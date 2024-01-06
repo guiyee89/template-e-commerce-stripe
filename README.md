@@ -1,5 +1,5 @@
 # Hola! 👋
-Este es mi e-commerce para la entrega del proyecto final del curso de React.js en CoderHouse
+Este es mi e-commerce integrado con Stripe
 
 ## Gif con nuevos estilos
 
