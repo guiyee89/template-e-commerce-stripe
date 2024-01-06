@@ -19,21 +19,11 @@ LINK A LA APP EN [VERCEL](https://pre-entrega-guillermo-di-nanno-comision-43240.
 - Firebase para almacenamiento de datos
 - Cloudinary para almacenamiento de imagenes
 
-### Objetivos a futuro:
-- Mejorar el Markup Html - SEO
-- Terminar Landing Page
-- Terminar detalles del carrito de compra y checkout
-- Proximamente implementaré una pasarela de pagos con Stripe, dado que Firebase me da la posibilidad de lograrlo sin Backend.
-- Tambien quisiera agregar el elemento "descuento" a los productos y crear un filter y map para que se puedan ver en la "Lading Page".
-- Implementar un carousel de items de sugerencia en la page ItemDetail.
-- Por ultimo, crear un dashboard para que el dueño del negocio pueda manipular sus productos a su antojo
-
-
 
 ### Clonacion:
  Ejecuta el siguiente codigo:
 ```
-git clone https://github.com/guiyee89/Pre-Entrega-Guillermo-Di-Nanno-Comision-43240.git
+git clone https://github.com/guiyee89/template-e-commerce-stripe.git
 ```
 ### Instalacion:
 Para ejecutar el proyecto, sigue los pasos a continuación:
