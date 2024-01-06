@@ -3,14 +3,10 @@ Este es mi e-commerce para la entrega del proyecto final del curso de React.js e
 
 ## Gif con nuevos estilos
 
-![Preview del diseño](./src/gif/e-commerce%20proyecto%20final.gif)
+![Preview del diseño](./src/gif/e-commerce%20MercadoPago.gif)
 
 LINK A LA APP EN [VERCEL](https://pre-entrega-guillermo-di-nanno-comision-43240.vercel.app/)
 #
-
-### Descripcion:
-En este proyecto, he aplicado mis conocimientos aprendidos en el curso para crear una aplicación de comercio electrónico. Utilicé diversas tecnologías y librerías, incluyendo Styled-Components para estilizar los componentes.   
-En esta App, se puede filtrar y simular la compra de productos desde la pagina de carrito y checkout, y luego se actualiza el stock de productos en Firebase.
 
 ### Creado con 🧱
 

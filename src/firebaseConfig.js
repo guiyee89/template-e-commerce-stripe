@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore,/*  getAnalytics  */} from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 import { v4 } from "uuid"
@@ -13,14 +13,15 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_MESSAGING,
-  appId: import.meta.env.VITE_APP_ID
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
 
 ///////////////////////////////////////////////////////////////////////////////
 /****   Inicializamos app   ****/
 const app = initializeApp(firebaseConfig);
-/* const analytics = getAnalytics(app); */
+/* const analytics = getAnalytics(app);  */
 
 ///////////////////////////////////////////////////////////////////////////////
 /* traemos el metodo getFirestore y lo exportamos a la app con "db" (database) */
