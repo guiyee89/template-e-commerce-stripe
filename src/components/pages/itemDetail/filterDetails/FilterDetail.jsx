@@ -20,15 +20,15 @@ export const FilterDetail = ({
   const [filteredItem, setFilteredItem] = useState({}); //Item filtered
 
   //////////////     //////////////    ////////////      ////////////      /////////////
-  //           FETCH ITEMS RELATED TO "selectedItem" BY userId PROPERTY              //           (Firestore database)
+  //           FETCH ITEMS RELATED TO "selectedItem" BY productId PROPERTY              //           (Firestore database)
 
   useEffect(() => {
     const fetchRelatedItems = () => {
       console.log("Fetching related items from Firestore...");
-      const userId = selectedItem.userId;
+      const productId = selectedItem.productId;
       const relatedItemsQuery = query(
         collection(db, "products"),
-        where("userId", "==", userId)
+        where("productId", "==", productId)
       );
       getDocs(relatedItemsQuery)
         .then((snapshot) => {

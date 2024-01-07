@@ -28,7 +28,7 @@ export const ProductList = ({
   foundProduct,
   searchProduct,
   setSearchProduct,
-  fetchItemsByUserId,
+  fetchItemsByProductId,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
@@ -110,7 +110,7 @@ export const ProductList = ({
                   backgroundColor: "#4b4d4e",
                 },
               }}
-              onClick={() => fetchItemsByUserId()}
+              onClick={() => fetchItemsByProductId()}
             >
               Buscar
             </Button>
@@ -174,7 +174,7 @@ export const ProductList = ({
                           }}
                         >
                           <TableCell align="center" component="th" scope="row">
-                            {product.userId}
+                            {product.productId}
                           </TableCell>
                           <ImgCell
                             align="center"

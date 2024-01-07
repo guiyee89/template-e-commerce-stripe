@@ -5,7 +5,7 @@ Este es mi e-commerce integrado con Stripe
 
 ![Preview del diseño](./src/gif/e-commerce%20MercadoPago.gif)
 
-LINK A LA APP EN [VERCEL](https://pre-entrega-guillermo-di-nanno-comision-43240.vercel.app/)
+LINK A LA APP EN [VERCEL](https://template-e-commerce-stripe.vercel.app/)
 #
 
 ### Creado con 🧱

@@ -143,11 +143,11 @@ export const DesktopFilterContainer = ({
       const filteredQuery = query(filteredCollection, ...queryFilters);
       const querySnapshot = await getDocs(filteredQuery);
 
-      // Use a Set to track unique userId-color combinations
+      // Use a Set to track unique productId-color combinations
       const uniqueItems = new Set();
       const filteredItems = querySnapshot.docs.reduce((filtered, doc) => {
         const item = doc.data();
-        const key = `${item.userId}-${item.color}`;
+        const key = `${item.productId}-${item.color}`;
 
         if (!uniqueItems.has(key)) {
           uniqueItems.add(key);
