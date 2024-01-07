@@ -1,6 +1,6 @@
 import { AboutUs } from "../pages/about/AboutUs";
 import { CartContainer } from "../pages/cart/CartContainer";
-import { CheckoutContainer } from "../pages/checkout/CheckoutContainer";
+import { CheckoutSession } from "../pages/checkoutStripe/CheckoutSession";
 import { ContactUs } from "../pages/contact/ContactUs";
 import { AdminDashboard } from "../pages/dashboard-auth/admin/AdminDashboard";
 import { UserOrders } from "../pages/dashboard-auth/user/UserOrders";
@@ -46,9 +46,9 @@ export const menuRoutes = [
         Element: CartContainer
     },
     {
-        id: "Checkout",
-        path: "/Checkout",
-        Element: CheckoutContainer
+        id: "checkout",
+        path: "/checkout",
+        Element: CheckoutSession
     },
     {
         id: "userOrders",

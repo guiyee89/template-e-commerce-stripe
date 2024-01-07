@@ -26,10 +26,10 @@ export const CarouselDesktop = () => {
         for (const doc of querySnapshot.docs) {
           const product = doc.data();
           if (product.discount) {
-            const { userId, color } = product;
-            const key = `${userId}-${color}`;
+            const { productId, color } = product;
+            const key = `${productId}-${color}`;
 
-            // Check if the product's userId and color combination already exists in the filteredProductsMap
+            // Check if the product's productId and color combination already exists in the filteredProductsMap
             if (!filteredProductsMap.has(key)) {
               // If not, add the product to the filteredProductsMap
               filteredProductsMap.set(key, product);

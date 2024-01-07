@@ -26,7 +26,7 @@ export const ItemDetailContainer = () => {
     progress,
   } = useContext(GlobalToolsContext);
 
-  // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "USERID" PARA RENDERIZAR
+  // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "productId" PARA RENDERIZAR
   useEffect(() => {
     setPageLoading(true);
     const delay = 250;

@@ -21,7 +21,7 @@ export const AgregarFullDocs = () => {
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
-      userId: "",
+      productId: "",
       title: "",
       subtitle: "",
       price: "",
@@ -51,7 +51,7 @@ export const AgregarFullDocs = () => {
       if (discount) {
         newItem = {
           ...values,
-          userId: parseInt(values.userId),
+          productId: parseInt(values.productId),
           price: parseFloat(values.price),
           discountPrice: totalPrice,
           stock: parseInt(values.stock),
@@ -62,7 +62,7 @@ export const AgregarFullDocs = () => {
       } else {
         newItem = {
           ...values,
-          userId: parseInt(values.userId),
+          productId: parseInt(values.productId),
           price: totalPrice,
           stock: parseInt(values.stock),
           //quitamos discount
@@ -101,10 +101,10 @@ export const AgregarFullDocs = () => {
             <Input
               label="Id"
               variant="outlined"
-              name="userId"
+              name="productId"
               onChange={handleChange}
-              helperText={errors.userId}
-              error={errors.userId ? true : false}
+              helperText={errors.productId}
+              error={errors.productId ? true : false}
               sx={{ marginTop: "24px" }}
             />
             <Input
