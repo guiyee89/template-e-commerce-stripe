@@ -7,16 +7,16 @@ import { ProductList } from "./ProductList";
 
 export const ProductSearch = () => {
   const [products, setProducts] = useState([]);
-  const [searchProduct, setSearchProduct] = useState(""); // State to store the userId for searching
+  const [searchProduct, setSearchProduct] = useState(""); // State to store the productId for searching
   const [foundProduct, setFoundProduct] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
 
-  const fetchItemsByUserId = async () => {
+  const fetchItemsByProductId = async () => {
     if (searchProduct.trim() !== "") {
       const itemsCollection = collection(db, "products");
       const q = query(
         itemsCollection,
-        where("userId", "==", parseFloat(searchProduct))
+        where("productId", "==", parseFloat(searchProduct))
       );
       console.log("fetcheando...");
       const snapshot = await getDocs(q);
@@ -34,7 +34,7 @@ export const ProductSearch = () => {
 
   // Use an effect to fetch products by searching or editing
   useEffect(() => {
-    fetchItemsByUserId();
+    fetchItemsByProductId();
   }, [isChanged]);
 
   const handleIsChanged = () => {
@@ -51,7 +51,7 @@ export const ProductSearch = () => {
         foundProduct={foundProduct}
         searchProduct={searchProduct}
         setSearchProduct={setSearchProduct}
-        fetchItemsByUserId={fetchItemsByUserId}
+        fetchItemsByProductId={fetchItemsByProductId}
       />
     </>
   );

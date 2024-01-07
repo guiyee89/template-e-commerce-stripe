@@ -69,11 +69,11 @@ export const ItemListContainer = () => {
           id: productDoc.id,
         }));
         console.log("Fetching data...");
-        // Remove duplicates based on userId and color
+        // Remove duplicates based on productId and color
         const uniqueProducts = [];
         const seen = new Set();
         products.forEach((product) => {
-          const key = `${product.userId}-${product.color}`;
+          const key = `${product.productId}-${product.color}`;
           if (!seen.has(key)) {
             uniqueProducts.push(product);
             seen.add(key);

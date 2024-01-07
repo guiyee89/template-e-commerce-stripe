@@ -45,7 +45,7 @@ export const ProductsForm = ({
     5: false,
   });
   const [newProduct, setNewProduct] = useState({
-    userId: "",
+    productId: "",
     title: "",
     subtitle: "",
     unit_price: "",
@@ -313,7 +313,7 @@ export const ProductsForm = ({
 
       let updatedItem = {
         ...selectedItem,
-        userId: parseInt(selectedItem.userId),
+        productId: parseInt(selectedItem.productId),
         unit_price: parseFloat(selectedItem.unit_price),
         discountPrice: totalPrice || null,
         stock: parseInt(selectedItem.stock),
@@ -353,7 +353,7 @@ export const ProductsForm = ({
       if (discount) {
         newItem = {
           ...newProduct,
-          userId: newProduct.userId ? parseInt(newProduct.userId) : 0,
+          productId: newProduct.productId ? parseInt(newProduct.productId) : 0,
           unit_price: newProduct.unit_price
             ? parseFloat(newProduct.unit_price)
             : 0,
@@ -375,7 +375,7 @@ export const ProductsForm = ({
       } else {
         newItem = {
           ...newProduct,
-          userId: newProduct.userId ? parseInt(newProduct.userId) : 0,
+          productId: newProduct.productId ? parseInt(newProduct.productId) : 0,
           unit_price: totalPrice,
           stock: newProduct.stock ? parseInt(newProduct.stock) : 0,
           color: newProduct.color.toLowerCase() || "",
@@ -429,11 +429,11 @@ export const ProductsForm = ({
                   <Input
                     label="ID del Producto"
                     variant="outlined"
-                    name="userId"
-                    defaultValue={selectedItem?.userId}
+                    name="productId"
+                    defaultValue={selectedItem?.productId}
                     onChange={handleChange}
-                    // helperText={errors.userId}
-                    // error={errors.userId ? true : false}
+                    // helperText={errors.productId}
+                    // error={errors.productId ? true : false}
                     sx={{ marginBottom: "18px" }}
                     InputLabelProps={{
                       style: { fontSize: "14px" },

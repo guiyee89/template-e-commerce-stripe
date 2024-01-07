@@ -12,9 +12,9 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
   useEffect(() => {
-    // Find the product with the given userId
+    // Find the product with the given productId
     const productProperties = products.find(
-      (product) => product.userId !== undefined
+      (product) => product.productId !== undefined
     );
     // If found, set the discount value
     if (productProperties) {
