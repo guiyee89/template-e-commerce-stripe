@@ -200,7 +200,7 @@ export const products = [
         secondUnit: "",
         stock: 10,
         description: "Introducing our 'Signature Series' hoodie. Crafted with premium fabric, meticulous attention to detail, and a tailored fit, it exudes confidence and elevates your personal style with timeless sophistication.",
-        category: "hoodie",
+        category: "hoodies",
         color:"white",
         size:"s",
         img: [
@@ -221,7 +221,7 @@ export const products = [
         secondUnit: "",
         stock: 12,
         description: "Introducing our 'Signature Series' hoodie. Crafted with premium fabric, meticulous attention to detail, and a tailored fit, it exudes confidence and elevates your personal style with timeless sophistication.",
-        category: "hoodie",
+        category: "hoodies",
         color:"white",
         size:"xs",
         img: [
@@ -242,7 +242,7 @@ export const products = [
         secondUnit: "",
         stock: 20,
         description: "Introducing our 'Signature Series' hoodie. Crafted with premium fabric, meticulous attention to detail, and a tailored fit, it exudes confidence and elevates your personal style with timeless sophistication.",
-        category: "hoodie",
+        category: "hoodies",
         color:"white",
         size:"l",
         img: [
