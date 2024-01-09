@@ -267,7 +267,7 @@ export const products = [
         color:"black",
         size:"s",
         img: [
-            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464700/web%20access/samples%20for%20e-commerce/Bags/aijhns1q4clrpis2ntph.png",
+            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/sl0xrrqnxdspv5othgmg.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/jvkivbds4kn8xqf9vnc7.png",
@@ -288,7 +288,7 @@ export const products = [
         color:"black",
         size:"xs",
         img: [
-            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464700/web%20access/samples%20for%20e-commerce/Bags/aijhns1q4clrpis2ntph.png",
+            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/sl0xrrqnxdspv5othgmg.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/jvkivbds4kn8xqf9vnc7.png",
@@ -309,7 +309,7 @@ export const products = [
         color:"black",
         size:"m",
         img: [
-            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464700/web%20access/samples%20for%20e-commerce/Bags/aijhns1q4clrpis2ntph.png",
+            "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/sl0xrrqnxdspv5othgmg.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/tcunbufqseoudnup8d6b.png",
             "https://res.cloudinary.com/derdim3m6/image/upload/v1704464701/web%20access/samples%20for%20e-commerce/Bags/jvkivbds4kn8xqf9vnc7.png",
