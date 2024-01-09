@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { CarouselDesktop } from "./carousels/CarouselDesktop";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-/* import { AgregarFullDocs } from "../dashboard-auth/AgregarFullDocs";  */
+/* import { AgregarFullDocs } from "../dashboard-auth/AgregarFullDocs";   */
 
 
 export const LandingPage = () => {
@@ -38,7 +38,7 @@ export const LandingPage = () => {
         ) : (
           <Title>¡on sale!</Title>
         )}
-        {/* <AgregarFullDocs />  */}
+        {/* <AgregarFullDocs />  */}  
         <CarouselWrapper>
           {windowWidth >= 900 && <CarouselDesktop />}
           {windowWidth < 900 && windowWidth >= 550 && <CarouselTablet />}
