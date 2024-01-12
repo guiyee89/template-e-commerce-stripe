@@ -18,6 +18,7 @@ export const AppRouter = () => {
           <Route key={id} path={path} element={<Element />} />
         ))}
       </Route>
+  
 
       <Route element={<ProtectedAdmin />}>
         <Route path="/dashboard" element={<AdminDashboard />} />
