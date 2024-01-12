@@ -364,7 +364,6 @@ export const ProductsForm = ({
             typeof newProduct.size === "number"
               ? parseFloat(newProduct.size)
               : newProduct.size.toLowerCase() || "",
-          discountPrice: totalPrice,
           title: newProduct.title || "",
           subtitle: newProduct.subtitle || "",
           description: newProduct.description || "",

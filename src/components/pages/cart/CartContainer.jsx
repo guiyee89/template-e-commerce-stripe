@@ -96,7 +96,7 @@ export const CartContainer = () => {
     }
 
     if (isValid) {
-      navigate("/checkout");
+      navigate("/payment");
     } else {
       // Ya no hay stock de productos o productos no encontrados
       Swal.fire({

@@ -1,4 +1,6 @@
 import {
+  Box,
+  Modal,
   TableBody,
   TableCell,
   TableContainer,
@@ -6,24 +8,33 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { CartContext } from "../../context/CartContext";
 import { Wallet } from "@mercadopago/sdk-react";
 import { Table } from "react-bootstrap";
+import { Payment } from "../checkoutStripe/Payment";
 
-export const Checkout = ({
-  handleSubmit,
-  handleChange,
-  errors,
-  preferenceId,
-}) => {
+export const Checkout = ({ handleSubmit, handleChange, errors, confirm }) => {
   const { cart, getTotalPrice, getItemPrice, getTotalDiscount, getSubTotal } =
     useContext(CartContext);
-
   const total = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Use useEffect to open the modal when confirm becomes true
+  useEffect(() => {
+    if (confirm) {
+      setIsModalOpen(true);
+    }
+  }, [confirm]);
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -89,9 +100,9 @@ export const Checkout = ({
           </FormWrapper>
 
           <TableContainer sx={{ width: "56%", paddingLeft: "15px" }}>
-            <Table sx={{ minWidth: 650}} aria-label="simple table">
-              <TableHead >
-                <TableRow >
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
                   <TableCell sx={{ width: "140px" }} align="center"></TableCell>
                   <TableCell sx={{ width: "120px" }} align="center">
                     Titulo
@@ -199,10 +210,18 @@ export const Checkout = ({
             <SubmitBtn type="submit" onClick={handleSubmit}>
               Confirm Purchase
             </SubmitBtn>
-            {preferenceId && (
-              <Wallet
-                initialization={{ preferenceId, redirectMode:"blank" }}
-              />
+            {isModalOpen && (
+              <Modal
+                open={isModalOpen}
+                onClose={closeModal}
+                sx={{ maxWidth: "1000px", margin: "0 auto" }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Payment />
+                </Box>
+              </Modal>
             )}
           </ConfirmMercadoPago>
         </TotalButton>
@@ -336,3 +355,14 @@ const ConfirmMercadoPago = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "100%",
+  bgcolor: "background.paper",
+  border: "none!importat",
+  boxShadow: 24,
+  outline: 0,
+};
