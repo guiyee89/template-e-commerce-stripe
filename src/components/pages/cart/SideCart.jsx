@@ -5,10 +5,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
 
 export const SideCart = () => {
   const {
     cart,
+    setCart,
     removeQuantity,
     removeById,
     getTotalPrice,
@@ -25,14 +28,71 @@ export const SideCart = () => {
   const totalDiscount = getTotalDiscount();
 
   const navigate = useNavigate();
-  const goCart = () => {
-    navigate("/cart");
-  };
 
+  const goCart = () => {
+    navigate("/checkout");
+  };
   const handleGoToCart = () => {
     goCart(); // Navigate to cart
     toggleSideCart(); // Toggle the cart
   };
+ 
+  const realizarCompra = async () => {
+    let isValid = true;
+    const missingItems = [];
+    const updatedCart = [];
+
+    for (const product of cart) {
+      const productRef = doc(db, "products", product.id);
+      const productSnapshot = await getDoc(productRef);
+
+      if (!productSnapshot.exists()) {
+        // Producto no existe en Firebase
+        isValid = false;
+        missingItems.push({ ...product, notFound: true });
+
+        // Remove the non-existing item from localStorage
+        const updatedCart = cart.filter((item) => item.id !== product.id);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      } else {
+        const productData = productSnapshot.data();
+
+        // Check if the size in the database matches the size in the cart
+        if (product.size !== productData.size) {
+          isValid = false;
+          missingItems.push({ ...product, sizeMismatch: true });
+          // Skip adding this item to the updatedCart
+          continue;
+        }
+
+        if (product.quantity > productData.stock) {
+          // Cantidad de producto en localStorage excede el stock en Firebase
+          isValid = false;
+          missingItems.push(product);
+        }
+
+        // Add the item to the updatedCart
+        updatedCart.push(product);
+      }
+    }
+
+    if (isValid) {
+      navigate("/checkout");
+    } else {
+      // Ya no hay stock de productos o productos no encontrados
+      Swal.fire({
+        title:
+          "<span style='font-size: 1rem; color: black; line-height:0.1'>Some items in your cart are no longer available:</span> <br>  <span style=' color: #c42828; line-height:4; font-size:1.2rem'>Product not found or change in Stock</span>",
+        html: missingItemMessage(missingItems),
+      });
+    }
+    // Set the updatedCart to the localStorage
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // Set the updatedCart to the CartContext or any state where you manage the cart
+    setCart(updatedCart);
+    toggleSideCart()
+  };
+
 
   return (
     <>
@@ -130,7 +190,7 @@ export const SideCart = () => {
                   </TotalWrapper>
                 </TotalPriceInfo>
 
-                <CheckoutButton onClick={handleGoToCart}>
+                <CheckoutButton onClick={/* realizarCompra */handleGoToCart}>
                   Go to Cart
                 </CheckoutButton>
               </CartInfo>
@@ -143,6 +203,27 @@ export const SideCart = () => {
     </>
   );
 };
+//Swal Sweet Alert Message - NO AVAILABLE STOCK
+const missingItemMessage = (missingItems) => {
+  let message = "<ul style='list-style-type: none; padding: 0;'>";
+
+  missingItems.forEach((item) => {
+    message += `<li style='display: flex; align-items: center; margin-bottom: 10px;'>
+    
+                  <img src="${item.img[0]}" alt="${
+      item.title
+    }" style='width: 100px; height: 100px; object-fit: contain; padding-right: 20px' />
+                  <span style='font-weight: bold; color: black; padding-right: 20px'>${
+                    item.title
+                  }</span> ${" "} <span style='font-weight: bold; color: grey; padding-right: 20px'> Size: <span style='text-transform:uppercase'>${
+      item.size
+    }</span></span>
+                </li>`;
+  });
+
+  message += "</ul>";
+  return message;
+}
 const TransparentDiv = styled.div`
   position: fixed;
   top: 0;
