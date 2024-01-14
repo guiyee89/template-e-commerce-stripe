@@ -42,7 +42,7 @@ export const NavDesktop = () => {
   );
 
   const isCart = currentRoute?.id === "cart";
-  const isCheckout = currentRoute?.id === "Checkout";
+  const isCheckout = currentRoute?.id === "checkout";
   const isDashboard = currentRoute?.id === "dashboard";
 
   //Hovering Category Links for Images
@@ -287,7 +287,7 @@ const Nav = styled.nav`
   margin: 0 auto;
   display: flex;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   background-color: rgb(253 253 253);
   box-shadow: ${(props) =>
     props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};

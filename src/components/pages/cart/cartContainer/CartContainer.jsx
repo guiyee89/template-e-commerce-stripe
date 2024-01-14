@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { db } from "../../../firebaseConfig";
+import { db } from "../../../../firebaseConfig";
 import { getDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartDesktop } from "./CartDesktop";
 import { CartMobile } from "./CartMobile";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 import styled from "styled-components/macro";
 import { Ring } from "@uiball/loaders";
 
@@ -30,7 +30,7 @@ const missingItemMessage = (missingItems) => {
 
   message += "</ul>";
   return message;
-}
+};
 
 export const CartContainer = () => {
   const { windowWidth, setProgress, setVisible } =

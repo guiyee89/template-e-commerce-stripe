@@ -1,13 +1,16 @@
 import styled from "styled-components/macro";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import axios from "axios";
 import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
+import { Ring } from "@uiball/loaders";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
 export const PaymentElementCheckout = () => {
-  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { cart, getTotalPrice, getItemPrice, clearCart } =
+    useContext(CartContext);
+  const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const stripe = useStripe();
@@ -25,12 +28,11 @@ export const PaymentElementCheckout = () => {
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      amount: total,
       confirmParams: {
         return_url: `${window.location.origin}/completion`,
       },
-      /* redirect: "if_required", */
     });
+
     if (error) {
       setMessage(error.message);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
@@ -38,22 +40,277 @@ export const PaymentElementCheckout = () => {
     } else {
       setMessage("Unexpected state");
     }
+
     setIsProcessing(false);
+    setMessage(null);
   };
 
   return (
     <>
-      <form id="payment-form" onSubmit={handleSubmit}>
-        <h2>The total amount is: {total}</h2>
-        <PaymentElement />
-        <button disabled={isProcessing} id="submit">
-          <span id="button-text">
-            {isProcessing ? "Processing ... " : "Pay Now"}
-          </span>
-        </button>
+      {isProcessing && (
+        <LoaderOverlay
+          window={windowWidth}
+          scrolled={scroll}
+          style={{ top: windowWidth < 900 && "0px" }}
+        >
+          <Ring size={35} lineWeight={7} speed={1} color="black" />
+        </LoaderOverlay>
+      )}
+      <Form
+        id="payment-form"
+        onSubmit={handleSubmit}
+        windowWidth={windowWidth}
+        data-aos="zoom-out-up"
+      >
+        <CheckoutContainer>
+          <CartInfoContainer>
+            <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png" />
+            <TitleTotalContainer>
+              <Title>We Shop</Title>
+              <Total>
+                {windowWidth > 750 ? <h2>$ {total.toFixed(2)}</h2> : null}
+              </Total>
+            </TitleTotalContainer>
+            <ItemsContainer windowWidth={windowWidth}>
+              {cart.map((product) => {
+                const itemPrice = getItemPrice(product.id); //Buscar item x id en la funcion getItemPrice
+                const hasDiscount = product.discountPrice; //Variable de Item con descuento
+                return (
+                  <ItemWrapper key={product.id}>
+                    <ItemInfoWrapper>
+                      <ImgWrapper>
+                        <ItemImg src={product.img[0]} alt="" />
+                      </ImgWrapper>
+                      <InsideContentWrapper>
+                        <ItemTitle>{product.title}</ItemTitle>
+
+                        <QuantityWrapper>
+                          <ItemQuantity>x {product.quantity}</ItemQuantity>
+                        </QuantityWrapper>
+                      </InsideContentWrapper>
+                    </ItemInfoWrapper>
+                    <PriceWrapper>
+                      {hasDiscount ? (
+                        <ItemPriceWrapper hasDiscount={hasDiscount}>
+                          {hasDiscount && (
+                            <DiscountPrice>
+                              ${" "}
+                              {(
+                                product.discountPrice * product.quantity
+                              ).toFixed(2)}
+                            </DiscountPrice>
+                          )}
+                          <Price hasDiscount={hasDiscount}>
+                            $ {itemPrice.toFixed(2)}
+                          </Price>
+                        </ItemPriceWrapper>
+                      ) : (
+                        <Price>$ {itemPrice.toFixed(2)}</Price>
+                      )}
+                    </PriceWrapper>
+                  </ItemWrapper>
+                );
+              })}
+            </ItemsContainer>
+          </CartInfoContainer>
+          <StripeImg
+            src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
+            windowWidth={windowWidth}
+          />
+        </CheckoutContainer>
+        <PaymentElementContainer windowWidth={windowWidth} data-aos="fade-left">
+          <PaymentElement />
+          <Button disabled={isProcessing} id="submit">
+            <span id="button-text">
+              {isProcessing
+                ? "Processing ... "
+                : windowWidth > 750
+                ? "Pay"
+                : `Pay $ ${total.toFixed(2)}`}
+            </span>
+          </Button>
+        </PaymentElementContainer>
 
         {message && <div id="payment-message">{message}</div>}
-      </form>
+      </Form>
     </>
   );
 };
+const Form = styled.form`
+  display: flex;
+  flex-direction: ${(props) => (props.windowWidth > 750 ? "row" : "column")};
+  justify-content: space-between;
+`;
+const CheckoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 50%;
+  padding-right: 24px;
+  margin: 0 0 -15px 15px;
+  position: relative;
+
+
+`;
+
+const CartInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: -25px;
+  gap: 0.9rem;
+  padding-left: 15px; /* Adjust the padding to your preference */
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 52px;
+    bottom: 0px;
+    left: -7px;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 100%);
+  }
+`;
+const TitleTotalContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Logo = styled.img`
+  width: 10%;
+`;
+const Title = styled.h1`
+  margin-top: 10px;
+  font-weight: 600;
+  color: grey;
+`;
+const Total = styled.h2`
+  font-weight: 900;
+  font-size: 1.5rem;
+`;
+const ItemsContainer = styled.div`
+  overflow-y: auto;
+  height: ${(props) => (props.windowWidth > 839 ? "398px" : "426px")};
+  border-bottom: 1px solid lightgray;
+`;
+const ItemWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+`;
+const ItemInfoWrapper = styled.div`
+  display: flex;
+`;
+const ImgWrapper = styled.div`
+  margin: 0 20px 0 0;
+  width: 60px;
+  height: 65px;
+`;
+const ItemImg = styled.img`
+  object-fit: contain;
+  border: 1px solid lightgrey;
+`;
+const ItemTitle = styled.h2`
+  padding-bottom: 2px;
+  font-size: clamp(0.6rem, 3.1vw + 1px, 1rem);
+`;
+const QuantityWrapper = styled.div``;
+const ItemQuantity = styled.h4`
+  font-weight: 600;
+  font-size: 0.75rem;
+`;
+const InsideContentWrapper = styled.div`
+  width: auto;
+  padding: 12px 0px 0 0;
+  height: 100%;
+  @media (max-width: 500px) {
+    width: 120px;
+  }
+`;
+const PriceWrapper = styled.div`
+  margin: 12px 0px 12px;
+  height: 50%;
+  min-width: 100px;
+`;
+const ItemPriceWrapper = styled.h4`
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  flex-direction: column-reverse;
+`;
+const DiscountPrice = styled.span`
+  color: #a83737;
+  font-weight: 600;
+  font-size: 1rem;
+  font-style: italic;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+`;
+const Price = styled.span`
+  font-weight: 600;
+  font-size: ${(props) => (props.hasDiscount ? "0.8rem" : "1rem")};
+  font-style: italic;
+  position: relative;
+  color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
+  /* Add the following styles to create the strike-through line if hasDiscount is true */
+  &::after {
+    content: ${(props) => (props.hasDiscount ? "''" : "none")};
+    position: absolute;
+    bottom: 52%;
+    left: 0;
+    width: 102%;
+    height: 1px;
+    background-color: black;
+  }
+`;
+
+const PaymentElementContainer = styled.div`
+  width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6rem;
+  margin-top: 25px;
+  position: relative;
+  padding-left: 24px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0) 100%)
+  }
+`;
+const StripeImg = styled.img`
+  width: ${(props) =>
+    props.windowWidth < 550 ? "55%" : props.windowWidth > 750 ? "35%" : "45%"};
+  margin-top: 8px;
+`;
+
+const Button = styled.button`
+  background-color: rgb(0 12 79);
+  color: white;
+  font-weight: 600;
+  height: 42px;
+  border-radius: 8px;
+`;
+const LoaderOverlay = styled.div`
+  position: fixed;
+  top: ${(props) => (props.scrolled === "scrolled" ? "64px" : "0.2px")};
+  transition: top
+    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
+    ease-in-out;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
+  display: flex;
+  justify-content: ${(props) => (props.window < 500 ? "flex-start" : "center")};
+  align-items: center;
+  padding-left: ${(props) => (props.window < 500 ? "80px" : "0")};
+  z-index: 2; /* Higher z-index to cover other elements */
+`;
