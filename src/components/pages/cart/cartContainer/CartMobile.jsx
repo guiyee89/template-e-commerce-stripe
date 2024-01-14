@@ -1,9 +1,9 @@
 import styled from "styled-components/macro";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 import { useContext, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const CartDesktop = ({ realizarCompra }) => {
+export const CartMobile = ({ realizarCompra }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
@@ -27,16 +27,6 @@ export const CartDesktop = ({ realizarCompra }) => {
   return (
     <Wrapper key="cart-wrapper">
       <CartTable>
-        <thead>
-          <tr>
-            <ProductHead>Product</ProductHead>
-            <PricePerItemHead>Unit Price</PricePerItemHead>
-            <DetailsHead>Details</DetailsHead>
-            <QuantityHead>Quantity</QuantityHead>
-            <TotalPricePerItemHead>Total</TotalPricePerItemHead>
-            <DeleteHead></DeleteHead>
-          </tr>
-        </thead>
         <tbody>
           {cart.map((product) => {
             const itemPrice = getItemPrice(product.id); //Buscar item x id en la funcion getItemPrice
@@ -44,38 +34,46 @@ export const CartDesktop = ({ realizarCompra }) => {
             return (
               <tr key={product.id}>
                 <Product>
-                  <ImgWrapper>
-                    <ItemImg src={product.img[0]} alt="" />
-                  </ImgWrapper>
                   <ItemTitle>{product.title}</ItemTitle>
+
+                  <ImageInfoContainer>
+                    <ImgWrapper>
+                      <ItemImg src={product.img[0]} alt="" />
+                    </ImgWrapper>
+                    <ProductInfo>
+                      <DetailsWrapper>
+                        <Color>
+                          Color: <Span>{product.color}</Span>
+                        </Color>
+                        <Size>
+                          Size: <Span2>{product.size}</Span2>
+                        </Size>
+                      </DetailsWrapper>
+
+                      <PricePerItem>
+                        {hasDiscount ? (
+                          <ItemPriceWrapper hasDiscount={hasDiscount}>
+                            {hasDiscount && (
+                              <DiscountPrice>
+                                $ {product.discountPrice.toFixed(2)}
+                              </DiscountPrice>
+                            )}
+                            <Price hasDiscount={hasDiscount}>
+                              $ {product.unit_price.toFixed(2)}
+                            </Price>
+                          </ItemPriceWrapper>
+                        ) : (
+                          <Price>$ {product.unit_price.toFixed(2)}</Price>
+                        )}
+                      </PricePerItem>
+                    </ProductInfo>
+                  </ImageInfoContainer>
                 </Product>
-                <PricePerItem>
-                  {hasDiscount ? (
-                    <ItemPriceWrapper hasDiscount={hasDiscount}>
-                      {hasDiscount && (
-                        <DiscountPrice>
-                          $ {product.discountPrice.toFixed(2)}
-                        </DiscountPrice>
-                      )}
-                      <Price hasDiscount={hasDiscount}>
-                        $ {product.unit_price.toFixed(2)}
-                      </Price>
-                    </ItemPriceWrapper>
-                  ) : (
-                    <Price>$ {product.unit_price.toFixed(2)}</Price>
-                  )}
-                </PricePerItem>
-                <Details>
-                  <DetailsWrapper>
-                    <Color>
-                      <Span>{product.color}</Span>
-                    </Color>
-                    <Size>
-                      <Span2>{product.size}</Span2>
-                    </Size>
-                  </DetailsWrapper>
-                </Details>
-                <Quantity>
+
+                <QuantityDeleteContainer>
+                  <Delete>
+                    <DeleteIconBtn onClick={() => removeById(product.id)} />
+                  </Delete>
                   <QuantityWrapper>
                     <BtnQuantity onClick={() => removeQuantity(product.id)}>
                       {" "}
@@ -90,26 +88,7 @@ export const CartDesktop = ({ realizarCompra }) => {
                       +{" "}
                     </BtnQuantity>
                   </QuantityWrapper>
-                </Quantity>
-                <TotalPricePerItem>
-                  {hasDiscount ? (
-                    <ItemPriceWrapper hasDiscount={hasDiscount}>
-                      {hasDiscount && (
-                        <DiscountPrice>
-                          ${" "}
-                          {(product.discountPrice * product.quantity).toFixed(
-                            2
-                          )}
-                        </DiscountPrice>
-                      )}
-                    </ItemPriceWrapper>
-                  ) : (
-                    <Price>$ {itemPrice.toFixed(2)}</Price>
-                  )}
-                </TotalPricePerItem>
-                <Delete>
-                  <DeleteIconBtn onClick={() => removeById(product.id)} />
-                </Delete>
+                </QuantityDeleteContainer>
               </tr>
             );
           })}
@@ -119,8 +98,6 @@ export const CartDesktop = ({ realizarCompra }) => {
         {cart.length > 0 ? (
           <>
             <CartTitle>order summary</CartTitle>
-            {/* <ClearButton onClick={clearCart}>Clear all</ClearButton> */}
-            {/* Clear Cart Button */}
             <TotalPriceInfo>
               <SubTotalWrapper>
                 <SubDisText colSpan="1">Subtotal:</SubDisText>
@@ -167,13 +144,16 @@ const CartTable = styled.table`
   tr {
     border: 1px solid rgb(221, 221, 221);
     display: flex;
+    height: 135px;
     -webkit-box-align: stretch;
     align-items: center;
-    flex-wrap: wrap;
     -webkit-box-pack: justify;
     justify-content: space-between;
     @media (max-width: 768px) {
       align-items: center;
+    }
+    @media (max-width: 680px) {
+      justify-content: space-around;
     }
   }
   td {
@@ -181,7 +161,7 @@ const CartTable = styled.table`
     flex: 1 1 1 0%;
     font-weight: 500;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
   }
   th {
     background-color: #f2f2f2;
@@ -190,51 +170,57 @@ const CartTable = styled.table`
     font-weight: 600;
   }
 `;
-const ProductHead = styled.th`
-  width: 190px;
-`;
+
 const Product = styled.td`
-  width: 190px;
+  min-width: 150px;
+  max-width: 230px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
-const DetailsHead = styled.th`
-  width: 70px;
-`;
-const Details = styled.td`
-  width: 70px;
-`;
-const PricePerItemHead = styled.th`
+
+const PricePerItem = styled.div`
   width: 130px;
   min-width: 90px;
+  display: flex;
+  justify-content: center;
 `;
-const PricePerItem = styled.td`
-  width: 130px;
-  min-width: 90px;
-`;
-const QuantityHead = styled.th`
+
+const QuantityDeleteContainer = styled.td`
   width: 120px;
+  height: 120px;
+  margin-top: 20px;
   min-width: 100px;
+  display: flex;
+  flex-direction: column;
 `;
-const Quantity = styled.td`
-  width: 120px;
-  min-width: 100px;
-`;
-const TotalPricePerItemHead = styled.th`
-  width: 90px;
-`;
-const TotalPricePerItem = styled.td`
-  width: 90px;
-`;
-const DeleteHead = styled.th`
+
+const Delete = styled.div`
   width: 50px;
+  margin: 0px auto;
+  text-align: center;
 `;
-const Delete = styled.td`
-  width: 50px;
+const ImageInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
-const ImgWrapper = styled.div``;
 const ItemTitle = styled.div`
-  min-width: 100px;
+  width: 100%;
+  padding: 0 0 7px 6px;
+  font-weight: 600;
+`;
+const ProductInfo = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 20px;
+  margin-right: -40px;
+  @media (max-width: 500px) {
+    margin-left: 10px;
+    margin-right: -20px;
+  }
 `;
 const QuantityWrapper = styled.div`
   display: flex;
@@ -246,8 +232,12 @@ const QuantityWrapper = styled.div`
   -webkit-box-pack: justify;
   justify-content: space-between;
 `;
+const ImgWrapper = styled.div`
+  width: 35%;
+  height: 100%;
+`;
 const ItemImg = styled.img`
-  width: 80%;
+  width: 100%;
   display: initial;
   object-fit: contain;
   border: 1px solid lightgray;
@@ -275,7 +265,7 @@ const CartInfo = styled.div`
   align-items: center;
   gap: 1.5rem;
   margin-left: 20px;
-  padding: 24px 0;
+  padding: 24px 0 44px;
   background-color: #efeded;
   @media (max-width: 1100px) {
     width: 100%;
@@ -300,16 +290,20 @@ const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
   font-size: 1rem;
+  width: max-content;
   font-style: italic;
   position: relative;
   display: inline-block;
   text-align: center;
+  margin-left: -8px;
 `;
 const Price = styled.span`
   font-weight: 600;
   font-size: ${(props) => (props.hasDiscount ? "0.8rem" : "1rem")};
   font-style: italic;
   position: relative;
+  width: max-content;
+  margin-left: -8px;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   /* Add the following styles to create the strike-through line if hasDiscount is true */
   &::after {
@@ -339,6 +333,15 @@ const TotalPriceInfo = styled.div`
   @media (max-width: 1100px) {
     padding: 20px 100px 15px;
   }
+  @media (max-width: 700px) {
+    padding: 20px 70px 15px;
+  }
+  @media (max-width: 530px) {
+    padding: 20px 40px 15px;
+  }
+  @media (max-width: 430px) {
+    padding: 20px 20px 15px;
+  }
 `;
 const TotalWrapper = styled.div`
   font-weight: 600;
@@ -366,11 +369,15 @@ const TotalDiscount = styled.h3`
   font-weight: 500;
   padding-left: 24px;
 `;
+
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: min-content;
+  align-items: flex-start;
+  width: max-content;
+  margin-top: -9px;
+  margin-bottom: 5px;
+  padding: 4px 0 0px 8px;
 `;
 
 const Color = styled.p`
@@ -385,8 +392,10 @@ const Span = styled.span`
 `;
 const Span2 = styled.span`
   font-weight: 600;
+  width: 100%;
   text-transform: uppercase;
   text-align: center;
+  padding-left: 9px;
 `;
 const SubTotal = styled.h3`
   font-weight: 500;

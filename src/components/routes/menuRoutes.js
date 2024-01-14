@@ -1,7 +1,6 @@
 import { AboutUs } from "../pages/about/AboutUs";
-import { CheckoutContainer } from "../pages/checkout/CheckoutContainer";
+import { CheckoutFormCartContainer } from "../pages/checkoutFormCart/CheckoutFormCartContainer";
 import { Completion } from "../pages/checkoutStripe/Completion";
-/* import { Payment } from "../pages/checkoutStripe/Payment"; */
 /* import { CardElement } from "../pages/checkoutStripe/CardElement"; */
 import { ContactUs } from "../pages/contact/ContactUs";
 import { AdminDashboard } from "../pages/dashboard-auth/admin/AdminDashboard";
@@ -43,31 +42,26 @@ export const menuRoutes = [
         path: "/about",
         Element: AboutUs
     },
-    /*   {
-        id: "cart",
-        path: "/cart",
-        Element: CartContainer
-    }, */
-        /*  {
-        id: "checkout",
-        path: "/checkout",
-        Element: CardElement
-    },  */
     {
         id: "checkout",
         path: "/checkout",
-        Element: CheckoutContainer
+        Element: CheckoutFormCartContainer
     },
-    /* {
-        id: "payment",
-        path: "/payment",
-        Element: Payment
-    }, */
     {
         id: "completion",
         path: "/completion",
         Element: Completion
     },
+    /*   {
+        id: "cart",
+        path: "/cart",
+        Element: CartContainer
+    }, */
+    /*  {
+        id: "checkout",
+        path: "/checkout",
+        Element: CardElement
+    },  */
     {
         id: "userOrders",
         path: "/user-orders",

@@ -1,25 +1,17 @@
-import { Checkout } from "./Checkout";
+import { CheckoutFormCart } from "./CheckoutFormCart";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { db } from "../../../firebaseConfig";
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  getDoc,
-} from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import styled from "styled-components/macro";
-import { initMercadoPago } from "@mercadopago/sdk-react";
-import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { Link, useLocation } from "react-router-dom";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
-export const CheckoutContainer = () => {
+export const CheckoutFormCartContainer = () => {
   const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { windowWidth } = useContext(GlobalToolsContext);
   const [confirm, setConfirm] = useState(false);
   const { user } = useContext(AuthContext);
   const [shipmentCost, setShipmentCost] = useState(0);
@@ -100,8 +92,6 @@ export const CheckoutContainer = () => {
   //   }
   // }, [paramValue]);
 
- 
-
   // initMercadoPago(import.meta.env.VITE_PUBLIC_KEY, {
   //   locale: "es-AR",
   // });
@@ -144,13 +134,14 @@ export const CheckoutContainer = () => {
 
   return (
     <>
-      <Wrapper>
-        <Checkout
+      <Wrapper windowWidth={windowWidth}>
+        <CheckoutFormCart
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           errors={errors}
           cart={cart}
           confirm={confirm}
+          setConfirm={setConfirm}
         />
       </Wrapper>
     </>
@@ -159,4 +150,12 @@ export const CheckoutContainer = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  height: ${(props) =>
+    props.windowWidth < 850 ? "none" : "550px"};
+  margin: ${(props) =>
+    props.windowWidth < 1050
+      ? props.windowWidth < 650
+        ? "0 5px 0 0"
+        : "0px 10px 0 22px"
+      : "0"};
 `;

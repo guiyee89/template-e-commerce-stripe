@@ -3,10 +3,13 @@ import styled from "styled-components/macro";
 import { CartContext } from "../../context/CartContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import { useState } from "react";
+import { Ring } from "@uiball/loaders";
+import Swal from "sweetalert2";
 
 export const SideCart = () => {
   const {
@@ -20,23 +23,20 @@ export const SideCart = () => {
     getTotalDiscount,
     getSubTotal,
   } = useContext(CartContext);
-
   const { isOpen, toggleSideCart } = useContext(GlobalToolsContext);
-
   const totalPrice = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
-
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const navigate = useNavigate();
 
-  const goCart = () => {
-    navigate("/checkout");
+  const realizarCompraWithTimeout = () => {
+    setCheckoutLoading(true);
+    setTimeout(() => {
+      realizarCompra();
+    }, 2500);
   };
-  const handleGoToCart = () => {
-    goCart(); // Navigate to cart
-    toggleSideCart(); // Toggle the cart
-  };
- 
+
   const realizarCompra = async () => {
     let isValid = true;
     const missingItems = [];
@@ -78,6 +78,7 @@ export const SideCart = () => {
 
     if (isValid) {
       navigate("/checkout");
+      setCheckoutLoading(false);
     } else {
       // Ya no hay stock de productos o productos no encontrados
       Swal.fire({
@@ -85,14 +86,14 @@ export const SideCart = () => {
           "<span style='font-size: 1rem; color: black; line-height:0.1'>Some items in your cart are no longer available:</span> <br>  <span style=' color: #c42828; line-height:4; font-size:1.2rem'>Product not found or change in Stock</span>",
         html: missingItemMessage(missingItems),
       });
+      setCheckoutLoading(false);
     }
     // Set the updatedCart to the localStorage
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     // Set the updatedCart to the CartContext or any state where you manage the cart
     setCart(updatedCart);
-    toggleSideCart()
+    toggleSideCart();
   };
-
 
   return (
     <>
@@ -102,7 +103,10 @@ export const SideCart = () => {
       />
       <SideCartWrapper isOpen={isOpen}>
         <CloseIcon
-          onClick={toggleSideCart}
+          onClick={() => {
+            toggleSideCart();
+            setCheckoutLoading(false);
+          }}
           sx={{
             fontSize: "35px",
             marginTop: "15px",
@@ -190,8 +194,14 @@ export const SideCart = () => {
                   </TotalWrapper>
                 </TotalPriceInfo>
 
-                <CheckoutButton onClick={/* realizarCompra */handleGoToCart}>
-                  Go to Cart
+                <CheckoutButton onClick={realizarCompraWithTimeout}>
+                  {checkoutLoading ? (
+                    <RingLoader>
+                      <Ring size={35} lineWeight={7} speed={1} color="white" />
+                    </RingLoader>
+                  ) : (
+                    " Go to Cart"
+                  )}
                 </CheckoutButton>
               </CartInfo>
             </>
@@ -223,7 +233,7 @@ const missingItemMessage = (missingItems) => {
 
   message += "</ul>";
   return message;
-}
+};
 const TransparentDiv = styled.div`
   position: fixed;
   top: 0;
@@ -284,6 +294,8 @@ const ItemWrapper = styled.div`
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
+    width: 72px;
+    height: 72px;
 `;
 const QuantityWrapper = styled.div`
   display: flex;
@@ -299,7 +311,7 @@ const QuantityWrapper = styled.div`
 const ItemImg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border: 1px solid lightgrey;
   @media (max-width: 500px) {
     width: 95px;
@@ -463,4 +475,8 @@ const TotalPrice = styled.h3`
 const EmptyCartMessage = styled.p`
   height: 400%;
   margin: 0 auto;
+`;
+const RingLoader = styled.div`
+  display: flex;
+  justify-content: center;
 `;

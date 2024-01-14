@@ -133,6 +133,9 @@ const StyledCarousel = styled(Carousel)`
       transition: opacity 0.2s ease, transform 0.18s ease;
     }
   }
+  .carousel-indicators {
+    z-index: 1;
+  }
   .carousel-indicators [data-bs-target] {
     box-sizing: content-box;
     flex: 0 1 auto;
