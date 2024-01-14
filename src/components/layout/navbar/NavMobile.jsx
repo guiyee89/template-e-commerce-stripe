@@ -57,7 +57,7 @@ export const NavMobile = () => {
     (route) => route.path === location.pathname
   );
   const isCart = currentRoute?.id === "cart";
-  const isCheckout = currentRoute?.id === "Checkout";
+  const isCheckout = currentRoute?.id === "checkout";
   const isDashboard = currentRoute?.id === "dashboard";
 
   return (
