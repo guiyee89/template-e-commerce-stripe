@@ -107,7 +107,7 @@ const OutletWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: rgb(253 253 253);
-  padding-bottom: 40px;
+  padding-bottom: 200px;
   margin: 0 auto;
   padding-top: 40px;
 
