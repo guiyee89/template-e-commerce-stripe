@@ -184,7 +184,7 @@ export const ProductList = ({
                               padding: windowWidth < 1100 ? "8px" : "12px",
                             }}
                           >
-                            <img src={product.img[0]} />
+                            <Img src={product.img[0]} />
                           </ImgCell>
                           <TableCell align="center" component="th" scope="row">
                             {product.title}
@@ -292,10 +292,9 @@ const ProductListWrapper = styled.div`
 const ProductsButtonsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap:  ${(props) =>
-    props.windowWidth < 600 ? "1rem" : "8.1rem"};
+  gap: ${(props) => (props.windowWidth < 600 ? "1rem" : "8.1rem")};
   justify-content: ${(props) =>
-    props.windowWidth < 750 ? "space-between" : "center"};;
+    props.windowWidth < 750 ? "space-between" : "center"};
   margin: ${(props) =>
     props.windowWidth < 750 ? "0 16px 0 0" : "0 0 0 -67px"};
 `;
@@ -313,6 +312,11 @@ const ProductListContainer = styled.div`
 `;
 const ImgCell = styled(TableCell)`
   width: 9%;
+`;
+const Img = styled.img`
+  min-width: 60px;
+  height: 70px;
+  object-fit: contain;
 `;
 const style = {
   position: "absolute",

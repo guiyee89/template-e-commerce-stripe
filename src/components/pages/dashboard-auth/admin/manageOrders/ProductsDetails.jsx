@@ -35,7 +35,7 @@ export const ProductsDetails = ({ clientProducts }) => {
                 <TableCellTitle>Size</TableCellTitle>
                 <TableCellTitle>Price</TableCellTitle>
                 <TableCellTitle>Qty</TableCellTitle>
-                <TableCellTitle>Total</TableCellTitle>
+                <TableCellTitle>Price</TableCellTitle>
               </TableRow>
             </TableHead>
             <TableBody>

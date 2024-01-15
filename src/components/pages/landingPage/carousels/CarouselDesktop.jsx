@@ -77,7 +77,7 @@ export const CarouselDesktop = () => {
         <StyledCarousel
           activeIndex={index}
           onSelect={handleSelect}
-          interval={5200}
+          interval={55200}
         >
           <CarouselItem>
             <CarouselInner>
@@ -105,9 +105,9 @@ export const CarouselDesktop = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -143,9 +143,9 @@ export const CarouselDesktop = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -181,9 +181,9 @@ export const CarouselDesktop = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -298,6 +298,9 @@ const ItemWrapper = styled.div`
   width: 100%;
   padding-top: 1.5px;
   padding-bottom: 5px;
+  @media (max-width: 1300px){
+    max-height: 400px;
+  }
 `;
 const LinkWrapper = styled(Link)`
   text-decoration: none;

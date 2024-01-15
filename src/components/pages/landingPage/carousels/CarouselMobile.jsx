@@ -82,7 +82,7 @@ export const CarouselMobile = () => {
         <StyledCarousel
           activeIndex={index}
           onSelect={handleSelect}
-          interval={5200}
+          interval={55200}
         >
           <CarouselItem>
             <CarouselInner>
@@ -110,9 +110,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -148,9 +148,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -186,9 +186,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -224,9 +224,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -262,9 +262,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -301,9 +301,9 @@ export const CarouselMobile = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -420,6 +420,12 @@ const ItemWrapper = styled.div`
   min-width: 165px;
   padding-top: 1.5px;
   padding-bottom: 5px;
+  @media (max-width:600px){
+    max-height: 380px;
+  }
+  @media (max-width:500px){
+    max-height: 320px;
+  }
 `;
 const LinkWrapper = styled(Link)`
   text-decoration: none;
@@ -450,7 +456,7 @@ const InfoWrapper = styled.div`
 const CarouselItemPrice = styled.h4`
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   font-weight: 600;
-  font-size: 1rem;
+  font-size: .80rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;
@@ -467,7 +473,7 @@ const CarouselItemPrice = styled.h4`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: .85rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;
@@ -476,19 +482,19 @@ const Discount = styled.h4`
   position: absolute;
   top: 3px;
   left: 3%;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background-color: rgb(179, 70, 70);
   text-align: center;
   color: white;
   font-weight: bold;
-  font-size: 0.9rem;
-  line-height: 2.9;
+  font-size: 0.75rem;
+  line-height: 3.1;
   cursor: pointer;
 `;
 const ItemTitle = styled.h2`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: black;
   font-weight: 700;
   word-spacing: 3px;

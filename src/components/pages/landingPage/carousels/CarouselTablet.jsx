@@ -82,7 +82,7 @@ export const CarouselTablet = () => {
         <StyledCarousel
           activeIndex={index}
           onSelect={handleSelect}
-          interval={5200}
+          interval={55200}
         >
           <CarouselItem>
             <CarouselInner>
@@ -110,9 +110,9 @@ export const CarouselTablet = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -148,9 +148,9 @@ export const CarouselTablet = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -186,9 +186,9 @@ export const CarouselTablet = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -224,9 +224,9 @@ export const CarouselTablet = () => {
                             hasDiscount={"discount" in product}
                           >
                             <DiscountPrice>
-                              $ {product.discountPrice}
+                              $ {product.discountPrice.toFixed(2)}
                             </DiscountPrice>{" "}
-                            $ {product.unit_price}
+                            $ {product.unit_price.toFixed(2)}
                           </CarouselItemPrice>
                         </InfoWrapper>
                       </ItemCard>
@@ -335,18 +335,25 @@ const CarouselInner = styled.div`
   max-width: 100%;
   display: flex;
   gap: 1rem;
-  @media (max-width:43.75rem){
-    gap: .5rem
+  @media (max-width: 43.75rem) {
+    gap: 0.5rem;
   }
 `;
 const ItemWrapper = styled.div`
   //esto ajusta el responsivnes junto con 100% del itemCard
-  max-height: 440px;
-  max-width: 315px;
+  max-height: 431px;
+  max-width: 359px;
   width: 100%;
   min-width: 165px;
   padding-top: 1.5px;
   padding-bottom: 5px;
+  @media (max-width: 950px) {
+    max-height: 370px;
+    max-width: 315px;
+  }
+  @media (max-width: 800px) {
+    max-height: 335px;
+  }
 `;
 const LinkWrapper = styled(Link)`
   text-decoration: none;
@@ -376,7 +383,7 @@ const InfoWrapper = styled.div`
 const CarouselItemPrice = styled.h4`
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;
@@ -393,7 +400,7 @@ const CarouselItemPrice = styled.h4`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;
@@ -409,17 +416,17 @@ const Discount = styled.h4`
   text-align: center;
   color: white;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 2.8;
   cursor: pointer;
 `;
 const ItemTitle = styled.h2`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: black;
   font-weight: 700;
   word-spacing: 3px;
   text-transform: uppercase;
 `;
 const ItemSubTitle = styled.h3`
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 `;

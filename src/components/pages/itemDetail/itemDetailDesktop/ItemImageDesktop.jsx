@@ -134,7 +134,7 @@ const ImgAside = styled.img`
       : "rgba(0, 0, 0, 0.65) 0px 0px 3px"};
   border: ${({ isSelected }) => (isSelected ? "1px solid black" : "none")};
   width: ${({ isSelected }) => (isSelected ? "63%" : "60%")};
-  height: ${({ isSelected }) => (isSelected ? "15%" : "14%")};
+  height: ${({ isSelected }) => (isSelected ? "11%" : "10.7%")};
   object-fit: cover;
 `;
 const LoaderContainer = styled.div`
@@ -146,7 +146,7 @@ const LoaderContainer = styled.div`
 `;
 const MainImgWrapper = styled.div`
   width: 100%;
-  height: 700px;
+  height: 920px;
   top: 0;
   left: 0;
   display: flex;

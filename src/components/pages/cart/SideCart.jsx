@@ -197,7 +197,7 @@ export const SideCart = () => {
                 <CheckoutButton onClick={realizarCompraWithTimeout}>
                   {checkoutLoading ? (
                     <RingLoader>
-                      <Ring size={35} lineWeight={7} speed={1} color="white" />
+                      <Ring size={25} lineWeight={5} speed={1} color="white" />
                     </RingLoader>
                   ) : (
                     " Go to Cart"
