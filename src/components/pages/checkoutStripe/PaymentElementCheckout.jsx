@@ -150,8 +150,6 @@ const CheckoutContainer = styled.div`
   padding-right: 24px;
   margin: 0 0 -15px 15px;
   position: relative;
-
-
 `;
 
 const CartInfoContainer = styled.div`
@@ -274,7 +272,6 @@ const PaymentElementContainer = styled.div`
   margin-top: 25px;
   position: relative;
   padding-left: 24px;
-
   &::before {
     content: '';
     position: absolute;

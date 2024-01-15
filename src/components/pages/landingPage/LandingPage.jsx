@@ -40,9 +40,9 @@ export const LandingPage = () => {
         )}
         {/* <AgregarFullDocs />  */}  
         <CarouselWrapper>
-          {windowWidth >= 900 && <CarouselDesktop />}
-          {windowWidth < 900 && windowWidth >= 550 && <CarouselTablet />}
-          {windowWidth < 550 && <CarouselMobile />}
+          {windowWidth >= 1200 && <CarouselDesktop />}
+          {windowWidth < 1200 && windowWidth >= 650 && <CarouselTablet />}
+          {windowWidth < 650 && <CarouselMobile />}
         </CarouselWrapper>
         <MiddleArticle>
           <ImgWrapper>
