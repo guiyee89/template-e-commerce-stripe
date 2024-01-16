@@ -123,17 +123,7 @@ export const CheckoutFormCart = ({
                 size="small"
               />
             </Form>
-            <TotalPriceInfoContainer
-              style={{
-                display: windowWidth > 850 && "none",
-                width: "93%",
-                flexDirection: "column",
-                gap: "0.5rem",
-                padding: "19px 0px 0px 2px",
-                margin: "24px 0px 0px 0px",
-                borderTop: "1px solid grey;",
-              }}
-            >
+            <TotalPriceInfoMobileContainer windowWidth={windowWidth}>
               <SubTotalWrapper>
                 <TotalText colSpan="1">Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -146,8 +136,8 @@ export const CheckoutFormCart = ({
                 <TotalText colSpan="1">Total:</TotalText>
                 <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
               </TotalWrapper>
-            </TotalPriceInfoContainer>
-            <ConfirmStripe>
+            </TotalPriceInfoMobileContainer>
+            <ConfirmStripe windowWidth={windowWidth}>
               <SubmitBtn
                 type="submit"
                 onClick={handleSubmit}
@@ -166,7 +156,9 @@ export const CheckoutFormCart = ({
                   <Box
                     sx={{
                       ...style,
+                      width: windowWidth < 550 ? "100%" : windowWidth < 800 ? "90%" : "85%",
                       height: windowWidth < 750 ? "100%" : "75%",
+                      padding: windowWidth < 551 ? "20px" : "50px 25px 40px",
                     }}
                   >
                     <CloseIconBtn onClick={closeModal} />
@@ -188,10 +180,10 @@ export const CheckoutFormCart = ({
                     : "22px",
                 display: "flex",
                 flexDirection: "column",
-                height: windowWidth < 850 ? "225px" : "70%",
+                height: windowWidth < 851 ? "190px" : "70%",
                 justifyContent: "space-between",
                 borderBottom:
-                  windowWidth < 850 ? "1px solid lightgrey" : "none",
+                  windowWidth < 851 ? "1px solid lightgrey" : "none",
               }}
             >
               <Table aria-label="simple table">
@@ -398,6 +390,7 @@ export const CheckoutFormCart = ({
                         <DeleteBtnWrapper windowWidth={windowWidth}>
                           <DeleteIconBtn
                             onClick={() => removeById(item.id)}
+                            windowWidth={windowWidth}
                           />
                         </DeleteBtnWrapper>
                       </TableRow>
@@ -406,7 +399,7 @@ export const CheckoutFormCart = ({
                 </TableBody>
               </Table>
             </TableContainer>
-            <TotalPriceInfoContainer windowWidth={windowWidth}>
+            <TotalPriceInfoDesktopContainer windowWidth={windowWidth}>
               <SubTotalWrapper>
                 <TotalText colSpan="1">Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -419,7 +412,7 @@ export const CheckoutFormCart = ({
                 <TotalText colSpan="1">Total:</TotalText>
                 <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
               </TotalWrapper>
-            </TotalPriceInfoContainer>
+            </TotalPriceInfoDesktopContainer>
           </TableTotalPriceContainer>
         </FormItems>
       </Wrapper>
@@ -430,22 +423,24 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
+  width: ${(props) => (props.windowWidth < 851 ? "100%" : "none")};
   max-width: 1300px;
   margin: 0 auto;
 `;
 const ShippingTitle = styled.h1`
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
-  width: 85%;
+  width: ${(props) => (props.windowWidth < 851 ? "100%" : "85%")};
   margin-top: 6px;
-  text-align: ${(props) => props.windowWidth < 8 && "center"};
+  text-align: ${(props) => props.windowWidth < 851 && "center"};
 `;
 const FormItems = styled.div`
   display: flex;
   flex-direction: ${(props) =>
-    props.windowWidth < 850 ? "column-reverse" : "row"};
-  height: ${(props) => (props.windowWidth < 850 ? "none" : "100%")};
-  align-items: ${(props) => props.windowWidth < 850 && "center"};
+    props.windowWidth < 851 ? "column-reverse" : "row"};
+  height: ${(props) => (props.windowWidth < 851 ? "none" : "100%")};
+  width: ${(props) => (props.windowWidth < 851 ? "100%" : "none")};
+  align-items: ${(props) => props.windowWidth < 851 && "center"};
 `;
 const FormWrapper = styled.div`
   position: relative;
@@ -456,15 +451,19 @@ const FormWrapper = styled.div`
   justify-content: space-between;
   align-items: ${(props) =>
     props.windowWidth < 1050 ? "flex-start" : "center"};
-  margin-top: ${(props) => (props.windowWidth < 850 ? "50px" : "0px")};
- 
+  margin-top: ${(props) => (props.windowWidth < 851 ? "50px" : "0px")};
+  @media (max-width: 851px) {
+    align-items: center;
+    width: 100%;
+  }
+
   &::before {
     content: "";
     position: absolute;
     top: 0px;
     bottom: 0px;
     left: 100%;
-    width: 2px;
+    width: ${(props) => (props.windowWidth < 851 ? "0" : "2px")};
     background: linear-gradient(rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0) 100%);
   }
 `;
@@ -474,24 +473,13 @@ const Form = styled.form`
   padding-right: ${(props) => (props.windowWidth < 1050 ? "0" : "25px")};
   align-items: ${(props) =>
     props.windowWidth < 1050 ? "flex-start" : "center"};
-  margin: ${(props) => (props.windowWidth < 850 ? "0" : "-60px 0 0 0")};
+  margin: ${(props) => (props.windowWidth < 851 ? "0" : "-60px 0 0 0")};
 `;
 const Input = styled(TextField)`
   width: 350px;
   padding-top: 12px;
 `;
-const SubmitBtn = styled.button`
-  width: ${(props) => (props.windowWidth < 1050 ? "94%" : "77%")};
-  height: 42px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  border: none;
-  background-color: black;
-  color: white;
-  margin: ${(props) =>
-    props.windowWidth < 1050 ? "20px 0 0px 0px" : "0px auto 6px 24px"};
-`;
+
 const TableTotalPriceContainer = styled.div``;
 const ImgCell = styled(TableCell)`
   width: 12%;
@@ -555,11 +543,10 @@ const DeleteBtnWrapper = styled.td`
   display: ${(props) => props.windowWidth < 500 && "none"};
   padding: ${(props) =>
     props.windowWidth < 950 ? ".5rem 0.15rem!important" : ".5rem .5rem"};
-  margin: 12px 0 0 6px;
 `;
 const DeleteIconBtn = styled(DeleteIcon)`
   cursor: pointer;
-  margin-bottom: -24px;
+  margin-bottom: ${(props) => (props.windowWidth < 1050 ? "-12px" : "-24px")};
 `;
 const DiscountPrice = styled.span`
   color: #a83737;
@@ -591,14 +578,24 @@ const Price = styled.span`
     background-color: black;
   }
 `;
-const TotalPriceInfoContainer = styled.div`
-  width: 97%;
-  display: ${(props) => (props.windowWidth < 850 ? "none" : "flex")};
+const TotalPriceInfoDesktopContainer = styled.div`
+  width: 100%;
+  display: ${(props) => (props.windowWidth < 851 ? "none" : "flex")};
   flex-direction: column;
   gap: 0.5rem;
-  padding: 55px 20px 0px 35px;
+  padding: 40px 20px 12px 35px;
   border-top: 2px solid grey;
-  background-color: beige;
+  background-color: #f5f5dcc2;
+`;
+const TotalPriceInfoMobileContainer = styled.div`
+  display: ${(props) => (props.windowWidth > 850 ? "none" : "flex")};
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 20px;
+  margin: 24px 0px 0px 0px;
+  border-top: 1px solid grey;
+  background-color: #f5f5dcc2;
 `;
 
 const TotalWrapper = styled.div`
@@ -606,6 +603,7 @@ const TotalWrapper = styled.div`
   font-size: 1.8rem;
   display: flex;
   justify-content: space-between;
+  text-decoration: underline;
 `;
 const SubTotalWrapper = styled.div`
   display: flex;
@@ -621,38 +619,51 @@ const TotalText = styled.h3`
 `;
 const TotalDiscount = styled.h3`
   font-weight: 500;
-  padding-left: 24px;
 `;
 const SubTotal = styled.h3`
   font-weight: 500;
-  padding-left: 35px;
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
   font-size: 1.7rem;
-  padding-left: 46px;
 `;
 
 const ConfirmStripe = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: ${(props) => (props.windowWidth < 850 ? "20px auto" : "0 0 15px 0")};
+  margin: ${(props) => (props.windowWidth < 851 ? "20px auto" : "0 0 15px 0")};
+  align-items: ${(props) => (props.windowWidth < 851 ? "center" : "none")};
+`;
+const SubmitBtn = styled.button`
+  width: ${(props) => (props.windowWidth < 851 ? "60%" : "80%")};
+  height: 42px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  background-color: black;
+  color: white;
+  margin: ${(props) =>
+    props.windowWidth < 1050 ? "20px 0 0px 0px" : "0px auto 6px 24px"};
 `;
 const CloseIconBtn = styled(CloseIcon)`
   font-size: 28px;
   top: 4%;
-  left: ${(props) => (props.windowWidth < 750 ? "85%" : "95%")};
+  left: ${(props) => (props.windowWidth < 750 ? "85%" : "93%")};
   position: absolute;
   cursor: "pointer";
+  z-index: 2;
+  @media (max-width: 750px){
+    top: 3%;
+    left: 88%;
+  }
 `;
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "100%",
-  p: "50px 25px 40px",
   bgcolor: "background.paper",
   border: "none!importat",
   borderRadius: "14px",
@@ -660,4 +671,5 @@ const style = {
   boxShadow:
     "0px 11px 15px -7px rgba(0,0,0,0.6), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,-0.48)!important",
   overflow: "auto",
+
 };

@@ -172,7 +172,7 @@ const StyledCarousel = styled(Carousel)`
 `;
 const CarouselItem = styled(Carousel.Item)`
   width: 100%;
-  aspect-ratio: 1/1.5;
+  aspect-ratio: 1/1;
 `;
 const MainImgWrapper = styled.div`
   display: flex;
