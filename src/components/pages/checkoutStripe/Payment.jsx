@@ -20,7 +20,7 @@ export const Payment = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const response = await axios.get("https://template-ecommerce-stripe-hosted-page-1-backend-kcp55hkl2.vercel.app/config");
+        const response = await axios.get("https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/config");
         const { publishableKey } = response.data;
         setPublishableKey(publishableKey);
         setStripePromise(loadStripe(publishableKey));
@@ -40,7 +40,7 @@ export const Payment = () => {
       const total = getTotalPrice();
       try {
         const response = await axios.post(
-          "https://template-ecommerce-stripe-hosted-page-1-backend-kcp55hkl2.vercel.app/create-payment-intent",
+          "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent",
           {
             items: cart,
             amount: total * 100,
