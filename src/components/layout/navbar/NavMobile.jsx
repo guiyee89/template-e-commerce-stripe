@@ -109,7 +109,10 @@ export const NavMobile = () => {
                       <CategoryLink
                         style={{
                           fontWeight: "600",
-                          fontSize: ".8rem",
+                          fontSize:
+                            scroll === "scrolled"
+                              ? "clamp(0.69rem, 1.7vw, 0.89rem)"
+                              : "clamp(0.69rem, 1.7vw, 0.89rem)",
                         }}
                         to="/all-products"
                         scrolled={scroll}
@@ -332,12 +335,15 @@ const LogoLink = styled(Link)`
 
 const Logo = styled.img`
   width: 51%;
-  margin-left: ${(props) =>
-    props.scrolled === "scrolled" ? "24%" : "26%"};
+  margin-left: ${(props) => (props.scrolled === "scrolled" ? "24%" : "26%")};
   transition: margin-left 0.2s ease-in-out;
   @media (max-width: 900px) {
     margin-left: ${(props) =>
-      props.isDashboard ? "15%" : props.scrolled === "scrolled" ? "24%" : "26%"};
+      props.isDashboard
+        ? "15%"
+        : props.scrolled === "scrolled"
+        ? "24%"
+        : "26%"};
   }
   @media (max-width: 550px) {
     margin-left: ${(props) =>
@@ -393,7 +399,9 @@ const OnClickDropDown = styled.div`
   text-transform: uppercase;
   position: relative;
   font-size: ${(props) =>
-    props.scrolled === "scrolled" ? ".75rem" : "0.82rem"};
+    props.scrolled === "scrolled"
+      ? "clamp(0.72rem, 1.7vw, 1rem)"
+      : "clamp(0.72rem, 1.7vw, 1rem)"};
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: ${(props) => (props.isDrowpDownOpen ? "0%" : "0% 100%")};
@@ -435,7 +443,9 @@ const NavLink = styled(Link)`
   text-transform: uppercase;
   position: relative;
   font-size: ${(props) =>
-    props.scrolled === "scrolled" ? ".75rem" : "0.82rem"};
+    props.scrolled === "scrolled"
+      ? "clamp(0.72rem, 1.7vw, 1rem)"
+      : "clamp(0.72rem, 1.7vw, 1rem)"};
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -474,8 +484,8 @@ const CategoryLink = styled(Link)`
   position: relative;
   font-size: ${(props) =>
     props.scrolled === "scrolled"
-      ? ".7rem"
-      : "clamp(0.7rem, 1vw + 7.5px, 1rem)"};
+      ? "clamp(0.67rem, 1.7vw, 0.87rem)"
+      : "clamp(0.67rem, 1.7vw, 0.87rem)"};
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
