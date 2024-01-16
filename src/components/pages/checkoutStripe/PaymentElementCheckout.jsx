@@ -6,6 +6,7 @@ import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { ForkRight } from "@mui/icons-material";
 
 export const PaymentElementCheckout = () => {
   const { cart, getTotalPrice, getItemPrice, clearCart } =
@@ -62,8 +63,8 @@ export const PaymentElementCheckout = () => {
         windowWidth={windowWidth}
         data-aos="zoom-out-up"
       >
-        <CheckoutContainer>
-          <CartInfoContainer>
+        <CheckoutContainer windowWidth={windowWidth}>
+          <CartInfoContainer windowWidth={windowWidth}>
             <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png" />
             <TitleTotalContainer>
               <Title>We Shop</Title>
@@ -76,9 +77,9 @@ export const PaymentElementCheckout = () => {
                 const itemPrice = getItemPrice(product.id); //Buscar item x id en la funcion getItemPrice
                 const hasDiscount = product.discountPrice; //Variable de Item con descuento
                 return (
-                  <ItemWrapper key={product.id}>
+                  <ItemWrapper key={product.id} windowWidth={windowWidth}>
                     <ItemInfoWrapper>
-                      <ImgWrapper>
+                      <ImgWrapper windowWidth={windowWidth}>
                         <ItemImg src={product.img[0]} alt="" />
                       </ImgWrapper>
                       <InsideContentWrapper>
@@ -89,23 +90,31 @@ export const PaymentElementCheckout = () => {
                         </QuantityWrapper>
                       </InsideContentWrapper>
                     </ItemInfoWrapper>
-                    <PriceWrapper>
+                    <PriceWrapper windowWidth={windowWidth}>
                       {hasDiscount ? (
-                        <ItemPriceWrapper hasDiscount={hasDiscount}>
+                        <BothPriceWrapper
+                          hasDiscount={hasDiscount}
+                          windowWidth={windowWidth}
+                        >
                           {hasDiscount && (
-                            <DiscountPrice>
+                            <DiscountPrice windowWidth={windowWidth}>
                               ${" "}
                               {(
                                 product.discountPrice * product.quantity
                               ).toFixed(2)}
                             </DiscountPrice>
                           )}
-                          <Price hasDiscount={hasDiscount}>
+                          <Price
+                            hasDiscount={hasDiscount}
+                            windowWidth={windowWidth}
+                          >
                             $ {itemPrice.toFixed(2)}
                           </Price>
-                        </ItemPriceWrapper>
+                        </BothPriceWrapper>
                       ) : (
-                        <Price>$ {itemPrice.toFixed(2)}</Price>
+                        <Price windowWidth={windowWidth}>
+                          $ {itemPrice.toFixed(2)}
+                        </Price>
                       )}
                     </PriceWrapper>
                   </ItemWrapper>
@@ -146,18 +155,18 @@ const CheckoutContainer = styled.div`
   flex-direction: column;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  width: 50%;
-  padding-right: 24px;
-  margin: 0 0 -15px 15px;
+  width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
+  padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
+  margin: 0;
   position: relative;
 `;
 
 const CartInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: -25px;
+  margin-top: ${(props) => (props.windowWidth > 750 ? "-25px" : "0")};
   gap: 0.9rem;
-  padding-left: 15px; /* Adjust the padding to your preference */
+  padding-left: ${(props) => (props.windowWidth > 750 ? "15px" : "0")};
   position: relative;
 
   &::before {
@@ -166,8 +175,12 @@ const CartInfoContainer = styled.div`
     top: 52px;
     bottom: 0px;
     left: -7px;
-    width: 2px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 100%);
+    width: ${(props) => (props.windowWidth > 850 ? "2px" : "0")};
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 `;
 const TitleTotalContainer = styled.div`
@@ -188,20 +201,21 @@ const Total = styled.h2`
 `;
 const ItemsContainer = styled.div`
   overflow-y: auto;
-  height: ${(props) => (props.windowWidth > 839 ? "398px" : "426px")};
+  height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
   border-bottom: 1px solid lightgray;
+  padding-right: 10px;
 `;
 const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 80px;
+  height: ${(props) => (props.windowWidth < 750 ? "none" : "80px")};
 `;
 const ItemInfoWrapper = styled.div`
   display: flex;
 `;
 const ImgWrapper = styled.div`
   margin: 0 20px 0 0;
-  width: 60px;
+  width: ${(props) => (props.windowWidth < 750 ? "52px" : "60px")};
   height: 65px;
 `;
 const ItemImg = styled.img`
@@ -210,7 +224,7 @@ const ItemImg = styled.img`
 `;
 const ItemTitle = styled.h2`
   padding-bottom: 2px;
-  font-size: clamp(0.6rem, 3.1vw + 1px, 1rem);
+  font-size: clamp(0.65rem, 1.5vw, 1rem);
 `;
 const QuantityWrapper = styled.div``;
 const ItemQuantity = styled.h4`
@@ -226,30 +240,38 @@ const InsideContentWrapper = styled.div`
   }
 `;
 const PriceWrapper = styled.div`
-  margin: 12px 0px 12px;
   height: 50%;
-  min-width: 100px;
+  min-width: ${(props) => (props.windowWidth < 750 ? "85px" : "100px")};
 `;
-const ItemPriceWrapper = styled.h4`
+const BothPriceWrapper = styled.h4`
   display: flex;
-  align-items: center;
+  align-items: ${(props) =>
+    props.windowWidth < 750 ? "flex-start" : "flex-end"};
   gap: 0.1rem;
   flex-direction: column-reverse;
+  margin: -10px 5px 0 0;
 `;
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: clamp(0.82rem, 2vw, 0.94rem);
   font-style: italic;
   position: relative;
   display: inline-block;
   text-align: center;
 `;
 const Price = styled.span`
+  margin: ${(props) => (props.hasDiscount ? "16px 0 0 0;" : "16px 5px 0 0")};
   font-weight: 600;
-  font-size: ${(props) => (props.hasDiscount ? "0.8rem" : "1rem")};
+  font-size: ${(props) =>
+    props.hasDiscount
+      ? "clamp(.72rem, 2vw, .85rem)"
+      : "clamp(.82rem, 2vw, .94rem)"};
   font-style: italic;
   position: relative;
+  display: flex;
+  justify-content: ${(props) =>
+    props.windowWidth < 750 ? "flex-start" : "flex-end"};
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   /* Add the following styles to create the strike-through line if hasDiscount is true */
   &::after {
@@ -271,20 +293,20 @@ const PaymentElementContainer = styled.div`
   gap: 6rem;
   margin-top: 25px;
   position: relative;
-  padding-left: 24px;
+  padding-left: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
-    width: 2px;
-    background: linear-gradient(rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0) 100%)
+    width: ${(props) => (props.windowWidth > 750 ? "2px" : "0")};
+    background: linear-gradient(rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0) 100%);
   }
 `;
 const StripeImg = styled.img`
   width: ${(props) =>
-    props.windowWidth < 550 ? "55%" : props.windowWidth > 750 ? "35%" : "45%"};
+    props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "35%" : "22%"};
   margin-top: 8px;
 `;
 
