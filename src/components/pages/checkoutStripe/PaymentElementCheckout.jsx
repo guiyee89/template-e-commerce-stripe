@@ -6,7 +6,7 @@ import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import { ForkRight } from "@mui/icons-material";
+
 
 export const PaymentElementCheckout = () => {
   const { cart, getTotalPrice, getItemPrice, clearCart } =
