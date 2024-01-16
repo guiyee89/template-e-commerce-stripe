@@ -11,7 +11,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 export const Payment = () => {
-  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { cart, getTotalPrice } = useContext(CartContext);
   const [publishableKey, setPublishableKey] = useState(null);
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -20,7 +20,7 @@ export const Payment = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const response = await axios.get("https://e-commerce-stripe-payment-element-1-dvobafole-guiyee89.vercel.app/config");
+        const response = await axios.get("http://localhost:3000/config");
         const { publishableKey } = response.data;
         setPublishableKey(publishableKey);
         setStripePromise(loadStripe(publishableKey));
@@ -39,13 +39,10 @@ export const Payment = () => {
     const fetchPaymentIntent = async () => {
       const total = getTotalPrice();
       try {
-        const response = await axios.post(
-          "https://e-commerce-stripe-payment-element-1-dvobafole-guiyee89.vercel.app/create-payment-intent",
-          {
-            items: cart,
-            amount: total * 100,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/create-payment-intent", {
+          items: cart,
+          amount: total * 100,
+        });
 
         const { clientSecret } = response.data;
         setTimeout(() => {

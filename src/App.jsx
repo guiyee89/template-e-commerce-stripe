@@ -8,7 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 /* import { Elements } from "@stripe/react-stripe-js"; */
 
 
-const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY);
+/* const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY); */
 
 
 function App() {
