@@ -21,7 +21,7 @@ export const Payment = () => {
     const fetchConfig = async () => {
       try {
         const response = await axios.get(
-          "https://template-ecommerce-stripe-hosted-page-1-backend-2dfap4jyp.vercel.app/config"
+          "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/config"
         );
         const { publishableKey } = response.data;
         setPublishableKey(publishableKey);
@@ -42,7 +42,7 @@ export const Payment = () => {
       const total = getTotalPrice();
       try {
         const response = await axios.post(
-          "https://template-ecommerce-stripe-hosted-page-1-backend-2dfap4jyp.vercel.app/create-payment-intent",
+          "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent",
           {
             items: cart,
             amount: total * 100,
