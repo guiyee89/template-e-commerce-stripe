@@ -141,9 +141,9 @@ export const ItemListContainer = () => {
         {pageLoading ? (
           <LoaderWrapper>
             {windowWidth > 600 ? (
-              <Ring size={40} lineWeight={7} speed={1} color="black" />
+              <Ring size={32} lineWeight={7} speed={1} color="black" />
             ) : (
-              <Ring size={35} lineWeight={6} speed={1} color="black" />
+              <Ring size={27} lineWeight={6} speed={1} color="black" />
             )}
           </LoaderWrapper>
         ) : (
