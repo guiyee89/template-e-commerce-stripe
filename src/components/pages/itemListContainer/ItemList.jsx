@@ -196,7 +196,10 @@ export const ItemList = ({
                   <ItemPriceWrapper hasDiscount={hasDiscount}>
                     {hasDiscount && (
                       <DiscountPrice>
-                        $ {product.discountPrice.toFixed(2)}
+                        ${" "}
+                        {typeof product.discountPrice === "number"
+                          ? product.discountPrice.toFixed(2)
+                          : "N/A"}
                       </DiscountPrice>
                     )}
                     <Price hasDiscount={hasDiscount}>
@@ -227,7 +230,6 @@ export const ItemList = ({
         />
         {isLoadingPagination && <ClipLoaderBottom color="#194f44" size={35} />}
       </PaginationWrapperBottom>
-      
     </>
   );
 };
@@ -518,7 +520,7 @@ const FilterBtn = styled.div`
   @media (max-width: 800px) {
     margin: 10px -4px 10px -0.8%;
   }
-  @media (max-width:650px){
+  @media (max-width: 650px) {
     margin: 10px -2.4% 10px -0.4%;
   }
   @media (max-width: 550px) {

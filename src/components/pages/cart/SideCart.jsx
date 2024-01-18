@@ -195,13 +195,20 @@ export const SideCart = () => {
                 </TotalPriceInfo>
 
                 <CheckoutButton onClick={realizarCompraWithTimeout}>
-                  {checkoutLoading ? (
-                    <RingLoader>
-                      <Ring size={25} lineWeight={5} speed={1} color="white" />
-                    </RingLoader>
-                  ) : (
-                    " Go to Cart"
-                  )}
+                  <SpanCheckout>
+                    {checkoutLoading ? (
+                      <RingLoader>
+                        <Ring
+                          size={25}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </RingLoader>
+                    ) : (
+                      "Check out"
+                    )}
+                  </SpanCheckout>
                 </CheckoutButton>
               </CartInfo>
             </>
@@ -294,8 +301,8 @@ const ItemWrapper = styled.div`
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
-    width: 72px;
-    height: 72px;
+  width: 72px;
+  height: 72px;
 `;
 const QuantityWrapper = styled.div`
   display: flex;
@@ -347,15 +354,42 @@ const CartInfo = styled.div`
   border-top: 1px solid lightgray;
 `;
 const CheckoutButton = styled.button`
-  width: 260px;
+  /* width: 260px;
   height: 46px;
   margin: 0px auto;
   border-radius: 22px;
   font-weight: bold;
   color: white;
-  background-color: rgb(29 29 29);
+  background-color: rgb(29 29 29); */
+  width: 240px;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  transform: rotate(0deg);
+  transform-origin: center;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 #494a4b;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: #cf873e;
+  :active {
+    transform: translateY(5px);
+    padding-bottom: 0px;
+    outline: 0;
+  }
 `;
-
+const SpanCheckout = styled.span`
+  background: #f1f5f8;
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 2px solid #494a4b;
+  font-family: "Gochi Hand", cursive;
+`;
 const PriceDeleteWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
@@ -478,5 +512,8 @@ const EmptyCartMessage = styled.p`
 `;
 const RingLoader = styled.div`
   display: flex;
+  -webkit-box-pack: center;
   justify-content: center;
+  height: 35px;
+  align-items: center;
 `;
