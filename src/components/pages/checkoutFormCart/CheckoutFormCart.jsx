@@ -56,12 +56,12 @@ export const CheckoutFormCart = ({
   return (
     <>
       <Wrapper>
-        <FormItems windowWidth={windowWidth}>
-          <FormWrapper windowWidth={windowWidth}>
-            <ShippingTitle windowWidth={windowWidth}>
+        <FormItems windowwidth={windowWidth}>
+          <FormWrapper windowwidth={windowWidth}>
+            <ShippingTitle windowwidth={windowWidth}>
               Shipping Information
             </ShippingTitle>
-            <Form onSubmit={handleSubmit} windowWidth={windowWidth}>
+            <Form onSubmit={handleSubmit} windowwidth={windowWidth}>
               <Input
                 label="Name"
                 variant="outlined"
@@ -123,7 +123,7 @@ export const CheckoutFormCart = ({
                 size="small"
               />
             </Form>
-            <TotalPriceInfoMobileContainer windowWidth={windowWidth}>
+            <TotalPriceInfoMobileContainer windowwidth={windowWidth}>
               <SubTotalWrapper>
                 <TotalText colSpan="1">Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -137,11 +137,11 @@ export const CheckoutFormCart = ({
                 <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
               </TotalWrapper>
             </TotalPriceInfoMobileContainer>
-            <ConfirmStripe windowWidth={windowWidth}>
+            <ConfirmStripe windowwidth={windowWidth}>
               <SubmitBtn
                 type="submit"
                 onClick={handleSubmit}
-                windowWidth={windowWidth}
+                windowwidth={windowWidth}
               >
                 Confirm
               </SubmitBtn>
@@ -274,7 +274,7 @@ export const CheckoutFormCart = ({
                           <Img
                             src={item.img[0]}
                             alt={`Item ${item.id}`}
-                            windowWidth={windowWidth}
+                            windowwidth={windowWidth}
                           />
                         </ImgCell>
                         <TableCell
@@ -294,7 +294,7 @@ export const CheckoutFormCart = ({
                         {hasDiscount ? (
                           <DiscountPriceWrapper
                             hasDiscount={hasDiscount}
-                            windowWidth={windowWidth}
+                            windowwidth={windowWidth}
                           >
                             {hasDiscount && (
                               <Price
@@ -307,14 +307,14 @@ export const CheckoutFormCart = ({
                               </Price>
                             )}
 
-                            <DiscountPrice windowWidth={windowWidth}>
+                            <DiscountPrice windowwidth={windowWidth}>
                               $ {item.discountPrice.toFixed(2)}
                             </DiscountPrice>
                           </DiscountPriceWrapper>
                         ) : (
                           <>
-                            <PriceWrapper windowWidth={windowWidth}>
-                              <Price windowWidth={windowWidth}>
+                            <PriceWrapper windowwidth={windowWidth}>
+                              <Price windowwidth={windowWidth}>
                                 $ {item.unit_price.toFixed(2)}
                               </Price>
                             </PriceWrapper>
@@ -351,7 +351,7 @@ export const CheckoutFormCart = ({
                           {item.color}
                         </TableCell>
                         <TableCell align="center" component="th" scope="row">
-                          <QuantityWrapper windowWidth={windowWidth}>
+                          <QuantityWrapper windowwidth={windowWidth}>
                             <BtnQuantity
                               onClick={() => removeQuantity(item.id)}
                             >
@@ -369,7 +369,7 @@ export const CheckoutFormCart = ({
                           </QuantityWrapper>
                         </TableCell>
                         {hasDiscount ? (
-                          <TotalPriceWrapper windowWidth={windowWidth}>
+                          <TotalPriceWrapper windowwidth={windowWidth}>
                             <DiscountPrice
                               align="center"
                               component="th"
@@ -387,10 +387,10 @@ export const CheckoutFormCart = ({
                             </Price>
                           </PriceWrapper>
                         )}
-                        <DeleteBtnWrapper windowWidth={windowWidth}>
+                        <DeleteBtnWrapper windowwidth={windowWidth}>
                           <DeleteIconBtn
                             onClick={() => removeById(item.id)}
-                            windowWidth={windowWidth}
+                            windowwidth={windowWidth}
                           />
                         </DeleteBtnWrapper>
                       </TableRow>
@@ -399,7 +399,7 @@ export const CheckoutFormCart = ({
                 </TableBody>
               </Table>
             </TableContainer>
-            <TotalPriceInfoDesktopContainer windowWidth={windowWidth}>
+            <TotalPriceInfoDesktopContainer windowwidth={windowWidth}>
               <SubTotalWrapper>
                 <TotalText colSpan="1">Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -423,35 +423,35 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: ${(props) => (props.windowWidth < 851 ? "100%" : "none")};
+  width: ${(props) => (props.windowwidth < 851 ? "100%" : "none")};
   max-width: 1300px;
   margin: 0 auto;
 `;
 const ShippingTitle = styled.h1`
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
-  width: ${(props) => (props.windowWidth < 851 ? "100%" : "85%")};
+  width: ${(props) => (props.windowwidth < 851 ? "100%" : "85%")};
   margin-top: 6px;
-  text-align: ${(props) => props.windowWidth < 851 && "center"};
+  text-align: ${(props) => props.windowwidth < 851 && "center"};
 `;
 const FormItems = styled.div`
   display: flex;
   flex-direction: ${(props) =>
-    props.windowWidth < 851 ? "column-reverse" : "row"};
-  height: ${(props) => (props.windowWidth < 851 ? "none" : "100%")};
-  width: ${(props) => (props.windowWidth < 851 ? "100%" : "none")};
-  align-items: ${(props) => props.windowWidth < 851 && "center"};
+    props.windowwidth < 851 ? "column-reverse" : "row"};
+  height: ${(props) => (props.windowwidth < 851 ? "none" : "100%")};
+  width: ${(props) => (props.windowwidth < 851 ? "100%" : "none")};
+  align-items: ${(props) => props.windowwidth < 851 && "center"};
 `;
 const FormWrapper = styled.div`
   position: relative;
-  width: ${(props) => (props.windowWidth < 1050 ? "320px" : "375px")};
+  width: ${(props) => (props.windowwidth < 1050 ? "320px" : "375px")};
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
   align-items: ${(props) =>
-    props.windowWidth < 1050 ? "flex-start" : "center"};
-  margin-top: ${(props) => (props.windowWidth < 851 ? "50px" : "0px")};
+    props.windowwidth < 1050 ? "flex-start" : "center"};
+  margin-top: ${(props) => (props.windowwidth < 851 ? "50px" : "0px")};
   @media (max-width: 851px) {
     align-items: center;
     width: 100%;
@@ -463,17 +463,17 @@ const FormWrapper = styled.div`
     top: 0px;
     bottom: 0px;
     left: 100%;
-    width: ${(props) => (props.windowWidth < 851 ? "0" : "2px")};
+    width: ${(props) => (props.windowwidth < 851 ? "0" : "2px")};
     background: linear-gradient(rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0) 100%);
   }
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding-right: ${(props) => (props.windowWidth < 1050 ? "0" : "25px")};
+  padding-right: ${(props) => (props.windowwidth < 1050 ? "0" : "25px")};
   align-items: ${(props) =>
-    props.windowWidth < 1050 ? "flex-start" : "center"};
-  margin: ${(props) => (props.windowWidth < 851 ? "0" : "-60px 0 0 0")};
+    props.windowwidth < 1050 ? "flex-start" : "center"};
+  margin: ${(props) => (props.windowwidth < 851 ? "0" : "-60px 0 0 0")};
 `;
 const Input = styled(TextField)`
   width: 350px;
@@ -486,12 +486,12 @@ const ImgCell = styled(TableCell)`
 `;
 const Img = styled.img`
   border: 1px solid lightgray;
-  min-width: ${(props) => (props.windowWidth < 1050 ? "40px" : "60px")};
-  height: ${(props) => (props.windowWidth < 1050 ? "40px" : "60px")};
+  min-width: ${(props) => (props.windowwidth < 1050 ? "40px" : "60px")};
+  height: ${(props) => (props.windowwidth < 1050 ? "40px" : "60px")};
   object-fit: cover;
 `;
 const PriceWrapper = styled.td`
-  display: ${(props) => props.windowWidth < 550 && "none"};
+  display: ${(props) => props.windowwidth < 550 && "none"};
   vertical-align: middle;
   text-align: center;
   border-top: 1px solid #e3dddd;
@@ -502,9 +502,9 @@ const DiscountPriceWrapper = styled.td`
   text-align: center;
   border-top: 1px solid #e3dddd;
   border-bottom: 1px solid #e3dddd;
-  display: ${(props) => props.windowWidth < 550 && "none"};
+  display: ${(props) => props.windowwidth < 550 && "none"};
   padding: ${(props) =>
-    props.windowWidth < 950
+    props.windowwidth < 950
       ? ".5rem 0.15rem!important"
       : ".5rem 0.5rem!important"};
 `;
@@ -514,7 +514,7 @@ const TotalPriceWrapper = styled.td`
   border-top: 1px solid #e3dddd;
   border-bottom: 1px solid #e3dddd;
   padding: ${(props) =>
-    props.windowWidth < 550
+    props.windowwidth < 550
       ? ".5rem 0.2rem!important"
       : ".5rem 0.5rem!important"};
 `;
@@ -522,7 +522,7 @@ const QuantityWrapper = styled.div`
   display: flex;
   border: 1px solid rgb(194, 191, 191);
   border-radius: 5%;
-  width: ${(props) => (props.windowWidth < 550 ? "64px" : "80px")};
+  width: ${(props) => (props.windowwidth < 550 ? "64px" : "80px")};
   margin: 0 auto;
   -webkit-box-align: center;
   align-items: center;
@@ -540,13 +540,13 @@ const BtnQuantity = styled.button`
   border: none;
 `;
 const DeleteBtnWrapper = styled.td`
-  display: ${(props) => props.windowWidth < 500 && "none"};
+  display: ${(props) => props.windowwidth < 500 && "none"};
   padding: ${(props) =>
-    props.windowWidth < 950 ? ".5rem 0.15rem!important" : ".5rem .5rem"};
+    props.windowwidth < 950 ? ".5rem 0.15rem!important" : ".5rem .5rem"};
 `;
 const DeleteIconBtn = styled(DeleteIcon)`
   cursor: pointer;
-  margin-bottom: ${(props) => (props.windowWidth < 1050 ? "-12px" : "-24px")};
+  margin-bottom: ${(props) => (props.windowwidth < 1050 ? "-12px" : "-24px")};
 `;
 const DiscountPrice = styled.span`
   color: #a83737;
@@ -558,7 +558,7 @@ const DiscountPrice = styled.span`
   display: block;
 `;
 const Price = styled.span`
-  display: ${(props) => props.windowWidth < 550 && "none"};
+  display: ${(props) => props.windowwidth < 550 && "none"};
   font-weight: 600;
   font-size: ${(props) =>
     props.hasDiscount
@@ -580,7 +580,7 @@ const Price = styled.span`
 `;
 const TotalPriceInfoDesktopContainer = styled.div`
   width: 100%;
-  display: ${(props) => (props.windowWidth < 851 ? "none" : "flex")};
+  display: ${(props) => (props.windowwidth < 851 ? "none" : "flex")};
   flex-direction: column;
   gap: 0.5rem;
   padding: 40px 20px 12px 35px;
@@ -588,7 +588,7 @@ const TotalPriceInfoDesktopContainer = styled.div`
   background-color: #f5f5dcc2;
 `;
 const TotalPriceInfoMobileContainer = styled.div`
-  display: ${(props) => (props.windowWidth > 850 ? "none" : "flex")};
+  display: ${(props) => (props.windowwidth > 850 ? "none" : "flex")};
   width: 100%;
   flex-direction: column;
   gap: 0.5rem;
@@ -632,11 +632,11 @@ const ConfirmStripe = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: ${(props) => (props.windowWidth < 851 ? "20px auto" : "0 0 15px 0")};
-  align-items: ${(props) => (props.windowWidth < 851 ? "center" : "none")};
+  margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0 0 15px 0")};
+  align-items: ${(props) => (props.windowwidth < 851 ? "center" : "none")};
 `;
 const SubmitBtn = styled.button`
-  width: ${(props) => (props.windowWidth < 851 ? "60%" : "80%")};
+  width: ${(props) => (props.windowwidth < 851 ? "60%" : "80%")};
   height: 42px;
   font-size: 1rem;
   font-weight: bold;
@@ -645,12 +645,12 @@ const SubmitBtn = styled.button`
   background-color: black;
   color: white;
   margin: ${(props) =>
-    props.windowWidth < 1050 ? "20px 0 0px 0px" : "0px auto 6px 24px"};
+    props.windowwidth < 1050 ? "20px 0 0px 0px" : "0px auto 6px 24px"};
 `;
 const CloseIconBtn = styled(CloseIcon)`
   font-size: 28px;
   top: 4%;
-  left: ${(props) => (props.windowWidth < 750 ? "85%" : "93%")};
+  left: ${(props) => (props.windowwidth < 750 ? "85%" : "93%")};
   position: absolute;
   cursor: "pointer";
   z-index: 2;
