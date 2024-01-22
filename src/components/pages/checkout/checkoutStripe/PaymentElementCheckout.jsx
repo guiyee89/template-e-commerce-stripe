@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
-
 export const PaymentElementCheckout = () => {
   const { cart, getTotalPrice, getItemPrice, clearCart } =
     useContext(CartContext);
@@ -189,6 +188,8 @@ const TitleTotalContainer = styled.div`
 `;
 const Logo = styled.img`
   width: 10%;
+  margin-top: -10px;
+  margin-bottom: 10px;
 `;
 const Title = styled.h1`
   margin-top: 10px;

@@ -34,7 +34,7 @@ export const SideCart = () => {
     setCheckoutLoading(true);
     setTimeout(() => {
       realizarCompra();
-    }, 2500);
+    }, 2000);
   };
 
   const realizarCompra = async () => {
@@ -193,23 +193,31 @@ export const SideCart = () => {
                     <TotalPrice>$ {totalPrice.toFixed(2)}</TotalPrice>
                   </TotalWrapper>
                 </TotalPriceInfo>
-
-                <CheckoutButton onClick={realizarCompraWithTimeout}>
-                  <SpanCheckout>
-                    {checkoutLoading ? (
-                      <RingLoader>
-                        <Ring
-                          size={25}
-                          lineWeight={5}
-                          speed={1}
-                          color="black"
-                        />
-                      </RingLoader>
-                    ) : (
-                      "Check out"
-                    )}
-                  </SpanCheckout>
-                </CheckoutButton>
+                <div
+                  style={{
+                    width: "width: 100%",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <CheckoutButton onClick={realizarCompraWithTimeout}>
+                    <SpanCheckout>
+                      {checkoutLoading ? (
+                        <RingLoader>
+                          <Ring
+                            size={25}
+                            lineWeight={5}
+                            speed={1}
+                            color="black"
+                          />
+                        </RingLoader>
+                      ) : (
+                        "Check out"
+                      )}
+                    </SpanCheckout>
+                  </CheckoutButton>
+                </div>
               </CartInfo>
             </>
           ) : (
@@ -350,18 +358,11 @@ const CartInfo = styled.div`
   gap: 1.5rem;
   flex-direction: column;
   background-color: #eeebeb;
-  margin-bottom: 24px;
+  padding-bottom: 24px;
   border-top: 1px solid lightgray;
 `;
 const CheckoutButton = styled.button`
-  /* width: 260px;
-  height: 46px;
-  margin: 0px auto;
-  border-radius: 22px;
-  font-weight: bold;
-  color: white;
-  background-color: rgb(29 29 29); */
-  width: 240px;
+  width: 275px;
   margin: 0 auto;
   padding: 0;
   border: none;
@@ -378,7 +379,7 @@ const CheckoutButton = styled.button`
   background-color: #cf873e;
   :active {
     transform: translateY(5px);
-    padding-bottom: 0px;
+    padding:0;
     outline: 0;
   }
 `;

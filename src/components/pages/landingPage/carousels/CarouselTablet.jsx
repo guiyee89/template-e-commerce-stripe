@@ -246,6 +246,7 @@ const Wrapper = styled.div`
   margin: 24px auto 110px;
   z-index: 0;
   max-height: 520px;
+ width:1110px;
   @media (max-width: 800px) {
     margin: 24px auto 80px;
   }

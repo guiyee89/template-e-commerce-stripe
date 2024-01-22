@@ -203,6 +203,7 @@ const Wrapper = styled.div`
   margin: 24px auto 110px;
   z-index: 0;
   max-height: 520px;
+  width: 1308px;
 `;
 const LoaderWrapper = styled.div`
   display: flex;
