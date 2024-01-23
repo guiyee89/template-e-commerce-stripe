@@ -202,7 +202,7 @@ export const SideCart = () => {
                   }}
                 >
                   <CheckoutButton onClick={realizarCompraWithTimeout}>
-                    <SpanCheckout>
+                    <SpanCheckout isLoading={checkoutLoading}>
                       {checkoutLoading ? (
                         <RingLoader>
                           <Ring
@@ -379,7 +379,7 @@ const CheckoutButton = styled.button`
   background-color: #cf873e;
   :active {
     transform: translateY(5px);
-    padding:0;
+    padding: 0;
     outline: 0;
   }
 `;
@@ -390,6 +390,10 @@ const SpanCheckout = styled.span`
   border-radius: 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
+  :hover {
+    transform: ${({ isLoading }) => (isLoading ? "none" : "translateY(-1.2px)")};
+    box-shadow: ${({ isLoading }) => (isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px")}
+  }
 `;
 const PriceDeleteWrapper = styled.div`
   display: flex;

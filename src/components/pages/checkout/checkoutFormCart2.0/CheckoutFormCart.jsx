@@ -123,15 +123,15 @@ export const CheckoutFormCart = ({
             </Form>
             <TotalPriceInfoMobileContainer windowwidth={windowWidth}>
               <SubTotalWrapper>
-                <TotalText colSpan="1">Subtotal:</TotalText>
+                <TotalText>Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
               </SubTotalWrapper>
               <DiscountWrapper>
-                <TotalText colSpan="1">Discount:</TotalText>
+                <TotalText>Discount:</TotalText>
                 <TotalDiscount>- $ {totalDiscount.toFixed(2)}</TotalDiscount>
               </DiscountWrapper>
               <TotalWrapper>
-                <TotalText colSpan="1">Total:</TotalText>
+                <TotalText>Total:</TotalText>
                 <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
               </TotalWrapper>
             </TotalPriceInfoMobileContainer>
@@ -179,14 +179,9 @@ export const CheckoutFormCart = ({
                 const hasDiscount = item.discountPrice;
 
                 return (
-                  <ItemsDetailsContainer
-                    key={item.id}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
+                  <ItemsDetailsContainer key={item.id}>
                     <ItemsDetails>
-                      <ImgContainer align="center" component="th" scope="row">
+                      <ImgContainer>
                         <Img
                           src={item.img[0]}
                           alt={`Item ${item.id}`}
@@ -195,53 +190,21 @@ export const CheckoutFormCart = ({
                       </ImgContainer>
                       <ItemInfoContainer>
                         <ItemData
-                          align="center"
-                          component="th"
-                          scope="row"
                           style={{
-                            fontSize: "clamp(0.70rem, 2vw, 0.94rem)",
-                            padding:
-                              windowWidth < 950
-                                ? ".5rem 0.15rem!important"
-                                : ".5rem .5rem",
+                            fontWeight: "500",
                           }}
                         >
                           {item.title}
                         </ItemData>
-
-                        <ItemData
-                          align="center"
-                          component="th"
-                          scope="row"
-                          style={{
-                            textTransform: "uppercase",
-                            fontSize: "clamp(0.70rem, 2vw, 0.94rem)",
-                            padding:
-                              windowWidth < 550
-                                ? ".5rem 0.15rem!important"
-                                : ".5rem .5rem",
-                          }}
-                        >
-                          {item.size}
-                        </ItemData>
-                        <ItemData
-                          align="center"
-                          component="th"
-                          scope="row"
-                          style={{
-                            textTransform: "capitalize",
-                            fontSize: "clamp(0.70rem, 2vw, 0.94rem)",
-                            padding:
-                              windowWidth < 950
-                                ? ".5rem 0.15rem!important"
-                                : ".5rem .5rem",
-                          }}
-                        >
-                          {item.color}
+                        <ItemData>
+                          <ItemSizeColor>
+                            <SpanColor>{item.color}</SpanColor>/
+                            <SpanSize>{item.size}</SpanSize>
+                          </ItemSizeColor>
                         </ItemData>
                       </ItemInfoContainer>
                     </ItemsDetails>
-                    <ItemData align="center" component="th" scope="row">
+                    <ItemData>
                       <QuantityWrapper windowwidth={windowWidth}>
                         <BtnQuantity onClick={() => removeQuantity(item.id)}>
                           {" "}
@@ -259,20 +222,14 @@ export const CheckoutFormCart = ({
                     </ItemData>
                     {hasDiscount ? (
                       <TotalPriceWrapper windowwidth={windowWidth}>
-                        <DiscountPrice
-                          align="center"
-                          component="th"
-                          scope="row"
-                        >
+                        <DiscountPrice>
                           {" "}
                           $ {(item.discountPrice * item.quantity).toFixed(2)}
                         </DiscountPrice>
                       </TotalPriceWrapper>
                     ) : (
                       <PriceWrapper>
-                        <Price align="center" component="th" scope="row">
-                          $ {itemTotalPrice.toFixed(2)}
-                        </Price>
+                        <Price>$ {itemTotalPrice.toFixed(2)}</Price>
                       </PriceWrapper>
                     )}
                   </ItemsDetailsContainer>
@@ -281,15 +238,15 @@ export const CheckoutFormCart = ({
             </CartItemsContainer>
             <TotalPriceInfoDesktopContainer windowwidth={windowWidth}>
               <SubTotalWrapper>
-                <TotalText colSpan="1">Subtotal:</TotalText>
+                <TotalText>Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
               </SubTotalWrapper>
               <DiscountWrapper>
-                <TotalText colSpan="1">Discount:</TotalText>
+                <TotalText>Discount:</TotalText>
                 <TotalDiscount>- $ {totalDiscount.toFixed(2)}</TotalDiscount>
               </DiscountWrapper>
               <TotalWrapper>
-                <TotalText colSpan="1">Total:</TotalText>
+                <TotalText>Total:</TotalText>
                 <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
               </TotalWrapper>
             </TotalPriceInfoDesktopContainer>
@@ -304,7 +261,6 @@ const Wrapper = styled.section`
   flex-direction: column;
   position: relative;
   width: ${(props) => (props.windowwidth < 851 ? "100%" : "100%")};
-  max-width: 1300px;
   margin: 0 auto;
 `;
 const ShippingTitle = styled.h1`
@@ -328,7 +284,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin-top: ${(props) => (props.windowwidth < 851 ? "50px" : "0px")};
@@ -360,18 +316,22 @@ const Input = styled(TextField)`
   padding-top: 12px;
 `;
 const CartTotalPriceContainer = styled.div`
-  width: 39%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   padding-left: 50px;
+  background-color: #eceaea;
 `;
 const ItemsDetailsContainer = styled.div`
   display: flex;
+  max-width: 428px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 `;
-
 const ImgContainer = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
 `;
 const Img = styled.img`
   border: 1px solid lightgray;
@@ -379,14 +339,32 @@ const Img = styled.img`
   height: ${(props) => (props.windowwidth < 1050 ? "40px" : "100%")};
   object-fit: cover;
 `;
-
-const ItemData = styled.div``;
+const ItemData = styled.div`
+  padding: 0 0 5px 8px;
+  font-size: clamp(0.72rem, 2vw, 0.96rem);
+`;
+const ItemSizeColor = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const SpanColor = styled.span`
+  font-size: clamp(0.65rem, 2vw, 0.9rem);
+  text-transform: capitalize;
+  padding-right: 8px;
+`;
+const SpanSize = styled.span`
+  font-size: clamp(0.65rem, 2vw, 0.9rem);
+  text-transform: uppercase;
+  padding-left: 8px;
+`;
 const ItemsDetails = styled.div`
   display: flex;
 `;
 const ItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 const PriceWrapper = styled.div`
   display: ${(props) => props.windowwidth < 550 && "none"};
@@ -421,15 +399,7 @@ const BtnQuantity = styled.button`
   border-radius: 5%;
   border: none;
 `;
-const DeleteBtnWrapper = styled.div`
-  display: ${(props) => props.windowwidth < 500 && "none"};
-  padding: ${(props) =>
-    props.windowwidth < 950 ? ".5rem 0.15rem!important" : ".5rem .5rem"};
-`;
-const DeleteIconBtn = styled(DeleteIcon)`
-  cursor: pointer;
-  margin-bottom: ${(props) => (props.windowwidth < 1050 ? "-12px" : "-24px")};
-`;
+
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
@@ -461,11 +431,11 @@ const Price = styled.span`
   }
 `;
 const TotalPriceInfoDesktopContainer = styled.div`
-  width: 100%;
+  max-width: 428px;
   display: ${(props) => (props.windowwidth < 851 ? "none" : "flex")};
   flex-direction: column;
   gap: 0.5rem;
-  padding: 40px 20px 12px 35px;
+  padding: 40px 0 0;
 `;
 const TotalPriceInfoMobileContainer = styled.div`
   display: ${(props) => (props.windowwidth > 850 ? "none" : "flex")};
@@ -571,4 +541,6 @@ const style = {
     "0px 11px 15px -7px rgba(0,0,0,0.6), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,-0.48)!important",
   overflow: "auto",
 };
-const CartItemsContainer = styled.div``;
+const CartItemsContainer = styled.div`
+  margin: 150px 0 0;
+`;

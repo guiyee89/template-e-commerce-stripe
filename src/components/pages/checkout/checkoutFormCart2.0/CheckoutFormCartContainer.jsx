@@ -87,7 +87,7 @@ export const CheckoutFormCartContainer = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: ${(props) => (props.windowWidth < 851 ? "none" : "550px")};
+  height: ${(props) => (props.windowWidth < 851 ? "none" : "100vh")};
   width: ${(props) => (props.windowWidth < 851 ? "100%" : "100%")};
   margin: ${(props) =>
     props.windowWidth < 1050
