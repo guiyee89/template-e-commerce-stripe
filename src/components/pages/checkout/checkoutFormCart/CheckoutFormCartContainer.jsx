@@ -1,13 +1,13 @@
 import { CheckoutFormCart } from "./CheckoutFormCart";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { db } from "../../../firebaseConfig";
+import { db } from "../../../../firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 import styled from "styled-components/macro";
-import { AuthContext } from "../../context/AuthContext";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { AuthContext } from "../../../context/AuthContext";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
 export const CheckoutFormCartContainer = () => {
   const { cart, getTotalPrice, clearCart } = useContext(CartContext);

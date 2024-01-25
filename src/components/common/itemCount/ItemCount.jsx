@@ -10,19 +10,20 @@ export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
   return (
     <>
       <Wrapper>
-        <CountButton onClick={decrement}>-</CountButton>
+        <CountButton onClick={decrement} disabled={count === 1}>
+          -
+        </CountButton>
         <CountNumber> {count} </CountNumber>
         <CountButton onClick={increment} disabled={count >= stock}>
           +
         </CountButton>
         {/* <ResetButton onClick={reset}>Reset</ResetButton> */}
-        <CheckoutButton
+        <AddCartBtn
           onClick={() => onAddToCart(count)}
           disabled={stock === 0 || count > stock}
         >
-          <SpanCheckout>Add to Cart</SpanCheckout>
-        </CheckoutButton>
-     
+          <SpanAddCart>Add to Cart</SpanAddCart>
+        </AddCartBtn>
       </Wrapper>
     </>
   );
@@ -53,35 +54,15 @@ const CountButton = styled.button`
     transition: ease-in-out 0.2s;
   }
 `;
-// const ResetButton = styled.button`
-//   font-size: 0.8rem;
-//   font-weight: bold;
-//   cursor: pointer;
-//   width: 50px;
-//   margin: 0 auto;
-//   display: flex;
-//   height: 30px;
-//   align-items: center;
-//   justify-content: center;
-//   &:hover {
-//     background-color: gray;
-//     transition: ease-in-out 0.2s;
-//   }
-// `;
-const CheckoutButton = styled.button`
-  /* width: 260px;
-  height: 46px;
-  margin: 0px auto;
-  border-radius: 22px;
-  font-weight: bold;
-  color: white;
-  background-color: rgb(29 29 29); */
+
+const AddCartBtn = styled.button`
   width: 160px;
   margin: 0 auto;
   padding: 0;
   border: none;
   transform: rotate(0deg);
   transform-origin: center;
+  height: 42px;
   font-weight: 500;
   text-decoration: none;
   font-size: 1.1rem;
@@ -97,10 +78,11 @@ const CheckoutButton = styled.button`
     outline: 0;
   }
 `;
-const SpanCheckout = styled.span`
+const SpanAddCart = styled.span`
   background: #f1f5f8;
   display: block;
   padding: 0.5rem 1rem;
+  height: 40px;
   border-radius: 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;

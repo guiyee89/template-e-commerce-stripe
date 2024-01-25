@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 import { Table } from "react-bootstrap";
-import { Payment } from "../checkoutStripe/Payment";
+import { Payment } from "../../checkoutStripe/Payment";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
 
 export const CheckoutFormCart = ({
@@ -138,13 +138,14 @@ export const CheckoutFormCart = ({
               </TotalWrapper>
             </TotalPriceInfoMobileContainer>
             <ConfirmStripe windowwidth={windowWidth}>
-              <SubmitBtn
+              <AddCartBtn
                 type="submit"
                 onClick={handleSubmit}
                 windowwidth={windowWidth}
               >
-                Confirm
-              </SubmitBtn>
+                <SpanAddCart>Confirm</SpanAddCart>
+              </AddCartBtn>
+
               {isModalOpen && (
                 <Modal
                   open={isModalOpen}
@@ -156,9 +157,14 @@ export const CheckoutFormCart = ({
                   <Box
                     sx={{
                       ...style,
-                      width: windowWidth < 550 ? "100%" : windowWidth < 800 ? "90%" : "85%",
-                      height: windowWidth < 750 ? "100%" : "75%",
-                      padding: windowWidth < 551 ? "20px" : "50px 25px 40px",
+                      width:
+                        windowWidth < 550
+                          ? "100%"
+                          : windowWidth < 800
+                          ? "90%"
+                          : "85%",
+                      height: windowWidth < 750 ? "100%" : "68%",
+                      padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
                     }}
                   >
                     <CloseIconBtn onClick={closeModal} />
@@ -635,26 +641,45 @@ const ConfirmStripe = styled.div`
   margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0 0 15px 0")};
   align-items: ${(props) => (props.windowwidth < 851 ? "center" : "none")};
 `;
-const SubmitBtn = styled.button`
-  width: ${(props) => (props.windowwidth < 851 ? "60%" : "80%")};
-  height: 42px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
+
+const AddCartBtn = styled.button`
+  width: 70%;
+  margin: 0px 0px 5px 39px;
+  padding: 0px 0px 2px;
   border: none;
-  background-color: black;
-  color: white;
-  margin: ${(props) =>
-    props.windowwidth < 1050 ? "20px 0 0px 0px" : "0px auto 6px 24px"};
+  transform: rotate(0deg);
+  transform-origin: center center;
+  height: 52px;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: rgb(73, 74, 75) 0px 2px 0px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+  background-color: rgb(207, 135, 62);
+  :active {
+    transform: translateY(5px);
+    padding-bottom: 0px;
+    outline: 0;
+  }
+`;
+const SpanAddCart = styled.span`
+  background: #f1f5f8;
+  display: block;
+  padding: 0.5rem 1rem;
+  height: 50px;
+  border-radius: 5px;
+  border: 2px solid #494a4b;
+  font-family: "Gochi Hand", cursive;
 `;
 const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
   font-size: 28px;
   top: 4%;
   left: ${(props) => (props.windowwidth < 750 ? "85%" : "93%")};
   position: absolute;
-  cursor: "pointer";
-  z-index: 2;
-  @media (max-width: 750px){
+  @media (max-width: 750px) {
     top: 3%;
     left: 88%;
   }
@@ -666,10 +691,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "none!importat",
-  borderRadius: "14px",
+  borderRadius: "4px",
   outline: 0,
   boxShadow:
     "0px 11px 15px -7px rgba(0,0,0,0.6), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,-0.48)!important",
   overflow: "auto",
-
 };

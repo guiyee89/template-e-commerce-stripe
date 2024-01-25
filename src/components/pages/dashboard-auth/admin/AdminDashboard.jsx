@@ -57,7 +57,7 @@ export const AdminDashboard = () => {
   );
 };
 const DashboardNavigation = styled.nav`
-  margin-top: 53px;
+  margin-top: 97px;
   width: 100%;
   @media (max-width:1088px){
     margin-top: 69px;

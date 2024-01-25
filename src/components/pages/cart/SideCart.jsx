@@ -34,7 +34,7 @@ export const SideCart = () => {
     setCheckoutLoading(true);
     setTimeout(() => {
       realizarCompra();
-    }, 2500);
+    }, 2000);
   };
 
   const realizarCompra = async () => {
@@ -135,7 +135,10 @@ export const SideCart = () => {
                     </Size>
 
                     <QuantityWrapper>
-                      <BtnQuantity onClick={() => removeQuantity(product.id)}>
+                      <BtnQuantity
+                        onClick={() => removeQuantity(product.id)}
+                        disabled={product.quantity === 1}
+                      >
                         {" "}
                         -{" "}
                       </BtnQuantity>
@@ -193,23 +196,31 @@ export const SideCart = () => {
                     <TotalPrice>$ {totalPrice.toFixed(2)}</TotalPrice>
                   </TotalWrapper>
                 </TotalPriceInfo>
-
-                <CheckoutButton onClick={realizarCompraWithTimeout}>
-                  <SpanCheckout>
-                    {checkoutLoading ? (
-                      <RingLoader>
-                        <Ring
-                          size={25}
-                          lineWeight={5}
-                          speed={1}
-                          color="black"
-                        />
-                      </RingLoader>
-                    ) : (
-                      "Check out"
-                    )}
-                  </SpanCheckout>
-                </CheckoutButton>
+                <div
+                  style={{
+                    width: "width: 100%",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <CheckoutButton onClick={realizarCompraWithTimeout}>
+                    <SpanCheckout isLoading={checkoutLoading}>
+                      {checkoutLoading ? (
+                        <RingLoader>
+                          <Ring
+                            size={25}
+                            lineWeight={5}
+                            speed={1}
+                            color="black"
+                          />
+                        </RingLoader>
+                      ) : (
+                        "Check out"
+                      )}
+                    </SpanCheckout>
+                  </CheckoutButton>
+                </div>
               </CartInfo>
             </>
           ) : (
@@ -297,7 +308,7 @@ const ItemWrapper = styled.div`
   -webkit-box-align: center;
   align-items: center;
   justify-content: flex-start;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 1px;
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
@@ -339,8 +350,9 @@ const BtnQuantity = styled.button`
 `;
 const DeleteIconBtn = styled(DeleteIcon)`
   position: absolute;
+  width: 0.8em !important;
   top: 33px;
-  right: 33%;
+  right: 39%;
   cursor: pointer;
 `;
 const CartInfo = styled.div`
@@ -350,18 +362,11 @@ const CartInfo = styled.div`
   gap: 1.5rem;
   flex-direction: column;
   background-color: #eeebeb;
-  margin-bottom: 24px;
+  padding-bottom: 24px;
   border-top: 1px solid lightgray;
 `;
 const CheckoutButton = styled.button`
-  /* width: 260px;
-  height: 46px;
-  margin: 0px auto;
-  border-radius: 22px;
-  font-weight: bold;
-  color: white;
-  background-color: rgb(29 29 29); */
-  width: 240px;
+  width: 275px;
   margin: 0 auto;
   padding: 0;
   border: none;
@@ -378,7 +383,7 @@ const CheckoutButton = styled.button`
   background-color: #cf873e;
   :active {
     transform: translateY(5px);
-    padding-bottom: 0px;
+    padding: 0;
     outline: 0;
   }
 `;
@@ -389,6 +394,12 @@ const SpanCheckout = styled.span`
   border-radius: 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
+  :hover {
+    transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"};
+    box-shadow: ${({ isLoading }) =>
+      isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
+  }
 `;
 const PriceDeleteWrapper = styled.div`
   display: flex;
@@ -440,16 +451,18 @@ const TotalPriceInfo = styled.div`
 `;
 const TotalWrapper = styled.div`
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
   display: inherit;
 `;
 const SubTotalWrapper = styled.div`
   display: inherit;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const DiscountWrapper = styled.div`
   display: inherit;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const TotalText = styled.h3`
   text-align: end;
@@ -500,7 +513,7 @@ const SubTotal = styled.h3`
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
   padding-left: 46px;
   text-align: end;
   width: 100%;
