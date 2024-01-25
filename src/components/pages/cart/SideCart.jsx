@@ -135,7 +135,10 @@ export const SideCart = () => {
                     </Size>
 
                     <QuantityWrapper>
-                      <BtnQuantity onClick={() => removeQuantity(product.id)}>
+                      <BtnQuantity
+                        onClick={() => removeQuantity(product.id)}
+                        disabled={product.quantity === 1}
+                      >
                         {" "}
                         -{" "}
                       </BtnQuantity>
@@ -305,7 +308,7 @@ const ItemWrapper = styled.div`
   -webkit-box-align: center;
   align-items: center;
   justify-content: flex-start;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 1px;
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
@@ -347,8 +350,9 @@ const BtnQuantity = styled.button`
 `;
 const DeleteIconBtn = styled(DeleteIcon)`
   position: absolute;
+  width: 0.8em !important;
   top: 33px;
-  right: 33%;
+  right: 39%;
   cursor: pointer;
 `;
 const CartInfo = styled.div`
@@ -391,8 +395,10 @@ const SpanCheckout = styled.span`
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
   :hover {
-    transform: ${({ isLoading }) => (isLoading ? "none" : "translateY(-1.2px)")};
-    box-shadow: ${({ isLoading }) => (isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px")}
+    transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"};
+    box-shadow: ${({ isLoading }) =>
+      isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
   }
 `;
 const PriceDeleteWrapper = styled.div`
@@ -445,16 +451,18 @@ const TotalPriceInfo = styled.div`
 `;
 const TotalWrapper = styled.div`
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
   display: inherit;
 `;
 const SubTotalWrapper = styled.div`
   display: inherit;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const DiscountWrapper = styled.div`
   display: inherit;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const TotalText = styled.h3`
   text-align: end;
@@ -505,7 +513,7 @@ const SubTotal = styled.h3`
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
   padding-left: 46px;
   text-align: end;
   width: 100%;

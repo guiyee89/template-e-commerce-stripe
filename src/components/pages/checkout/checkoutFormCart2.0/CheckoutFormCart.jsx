@@ -67,7 +67,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.name}
                 error={errors.name ? true : false}
-                sx={{ marginTop: "20px", width: "300px", minWidth: "200px" }}
+                sx={{ marginTop: "20px", minWidth: "200px" }}
                 size="small"
               />
               <Input
@@ -77,7 +77,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.email}
                 error={errors.email ? true : false}
-                sx={{ marginTop: "20px", width: "300px" }}
+                sx={{ marginTop: "20px" }}
                 size="small"
               />
               <Input
@@ -87,7 +87,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.phone}
                 error={errors.phone ? true : false}
-                sx={{ marginTop: "20px", width: "300px" }}
+                sx={{ marginTop: "20px" }}
                 size="small"
               />
               <Input
@@ -97,7 +97,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.ciudad}
                 error={errors.ciudad ? true : false}
-                sx={{ marginTop: "20px", width: "300px" }}
+                sx={{ marginTop: "20px" }}
                 size="small"
               />
               <Input
@@ -107,7 +107,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.direccion}
                 error={errors.direccion ? true : false}
-                sx={{ marginTop: "20px", width: "300px" }}
+                sx={{ marginTop: "20px" }}
                 size="small"
               />
               <Input
@@ -117,7 +117,7 @@ export const CheckoutFormCart = ({
                 onChange={handleChange}
                 helperText={errors.cp}
                 error={errors.cp ? true : false}
-                sx={{ marginTop: "20px", width: "300px" }}
+                sx={{ marginTop: "20px" }}
                 size="small"
               />
             </Form>
@@ -202,18 +202,38 @@ export const CheckoutFormCart = ({
                             <SpanSize>{item.size}</SpanSize>
                           </ItemSizeColor>
                         </ItemData>
+                        {item.quantity > 1 && (
+                          <ItemData style={{ marginTop: "-8px" }}>
+                            {hasDiscount ? (
+                              <SpanEachPrice>
+                                $ {item.discountPrice} each
+                              </SpanEachPrice>
+                            ) : (
+                              <SpanEachPrice>
+                                $ {item.unit_price} each
+                              </SpanEachPrice>
+                            )}
+                          </ItemData>
+                        )}
                       </ItemInfoContainer>
                     </ItemsDetails>
                     <ItemData>
                       <QuantityWrapper windowwidth={windowWidth}>
-                        <BtnQuantity onClick={() => removeQuantity(item.id)}>
+                        <BtnQuantity
+                          onClick={() => removeQuantity(item.id)}
+                          disabled={item.quantity === 1}
+                          style={{ width: "33%" }}
+                        >
                           {" "}
                           -{" "}
                         </BtnQuantity>
+
                         <ItemQuantity>{item.quantity}</ItemQuantity>
+
                         <BtnQuantity
                           onClick={() => addQuantity(item.id)}
                           disabled={item.stock === item.quantity}
+                          style={{ width: "33%" }}
                         >
                           {" "}
                           +{" "}
@@ -221,22 +241,39 @@ export const CheckoutFormCart = ({
                       </QuantityWrapper>
                     </ItemData>
                     {hasDiscount ? (
-                      <TotalPriceWrapper windowwidth={windowWidth}>
-                        <DiscountPrice>
-                          {" "}
-                          $ {(item.discountPrice * item.quantity).toFixed(2)}
-                        </DiscountPrice>
-                      </TotalPriceWrapper>
+                      <ItemPriceWrapper hasDiscount={hasDiscount}>
+                        {hasDiscount && (
+                          <DiscountPrice>
+                            $ {(item.discountPrice * item.quantity).toFixed(2)}
+                          </DiscountPrice>
+                        )}
+                        <Price hasDiscount={hasDiscount}>
+                          $ {itemTotalPrice.toFixed(2)}
+                        </Price>
+                      </ItemPriceWrapper>
                     ) : (
-                      <PriceWrapper>
-                        <Price>$ {itemTotalPrice.toFixed(2)}</Price>
-                      </PriceWrapper>
+                      <Price>$ {itemTotalPrice.toFixed(2)}</Price>
                     )}
+
+                    <DeleteIconBtn onClick={() => removeById(item.id)} />
                   </ItemsDetailsContainer>
                 );
               })}
             </CartItemsContainer>
             <TotalPriceInfoDesktopContainer windowwidth={windowWidth}>
+              <DiscountCouponWrapper>
+                <Input
+                  label="Discount code"
+                  variant="outlined"
+                  name="discount"
+                  onChange={handleChange}
+                  helperText={errors.ciudad}
+                  error={errors.ciudad ? true : false}
+                  sx={{ width: "300px", backgroundColor: "white" }}
+                  size="medium"
+                />
+                <DiscountCouponBtn>Apply</DiscountCouponBtn>
+              </DiscountCouponWrapper>
               <SubTotalWrapper>
                 <TotalText>Subtotal:</TotalText>
                 <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -266,8 +303,6 @@ const Wrapper = styled.section`
 const ShippingTitle = styled.h1`
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
-  width: ${(props) => (props.windowwidth < 851 ? "100%" : "85%")};
-  margin-top: 6px;
   text-align: ${(props) => props.windowwidth < 851 && "center"};
 `;
 const FormItems = styled.div`
@@ -284,10 +319,11 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin-top: ${(props) => (props.windowwidth < 851 ? "50px" : "0px")};
+  padding-left: 232px;
   @media (max-width: 851px) {
     align-items: center;
     width: 100%;
@@ -309,7 +345,7 @@ const Form = styled.form`
   padding-right: ${(props) => (props.windowwidth < 1050 ? "0" : "25px")};
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
-  margin: ${(props) => (props.windowwidth < 851 ? "0" : "-60px 0 0 0")};
+  margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
 `;
 const Input = styled(TextField)`
   width: 350px;
@@ -328,10 +364,15 @@ const ItemsDetailsContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  justify-content: space-around;
+`;
+const ItemsDetails = styled.div`
+  display: flex;
+  width: 50%;
 `;
 const ImgContainer = styled.div`
-  width: 75px;
-  height: 75px;
+  width: 68px;
+  height: 68px;
 `;
 const Img = styled.img`
   border: 1px solid lightgray;
@@ -341,81 +382,92 @@ const Img = styled.img`
 `;
 const ItemData = styled.div`
   padding: 0 0 5px 8px;
-  font-size: clamp(0.72rem, 2vw, 0.96rem);
+  font-size: clamp(0.7rem, 2vw, 0.88rem);
 `;
 const ItemSizeColor = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 `;
 const SpanColor = styled.span`
-  font-size: clamp(0.65rem, 2vw, 0.9rem);
+  font-size: clamp(0.6rem, 2vw, 0.78rem);
   text-transform: capitalize;
   padding-right: 8px;
 `;
 const SpanSize = styled.span`
-  font-size: clamp(0.65rem, 2vw, 0.9rem);
+  font-size: clamp(0.6rem, 2vw, 0.78rem);
   text-transform: uppercase;
   padding-left: 8px;
 `;
-const ItemsDetails = styled.div`
-  display: flex;
+const SpanEachPrice = styled.span`
+  font-size: clamp(0.6rem, 2vw, 0.78rem);
+  font-weight: 600;
+  color: grey;
 `;
 const ItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-const PriceWrapper = styled.div`
-  display: ${(props) => props.windowwidth < 550 && "none"};
-  vertical-align: middle;
-  text-align: center;
-  border-top: 1px solid #e3dddd;
-  border-bottom: 1px solid #e3dddd;
+  /* min-width: 130px; */
 `;
 
-const TotalPriceWrapper = styled.div`
-  vertical-align: middle;
-  text-align: center;
-`;
 const QuantityWrapper = styled.div`
   display: flex;
   border: 1px solid rgb(194, 191, 191);
   border-radius: 5%;
-  width: ${(props) => (props.windowwidth < 550 ? "64px" : "80px")};
+  width: ${(props) => (props.windowwidth < 550 ? "64px" : "74px")};
+  min-width: ${(props) =>
+    props.windowwidth < 550 ? "64px" : "74px"}; // Add min-width
   margin: 0 auto;
-  -webkit-box-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
   justify-content: space-between;
 `;
+
 const ItemQuantity = styled.h4`
   font-weight: 600;
   font-size: 0.75rem;
-  padding: 0 7px;
+  text-align: center;
+  width: 34%;
+  min-width: 20px;
+  background-color: #fbf8f8;
+  padding: 4px 0;
 `;
+
 const BtnQuantity = styled.button`
-  width: 32px;
   border-radius: 5%;
   border: none;
+  font-size: 1rem;
+`;
+const ItemPriceWrapper = styled.h4`
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  flex-direction: column-reverse;
+  min-width: 90px;
+`;
+const DeleteIconBtn = styled(DeleteIcon)`
+  width: 0.8em !important;
+  cursor: pointer;
 `;
 
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.7rem, 1.2vw, 0.88rem);
   font-style: italic;
   position: relative;
   text-align: center;
   display: block;
 `;
 const Price = styled.span`
-  display: ${(props) => props.windowwidth < 550 && "none"};
+  display: ${(props) => (props.windowwidth < 550 ? "none" : "flex")};
+  justify-content: center;
+  min-width: 90px;
   font-weight: 600;
   font-size: ${(props) =>
     props.hasDiscount
-      ? "clamp(0.55rem, 1.2vw, .80rem);"
-      : "clamp(0.75rem, 1.2vw, .95rem);"};
+      ? "clamp(0.53rem, 1.2vw, .76rem);"
+      : "clamp(0.7rem, 1.2vw, .88rem);"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -424,18 +476,19 @@ const Price = styled.span`
     content: ${(props) => (props.hasDiscount ? "''" : "none")};
     position: absolute;
     bottom: 52%;
-    left: 0;
-    width: 102%;
+    left: 20px;
+    width: 58%;
     height: 1px;
     background-color: black;
   }
 `;
 const TotalPriceInfoDesktopContainer = styled.div`
-  max-width: 428px;
   display: ${(props) => (props.windowwidth < 851 ? "none" : "flex")};
+  max-width: 428px;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 40px 0 0;
+  gap: 0.6rem;
+  padding: 32px 8px 0px;
+  border-top: 1px solid lightgray;
 `;
 const TotalPriceInfoMobileContainer = styled.div`
   display: ${(props) => (props.windowwidth > 850 ? "none" : "flex")};
@@ -450,31 +503,30 @@ const TotalPriceInfoMobileContainer = styled.div`
 
 const TotalWrapper = styled.div`
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
   display: flex;
   justify-content: space-between;
 `;
 const SubTotalWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const DiscountWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
 `;
 const TotalText = styled.h3`
   text-align: end;
-  font-weight: 600;
 `;
-const TotalDiscount = styled.h3`
-  font-weight: 500;
-`;
+const TotalDiscount = styled.h3``;
 const SubTotal = styled.h3`
   font-weight: 500;
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
 `;
 
 const ConfirmStripe = styled.div`
@@ -486,8 +538,8 @@ const ConfirmStripe = styled.div`
 `;
 
 const ConfirmFormCartBtn = styled.button`
-  width: 80%;
-  margin: 0px 0px 5px 24px;
+  width: 75%;
+  margin: 50px 0px 5px 46px;
   padding: 0px 0px 2px;
   border: none;
   transform: rotate(0deg);
@@ -543,4 +595,20 @@ const style = {
 };
 const CartItemsContainer = styled.div`
   margin: 150px 0 0;
+  padding-bottom: 40px;
+`;
+const DiscountCouponWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+`;
+const DiscountCouponBtn = styled.button`
+  border: 1px solid darkgray;
+  height: 98%;
+  width: 18%;
+  font-weight: 600;
+  color: grey;
+  font-size: 0.8rem;
+  border-radius: 10%;
 `;
