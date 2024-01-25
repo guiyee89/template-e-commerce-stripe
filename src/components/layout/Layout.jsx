@@ -45,6 +45,7 @@ export const Layout = () => {
   );
   const isHome = currentRoute?.id === "home";
   const isDashboard = currentRoute?.id === "dashboard";
+  const isCheckout = currentRoute?.id === "checkout"
 
   return (
     <>
@@ -62,7 +63,7 @@ export const Layout = () => {
             {windowWidth <= 900 && <NavMobile />}
 
             <SideCart />
-            {!isHome && !isDashboard && <HeroSmall />}
+            {!isHome && !isDashboard && !isCheckout && <HeroSmall />}
 
             <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
 
@@ -107,9 +108,7 @@ const OutletWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: rgb(253 253 253);
-  padding-bottom: 150px;
-  margin: 0 auto;
-  padding-top: 40px;
+  margin: auto;
 
   @media (max-width: 68rem) {
     padding-top: 0;

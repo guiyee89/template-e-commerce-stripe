@@ -285,7 +285,7 @@ const ColorCheckbox = styled.input.attrs({ type: "checkbox" })`
   outline: none;
   cursor: pointer;
   &:checked {
-    border: 2px rgb(21, 26, 32) solid;
+    border: 1px solid rgb(21 26 32 / 78%);
     border-radius: 12px;
   }
 `;

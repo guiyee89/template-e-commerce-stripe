@@ -7,7 +7,7 @@ export const NewsLetter = () => {
       <Wrapper>
         <Title>get 5% off </Title>
         <Text>Suscribe to our newsletter to get our exclusive sales</Text>
-        <Form >
+        <Form>
           <Input
             label="Add your Email"
             variant="outlined"
@@ -43,18 +43,22 @@ const Form = styled.form`
   gap: 1rem;
   height: 100px;
   align-items: baseline;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     flex-direction: column;
     align-items: center;
     margin: 20px 0;
   }
 `;
 const Input = styled(TextField)`
-  border-radius: 30px;
+  border-radius: 13px;
   width: 280px;
-  height: 50px;
+  height: 55px;
   background-color: white;
   z-index: 0;
+  :focus-visible {
+    height: 17px;
+    border-radius: 30px;
+  }
 `;
 const Button = styled.button`
   width: 140px;
@@ -68,7 +72,7 @@ const Button = styled.button`
 `;
 const Text = styled.p`
   letter-spacing: 1px;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     text-align: center;
   }
 `;

@@ -69,6 +69,27 @@ export const HeroLanding = () => {
             />
           </picture>
         </CarouselItem>
+        <CarouselItem>
+          <picture>
+            <source
+              media="(max-width: 800px)"
+              srcSet=" https://res.cloudinary.com/derdim3m6/image/upload/v1705670243/web%20access/samples%20for%20e-commerce/Hero/defflu7gn7vxkj8g0zpw.png"
+            />
+            {windowWidth < 801 && (
+              <BannerTextContainer>
+                <BannerTitle>conscious</BannerTitle>
+                <BannerSub>Sustainable Collection</BannerSub>
+                <FakeButton>Buy</FakeButton>
+              </BannerTextContainer>
+            )}
+            <CarouselImg
+              className="d-block w-100"
+              src="https://res.cloudinary.com/derdim3m6/image/upload/v1705670243/web%20access/samples%20for%20e-commerce/Hero/defflu7gn7vxkj8g0zpw.png"
+              alt="First slide"
+            />
+          </picture>
+        </CarouselItem>
+       
       </StyledCarousel>
 
       <MarginWrapper>
