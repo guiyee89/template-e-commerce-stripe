@@ -7,11 +7,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
 import { menuRoutes } from "../../routes/menuRoutes";
-import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import { AuthContext } from "../../context/AuthContext";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LoginSharpIcon from '@mui/icons-material/LoginSharp';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 
 export const NavMobile = () => {
   const navigate = useNavigate();
@@ -44,6 +44,8 @@ export const NavMobile = () => {
     localStorage.removeItem("selectedCategoryOrder");
     localStorage.removeItem("selectedColorOrder");
     localStorage.removeItem("currentPage");
+    localStorage.removeItem("prevLocation");
+    localStorage.removeItem("reloadOccurred");
     if (!isMenuOpen) {
       toggleSideMenu();
       setIsDropDownOpen(true);
@@ -192,7 +194,7 @@ export const NavMobile = () => {
             {!user || !user.rol ? (
               <LoginBtn>
                 <h4>Login / Sign up</h4>
-                <LoginOutlinedIcon
+                <LoginSharpIcon
                   sx={{ fontSize: "26px" }}
                   onClick={() => navigate("/login")}
                 />
@@ -204,7 +206,7 @@ export const NavMobile = () => {
               <>
                 <DashboardBtn scrolled={scroll}>
                   <h4>Admin</h4>
-                  <DashboardCustomizeIcon
+                  <DashboardCustomizeRoundedIcon
                     sx={{ fontSize: "27px" }}
                     onClick={() => navigate("/dashboard")}
                   />
@@ -347,7 +349,7 @@ const Logo = styled.img`
   }
   @media (max-width: 550px) {
     margin-left: ${(props) =>
-      props.scrolled === "scrolled" ? "18.8px" : "25.3px"};
+      props.scrolled === "scrolled" ? "17.8px" : "25.3px"};
   }
 `;
 

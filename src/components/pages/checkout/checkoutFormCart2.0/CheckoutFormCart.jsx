@@ -1,19 +1,14 @@
-import {
-  Box,
-  Modal,
-  TableBody,
-  TableCell,
-  TableRow,
-  TextField,
-} from "@mui/material";
+import { Box, Modal, TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { CartContext } from "../../../context/CartContext";
-import { Table } from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
 import { Payment } from "../checkoutStripe2.0/Payment";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
+import { Ring } from "@uiball/loaders";
 
 export const CheckoutFormCart = ({
   handleSubmit,
@@ -21,6 +16,7 @@ export const CheckoutFormCart = ({
   errors,
   confirm,
   setConfirm,
+  checkoutLoading,
 }) => {
   const {
     cart,
@@ -33,10 +29,18 @@ export const CheckoutFormCart = ({
     addQuantity,
   } = useContext(CartContext);
   const { windowWidth } = useContext(GlobalToolsContext);
+  const { user, handleLogout } = useContext(AuthContext);
   const total = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 350);
+  }, []);
 
   // Use useEffect to open the modal when confirm becomes true
   useEffect(() => {
@@ -51,298 +55,390 @@ export const CheckoutFormCart = ({
     setConfirm(false);
   };
 
+  const handleLoginLinkClick = () => {
+    localStorage.setItem("prevLocation", location.pathname);
+  };
+
+  useEffect(() => {
+    const handleLogoutAfterReload = () => {
+      const logoutInfoString = localStorage.getItem("logoutInfo");
+      if (logoutInfoString) {
+        const logoutInfo = JSON.parse(logoutInfoString);
+        if (logoutInfo.logoutAfterReload) {
+          // Perform the logout action
+          handleLogout();
+          localStorage.removeItem("logoutInfo");
+        }
+      }
+    };
+    // Check if there is a logoutInfo in localStorage
+    handleLogoutAfterReload();
+    // Set a flag in localStorage to indicate that a reload has occurred
+    localStorage.setItem("reloadOccurred", "true");
+    return () => {
+      localStorage.removeItem("reloadOccurred");
+    };
+  }, [handleLogout]);
+
   return (
     <>
       <Wrapper>
-        <FormItems windowwidth={windowWidth}>
-          <FormWrapper windowwidth={windowWidth}>
-            <ShippingTitle windowwidth={windowWidth}>
-              Shipping Information
-            </ShippingTitle>
-            <Form onSubmit={handleSubmit} windowwidth={windowWidth}>
-              <Input
-                label="Name"
-                variant="outlined"
-                name="name"
-                onChange={handleChange}
-                helperText={errors.name}
-                error={errors.name ? true : false}
-                sx={{ marginTop: "20px", minWidth: "200px" }}
-                size="small"
-              />
-              <Input
-                label="Email"
-                variant="outlined"
-                name="email"
-                onChange={handleChange}
-                helperText={errors.email}
-                error={errors.email ? true : false}
-                sx={{ marginTop: "20px" }}
-                size="small"
-              />
-              <Input
-                label="Phone"
-                variant="outlined"
-                name="phone"
-                onChange={handleChange}
-                helperText={errors.phone}
-                error={errors.phone ? true : false}
-                sx={{ marginTop: "20px" }}
-                size="small"
-              />
-              <Input
-                label="City"
-                variant="outlined"
-                name="ciudad"
-                onChange={handleChange}
-                helperText={errors.ciudad}
-                error={errors.ciudad ? true : false}
-                sx={{ marginTop: "20px" }}
-                size="small"
-              />
-              <Input
-                label="Address"
-                variant="outlined"
-                name="direccion"
-                onChange={handleChange}
-                helperText={errors.direccion}
-                error={errors.direccion ? true : false}
-                sx={{ marginTop: "20px" }}
-                size="small"
-              />
-              <Input
-                label="Zip Code "
-                variant="outlined"
-                name="cp"
-                onChange={handleChange}
-                helperText={errors.cp}
-                error={errors.cp ? true : false}
-                sx={{ marginTop: "20px" }}
-                size="small"
-              />
-            </Form>
-            <TotalPriceInfoMobileContainer windowwidth={windowWidth}>
-              <SubTotalWrapper>
-                <TotalText>Subtotal:</TotalText>
-                <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
-              </SubTotalWrapper>
-              <DiscountWrapper>
-                <TotalText>Discount:</TotalText>
-                <TotalDiscount>- $ {totalDiscount.toFixed(2)}</TotalDiscount>
-              </DiscountWrapper>
-              <TotalWrapper>
-                <TotalText>Total:</TotalText>
-                <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
-              </TotalWrapper>
-            </TotalPriceInfoMobileContainer>
-            <ConfirmStripe windowwidth={windowWidth}>
-              <ConfirmFormCartBtn
-                type="submit"
-                onClick={handleSubmit}
-                windowwidth={windowWidth}
-              >
-                <SpanConfirmBtn>Confirm</SpanConfirmBtn>
-              </ConfirmFormCartBtn>
+        <FormItemsContainer windowwidth={windowWidth}>
+          <FormItemsWrapper>
+            {isLoading === false ? (
+              <div style={{width:"52%", height:"100%"}}></div>
+            ) : (
+              <FormWrapper windowwidth={windowWidth}>
+                <Form onSubmit={handleSubmit} windowwidth={windowWidth}>
+                  {Object.keys(user).length > 0 ? (
+                    <>
+                      <ContactTitle windowwidth={windowWidth}>
+                        Contact
+                      </ContactTitle>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        <LogoutContainer>
+                          <p style={{ fontSize: ".9rem", fontWeight: "500" }}>
+                            {user.email}
+                          </p>
 
-              {isModalOpen && (
-                <Modal
-                  open={isModalOpen}
-                  onClose={closeModal}
-                  sx={{ maxWidth: "1000px", margin: "0 auto" }}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box
-                    sx={{
-                      ...style,
-                      width:
-                        windowWidth < 550
-                          ? "100%"
-                          : windowWidth < 800
-                          ? "90%"
-                          : "85%",
-                      height: windowWidth < 750 ? "100%" : "68%",
-                      padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
-                    }}
+                          <LogoutBtn
+                            type="button"
+                            onClick={() => {
+                              localStorage.setItem(
+                                "logoutInfo",
+                                JSON.stringify({ logoutAfterReload: true })
+                              );
+                              window.location.reload();
+                            }}
+                          >
+                            Log out
+                          </LogoutBtn>
+                        </LogoutContainer>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ContactTitle windowwidth={windowWidth}>
+                          Contact
+                        </ContactTitle>
+                        <LoginContainer>
+                          <p style={{ textAlign: "end" }}>
+                            Have an account?{" "}
+                            <Link to="/login" onClick={handleLoginLinkClick}>
+                              Log in
+                            </Link>
+                          </p>
+                        </LoginContainer>
+                      </div>
+                      <Input
+                        label="Email"
+                        variant="outlined"
+                        name="email"
+                        onChange={handleChange}
+                        helperText={errors.email}
+                        error={errors.email ? true : false}
+                        sx={{ marginTop: "20px", width: "100%" }}
+                        size="medium"
+                      />
+                    </>
+                  )}
+                  <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
+                  <Input
+                    label="Name"
+                    variant="outlined"
+                    name="name"
+                    onChange={handleChange}
+                    helperText={errors.name}
+                    error={errors.name ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                  <Input
+                    label="Phone"
+                    variant="outlined"
+                    name="phone"
+                    onChange={handleChange}
+                    helperText={errors.phone}
+                    error={errors.phone ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                  <Input
+                    label="City"
+                    variant="outlined"
+                    name="ciudad"
+                    onChange={handleChange}
+                    helperText={errors.ciudad}
+                    error={errors.ciudad ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                  <Input
+                    label="Address"
+                    variant="outlined"
+                    name="direccion"
+                    onChange={handleChange}
+                    helperText={errors.direccion}
+                    error={errors.direccion ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                  <Input
+                    label="Zip Code "
+                    variant="outlined"
+                    name="cp"
+                    onChange={handleChange}
+                    helperText={errors.cp}
+                    error={errors.cp ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                </Form>
+                <TotalPriceInfoMobileContainer windowwidth={windowWidth}>
+                  <SubTotalWrapper>
+                    <TotalText>Subtotal:</TotalText>
+                    <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
+                  </SubTotalWrapper>
+                  <DiscountWrapper>
+                    <TotalText>Discount:</TotalText>
+                    <TotalDiscount>
+                      - $ {totalDiscount.toFixed(2)}
+                    </TotalDiscount>
+                  </DiscountWrapper>
+                  <TotalWrapper>
+                    <TotalText>Total:</TotalText>
+                    <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
+                  </TotalWrapper>
+                </TotalPriceInfoMobileContainer>
+                <ConfirmStripe windowwidth={windowWidth}>
+                  <ConfirmFormCartBtn
+                    type="submit"
+                    onClick={handleSubmit}
+                    windowwidth={windowWidth}
                   >
-                    <CloseIconBtn onClick={closeModal} />
-                    <Payment />
-                  </Box>
-                </Modal>
-              )}
-            </ConfirmStripe>
-          </FormWrapper>
-          <CartTotalPriceContainer>
-            <CartItemsContainer>
-              {cart.map((item) => {
-                const itemTotalPrice = getItemPrice(item.id);
-                const hasDiscount = item.discountPrice;
+                    <SpanConfirmBtn isLoading={checkoutLoading}>
+                      {checkoutLoading ? (
+                        <RingLoader>
+                          <Ring
+                            size={25}
+                            lineWeight={5}
+                            speed={1}
+                            color="black"
+                          />
+                        </RingLoader>
+                      ) : (
+                        "Confirm"
+                      )}
+                    </SpanConfirmBtn>
+                  </ConfirmFormCartBtn>
 
-                return (
-                  <ItemsDetailsContainer key={item.id}>
-                    <ItemsDetails>
-                      <ImgContainer>
-                        <Img
-                          src={item.img[0]}
-                          alt={`Item ${item.id}`}
-                          windowwidth={windowWidth}
-                        />
-                      </ImgContainer>
-                      <ItemInfoContainer>
-                        <ItemData
-                          style={{
-                            fontWeight: "500",
-                          }}
-                        >
-                          {item.title}
-                        </ItemData>
-                        <ItemData>
-                          <ItemSizeColor>
-                            <SpanColor>{item.color}</SpanColor>/
-                            <SpanSize>{item.size}</SpanSize>
-                          </ItemSizeColor>
-                        </ItemData>
-                        {item.quantity > 1 && (
-                          <ItemData style={{ marginTop: "-8px" }}>
-                            {hasDiscount ? (
-                              <SpanEachPrice>
-                                $ {item.discountPrice} each
-                              </SpanEachPrice>
-                            ) : (
-                              <SpanEachPrice>
-                                $ {item.unit_price} each
-                              </SpanEachPrice>
+                  {isModalOpen && (
+                    <Modal
+                      open={isModalOpen}
+                      onClose={closeModal}
+                      sx={{ maxWidth: "1000px", margin: "0 auto" }}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box
+                        sx={{
+                          ...style,
+                          width:
+                            windowWidth < 550
+                              ? "100%"
+                              : windowWidth < 800
+                              ? "90%"
+                              : "85%",
+                          height: windowWidth < 750 ? "100%" : "68%",
+                          padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
+                        }}
+                      >
+                        <CloseIconBtn onClick={closeModal} />
+                        <Payment />
+                      </Box>
+                    </Modal>
+                  )}
+                </ConfirmStripe>
+              </FormWrapper>
+            )}
+            <CartTotalMainContainer>
+              <CartTotalPriceContainer>
+                <CartItemsContainer>
+                  <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
+                  {cart.map((item) => {
+                    const itemTotalPrice = getItemPrice(item.id);
+                    const hasDiscount = item.discountPrice;
+
+                    return (
+                      <ItemsDetailsContainer key={item.id}>
+                        <ItemsDetails>
+                          <ImgContainer>
+                            <Img src={item.img[0]} alt={`Item ${item.id}`} />
+                          </ImgContainer>
+                          <ItemInfoContainer>
+                            <ItemData
+                              style={{
+                                fontWeight: "500",
+                              }}
+                            >
+                              {item.title}
+                            </ItemData>
+                            <ItemData>
+                              <ItemSizeColor>
+                                <SpanColor>{item.color}</SpanColor>/
+                                <SpanSize>{item.size}</SpanSize>
+                              </ItemSizeColor>
+                            </ItemData>
+                            {item.quantity > 1 && (
+                              <ItemData style={{ marginTop: "-8px" }}>
+                                {hasDiscount ? (
+                                  <SpanEachPrice>
+                                    $ {item.discountPrice.toFixed(2)} each
+                                  </SpanEachPrice>
+                                ) : (
+                                  <SpanEachPrice>
+                                    $ {item.unit_price.toFixed(2)} each
+                                  </SpanEachPrice>
+                                )}
+                              </ItemData>
                             )}
-                          </ItemData>
+                          </ItemInfoContainer>
+                        </ItemsDetails>
+                        <ItemData>
+                          <QuantityWrapper windowwidth={windowWidth}>
+                            <BtnQuantity
+                              onClick={() => removeQuantity(item.id)}
+                              disabled={item.quantity === 1}
+                              style={{ width: "33%" }}
+                            >
+                              {" "}
+                              -{" "}
+                            </BtnQuantity>
+
+                            <ItemQuantity>{item.quantity}</ItemQuantity>
+
+                            <BtnQuantity
+                              onClick={() => addQuantity(item.id)}
+                              disabled={item.stock === item.quantity}
+                              style={{ width: "33%" }}
+                            >
+                              {" "}
+                              +{" "}
+                            </BtnQuantity>
+                          </QuantityWrapper>
+                        </ItemData>
+                        {hasDiscount ? (
+                          <ItemPriceWrapper hasDiscount={hasDiscount}>
+                            {hasDiscount && (
+                              <DiscountPrice>
+                                ${" "}
+                                {(item.discountPrice * item.quantity).toFixed(
+                                  2
+                                )}
+                              </DiscountPrice>
+                            )}
+                            <Price hasDiscount={hasDiscount}>
+                              $ {itemTotalPrice.toFixed(2)}
+                            </Price>
+                          </ItemPriceWrapper>
+                        ) : (
+                          <Price>$ {itemTotalPrice.toFixed(2)}</Price>
                         )}
-                      </ItemInfoContainer>
-                    </ItemsDetails>
-                    <ItemData>
-                      <QuantityWrapper windowwidth={windowWidth}>
-                        <BtnQuantity
-                          onClick={() => removeQuantity(item.id)}
-                          disabled={item.quantity === 1}
-                          style={{ width: "33%" }}
-                        >
-                          {" "}
-                          -{" "}
-                        </BtnQuantity>
 
-                        <ItemQuantity>{item.quantity}</ItemQuantity>
-
-                        <BtnQuantity
-                          onClick={() => addQuantity(item.id)}
-                          disabled={item.stock === item.quantity}
-                          style={{ width: "33%" }}
-                        >
-                          {" "}
-                          +{" "}
-                        </BtnQuantity>
-                      </QuantityWrapper>
-                    </ItemData>
-                    {hasDiscount ? (
-                      <ItemPriceWrapper hasDiscount={hasDiscount}>
-                        {hasDiscount && (
-                          <DiscountPrice>
-                            $ {(item.discountPrice * item.quantity).toFixed(2)}
-                          </DiscountPrice>
-                        )}
-                        <Price hasDiscount={hasDiscount}>
-                          $ {itemTotalPrice.toFixed(2)}
-                        </Price>
-                      </ItemPriceWrapper>
-                    ) : (
-                      <Price>$ {itemTotalPrice.toFixed(2)}</Price>
-                    )}
-
-                    <DeleteIconBtn onClick={() => removeById(item.id)} />
-                  </ItemsDetailsContainer>
-                );
-              })}
-            </CartItemsContainer>
-            <TotalPriceInfoDesktopContainer windowwidth={windowWidth}>
-              <DiscountCouponWrapper>
-                <Input
-                  label="Discount code"
-                  variant="outlined"
-                  name="discount"
-                  onChange={handleChange}
-                  helperText={errors.ciudad}
-                  error={errors.ciudad ? true : false}
-                  sx={{ width: "300px", backgroundColor: "white" }}
-                  size="medium"
-                />
-                <DiscountCouponBtn>Apply</DiscountCouponBtn>
-              </DiscountCouponWrapper>
-              <SubTotalWrapper>
-                <TotalText>Subtotal:</TotalText>
-                <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
-              </SubTotalWrapper>
-              <DiscountWrapper>
-                <TotalText>Discount:</TotalText>
-                <TotalDiscount>- $ {totalDiscount.toFixed(2)}</TotalDiscount>
-              </DiscountWrapper>
-              <TotalWrapper>
-                <TotalText>Total:</TotalText>
-                <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
-              </TotalWrapper>
-            </TotalPriceInfoDesktopContainer>
-          </CartTotalPriceContainer>
-        </FormItems>
+                        <DeleteIconBtn onClick={() => removeById(item.id)} />
+                      </ItemsDetailsContainer>
+                    );
+                  })}
+                </CartItemsContainer>
+                <TotalPriceInfoDesktopContainer windowwidth={windowWidth}>
+                  <DiscountCouponWrapper>
+                    <Input
+                      label="Discount code"
+                      variant="outlined"
+                      name="discount"
+                      onChange={handleChange}
+                      helperText={errors.ciudad}
+                      error={errors.ciudad ? true : false}
+                      sx={{
+                        width: "70%",
+                        minWidth: "160px",
+                        backgroundColor: "white",
+                      }}
+                      size="medium"
+                    />
+                    <DiscountCouponBtn>Apply</DiscountCouponBtn>
+                  </DiscountCouponWrapper>
+                  <SubTotalWrapper>
+                    <TotalText>Subtotal:</TotalText>
+                    <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
+                  </SubTotalWrapper>
+                  <DiscountWrapper>
+                    <TotalText>Discount:</TotalText>
+                    <TotalDiscount>
+                      - $ {totalDiscount.toFixed(2)}
+                    </TotalDiscount>
+                  </DiscountWrapper>
+                  <TotalWrapper>
+                    <TotalText>Total:</TotalText>
+                    <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
+                  </TotalWrapper>
+                </TotalPriceInfoDesktopContainer>
+              </CartTotalPriceContainer>
+            </CartTotalMainContainer>
+          </FormItemsWrapper>
+        </FormItemsContainer>
       </Wrapper>
     </>
   );
 };
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: ${(props) => (props.windowwidth < 851 ? "100%" : "100%")};
+  width: 100%;
   margin: 0 auto;
 `;
-const ShippingTitle = styled.h1`
-  color: black;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  text-align: ${(props) => props.windowwidth < 851 && "center"};
-`;
-const FormItems = styled.div`
-  display: flex;
-  flex-direction: ${(props) =>
-    props.windowwidth < 851 ? "column-reverse" : "row"};
+
+const FormItemsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   height: ${(props) => (props.windowwidth < 851 ? "none" : "100%")};
   width: ${(props) => (props.windowwidth < 851 ? "100%" : "none")};
-  align-items: ${(props) => props.windowwidth < 851 && "center"};
+`;
+const FormItemsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  grid-column: 1/13;
+  height: 100%;
+  margin-bottom: 100px;
 `;
 const FormWrapper = styled.div`
-  position: relative;
-  width: ${(props) => (props.windowwidth < 1050 ? "320px" : "62%")};
+  height: 100%;
+  width: 52%;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-items: ${(props) =>
-    props.windowwidth < 1050 ? "flex-start" : "center"};
-  margin-top: ${(props) => (props.windowwidth < 851 ? "50px" : "0px")};
-  padding-left: 232px;
-  @media (max-width: 851px) {
-    align-items: center;
-    width: 100%;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 100%;
-    width: ${(props) => (props.windowwidth < 851 ? "0" : "2px")};
-    background: linear-gradient(rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0) 100%);
+  margin: 0 auto;
+  padding: 150px 40px 0;
+  align-items: flex-end;
+  @media (max-width: 1050px) {
+    padding: 150px 35px 0;
   }
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding-right: ${(props) => (props.windowwidth < 1050 ? "0" : "25px")};
+  width: 100%;
+  max-width: 500px;
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
@@ -351,16 +447,80 @@ const Input = styled(TextField)`
   width: 350px;
   padding-top: 12px;
 `;
+
+const ContactTitle = styled.h2`
+  text-align: ${(props) => props.windowwidth < 851 && "center"};
+  color: black;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  width: 100%;
+`;
+const LoginContainer = styled.div`
+  width: 100%;
+  font-size: 0.8rem;
+  padding-right: 5px;
+`;
+const LogoutContainer = styled.div`
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding-right: 5px;
+  height: 60px;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-left: 4px;
+`;
+const LogoutBtn = styled.button`
+  border: none;
+  background-color: transparent;
+  color: blue;
+  text-decoration: underline;
+`;
+const DeliveryInfoTitle = styled.h2`
+  text-align: ${(props) => props.windowwidth < 851 && "center"};
+  color: black;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  margin-top: 44px;
+  font-weight: 600;
+  width: 100%;
+`;
+const OrderSummaryTitle = styled.h1`
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  margin-bottom: 36px;
+  font-family: "Playfair Display", serif;
+`;
+const CartTotalMainContainer = styled.div`
+  width: 46%;
+  min-width: 450px;
+  background-color: rgb(236, 234, 234);
+  padding: 150px 0px 40px;
+`;
 const CartTotalPriceContainer = styled.div`
-  width: 45%;
   display: flex;
   flex-direction: column;
-  padding-left: 50px;
+  padding: 0 50px 0 50px;
   background-color: #eceaea;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    bottom: -20%;
+    margin-left: -50px;
+    width: 1px;
+    background: linear-gradient(rgba(0, 0, 0, 0.35) 2%, rgba(0, 0, 0, 0) 100%);
+    @media (max-width: 1050px) {
+      margin-left: -36px;
+    }
+  }
+  @media (max-width: 1050px) {
+    padding: 0 35px 0 35px;
+  }
 `;
 const ItemsDetailsContainer = styled.div`
   display: flex;
-  max-width: 428px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
@@ -376,8 +536,8 @@ const ImgContainer = styled.div`
 `;
 const Img = styled.img`
   border: 1px solid lightgray;
-  min-width: ${(props) => (props.windowwidth < 1050 ? "40px" : "100%")};
-  height: ${(props) => (props.windowwidth < 1050 ? "40px" : "100%")};
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 `;
 const ItemData = styled.div`
@@ -408,7 +568,6 @@ const ItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* min-width: 130px; */
 `;
 
 const QuantityWrapper = styled.div`
@@ -453,7 +612,7 @@ const DeleteIconBtn = styled(DeleteIcon)`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.7rem, 1.2vw, 0.88rem);
+  font-size: clamp(0.7rem, 1.3vw, 0.88rem);
   font-style: italic;
   position: relative;
   text-align: center;
@@ -467,7 +626,7 @@ const Price = styled.span`
   font-size: ${(props) =>
     props.hasDiscount
       ? "clamp(0.53rem, 1.2vw, .76rem);"
-      : "clamp(0.7rem, 1.2vw, .88rem);"};
+      : "clamp(0.7rem, 1.3vw, .88rem);"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -533,42 +692,57 @@ const ConfirmStripe = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0 0 15px 0")};
-  align-items: ${(props) => (props.windowwidth < 851 ? "center" : "none")};
+  max-width: 500px;
+  padding: 40px 10px 0;
+  margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0")};
+  align-items: ${(props) => (props.windowwidth < 851 ? "center" : "flex-end")};
 `;
 
 const ConfirmFormCartBtn = styled.button`
-  width: 75%;
-  margin: 50px 0px 5px 46px;
-  padding: 0px 0px 2px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
   border: none;
+  color: #020202;
   transform: rotate(0deg);
-  transform-origin: center center;
-  height: 52px;
-  color: white;
+  transform-origin: center;
   font-weight: 500;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
+  padding-bottom: 2px;
   border-radius: 5px;
-  box-shadow: rgb(73, 74, 75) 0px 2px 0px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
-  background-color: rgb(209 205 200);
+  box-shadow: 0 2px 0 #494a4b;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: #c8935f;
   :active {
     transform: translateY(5px);
-    padding-bottom: 0px;
+    padding: 0;
     outline: 0;
   }
 `;
 const SpanConfirmBtn = styled.span`
-  background: rgb(23 27 31);
+  background: #f1f5f8;
   display: block;
   padding: 0.5rem 1rem;
-  height: 50px;
   border-radius: 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
+  :hover {
+    transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"};
+    box-shadow: ${({ isLoading }) =>
+      isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
+  }
 `;
+const RingLoader = styled.div`
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 35px;
+  align-items: center;
+`;
+
 const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
   font-size: 28px;
@@ -594,7 +768,7 @@ const style = {
   overflow: "auto",
 };
 const CartItemsContainer = styled.div`
-  margin: 150px 0 0;
+  max-width: 428px;
   padding-bottom: 40px;
 `;
 const DiscountCouponWrapper = styled.div`
@@ -605,7 +779,7 @@ const DiscountCouponWrapper = styled.div`
 `;
 const DiscountCouponBtn = styled.button`
   border: 1px solid darkgray;
-  height: 98%;
+  height: 53px;
   width: 18%;
   font-weight: 600;
   color: grey;

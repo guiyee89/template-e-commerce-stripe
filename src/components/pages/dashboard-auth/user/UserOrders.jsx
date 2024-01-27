@@ -3,7 +3,7 @@ import { db } from "../../../../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { AuthContext } from "../../../context/AuthContext";
 import styled from "styled-components/macro";
-import ExitToAppSharpIcon from "@mui/icons-material/ExitToAppSharp";
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import { useNavigate } from "react-router-dom";
 
 export const UserOrders = () => {
@@ -35,8 +35,8 @@ export const UserOrders = () => {
     <>
       <LogoutBtn>
         <h4>Logout</h4>
-        <ExitToAppSharpIcon
-          sx={{ fontSize: "30px" }}
+        <LogoutSharpIcon
+          sx={{ fontSize: "25px" }}
           onClick={() => handleLogout(navigate("/"))}
         />
       </LogoutBtn>

@@ -108,7 +108,7 @@ export const SideCart = () => {
             setCheckoutLoading(false);
           }}
           sx={{
-            fontSize: "35px",
+            fontSize: "28px",
             marginTop: "15px",
             marginLeft: "15px",
             cursor: "pointer",
@@ -303,12 +303,13 @@ const ItemsContainer = styled.div`
 `;
 const ItemWrapper = styled.div`
   display: flex;
-  height: 130px;
+  height: 125px;
   width: 100%;
   -webkit-box-align: center;
   align-items: center;
+  -webkit-box-pack: start;
   justify-content: flex-start;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 1px;
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
@@ -317,7 +318,7 @@ const ImgWrapper = styled.div`
 `;
 const QuantityWrapper = styled.div`
   display: flex;
-  margin: 10px 75px 10px 0px;
+  margin: 2px 75px 10px 0px;
   border: 1px solid rgb(194, 191, 191);
   border-radius: 5%;
   width: 100px;
@@ -325,6 +326,9 @@ const QuantityWrapper = styled.div`
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
+  @media (max-width:600px){
+    width:90px
+  }
 `;
 const ItemImg = styled.img`
   width: 100%;
