@@ -11,23 +11,25 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CheckoutFormCart } from "./CheckoutFormCart";
 
 export const CheckoutFormCartContainer = () => {
-  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { cart, getTotalPrice } = useContext(CartContext);
   const { windowWidth } = useContext(GlobalToolsContext);
   const [confirm, setConfirm] = useState(false);
   const { user } = useContext(AuthContext);
   const [shipmentCost, setShipmentCost] = useState(0);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   let total = getTotalPrice();
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
+      email: "" || user.email,
       name: "",
-      email: "",
       phone: "",
       ciudad: "",
       direccion: "",
       cp: "",
     },
     onSubmit: (data) => {
+      setCheckoutLoading(true)
       //Submit order data
       let order = {
         buyer: data,
@@ -41,6 +43,7 @@ export const CheckoutFormCartContainer = () => {
       };
       localStorage.setItem("order", JSON.stringify(order));
       setConfirm(true);
+      setCheckoutLoading(false)
       console.log(order);
     },
 
@@ -79,20 +82,12 @@ export const CheckoutFormCartContainer = () => {
           cart={cart}
           confirm={confirm}
           setConfirm={setConfirm}
+          checkoutLoading={checkoutLoading}
         />
       </Wrapper>
     </>
   );
 };
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  height: ${(props) => (props.windowWidth < 851 ? "none" : "100vh")};
   width: ${(props) => (props.windowWidth < 851 ? "100%" : "100%")};
-  margin: ${(props) =>
-    props.windowWidth < 1050
-      ? props.windowWidth < 650
-        ? "0 5px 0 0"
-        : "0px 10px 0 22px"
-      : "0"};
 `;

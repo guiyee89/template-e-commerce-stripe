@@ -1,11 +1,13 @@
-//Importamos el Custom Hoom para darle funcionalidad a los botones del contador
+import { useState } from "react";
 import { useCount } from "../../hooks/useCount";
 import styled from "styled-components/macro";
+import { Ring } from "@uiball/loaders";
 
 //Usamos los datos como parametros en ItemCount
 export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
   //Recibimos la data del contador y los productos del padre ProductDetail
   const { count, increment, decrement, reset } = useCount(initial, stock);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
@@ -19,15 +21,29 @@ export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
         </CountButton>
         {/* <ResetButton onClick={reset}>Reset</ResetButton> */}
         <AddCartBtn
-          onClick={() => onAddToCart(count)}
-          disabled={stock === 0 || count > stock}
+          onClick={() => {
+            onAddToCart(count);
+            setTimeout(() => {
+              setIsLoading(true);
+              
+            }, 1500);
+            setIsLoading(false)
+          }}
+          disabled={stock === 0 || count > stock || isLoading === false}
         >
-          <SpanAddCart>Add to Cart</SpanAddCart>
+          {isLoading === false ? (
+            <RingLoader>
+              <Ring size={25} lineWeight={5} speed={1} color="black" />
+            </RingLoader>
+          ) : (
+            <SpanAddCart>Add to Cart</SpanAddCart>
+          )}
         </AddCartBtn>
       </Wrapper>
     </>
   );
 };
+
 const Wrapper = styled.div`
   display: flex;
   gap: 1.2rem;
@@ -81,31 +97,28 @@ const AddCartBtn = styled.button`
 const SpanAddCart = styled.span`
   background: #f1f5f8;
   display: block;
-  padding: 0.5rem 1rem;
-  height: 40px;
+  padding: 0.3rem 1rem;
   border-radius: 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
+  :hover {
+    transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"};
+    box-shadow: ${({ isLoading }) =>
+      isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
+  }
 `;
-// const AddCartButton = styled.button`
-//   width: 135px;
-//   height: 45px;
-//   font-size: 0.9rem;
-//   font-weight: bold;
-//   border-radius: 0.8rem;
-//   background: ${({ disabled }) => (disabled ? "#999" : "rgb(9 9 9)")};
-//   color: white;
-//   margin-left: 20px;
-//   cursor: pointer;
-//   &:hover {
-//     background-color: ${({ disabled }) => (disabled ? "#999" : "#454444")};
-//     transition: ${({ disabled }) => (disabled ? "none" : "ease-in-out 0.2s")};
-//   }
-//   &:active {
-//     background-color: ${({ disabled }) => (disabled ? "#999" : "#686565")};
-//     transition: ${({ disabled }) => (disabled ? "none" : "ease-in-out 0.3s")};
-//   }
-// `;
+const RingLoader = styled.div`
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(241, 245, 248);
+  border: 2px solid #494a4b;
+  border-radius: 5px;
+  padding: 0.35rem 1rem;
+  cursor: not-allowed;
+`;
 
 const CountNumber = styled.span`
   font-size: 1.4rem;

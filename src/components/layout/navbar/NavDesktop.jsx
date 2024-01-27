@@ -4,13 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import { menuRoutes } from "../../routes/menuRoutes";
-import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { AuthContext } from "../../context/AuthContext";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
+import LoginSharpIcon from '@mui/icons-material/LoginSharp';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 
 export const NavDesktop = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const NavDesktop = () => {
   //                       CartContext                      //
   const { getTotalItems } = useContext(CartContext);
   const totalItems = getTotalItems();
-  const { scroll } = useContext(GlobalToolsContext);
+  const { scroll, isOpen } = useContext(GlobalToolsContext);
 
   //////////        ////////////        ////////////        ///////////
   //                 Reset localStorage on nav links               //
@@ -33,6 +33,8 @@ export const NavDesktop = () => {
     localStorage.removeItem("selectedCategoryOrder");
     localStorage.removeItem("selectedColorOrder");
     localStorage.removeItem("currentPage");
+    localStorage.removeItem("prevLocation");
+    localStorage.removeItem("reloadOccurred");
   };
 
   //Find "Home" and "ItemDetail" locations
@@ -227,7 +229,7 @@ export const NavDesktop = () => {
                   </NavList>
                 </NavListWrapper>
 
-                <DashCartContainer>
+                <DashCartContainer isOpen={isOpen}>
                   <CartWidget
                     scrolled={scroll}
                     sx={{ padding: "10px" }}
@@ -236,8 +238,8 @@ export const NavDesktop = () => {
                   {!user || !user.rol ? (
                     <LoginBtn>
                       <h4>Login / Sign up</h4>
-                      <LoginOutlinedIcon
-                        sx={{ fontSize: "26px" }}
+                      <LoginSharpIcon
+                        sx={{ fontSize: "25px" }}
                         onClick={() => navigate("/login")}
                       />
                     </LoginBtn>
@@ -248,8 +250,8 @@ export const NavDesktop = () => {
                     <>
                       <DashboardBtn scrolled={scroll}>
                         <h4>Admin</h4>
-                        <DashboardCustomizeIcon
-                          sx={{ fontSize: "27px" }}
+                        <DashboardCustomizeRoundedIcon
+                          sx={{ fontSize: "25px" }}
                           onClick={() => navigate("/dashboard")}
                         />
                       </DashboardBtn>
@@ -259,7 +261,7 @@ export const NavDesktop = () => {
                       <ProfileBtn>
                         <h4>Profile</h4>
                         <AccountCircleSharpIcon
-                          sx={{ fontSize: "30px", marginBottom: "-13px" }}
+                          sx={{ fontSize: "28px", marginBottom: "-6px" }}
                           onClick={() => navigate("/user-orders")}
                         />
                       </ProfileBtn>
@@ -317,6 +319,7 @@ const LogoDiv = styled.div`
   transition: width
     ${(props) => (props.scrolled === "scrolled" ? "0.20s" : "0.16s")}
     ease-in-out;
+  margin-top: 13px;
   @media screen and (max-width: 50rem) {
     position: absolute;
     left: 42%;
@@ -326,8 +329,8 @@ const LogoLink = styled(Link)`
   text-decoration: none;
 `;
 const Logo = styled.img`
-  width: 62%;
-  margin-left: 12px;
+  width: 48%;
+  margin-left: 15px;
   @media screen and (max-width: 50rem) {
     width: 50%;
   }
@@ -335,7 +338,9 @@ const Logo = styled.img`
 const NavListWrapper = styled.ul`
   display: flex;
   list-style: none;
-  margin-bottom: ${(props) => (props.scrolled === "scrolled" ? "-10px" : "-21px")};
+  margin-bottom: ${(props) =>
+    props.scrolled === "scrolled" ? "-10px" : "-21px"};
+ 
   @media screen and (max-width: 50rem) {
     display: none;
   }
@@ -507,6 +512,8 @@ const CategoryLink = styled(Link)`
 const DashCartContainer = styled.div`
   display: flex;
   align-items: center;
+  padding-right: ${({ isOpen }) =>
+      isOpen ? "0" : "16.8px"};
 `;
 const DashboardBtn = styled.button`
   background-color: transparent;

@@ -22,8 +22,6 @@ import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { AuthContext } from "../../../../context/AuthContext";
 import { db, loginWithGoogle, onLogin } from "../../../../../firebaseConfig";
 
-
-
 export const LoginContainer = () => {
   const { handleLogin } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +50,17 @@ export const LoginContainer = () => {
           console.log(res.user);
           /* console.log(userDoc.data()); */
           handleLogin(finallyUser);
-          navigate("/");
+
+          // Check if the "prevLocation" exists in localStorage
+          const prevLocation = localStorage.getItem("prevLocation");
+          if (prevLocation) {
+            // Navigate to "/checkout" if "prevLocation" exists
+            navigate("/checkout");
+            localStorage.removeItem("prevLocation");
+          } else {
+            // Navigate to "/" if "prevLocation" doesn't exist
+            navigate("/");
+          }
         } else {
           alert("Login failed. Please check your email or password.");
         }
@@ -79,7 +87,7 @@ export const LoginContainer = () => {
     try {
       // Authenticate the user with Google
       let res = await loginWithGoogle();
-  
+
       if (res.user) {
         const userCollection = collection(db, "users");
         const userRef = doc(userCollection, res.user.uid);
@@ -102,14 +110,21 @@ export const LoginContainer = () => {
         }
         // Log in the user and navigate
         handleLogin(finallyUser);
-        navigate("/");
+        const prevLocation = localStorage.getItem("prevLocation");
+        if (prevLocation) {
+          // Navigate to "/checkout" if "prevLocation" exists
+          navigate("/checkout");
+          localStorage.removeItem("prevLocation");
+        } else {
+          // Navigate to "/" if "prevLocation" doesn't exist
+          navigate("/");
+        }
       }
     } catch (error) {
       // Handle any authentication or database errors
       console.error("Error during Google login:", error);
     }
   };
-  
 
   return (
     <LoginWrapper>
@@ -249,46 +264,3 @@ const LoginWrapper = styled.div`
   max-width: 800px;
   margin: 0 auto;
 `;
-//LOGIN CREADO POR MI
-// import { useNavigate } from "react-router-dom";
-// import { Login } from "./Login";
-// import { login, loginWithGoogle } from "../../../../firebaseConfig";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
-
-// export const LoginContainer = () => {
-
-//     const navigate = useNavigate();
-
-//     const { handleSubmit, handleChange, errors } = useFormik({
-//       initialValues : {
-//         email: "",
-//         password: "",
-//       },
-//       onSubmit : async (values) => {
-//         let res = await login(values);
-//         navigate("/");
-//         return res
-//       },
-//       validateOnChange: false,
-//       validationSchema : Yup.object({
-//         email: Yup.string().email("Invalid email address").required("an email is required"),
-//         password: Yup.string().required("a password is required").min(6, "a minimum of 6 characters"),
-//       })
-//     })
-
-//     const handleSubmitGoogle = async() => {
-//         let res = await loginWithGoogle()
-//         navigate("/")
-//         return res
-//     }
-
-//   return (
-//     <Login
-//       handleSubmit={handleSubmit}
-//       handleChange={handleChange}
-//       handleSubmitGoogle={handleSubmitGoogle}
-//       errors={errors}
-//     />
-//   );
-// };

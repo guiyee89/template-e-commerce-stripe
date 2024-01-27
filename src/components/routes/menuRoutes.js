@@ -1,4 +1,3 @@
-import { AboutUs } from "../pages/about/AboutUs";
 import { CheckoutFormCartContainer } from "../pages/checkout/checkoutFormCart2.0/CheckoutFormCartContainer";
 import { Completion } from "../pages/checkout/checkoutStripe2.0/Completion";
 import { ContactUs } from "../pages/contact/ContactUs";
@@ -35,11 +34,6 @@ export const menuRoutes = [
         id: "contact",
         path: "/contact",
         Element: ContactUs
-    },
-    {
-        id: "about",
-        path: "/about",
-        Element: AboutUs
     },
     {
         id: "checkout",

@@ -1,8 +1,7 @@
 import "sweetalert2/dist/sweetalert2.css";
 //Creo el contexto del cart
 import { createContext, useState } from "react";
-import { toast } from "react-toastify";
-
+import { Bounce, toast } from "react-toastify";
 
 //exportamos la variable que contiene la funcion createContext()
 export const CartContext = createContext();
@@ -10,12 +9,11 @@ export const CartContext = createContext();
 //*********************************************//
 //CREO EL COMPONENTE PROVEEDOR DEL "CONTEXT"
 const CartContextProvider = ({ children }) => {
-  
   //Traemos los datos desde "localStorage", los guardamos en "cart", ejecutamos con "setCart". O que traiga "array vacio"
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
-  
+
   //Funcion para detectar por "id" si ya existe un producto un "cart"
   const isInCart = (id) => {
     let exist = cart.some((product) => product.id === id);
@@ -61,51 +59,34 @@ const CartContextProvider = ({ children }) => {
     }
   };
 
-  //Funcion "toastify" para producto agregado exitosamente
   const notifySuccess = () => {
-    toast
-      .promise(
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, 900);
-        }),
-        {
-          pending: "Adding to Cart...",
-          success: "Added successfully!",
-          error: "Error on adding product!",
-        }
-      )
-      .then(() => {
-        
-      })
-      .catch((error) => {
-        return error
-      });
+    toast.success("Added successfully!", {
+      position: "bottom-center",
+      autoClose: 550,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
   };
 
-  //Funcion "toastify" para producto con stock maxeado
-  const notifyMaxStock = () => {  
-    toast
-      .promise(
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, 1000);
-        }),
-        {
-          pending: "Adding to Cart...",
-        }
-      )
-      .then(() => {
-        toast.warn("Max stock reached!");
-        
-      })
-      .catch((error) => {
-        toast.error("Error on adding product!");
-        return error
-      });
+  const notifyMaxStock = () => {
+    toast.error("Max stock reached", {
+      position: "bottom-center",
+      autoClose: 550,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
   };
+
 
   //Limpiar todo el carrito
   const clearCart = () => {
@@ -193,17 +174,19 @@ const CartContextProvider = ({ children }) => {
   //Calcular SubTotal del carrito
   const getSubTotal = () => {
     const total = cart.reduce((acc, item) => {
-      return acc + item.quantity * item.unit_price
-    }, 0)
+      return acc + item.quantity * item.unit_price;
+    }, 0);
     return total;
-  }
+  };
 
   //Calcular precio total de los elementos en cart con y sin descuento
   const getTotalPrice = () => {
-    const hasDiscountItem = cart.some(item => item.discountPrice); // Check if any item has a discount
+    const hasDiscountItem = cart.some((item) => item.discountPrice); // Check if any item has a discount
     if (hasDiscountItem) {
       const total = cart.reduce((acc, item) => {
-        const itemPrice = item.discountPrice ? item.discountPrice : item.unit_price;
+        const itemPrice = item.discountPrice
+          ? item.discountPrice
+          : item.unit_price;
         return acc + item.quantity * itemPrice;
       }, 0);
       return total;
@@ -220,15 +203,16 @@ const CartContextProvider = ({ children }) => {
     const hasDiscount = cart.some((item) => item.discountPrice);
     if (hasDiscount) {
       const totalDiscount = cart.reduce((acc, item) => {
-        const itemDiscount = item.discountPrice ? item.discountPrice : item.unit_price;
+        const itemDiscount = item.discountPrice
+          ? item.discountPrice
+          : item.unit_price;
         return acc + item.quantity * (itemDiscount - item.unit_price); // Calculate the discount amount for each item
       }, 0);
-  
+
       return Math.abs(totalDiscount);
     }
-    return 0.00; // Return a string "0.00" if no discount is found
+    return 0.0; // Return a string "0.00" if no discount is found
   };
-  
 
   //(No es usada en esta app)
   //Identifico Quantity para que se mantenga la cantidad en todas las rutas / pages
@@ -254,7 +238,6 @@ const CartContextProvider = ({ children }) => {
     getTotalDiscount,
   };
 
-  
   //PROVEEMOS A LOS "CHILDREN" CON LA "DATA" DEL "CARTCONTEXT"
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 };
