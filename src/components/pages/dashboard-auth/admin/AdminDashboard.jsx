@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import styled, { css } from "styled-components/macro";
-import ExitToAppSharpIcon from "@mui/icons-material/ExitToAppSharp";
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import { AuthContext } from "../../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { AdminOrders } from "./manageOrders/AdminOrders";
 import { AdminNewsletters } from "./manageNewsletters/AdminNewsletters";
 import { ProductSearch } from "./manageProducts/ProductSearch";
@@ -44,8 +44,8 @@ export const AdminDashboard = () => {
         </DashboardListContainer>
         <LogoutBtn>
           <h4>Logout</h4>
-          <ExitToAppSharpIcon
-            sx={{ fontSize: "30px" }}
+          <LogoutSharpIcon
+            sx={{ fontSize: "25px" }}
             onClick={() => handleLogout(navigate("/"))}
           />
         </LogoutBtn>

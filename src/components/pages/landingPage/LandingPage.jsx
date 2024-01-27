@@ -103,7 +103,7 @@ export const LandingPage = () => {
             <TextDiv>
               <TextDiv1>
                 <TextTitle>All our Shoes</TextTitle>
-                <TextPromo>30% off</TextPromo>
+                <TextPromo>30% <TextPromoSpan>off</TextPromoSpan></TextPromo>
               </TextDiv1>
               <TextDiv2>
                 <TextSub>On second unit </TextSub>
@@ -127,7 +127,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 8px 20px 0;
+  margin: 36px 20px 0;
   overflow: hidden;
   @media (max-width: 700px) {
     margin-top: 25px;
@@ -240,7 +240,7 @@ const MidImgText = styled.h2`
   line-height: 0.9;
   text-transform: uppercase;
   margin: 9px 0px 14px;
-  font-family: "Playfair Display", serif;
+  font-family: "Gochi Hand", cursive;
   @media (max-width: 900px) {
     margin: 2px 0px 11px;
   }
@@ -270,7 +270,7 @@ const MidSpan = styled.span`
   text-transform: lowercase;
   font-size: 1.2rem;
   line-height: 2;
-  font-family: "Playfair Display", serif;
+  font-family: "Gochi Hand", cursive;
 `;
 const PriceSpan = styled.span``;
 const ShoesImg = styled.img`
@@ -425,8 +425,8 @@ const LinkStreched = styled(Link)`
   }
 `;
 const TextTitle = styled.h3`
-  font-size: clamp(1.5rem, 1.1vw + 1.3rem, 3.8rem);
-  font-family: "Playfair Display", serif;
+  font-size: clamp(2.7rem, 3vw + .9rem, 5.3rem);
+  font-family: "Gochi Hand", cursive;
 `;
 const TextPromo = styled.h3`
   font-size: clamp(2.9rem, 4vw + 1rem, 5.3rem);
@@ -436,15 +436,19 @@ const TextPromo = styled.h3`
   color: #b60404;
   margin-top: -8px;
 `;
+const TextPromoSpan = styled.span`
+   font-family: "Gochi Hand", cursive;
+   font-size: clamp(2.9rem, 3vw + 1rem, 5.3rem);
+`
 const TextSub = styled.h3`
-  font-size: clamp(1rem, 1.3vw + 1rem, 1.7rem);
+  font-size: clamp(1rem, 1.3vw + 1rem, 1.4rem);
   font-family: "Playfair Display", serif;
   @media (max-width: 900px) {
     margin-top: -5px;
   }
 `;
 const TextSub2 = styled.p`
-  font-size: clamp(0.8rem, 1vw + 0.4rem, 1.15rem);
+  font-size: clamp(0.8rem, 1vw + 0.4rem, 1rem);
   font-family: "Playfair Display", serif;
   @media (max-width: 600px) {
     margin-top: 4px;

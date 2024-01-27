@@ -70,7 +70,7 @@ export const PaymentElementCheckout = () => {
             <TitleTotalContainer>
               <Title>We Shop</Title>
               <Total>
-                {windowWidth > 750 ? <h2>$ {total.toFixed(2)}</h2> : null}
+                {windowWidth > 750 ? <p>$ {total.toFixed(2)}</p> : null}
               </Total>
             </TitleTotalContainer>
             <ItemsContainer windowWidth={windowWidth}>
@@ -150,6 +150,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: ${(props) => (props.windowWidth > 750 ? "row" : "column")};
   justify-content: space-between;
+  margin-bottom: 30px;
 `;
 const CheckoutContainer = styled.div`
   display: flex;
