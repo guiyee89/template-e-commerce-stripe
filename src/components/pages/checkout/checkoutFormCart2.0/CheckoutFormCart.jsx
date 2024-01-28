@@ -56,6 +56,7 @@ export const CheckoutFormCart = ({
   };
 
   const handleLoginLinkClick = () => {
+    window.location.assign("/login");
     localStorage.setItem("prevLocation", location.pathname);
   };
 
@@ -86,7 +87,7 @@ export const CheckoutFormCart = ({
         <FormItemsContainer windowwidth={windowWidth}>
           <FormItemsWrapper>
             {isLoading === false ? (
-              <div style={{width:"52%", height:"100%"}}></div>
+              <div style={{ width: "52%", height: "100%" }}></div>
             ) : (
               <FormWrapper windowwidth={windowWidth}>
                 <Form onSubmit={handleSubmit} windowwidth={windowWidth}>
@@ -107,7 +108,7 @@ export const CheckoutFormCart = ({
                             {user.email}
                           </p>
 
-                          <LogoutBtn
+                          <LogBtn
                             type="button"
                             onClick={() => {
                               localStorage.setItem(
@@ -118,7 +119,7 @@ export const CheckoutFormCart = ({
                             }}
                           >
                             Log out
-                          </LogoutBtn>
+                          </LogBtn>
                         </LogoutContainer>
                       </div>
                     </>
@@ -137,9 +138,12 @@ export const CheckoutFormCart = ({
                         <LoginContainer>
                           <p style={{ textAlign: "end" }}>
                             Have an account?{" "}
-                            <Link to="/login" onClick={handleLoginLinkClick}>
+                            <LogBtn
+                              type="button"
+                              onClick={handleLoginLinkClick}
+                            >
                               Log in
-                            </Link>
+                            </LogBtn>
                           </p>
                         </LoginContainer>
                       </div>
@@ -259,10 +263,10 @@ export const CheckoutFormCart = ({
                           width:
                             windowWidth < 550
                               ? "100%"
-                              : windowWidth < 800
-                              ? "90%"
-                              : "85%",
-                          height: windowWidth < 750 ? "100%" : "68%",
+                              : windowWidth < 1100
+                              ? "95%"
+                              : "110%",
+                          height: windowWidth < 750 ? "100%" : "645px",
                           padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
                         }}
                       >
@@ -460,6 +464,18 @@ const LoginContainer = styled.div`
   font-size: 0.8rem;
   padding-right: 5px;
 `;
+const LogBtn = styled.button`
+  border: none;
+  background-color: transparent;
+  color: blue;
+  text-decoration: underline;
+  :hover {
+    color: #4f4fe7;
+  }
+  :active {
+   color: #bdbdf0;
+  }
+`;
 const LogoutContainer = styled.div`
   width: 100%;
   display: flex;
@@ -472,12 +488,7 @@ const LogoutContainer = styled.div`
   border-bottom: 1px solid lightgray;
   padding-left: 4px;
 `;
-const LogoutBtn = styled.button`
-  border: none;
-  background-color: transparent;
-  color: blue;
-  text-decoration: underline;
-`;
+
 const DeliveryInfoTitle = styled.h2`
   text-align: ${(props) => props.windowwidth < 851 && "center"};
   color: black;

@@ -12,17 +12,17 @@ export const NewsLetter = () => {
             label="Add your Email"
             variant="outlined"
             name="email"
-            // sx={{ marginTop: "24px" }}
+            size="small"
           />
           <Button type="submit">Subscribe</Button>
         </Form>
-        <Text>Follow us in our social media</Text>
+       {/*  <Text>Follow us in our social media</Text> */}
       </Wrapper>
     </>
   );
 };
 const Wrapper = styled.section`
-  height: 350px;
+  height: 250px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ const Form = styled.form`
   display: flex;
   gap: 1rem;
   height: 100px;
-  align-items: baseline;
+  align-items: center;
   @media (max-width: 500px) {
     flex-direction: column;
     align-items: center;
@@ -52,7 +52,6 @@ const Form = styled.form`
 const Input = styled(TextField)`
   border-radius: 13px;
   width: 280px;
-  height: 55px;
   background-color: white;
   z-index: 0;
   :focus-visible {
@@ -62,9 +61,9 @@ const Input = styled(TextField)`
 `;
 const Button = styled.button`
   width: 140px;
-  height: 45px;
-  background-color: rgb(196 129 3);
-  border-radius: 30px;
+  height: 41px;
+  background-color: rgb(196, 129, 3);
+  border-radius: 12px;
   color: white;
   text-transform: uppercase;
   font-weight: bold;

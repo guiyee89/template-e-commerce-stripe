@@ -312,11 +312,11 @@ const StripeImg = styled.img`
 `;
 
 const Button = styled.button`
-  background-color: rgb(0 12 79);
+  background-color: rgb(4 4 4);
   color: white;
   font-weight: 600;
   height: 42px;
-  border-radius: 8px;
+  border-radius: 5px;
 `;
 const LoaderOverlay = styled.div`
   position: fixed;
