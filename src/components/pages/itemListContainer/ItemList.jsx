@@ -238,7 +238,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   max-width: 1400px;
-  padding: 2px 0px;
+  padding: 2px 0px 78px;
   margin: 0px 10px 50px 0;
   gap: 1.1rem;
   -webkit-box-pack: center;
@@ -551,7 +551,8 @@ const PaginationWrapperBottom = styled.div`
   display: flex;
   width: 100%;
   margin: 20px 0 40px;
-  position: relative;
+  bottom: 0;
+  position: absolute;
   justify-content: center;
   @media (max-width: 900px) {
     width: 104%;
