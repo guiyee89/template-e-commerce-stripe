@@ -34,7 +34,7 @@ export const SideCart = () => {
     setCheckoutLoading(true);
     setTimeout(() => {
       realizarCompra();
-    }, 2000);
+    }, 1000);
   };
 
   const realizarCompra = async () => {
@@ -77,6 +77,7 @@ export const SideCart = () => {
     }
 
     if (isValid) {
+      /* window.location.assign("/checkout"); */
       navigate("/checkout");
       setCheckoutLoading(false);
     } else {
@@ -326,8 +327,8 @@ const QuantityWrapper = styled.div`
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  @media (max-width:600px){
-    width:90px
+  @media (max-width: 600px) {
+    width: 90px;
   }
 `;
 const ItemImg = styled.img`

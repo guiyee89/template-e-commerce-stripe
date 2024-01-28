@@ -85,7 +85,7 @@ const Wrapper = styled.div`
   min-height: 100%;
   overflow-x: clip;
   padding-right: ${({ isOpen, windowWidth }) =>
-    windowWidth > 950 ? (isOpen ? "0" : "16px") : "0"};
+    windowWidth > 901 ? (isOpen ? "0" : "16px") : "0"};
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -106,7 +106,7 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  min-height: 98vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;

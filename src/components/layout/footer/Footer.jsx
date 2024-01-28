@@ -55,7 +55,7 @@ const Section = styled.section`
 const FooterWrapper = styled.footer`
   height: auto;
   font-family: open sans-serif;
-  padding-top: 40px;
+  padding-top: 26px;
   color: black;
 `;
 
@@ -85,8 +85,7 @@ const SocialsWrapper = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1rem;
-  margin: 1rem 0 3rem 0;
+
 `;
 
 const SocialsItem = styled.li`
