@@ -618,7 +618,7 @@ const ClearFilterBtn = styled.button`
 const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 90%;
+  height: 76.5%;
   width: 95%;
   align-items: center;
   overflow-x: hidden;
