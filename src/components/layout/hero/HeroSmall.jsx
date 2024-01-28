@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { useContext } from "react";
 
 export const HeroSmall = () => {
   const [index, setIndex] = useState(0);
+  const { isOpen } = useContext(GlobalToolsContext);
 
   // Function to handle the carousel interval
   useEffect(() => {
@@ -25,7 +28,7 @@ export const HeroSmall = () => {
         <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
           <Carousel.Item>
             <Banner>
-              <BannerText>
+              <BannerText isOpen={isOpen}>
                 pants, shorts, sweaters, shirts and more...
                 <br />
                 <Span>up to 25%off</Span>
@@ -34,7 +37,7 @@ export const HeroSmall = () => {
           </Carousel.Item>
           <Carousel.Item>
             <Banner>
-              <BannerText>
+              <BannerText isOpen={isOpen}>
                 on the second unit for all our shoes...
                 <br />
                 <Span>30%off</Span>
@@ -106,7 +109,7 @@ const BannerText = styled.p`
   letter-spacing: 3px;
   word-spacing: 5px;
   text-align: center;
-  padding: 0 32px;
+  padding: ${({ isOpen }) => (isOpen ? "0 32px 0 33px" : "0 32px")}
 `;
 
 const Span = styled.span`
