@@ -34,6 +34,7 @@ export const DesktopFilter = ({
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
+
   return (
     <>
       <FilterHeader>
@@ -567,6 +568,7 @@ const FilterHeader = styled.div`
   justify-content: center;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
+  align-items: center;
 `;
 const FilterBy = styled.p`
   font-weight: bold;
@@ -616,7 +618,7 @@ const ClearFilterBtn = styled.button`
 const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 68%;
+  height: 90%;
   width: 95%;
   align-items: center;
   overflow-x: hidden;
@@ -663,22 +665,23 @@ const OrderByWrapper = styled.div`
 const OrderByBtn = styled.button`
   width: 100%;
   text-align: inherit;
-  border-radius: 3%;
+  border-radius: 2px;
   margin-bottom: 5px;
   padding: ${(props) => (props.active ? "6px 3px" : "6px 3px")};
   padding-left: 6px;
   text-transform: uppercase;
   color: ${(props) => (props.active ? "#000000" : "black")};
-  font-size: ${(props) => (props.active ? "0.7rem" : "0.65rem")};
+  font-size: ${(props) => (props.active ? "0.67rem" : "0.65rem")};
   background-color: ${(props) =>
-    props.active ? "rgb(189 189 189)" : "rgb(244 244 244 / 30%);"};
-  border: ${(props) =>
+    props.active ? "rgb(189 189 189 / 65%)" : "rgb(244 244 244 / 30%)"};
+  border: none;
+  border-bottom: ${(props) =>
     props.active ? "1px solid #857a7a" : "1px solid #8f8f8f89;"};
-  font-weight: ${(props) => (props.active ? "500" : "normal")};
+  font-weight: ${(props) => (props.active ? "500" : "500")};
   text-align: ${(props) => (props.active ? "center" : "normal")};
-  &:hover {
+  /* &:hover {
     background-color: ${(props) => (props.active ? "#979797" : "lightgrey")};
-  }
+  } */
 `;
 const ColorCheckbox = styled.input`
   appearance: none;

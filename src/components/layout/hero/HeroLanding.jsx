@@ -45,7 +45,7 @@ export const HeroLanding = () => {
             <CarouselImg
               className="d-block w-100"
               src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771372/web%20access/samples%20for%20e-commerce/Hero/2023-06-15_18h29_53_qtqorc600_gt3fsj.png"
-              alt="First slide"
+              alt="Second slide"
             />
           </picture>
         </CarouselItem>
@@ -84,12 +84,11 @@ export const HeroLanding = () => {
             )}
             <CarouselImg
               className="d-block w-100"
-              src="https://res.cloudinary.com/derdim3m6/image/upload/v1705670243/web%20access/samples%20for%20e-commerce/Hero/defflu7gn7vxkj8g0zpw.png"
+              src="https://res.cloudinary.com/derdim3m6/image/upload/v1706455563/web%20access/samples%20for%20e-commerce/Hero/vgbvvqxoqdabcpkt9mpy.png"
               alt="First slide"
             />
           </picture>
         </CarouselItem>
-       
       </StyledCarousel>
 
       <MarginWrapper>
@@ -109,6 +108,8 @@ const Wrapper = styled.div`
   max-height: 100%;
 `;
 const StyledCarousel = styled(Carousel)`
+  max-width: 1450px;
+  margin: 0 auto;
   @media (max-width: 1100px) {
     margin: -17px 0 30px;
   }
@@ -128,11 +129,8 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
-   
-    
     background-color: rgba(0, 0, 0, 0.55);
     @media (max-width: 550px) {
- 
       height: 2.6rem;
       background-color: transparent;
     }
@@ -150,7 +148,7 @@ const StyledCarousel = styled(Carousel)`
     }
   }
   .carousel-control-prev {
-    left: 1.9%;
+    left: /* 1.9%; */ -5.1%;
     @media (max-width: 800px) {
       left: -13.2%;
     }
@@ -163,7 +161,7 @@ const StyledCarousel = styled(Carousel)`
   }
 
   .carousel-control-next {
-    right: 1.9%;
+    right: /* 1.9%; */ -5.1%;
     @media (max-width: 800px) {
       right: -13.2%;
     }
@@ -175,7 +173,7 @@ const StyledCarousel = styled(Carousel)`
     }
   }
   .carousel-indicators [data-bs-target] {
-    margin-right: 15px;
+    margin-right: 5px;
     border-radius: 50%;
     width: 12px;
     height: 12px;

@@ -371,7 +371,7 @@ const StyledCarousel = styled(Carousel)`
     }
   }
   .carousel-indicators [data-bs-target] {
-    margin: 10px;
+    margin: 4px 6px 14px;
     border-radius: 50%;
     width: 6px;
     height: 6px;
@@ -418,7 +418,7 @@ const ItemWrapper = styled.div`
   max-height: 440px;
   max-width: 315px;
   width: 100%;
-  min-width: 165px;
+  min-width: 135px;
   padding-top: 1.5px;
   padding-bottom: 5px;
   @media (max-width:600px){

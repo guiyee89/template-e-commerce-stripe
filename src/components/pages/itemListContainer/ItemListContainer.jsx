@@ -269,6 +269,7 @@ const ItemsFiltersWrapper = styled.div`
   height: 100%;
   width: 100%;
   max-width: 1618px;
+  margin-top: 38px;
   @media (max-width: 900px) {
     grid-column: 1/13;
     margin: 0 auto;

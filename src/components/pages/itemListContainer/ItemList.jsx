@@ -117,10 +117,10 @@ export const ItemList = ({
         <FilterBtn>
           Filters: <TuneIcon onClick={toggleFilterMenu} />
         </FilterBtn>
-        <ItemListTitle>{categoryTitle}</ItemListTitle>
       </FilterContainer>
 
       <HeaderContainer>
+        <ItemListTitle>{categoryTitle}</ItemListTitle>
         <PaginationWrapperTop>
           <Pagination
             size={windowWidth < 600 ? "small" : "medium"}
@@ -239,7 +239,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   max-width: 1400px;
   padding: 2px 0px;
-  margin: 0px 10px 0 0;
+  margin: 0px 10px 50px 0;
   gap: 1.1rem;
   -webkit-box-pack: center;
   justify-items: center;
@@ -480,6 +480,7 @@ const HeaderContainer = styled.div`
   display: flex;
   width: 94%;
   justify-content: flex-end;
+  margin-top: 44px;
   margin-bottom: 5px;
   @media (max-width: 900px) {
     width: 100%;
@@ -562,7 +563,6 @@ const ItemListTitle = styled.h1`
   font-size: clamp(0.8rem, 2vw + 1px, 1.6rem);
   font-weight: bold;
   text-transform: capitalize;
-  margin: 50px 0 -50px;
   @media (max-width: 900px) {
     width: 50%;
     margin: auto;

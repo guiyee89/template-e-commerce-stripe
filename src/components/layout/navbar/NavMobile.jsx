@@ -10,8 +10,9 @@ import { menuRoutes } from "../../routes/menuRoutes";
 import { AuthContext } from "../../context/AuthContext";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import LoginSharpIcon from '@mui/icons-material/LoginSharp';
-import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import LoginSharpIcon from "@mui/icons-material/LoginSharp";
+import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavMobile = () => {
   const navigate = useNavigate();
@@ -177,7 +178,12 @@ export const NavMobile = () => {
                   scrolled={scroll}
                   onClick={handleNavLinkClick}
                 >
-                  about us
+                  sale
+                  <LocalFireDepartmentIcon
+                    color="warning"
+                    fontSize="small"
+                    sx={{ padding: "0 0 3px 3px" }}
+                  />
                 </NavLink>
               </NavList>
               <NavList>
@@ -186,7 +192,7 @@ export const NavMobile = () => {
                   scrolled={scroll}
                   onClick={handleNavLinkClick}
                 >
-                  contact us
+                  contact
                 </NavLink>
               </NavList>
             </NavListWrapper>
@@ -196,7 +202,9 @@ export const NavMobile = () => {
                 <h4>Login / Sign up</h4>
                 <LoginSharpIcon
                   sx={{ fontSize: "26px" }}
-                  onClick={() => navigate("/login")}
+                  onClick={() =>
+                    /*navigate("/login")*/window.location.assign("/login")
+                  }
                 />
               </LoginBtn>
             ) : user.rol === rolAdmin ||
@@ -208,7 +216,11 @@ export const NavMobile = () => {
                   <h4>Admin</h4>
                   <DashboardCustomizeRoundedIcon
                     sx={{ fontSize: "27px" }}
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() =>
+                      /*navigate("/dashboard")*/window.location.assign(
+                        "/dashboard"
+                      )
+                    }
                   />
                 </DashboardBtn>
               </>
@@ -218,7 +230,11 @@ export const NavMobile = () => {
                   <h4>Profile</h4>
                   <AccountCircleSharpIcon
                     sx={{ fontSize: "30px", marginBottom: "-13px" }}
-                    onClick={() => navigate("/user-orders")}
+                    onClick={() =>
+                      /*navigate("/user-orders")*/window.location.assign(
+                        "/user-orders"
+                      )
+                    }
                   />
                 </ProfileBtn>
               </>

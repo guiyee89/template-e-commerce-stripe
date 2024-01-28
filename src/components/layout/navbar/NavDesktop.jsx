@@ -9,8 +9,9 @@ import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
-import LoginSharpIcon from '@mui/icons-material/LoginSharp';
-import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import LoginSharpIcon from "@mui/icons-material/LoginSharp";
+import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavDesktop = () => {
   const navigate = useNavigate();
@@ -185,7 +186,7 @@ export const NavDesktop = () => {
                             </CategoryList>
                           </CategoryContainer>
                         </CategoryDropDown>
-                        <ImagesDropDown>
+                        <ImagesDropDown scrolled={scroll}>
                           {hoveredCategory === "all-products" && (
                             <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703952195/web%20access/samples%20for%20e-commerce/Nav%20Images/lncaoen82w7hf8epzswd.png" />
                           )}
@@ -215,7 +216,12 @@ export const NavDesktop = () => {
                       scrolled={scroll}
                       onClick={handleNavLinkClick}
                     >
-                      about us
+                      sale
+                      <LocalFireDepartmentIcon
+                        color="warning"
+                        fontSize="small"
+                        sx={{ padding: "0 0 3px 3px" }}
+                      />
                     </NavLink>
                   </NavList>
                   <NavList>
@@ -224,7 +230,7 @@ export const NavDesktop = () => {
                       scrolled={scroll}
                       onClick={handleNavLinkClick}
                     >
-                      contact us
+                      contact
                     </NavLink>
                   </NavList>
                 </NavListWrapper>
@@ -240,7 +246,11 @@ export const NavDesktop = () => {
                       <h4>Login / Sign up</h4>
                       <LoginSharpIcon
                         sx={{ fontSize: "25px" }}
-                        onClick={() => navigate("/login")}
+                        onClick={() =>
+                          /* navigate("/login") */window.location.assign(
+                            "/login"
+                          )
+                        }
                       />
                     </LoginBtn>
                   ) : user.rol === rolAdmin ||
@@ -252,7 +262,11 @@ export const NavDesktop = () => {
                         <h4>Admin</h4>
                         <DashboardCustomizeRoundedIcon
                           sx={{ fontSize: "25px" }}
-                          onClick={() => navigate("/dashboard")}
+                          onClick={() =>
+                            /* navigate("/dashboard")  */window.location.assign(
+                              "/dashboard"
+                            )
+                          }
                         />
                       </DashboardBtn>
                     </>
@@ -262,7 +276,11 @@ export const NavDesktop = () => {
                         <h4>Profile</h4>
                         <AccountCircleSharpIcon
                           sx={{ fontSize: "28px", marginBottom: "-6px" }}
-                          onClick={() => navigate("/user-orders")}
+                          onClick={() =>
+                            /* navigate("/user-orders") */ window.location.assign(
+                              "/user-orders"
+                            )
+                          }
                         />
                       </ProfileBtn>
                     </>
@@ -340,7 +358,7 @@ const NavListWrapper = styled.ul`
   list-style: none;
   margin-bottom: ${(props) =>
     props.scrolled === "scrolled" ? "-10px" : "-21px"};
- 
+  padding-right: 24px;
   @media screen and (max-width: 50rem) {
     display: none;
   }
@@ -367,6 +385,7 @@ const DropDown = styled.div`
   border-bottom: 1px solid lightgray;
   justify-content: center;
   margin-top: ${(props) => (props.scrolled === "scrolled" ? "-26px" : "0px")};
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px;
   ${ProductsDropDown}:hover & {
     display: flex;
     visibility: visible;
@@ -409,7 +428,7 @@ const ImagesDropDown = styled.div`
   position: relative;
   width: 190px;
   height: 210px;
-  margin: 0 9px 0 -13px;
+  margin: ${(props) => (props.scrolled === "scrolled" ? "0px 20px 0px -17px" : "0px 16px 0px -15px")};
   border-left: 1px solid lightgrey;
 `;
 const Img = styled.img`
@@ -512,8 +531,7 @@ const CategoryLink = styled(Link)`
 const DashCartContainer = styled.div`
   display: flex;
   align-items: center;
-  padding-right: ${({ isOpen }) =>
-      isOpen ? "0" : "16.8px"};
+  padding-right: ${({ isOpen }) => (isOpen ? "10px" : "27px")};
 `;
 const DashboardBtn = styled.button`
   background-color: transparent;
