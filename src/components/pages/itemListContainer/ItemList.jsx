@@ -222,10 +222,10 @@ export const ItemList = ({
 
       {/* Pagination */}
       <PaginationWrapperBottom>
-        <Pagination
+        <PaginationBtn
           size={windowWidth < 600 ? "medium" : "large"}
           shape="rounded"
-          variant="outlined"
+          variant=""
           count={totalPages} // Set the count to the total number of pages
           page={currentPage}
           onChange={(event, value) => {
@@ -483,8 +483,8 @@ const Discount = styled.h4`
 `;
 const HeaderContainer = styled.div`
   display: flex;
-  width: 94%;
-  justify-content: flex-end;
+  width: 100%;
+  justify-content: center;
   margin-top: 44px;
   margin-bottom: 5px;
   @media (max-width: 900px) {
@@ -545,7 +545,7 @@ const ClipLoaderBottom = styled(ClipLoader)`
 `;
 const PaginationWrapperTop = styled.div`
   display: flex;
-  width: 45%;
+  width: 33%;
   margin: 1px 10px 21px -8px;
   justify-content: center;
   @media (max-width: 900px) {
@@ -564,7 +564,20 @@ const PaginationWrapperBottom = styled.div`
     width: 104%;
   }
 `;
+const PaginationBtn = styled(Pagination)`
+  background-color: #d3d3d385;
+  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    background-color: rgba(0, 0, 0, 0.2);
+    :hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
 const ItemListTitle = styled.h1`
+  width: 34%;
   color: #2b2929;
   text-align: center;
   font-size: clamp(0.8rem, 2vw + 1px, 1.6rem);
@@ -579,13 +592,13 @@ const ItemListTitle = styled.h1`
   }
 `;
 const ItemsQuantity = styled.p`
-  width: 25%;
+  width: 33%;
   text-align: center;
   font-weight: 600;
   font-size: clamp(0.7rem, 1.7vw + 1px, 0.9rem);
-  margin: 6px 10px 0 -20px;
+  margin: 6px 0 0 0;
   word-spacing: 5px;
   @media (max-width: 900px) {
-    margin: 8px 0px 8px -2px;
+    margin: 8px 0px 8px 0px;
   }
 `;
