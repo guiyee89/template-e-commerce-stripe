@@ -117,10 +117,15 @@ export const ItemList = ({
         <FilterBtn>
           Filters: <TuneIcon onClick={toggleFilterMenu} />
         </FilterBtn>
+        <ItemListTitle style={{ display: windowWidth > "900" && "none" }}>
+          {categoryTitle}
+        </ItemListTitle>
       </FilterContainer>
 
       <HeaderContainer>
-        <ItemListTitle>{categoryTitle}</ItemListTitle>
+        <ItemListTitle style={{ display: windowWidth < "901" && "none" }}>
+          {categoryTitle}
+        </ItemListTitle>
         <PaginationWrapperTop>
           <Pagination
             size={windowWidth < 600 ? "small" : "medium"}
@@ -252,7 +257,7 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 900px) {
-    margin: 0 0 0 -4.1px;
+    margin: 0 10px 0 11px;
   }
   @media (max-width: 500px) {
     grid-template-columns: repeat(1, 1fr);
@@ -495,37 +500,38 @@ const FilterContainer = styled.div`
   margin-bottom: 19px;
   @media (max-width: 900px) {
     display: flex;
-    width: 108%;
+    width: 100%;
     position: sticky;
-    margin: 0px auto 6px -17px;
-    border-bottom: 1px solid lightgray;
+    margin: 0px auto 6px 0px;
     top: 56px;
     align-items: center;
+    justify-content: space-between;
     z-index: ${({ isMenuOpen, isFilterOpen }) =>
       isMenuOpen && isFilterOpen ? "1" : "0"};
     transition: z-index 0.3s ease-out;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0%;
+      left: -24px;
+      width: 106%;
+      height: 1px;
+      background-color: lightgray;
+    }
   }
 `;
 
 const FilterBtn = styled.div`
   font-weight: 600;
-  margin: 10px -28px 10px -1%;
+  margin: 10px 0px 10px 0px;
   word-spacing: 7px;
-  width: 49.1%;
+  width: 100%;
   border-right: 1px solid #aeacac;
   font-size: clamp(0.88rem, 2vw + 1px, 1.2rem);
   text-align: center;
   @media (min-width: 901px) {
     display: none;
-  }
-  @media (max-width: 800px) {
-    margin: 10px -4px 10px -0.8%;
-  }
-  @media (max-width: 650px) {
-    margin: 10px -2.4% 10px -0.4%;
-  }
-  @media (max-width: 550px) {
-    margin: 10px -4px 10px 0%;
   }
 `;
 
@@ -544,7 +550,7 @@ const PaginationWrapperTop = styled.div`
   justify-content: center;
   @media (max-width: 900px) {
     width: 100%;
-    margin: 10px 0 15px -8px;
+    margin: 10px 0 15px -2px;
   }
 `;
 const PaginationWrapperBottom = styled.div`
@@ -565,7 +571,7 @@ const ItemListTitle = styled.h1`
   font-weight: bold;
   text-transform: capitalize;
   @media (max-width: 900px) {
-    width: 50%;
+    width: 100%;
     margin: auto;
   }
   @media (max-width: 600px) {
@@ -580,6 +586,6 @@ const ItemsQuantity = styled.p`
   margin: 6px 10px 0 -20px;
   word-spacing: 5px;
   @media (max-width: 900px) {
-    margin: 8px 0px 8px -18px;
+    margin: 8px 0px 8px -2px;
   }
 `;

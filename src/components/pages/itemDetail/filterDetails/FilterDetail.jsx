@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../firebaseConfig";
@@ -10,17 +10,16 @@ export const FilterDetail = ({
   handleSizeLoading,
   handleColorLoading,
 }) => {
-  //////////////     //////////////    ////////////      ////////////      /////////////
+  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
   const [selectedFilters, setSelectedFilters] = useState({
-    //set selectedFilters with color and size values
     color: null,
     size: null,
   });
   const [relatedItems, setRelatedItems] = useState([]); //Items related to the selectedItem prop
-  const [filteredItem, setFilteredItem] = useState({}); //Item filtered
+  const [filteredItem, setFilteredItem] = useState({});
 
-  //////////////     //////////////    ////////////      ////////////      /////////////
-  //           FETCH ITEMS RELATED TO "selectedItem" BY productId PROPERTY              //           (Firestore database)
+  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
+  //                         FETCH ITEMS RELATED TO "selectedItem" BY productId PROPERTY             (Firestore database)              //
 
   useEffect(() => {
     const fetchRelatedItems = () => {
@@ -42,7 +41,6 @@ export const FilterDetail = ({
           console.error("Error fetching related items:", error);
         });
     };
-
     // Fetch related items only once when the component mounts
     fetchRelatedItems();
     // Set the color and size checkboxes according to the selectedItem at first rendering
@@ -52,8 +50,8 @@ export const FilterDetail = ({
     });
   }, [selectedItem]);
 
-  //////////////     //////////////    ////////////      ////////////      /////////////
-  //            HANDLING OF COLOR AND SIZE SELECTION ON-CHANGE  +  LOADERS            //
+  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
+  //                                      HANDLING OF COLOR AND SIZE SELECTION ON-CHANGE  +  LOADERS                                         //
 
   // Function to handle color filter selection change
   const handleColorChange = (color) => {
@@ -100,8 +98,8 @@ export const FilterDetail = ({
     }
   }, [selectedFilters, relatedItems, onFilterItemChange]);
 
-  //////////////     //////////////    ////////////      ////////////      //////////////
-  //                      LOGIC FOR COLOR & SIZE RENDERING                           //
+  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
+  //                                            LOGIC FOR COLOR & SIZE RENDERING                                                             //
   //Create map for properties existing "color"
   const uniqueColors = Array.from(
     new Set(relatedItems.map((item) => item.color))
@@ -110,7 +108,7 @@ export const FilterDetail = ({
   //Render custom "size" for clothing or map existing "size" for shoes
   const renderSizes = () => {
     const customStringSizes = ["xs", "s", "m", "l", "xl", "xxl"];
-    const customNumberSizes = [39, 40, 41, 42, 43, 44, 45]
+    const customNumberSizes = [39, 40, 41, 42, 43, 44, 45];
 
     if (typeof selectedItem.size === "string") {
       // If selectedItem.size is a string, render customStringSizes
@@ -120,16 +118,6 @@ export const FilterDetail = ({
       return customNumberSizes;
     }
     return [];
-    
-    /* const uniqueSizesShoes = Array.from(
-      new Set(relatedItems.map((item) => item.size))
-    );
-    return selectedItem.category === "shoes" || selectedItem.category === "bags" 
-      ? uniqueSizesShoes
-          .map((size) => parseInt(size, 10))
-          .sort((a, b) => a - b)
-          .map((sizeNumber) => sizeNumber.toString())
-      : customStringSizes; */
   };
 
   //Manipulate "size" enabling/disabling by selecting a "color" checking which sizes are available
@@ -142,13 +130,12 @@ export const FilterDetail = ({
       )
     );
   };
-  // ... (other handlers)
   const availableSizesForColor = selectedFilters.color
     ? getAvailableSizesForColor(selectedFilters.color)
     : [];
 
-  //////////////     //////////////    ////////////      ////////////      //////////////
-  //                                 RENDERING                                         //
+  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
+  //                                                   RENDERING                                                                             //
   return (
     <>
       <Wrapper>

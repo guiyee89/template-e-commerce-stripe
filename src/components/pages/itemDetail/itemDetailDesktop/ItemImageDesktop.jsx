@@ -9,9 +9,9 @@ export const ItemImageDesktop = ({
   selectedItem,
   loadingColorFilter,
 }) => {
-  const [selectedImage, setSelectedImage] = useState({});
+  const [selectedImage, setSelectedImage] = useState({ index: 0, source: "" });
   const [imagesToRender, setImagesToRender] = useState([]);
-  const filteredImagesToRender = imagesToRender.filter( (image) => image !== null)//Render images - Avoid null values in array
+  const filteredImagesToRender = imagesToRender.filter((image) => image !== null); //Render images - Avoid null values in array
   const { progress, setProgress, setVisible, windowHeight } = useContext(GlobalToolsContext);
   const [loadedImages, setLoadedImages] = useState(0);
 
@@ -25,12 +25,18 @@ export const ItemImageDesktop = ({
   useEffect(() => {
     if (filteredItem && Object.keys(filteredItem).length > 0) {
       setImagesToRender(filteredItem.img.slice(0, 5));
-      setSelectedImage({ image: selectedItem.img[0], index: 0 });
+      // Find the selected image index in the filtered item's images
+      const selectedImageIndex = filteredItem.img.indexOf(selectedImage.source);
+
+      setSelectedImage({
+        index: selectedImageIndex !== -1 ? selectedImageIndex : 0,
+        source: selectedImage.source,
+      });
     }
-  }, [filteredItem]);
+  }, [filteredItem, selectedImage.source]);
 
   const handleImageClick = (image, index) => {
-    setSelectedImage({ image, index });
+    setSelectedImage({ index, source: image });
   };
 
   useEffect(() => {
@@ -55,10 +61,9 @@ export const ItemImageDesktop = ({
 
   useEffect(() => {
     const totalImages = imagesToRender.filter((image) => image !== null).length;
-  
+
     if (loadedImages === totalImages) {
       // All non-null images are loaded
-      console.log(loadedImages)
       setProgress(100);
       if (progress === 100) {
         setVisible(false);
@@ -66,14 +71,14 @@ export const ItemImageDesktop = ({
     }
   }, [loadedImages, setVisible]);
 
-
-  
   return (
     <Wrapper>
       <ImgAsideWrapper>
         {filteredImagesToRender.map((image, index) => (
           <React.Fragment key={`img-aside-${index}`}>
-            {image !== null && loadedImages <= index && loadingColorFilter === true ? (
+            {image !== null &&
+            loadedImages <= index &&
+            loadingColorFilter === true ? (
               <LoaderContainer key={`loader-container-${index}`}>
                 <ClipLoader color="#8f501a" size={17} />
               </LoaderContainer>

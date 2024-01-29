@@ -259,7 +259,7 @@ const ItemListWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   @media (max-width: 900px) {
-    width: 95%;
+    width: 100%;
     grid-column: 1/13;
   }
 

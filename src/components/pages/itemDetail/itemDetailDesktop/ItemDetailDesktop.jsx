@@ -31,14 +31,13 @@ export const ItemDetailDesktop = ({
       };
     }
     addToCart(data);
-    //Reset the filteredItem state after adding to cart
-    setFilteredItem({});
+    /* setFilteredItem({}); */ //Reset the filteredItem state after adding to cart
   };
 
   //Handle filtering size & color
   const handleFilterItemChange = (item) => {
     if (item === undefined) {
-      setFilteredItem(selectedItem);
+      setFilteredItem(selectedItem || filteredItem);
     } else {
       setFilteredItem(item);
     }
