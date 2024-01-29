@@ -43,8 +43,9 @@ export const Payment = () => {
       const total = getTotalPrice();
       try {
         const response = await axios.post(
-         /*  "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent", */
-          "http://localhost:3000/create-payment-intent", {
+          /*  "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent", */
+          "http://localhost:3000/create-payment-intent",
+          {
             items: cart,
             amount: total * 100,
           }
@@ -68,7 +69,7 @@ export const Payment = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       {stripePromise && clientSecret && (
         <Elements
           stripe={stripePromise}
@@ -79,16 +80,16 @@ export const Payment = () => {
         </Elements>
       )}
       {isFormLoading && (
-        <RingLoader>
+        <RingLoaderContainer>
           <Ring size={35} lineWeight={7} speed={1} color="black" />
-        </RingLoader>
+        </RingLoaderContainer>
       )}
     </div>
   );
 };
-const RingLoader = styled.div`
+const RingLoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 120px;
+  height: 84%;
 `;

@@ -30,7 +30,7 @@ export const ItemDetailMobile = ({ selectedItem }) => {
       };
     }
     addToCart(data);
-    setFilteredItem({}); // Reset the filteredItem state after adding to cart
+    /* setFilteredItem({}); */ // Reset the filteredItem state after adding to cart
   };
 
   ///////////////////////////////////////////////////////////////////////////////////

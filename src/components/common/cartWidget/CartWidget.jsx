@@ -36,6 +36,9 @@ const Contador = styled(Badge)`
   padding-left: 8px;
   margin: 0 5px 0 0;
   z-index: 0;
+  @media (max-width: 950px) {
+    margin: 0 24px 0 0;
+  }
   .css-16rm5dn-MuiBadge-badge {
     font-size: 0.75rem;
     height: 21.2px;

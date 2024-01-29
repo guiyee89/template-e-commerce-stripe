@@ -269,7 +269,7 @@ const SideCartWrapper = styled.div`
   transition: right 0.3s ease-in-out;
   z-index: 3;
   min-width: 295px;
-  max-width: 420px;
+  max-width: 412px;
   height: 100%;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -319,7 +319,7 @@ const ImgWrapper = styled.div`
 `;
 const QuantityWrapper = styled.div`
   display: flex;
-  margin: 2px 75px 10px 0px;
+  margin: 4px 0px 10px 0px;
   border: 1px solid rgb(194, 191, 191);
   border-radius: 5%;
   width: 100px;
@@ -328,7 +328,8 @@ const QuantityWrapper = styled.div`
   -webkit-box-pack: justify;
   justify-content: space-between;
   @media (max-width: 600px) {
-    width: 90px;
+    width: 85px;
+    margin: 8px 0px 10px 0px;
   }
 `;
 const ItemImg = styled.img`
@@ -345,6 +346,7 @@ const ItemQuantity = styled.h4`
   font-size: 0.75rem;
 `;
 const ItemTitle = styled.h2`
+  font-weight: 500;
   padding-bottom: 2px;
   font-size: clamp(0.6rem, 3.1vw + 1px, 1rem);
 `;
@@ -419,7 +421,7 @@ const PriceDeleteWrapper = styled.div`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 3.1vw + 1px, 1rem);
   font-style: italic;
   position: relative;
   display: inline-block;
@@ -427,10 +429,12 @@ const DiscountPrice = styled.span`
 `;
 const Price = styled.span`
   font-weight: 600;
-  font-size: ${(props) => (props.hasDiscount ? "0.8rem" : "1rem")};
+  font-size: ${(props) =>
+    props.hasDiscount ? "0.8rem" : "clamp(0.9rem, 3.1vw + 1px, 1rem);"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
+  margin-bottom: 4px;
   /* Add the following styles to create the strike-through line if hasDiscount is true */
   &::after {
     content: ${(props) => (props.hasDiscount ? "''" : "none")};
@@ -485,25 +489,26 @@ const InsideContentWrapper = styled.div`
   width: auto;
   padding: 12px 0px 0 0;
   height: 100%;
-  @media (max-width: 500px) {
-    width: 120px;
+  min-width: 190px;
+  @media (max-width: 550px) {
+    min-width: 120px;
   }
 `;
 const Color = styled.p`
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.7vw + 1px, 0.78rem);
 `;
 const Size = styled.p`
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.7vw + 1px, 0.78rem);
 `;
 const Span = styled.span`
-  font-weight: 600;
+  font-weight: 500;
   padding-left: 1px;
-  font-size: 0.65rem;
+  font-size: clamp(0.65rem, 2.5vw + 1px, 0.77rem);
   text-transform: capitalize;
 `;
 const Span2 = styled.span`
-  font-weight: 600;
-  font-size: 0.65rem;
+  font-weight: 500;
+  font-size: clamp(0.65rem, 2.5vw + 1px, 0.77rem);
   width: 100%;
   text-transform: uppercase;
   text-align: center;
