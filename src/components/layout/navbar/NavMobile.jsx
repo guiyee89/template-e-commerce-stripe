@@ -363,9 +363,9 @@ const Logo = styled.img`
         ? "24%"
         : "26%"};
   }
-  @media (max-width: 550px) {
+  @media (max-width: 900px) {
     margin-left: ${(props) =>
-      props.scrolled === "scrolled" ? "17.8px" : "25.3px"};
+      props.scrolled === "scrolled" ? "23.8px" : "27.3px"};
   }
 `;
 

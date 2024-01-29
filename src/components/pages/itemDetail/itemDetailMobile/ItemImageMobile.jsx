@@ -12,7 +12,7 @@ export const ItemImageMobile = ({
   imgSkeletonLoader,
   setImgSkeletonLoader,
 }) => {
-  const [selectedImage, setSelectedImage] = useState({});
+  const [selectedImage, setSelectedImage] = useState({ index: 0, source: "" });
   const [imagesToRender, setImagesToRender] = useState([]);
   const filteredImagesToRender = imagesToRender.filter(
     (image) => image !== null
@@ -31,12 +31,17 @@ export const ItemImageMobile = ({
   useEffect(() => {
     if (filteredItem && Object.keys(filteredItem).length > 0) {
       setImagesToRender(filteredItem.img.slice(0, 5));
-      setSelectedImage({ image: selectedItem.img[0], index: 0 });
+      // Find the selected image index in the filtered item's images
+      const selectedImageIndex = filteredItem.img.indexOf(selectedImage.source);
+      setSelectedImage({
+        index: selectedImageIndex !== -1 ? selectedImageIndex : 0,
+        source: selectedImage.source,
+      });
     }
-  }, [filteredItem]);
+  }, [filteredItem, selectedImage.source]);
 
   const handleImageSwitch = (newIndex) => {
-    setSelectedImage({ image: imagesToRender[newIndex], index: newIndex });
+    setSelectedImage({ source: imagesToRender[newIndex], index: newIndex });
   };
 
   const trackImageLoadingProgress = () => {

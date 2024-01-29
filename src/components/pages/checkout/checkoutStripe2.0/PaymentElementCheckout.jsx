@@ -8,7 +8,6 @@ import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
 
-
 export const PaymentElementCheckout = () => {
   const { cart, getTotalPrice, getItemPrice, clearCart } =
     useContext(CartContext);
@@ -53,7 +52,7 @@ export const PaymentElementCheckout = () => {
         <LoaderOverlay
           window={windowWidth}
           scrolled={scroll}
-          style={{ top: windowWidth < 900 && "0px" }}
+          style={{ top: windowWidth < 900 && "0px", height:"100%" }}
         >
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </LoaderOverlay>
@@ -315,11 +314,19 @@ const StripeImg = styled.img`
 `;
 
 const Button = styled.button`
-  background-color: rgb(0 12 79);
+  background-color: rgb(20, 20, 20);
   color: white;
   font-weight: 600;
-  height: 42px;
-  border-radius: 8px;
+  height: 46px;
+  position: absolute;
+  border: none;
+  border-radius: 4px;
+  right: 1px;
+  bottom: 0;
+  width: 95%;
+  :hover {
+    box-shadow: rgba(0, 0, 0, 2.45) 0px 0px 10px;
+  }
 `;
 const LoaderOverlay = styled.div`
   position: fixed;

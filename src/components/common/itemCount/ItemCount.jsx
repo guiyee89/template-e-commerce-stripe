@@ -19,15 +19,13 @@ export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
         <CountButton onClick={increment} disabled={count >= stock}>
           +
         </CountButton>
-        {/* <ResetButton onClick={reset}>Reset</ResetButton> */}
         <AddCartBtn
           onClick={() => {
             onAddToCart(count);
             setTimeout(() => {
               setIsLoading(true);
-              
             }, 1500);
-            setIsLoading(false)
+            setIsLoading(false);
           }}
           disabled={stock === 0 || count > stock || isLoading === false}
         >
