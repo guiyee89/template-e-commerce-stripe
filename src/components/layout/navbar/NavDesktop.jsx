@@ -53,7 +53,7 @@ export const NavDesktop = () => {
 
   return (
     <>
-      <HeaderWrapper>
+      <HeaderWrapper scrolled={scroll}>
         <Nav scrolled={scroll}>
           <InsideNav
             isCart={isCart}
@@ -247,7 +247,7 @@ export const NavDesktop = () => {
                       <LoginSharpIcon
                         sx={{ fontSize: "25px" }}
                         onClick={() =>
-                          /* navigate("/login") */window.location.assign(
+                          /* navigate("/login") */ window.location.assign(
                             "/login"
                           )
                         }
@@ -263,7 +263,7 @@ export const NavDesktop = () => {
                         <DashboardCustomizeRoundedIcon
                           sx={{ fontSize: "25px" }}
                           onClick={() =>
-                            /* navigate("/dashboard")  */window.location.assign(
+                            /* navigate("/dashboard")  */ window.location.assign(
                               "/dashboard"
                             )
                           }
@@ -295,26 +295,40 @@ export const NavDesktop = () => {
   );
 };
 
-const HeaderWrapper = styled.header`
-  position: relative;
-`;
-const Nav = styled.nav`
+const HeaderWrapper = styled.div`
+  /* position: relative; */
+  position: sticky;
+  top: 0;
+  z-index: 2;
   height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "90px")};
+  box-shadow: ${(props) =>
+    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   transition: height
     ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
     ease-in-out;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  position: fixed;
-  z-index: 2;
-  background-color: rgb(253 253 253);
-  box-shadow: ${(props) =>
-    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   border-bottom: ${(props) =>
     props.scrolled === "scrolled"
       ? "1px solid rgb(133 132 132 / 25%)"
       : "none"};
+`;
+const Nav = styled.nav`
+  /* height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "90px")};
+  transition: height
+    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
+    ease-in-out; */
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  /* position: fixed;
+  z-index: 2; */
+  background-color: rgb(253 253 253);
+  /* box-shadow: ${(props) =>
+    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
+  border-bottom: ${(props) =>
+    props.scrolled === "scrolled"
+      ? "1px solid rgb(133 132 132 / 25%)"
+      : "none"}; */
 `;
 const InsideNav = styled.div`
   width: 100vw;
@@ -428,7 +442,10 @@ const ImagesDropDown = styled.div`
   position: relative;
   width: 190px;
   height: 210px;
-  margin: ${(props) => (props.scrolled === "scrolled" ? "0px 20px 0px -17px" : "0px 16px 0px -15px")};
+  margin: ${(props) =>
+    props.scrolled === "scrolled"
+      ? "0px 20px 0px -17px"
+      : "0px 16px 0px -15px"};
   border-left: 1px solid lightgrey;
 `;
 const Img = styled.img`
@@ -531,7 +548,7 @@ const CategoryLink = styled(Link)`
 const DashCartContainer = styled.div`
   display: flex;
   align-items: center;
-  padding-right: ${({ isOpen }) => (isOpen ? "10px" : "27px")};
+  padding-right: 10px;
 `;
 const DashboardBtn = styled.button`
   background-color: transparent;

@@ -30,6 +30,9 @@ const Wrapper = styled.section`
   justify-content: center;
   color: white;
   line-height: 2.5;
+  @media (max-width:900px){
+    height: 312px;
+  }
 `;
 const Title = styled.h1`
   font-size: 2rem;

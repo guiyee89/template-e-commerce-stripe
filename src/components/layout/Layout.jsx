@@ -31,9 +31,9 @@ export const Layout = () => {
   // Prevent scrolling when the SideCart is open
   useEffect(() => {
     if (isOpen && isMenuOpen && isFilterOpen) {
-      document.body.style.overflow = "inherit";
+      document.body.style.overflow = "overlay";
     } else {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "clip";
     }
   }, [isOpen, isMenuOpen, isFilterOpen]);
 
@@ -84,8 +84,7 @@ export const Layout = () => {
 const Wrapper = styled.div`
   min-height: 100%;
   overflow-x: clip;
-  padding-right: ${({ isOpen, windowWidth }) =>
-    windowWidth > 901 ? (isOpen ? "0" : "16px") : "0"};
+ /*  overflow-y: ${({ isOpen }) => (isOpen ? "visible" : "overlay")}; */
   ::-webkit-scrollbar {
     width: 10px;
   }

@@ -119,7 +119,7 @@ p, h1, h2, h3, h4, h5, h6 {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-/* ::-webkit-scrollbar {
+ ::-webkit-scrollbar {
     width: 10px;
   }
 
@@ -134,7 +134,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
   ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-  } */
+  } 
 `;
 
 export default GlobalStyles;
