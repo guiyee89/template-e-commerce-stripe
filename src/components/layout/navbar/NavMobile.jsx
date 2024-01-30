@@ -366,6 +366,7 @@ const LogoLink = styled(Link)`
 `;
 
 const Logo = styled.img`
+  margin-left: -2px;
   transition: margin-left 0.2s ease-in-out;
 `;
 
