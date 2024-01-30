@@ -568,7 +568,7 @@ const FilterHeader = styled.div`
   justify-content: center;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
-  align-items: center;
+  align-items: flex-start;
 `;
 const FilterBy = styled.p`
   font-weight: bold;

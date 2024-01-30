@@ -119,22 +119,7 @@ p, h1, h2, h3, h4, h5, h6 {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-/* ::-webkit-scrollbar {
-    width: 10px;
-  }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  } */
 `;
 
 export default GlobalStyles;
