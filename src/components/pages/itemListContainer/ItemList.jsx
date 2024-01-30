@@ -257,13 +257,13 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 900px) {
-    margin: 0 10px 0 11px;
+    margin: 0 10px 36px 11px;
   }
   @media (max-width: 500px) {
     grid-template-columns: repeat(1, 1fr);
     gap: 0.4rem;
     row-gap: 1.2rem;
-    margin: 0;
+    margin: 0 0 32px;
   }
 `;
 const LoaderOverlay = styled.div`
@@ -515,7 +515,7 @@ const FilterContainer = styled.div`
       position: absolute;
       bottom: 0%;
       left: -24px;
-      width: 106%;
+      width: 109%;
       height: 1px;
       background-color: lightgray;
     }
@@ -561,7 +561,7 @@ const PaginationWrapperBottom = styled.div`
   position: absolute;
   justify-content: center;
   @media (max-width: 900px) {
-    width: 104%;
+    width: 100%;
   }
 `;
 const PaginationBtn = styled(Pagination)`

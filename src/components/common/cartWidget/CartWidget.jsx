@@ -5,11 +5,11 @@ import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const CartWidget = ({ totalItems }) => {
-  const { toggleSideCart, scroll } = useContext(GlobalToolsContext);
+  const { toggleSideCart, scroll, isOpen, windowWidth } = useContext(GlobalToolsContext);
 
   return (
     <>
-      <CartWidgetWrapper onClick={toggleSideCart} scrolled={scroll}>
+      <CartWidgetWrapper onClick={toggleSideCart} scrolled={scroll} isOpen={isOpen} windowWidth={windowWidth}>
         <Contador
           badgeContent={totalItems}
           aria-label={totalItems}
@@ -30,15 +30,13 @@ export const CartWidget = ({ totalItems }) => {
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
   margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-4px" : "-10px"};
+    props.scrolled === "scrolled" ? "-11px" : "-13px"};
+  padding: ${({ isOpen, windowWidth }) =>
+    windowWidth > 900 ? (isOpen ? "0" : "0 1px 0 0") : "0"}; 
 `;
 const Contador = styled(Badge)`
-  padding-left: 8px;
-  margin: 0 5px 0 0;
   z-index: 0;
-  @media (max-width: 950px) {
-    margin: 0 24px 0 0;
-  }
+
   .css-16rm5dn-MuiBadge-badge {
     font-size: 0.75rem;
     height: 21.2px;
@@ -51,11 +49,9 @@ const Contador = styled(Badge)`
   }
 `;
 const CartWrapper = styled.div`
-  width: ${(props) => (props.scrolled === "scrolled" ? "22px" : "32px")};
+  width: ${(props) => (props.scrolled === "scrolled" ? "none" : "none")};
   transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
     ease-in-out;
   margin-top: ${(props) => (props.scrolled === "scrolled" ? "0px" : "8px")};
-  @media screen and (max-width: 50rem) {
-    width: 22px;
-  }
+
 `;
