@@ -74,12 +74,12 @@ export const MobileFilter = ({
           </ResetAllBtn>
         </FilterHeader>
         <FilterWrapper>
-          {/*      Loader Circle      */}
-          <Loader>
+          {/*  Loader Circle  */}
+          <ResetLoader>
             {loadingReset && (
               <Ring size={40} lineWeight={6} speed={1} color="black" />
             )}
-          </Loader>
+          </ResetLoader>
 
           {/****************      GENERAL FILTER       ****************/}
           <Accordion defaultExpanded sx={styles.expandedAccordion}>
@@ -667,7 +667,7 @@ const FilterWrapper = styled.div`
   }
 `;
 
-const Loader = styled.div`
+const ResetLoader = styled.div`
   position: absolute;
   top: 48%;
   right: 85%;

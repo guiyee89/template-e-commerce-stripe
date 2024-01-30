@@ -110,6 +110,8 @@ export const ItemList = ({
     }, 550);
   }, []);
 
+  console.log(isFilterOpen);
+
   ///////////////////////////                  /////////////////////////////
   return (
     <>
@@ -145,6 +147,7 @@ export const ItemList = ({
 
       {itemLoader && ( //Loader for filters
         <LoaderOverlay
+          isFilterOpen={isFilterOpen}
           window={windowWidth}
           scrolled={scroll}
           style={{ top: windowWidth < 900 && "0px" }}
@@ -277,11 +280,22 @@ const LoaderOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
   display: flex;
-  justify-content: ${(props) => (props.window < 500 ? "flex-start" : "center")};
+  justify-content: ${(props) =>
+    props.windowWidth > 500
+      ? "center"
+      : props.isFilterOpen
+      ? "center"
+      : "flex-start"};
   align-items: center;
-  padding-left: ${(props) => (props.window < 500 ? "80px" : "0")};
-  z-index: 2; /* Higher z-index to cover other elements */
+  padding-left: ${(props) =>
+    props.windowWidth > 500
+      ? "0"
+      : props.isFilterOpen
+      ? "0"
+      : "80px"};
+  z-index: 2;
 `;
+
 
 const ButtonsWrapper = styled.div`
   position: absolute;
@@ -506,8 +520,7 @@ const FilterContainer = styled.div`
     top: 56px;
     align-items: center;
     justify-content: space-between;
-    z-index: ${({ isMenuOpen, isFilterOpen }) =>
-      isMenuOpen && isFilterOpen ? "1" : "0"};
+    z-index: 1;
     transition: z-index 0.3s ease-out;
 
     &::after {

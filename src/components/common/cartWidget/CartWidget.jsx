@@ -5,11 +5,17 @@ import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const CartWidget = ({ totalItems }) => {
-  const { toggleSideCart, scroll, isOpen, windowWidth } = useContext(GlobalToolsContext);
+  const { toggleSideCart, scroll, isOpen, windowWidth } =
+    useContext(GlobalToolsContext);
 
   return (
     <>
-      <CartWidgetWrapper onClick={toggleSideCart} scrolled={scroll} isOpen={isOpen} windowWidth={windowWidth}>
+      <CartWidgetWrapper
+        onClick={toggleSideCart}
+        scrolled={scroll}
+        isOpen={isOpen}
+        windowWidth={windowWidth}
+      >
         <Contador
           badgeContent={totalItems}
           aria-label={totalItems}
@@ -30,10 +36,22 @@ export const CartWidget = ({ totalItems }) => {
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
   margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-11px" : "-13px"};
-  padding: ${({ isOpen, windowWidth }) =>
-    windowWidth > 900 ? (isOpen ? "0" : "0 1px 0 0") : "0"}; 
+    props.windowWidth > 900
+      ? props.scrolled === "scrolled"
+        ? "-11px"
+        : "-13px"
+      : props.windowWidth < 900
+      ? props.scrolled === "scrolled"
+        ? "-4px"
+        : "-10px"
+      : "0"};
+  transition: margin-bottom
+    ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
+    ease-in-out;
+  padding: ${(props) =>
+    props.isOpen && props.windowWidth > 900 ? "0" : "0 1px 0 0"};
 `;
+
 const Contador = styled(Badge)`
   z-index: 0;
 
@@ -53,5 +71,4 @@ const CartWrapper = styled.div`
   transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
     ease-in-out;
   margin-top: ${(props) => (props.scrolled === "scrolled" ? "0px" : "8px")};
-
 `;
