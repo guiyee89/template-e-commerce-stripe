@@ -515,7 +515,7 @@ const FilterContainer = styled.div`
       position: absolute;
       bottom: 0%;
       left: -24px;
-      width: 106%;
+      width: 109%;
       height: 1px;
       background-color: lightgray;
     }

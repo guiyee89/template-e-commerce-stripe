@@ -295,16 +295,16 @@ export const NavDesktop = () => {
   );
 };
 
-const HeaderWrapper = styled.div`
-  /* position: relative; */
+const HeaderWrapper = styled.header`
   position: sticky;
+  margin-bottom: -90px;
   top: 0;
   z-index: 2;
   height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "90px")};
   box-shadow: ${(props) =>
     props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
     ease-in-out;
   border-bottom: ${(props) =>
     props.scrolled === "scrolled"
@@ -312,23 +312,11 @@ const HeaderWrapper = styled.div`
       : "none"};
 `;
 const Nav = styled.nav`
-  /* height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "90px")};
-  transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
-    ease-in-out; */
   width: 100%;
   height: 100%;
   margin: 0 auto;
   display: flex;
-  /* position: fixed;
-  z-index: 2; */
   background-color: rgb(253 253 253);
-  /* box-shadow: ${(props) =>
-    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
-  border-bottom: ${(props) =>
-    props.scrolled === "scrolled"
-      ? "1px solid rgb(133 132 132 / 25%)"
-      : "none"}; */
 `;
 const InsideNav = styled.div`
   width: 100vw;
@@ -349,7 +337,7 @@ const InsideNav = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "90px" : "110px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.20s" : "0.16s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.2s" : "0.2s")}
     ease-in-out;
   margin-top: 13px;
   @media screen and (max-width: 50rem) {

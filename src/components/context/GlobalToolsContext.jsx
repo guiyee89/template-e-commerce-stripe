@@ -3,9 +3,8 @@ import { useEffect } from "react";
 
 export const GlobalToolsContext = createContext();
 
-
 const GlobalToolsProvider = ({ children }) => {
-   ///////////         TOGGLE ON CLICK           ///////////
+  ///////////         TOGGLE ON CLICK           ///////////
   //Manage side cart
   const [isOpen, setIsOpen] = useState(true);
   const toggleSideCart = () => {
@@ -22,7 +21,7 @@ const GlobalToolsProvider = ({ children }) => {
     setIsFilterOpen((prevIsOpen) => !prevIsOpen);
   };
   //Manage products dropdown on Mobile Navbar
-  const [isDrowpDownOpen, setIsDropDownOpen] = useState(true)
+  const [isDrowpDownOpen, setIsDropDownOpen] = useState(true);
   const toggleDropDown = () => {
     setIsDropDownOpen((prevIsOpen) => !prevIsOpen);
   };
@@ -40,8 +39,8 @@ const GlobalToolsProvider = ({ children }) => {
     };
   }, []);
 
-   //State for managing different screen Height
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
+  //State for managing different screen Height
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   useEffect(() => {
     const handleResize = () => {
       setWindowHeight(window.innerHeight);
@@ -51,7 +50,6 @@ const GlobalToolsProvider = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   ///////////         LOADERS           ///////////
   //Manage state for Loading spinner on page change (used in LoadingTopBar)
@@ -63,13 +61,13 @@ const GlobalToolsProvider = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const [progressComplete, setProgressComplete] = useState(false);
 
-    //////////        ////////////        ////////////        ///////////
+  //////////        ////////////        ////////////        ///////////
   //                       Scroll Effect                      //
   const [scroll, setScroll] = useState("not-scrolled");
-  //funcion para darle efecto al navbar al scrollear 12% de la pantalla
   useEffect(() => {
     const handleScroll = () => {
-      const scrollHeight = window.innerHeight * 0.05; // 10% of screen height
+      //Scroll effect for navbar
+      const scrollHeight = window.innerHeight * 0.001; // 10% of screen height
       if (window.scrollY > scrollHeight) {
         setScroll("scrolled");
       } else {
@@ -104,7 +102,7 @@ const GlobalToolsProvider = ({ children }) => {
     setVisible,
     progressComplete,
     setProgressComplete,
-    scroll
+    scroll,
   };
 
   return (

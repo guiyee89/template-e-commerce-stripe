@@ -31,9 +31,9 @@ export const Layout = () => {
   // Prevent scrolling when the SideCart is open
   useEffect(() => {
     if (isOpen && isMenuOpen && isFilterOpen) {
-      document.body.style.overflow = "overlay";
+      document.body.style.overflow = "visible";
     } else {
-      document.body.style.overflow = "clip";
+      document.body.style.overflow = "hidden";
     }
   }, [isOpen, isMenuOpen, isFilterOpen]);
 
@@ -82,22 +82,10 @@ export const Layout = () => {
 };
 
 const Wrapper = styled.div`
-  min-height: 100%;
+  /* min-height: 100%; */
   overflow-x: clip;
- /*  overflow-y: ${({ isOpen }) => (isOpen ? "visible" : "overlay")}; */
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
+  padding: ${({ isOpen, windowWidth }) =>
+    windowWidth > 800 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"}; 
 `;
 
 const LoadingScreen = styled.div`
