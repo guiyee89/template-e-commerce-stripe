@@ -101,7 +101,7 @@ export const NavDesktop = () => {
                           <CategoryLink
                             style={{
                               fontWeight: "600",
-                              fontSize: ".8rem",
+                              fontSize: ".74rem",
                               textDecoration: "underline",
                               position: "absolute",
                               right: "-42px",
@@ -304,7 +304,7 @@ const HeaderWrapper = styled.header`
   box-shadow: ${(props) =>
     props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.3s" : "0.3s")}
     ease-in-out;
   border-bottom: ${(props) =>
     props.scrolled === "scrolled"
@@ -337,7 +337,7 @@ const InsideNav = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "90px" : "110px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.2s" : "0.2s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
     ease-in-out;
   margin-top: 13px;
   @media screen and (max-width: 50rem) {
@@ -360,6 +360,9 @@ const NavListWrapper = styled.ul`
   list-style: none;
   margin-bottom: ${(props) =>
     props.scrolled === "scrolled" ? "-10px" : "-21px"};
+  transition: margin-bottom
+    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ease-in-out;
   padding-right: 24px;
   @media screen and (max-width: 50rem) {
     display: none;
@@ -463,6 +466,9 @@ const NavLink = styled(Link)`
     props.scrolled === "scrolled"
       ? ".68rem"
       : "clamp(0.62rem, 2vw + 1px, 0.72rem);"};
+  transition: font-size
+    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ease-in-out;
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -501,8 +507,11 @@ const CategoryLink = styled(Link)`
   position: relative;
   font-size: ${(props) =>
     props.scrolled === "scrolled"
-      ? ".69rem"
-      : "clamp(0.6rem, 1vw + 2px, 0.8rem)"};
+      ? ".68rem"
+      : "clamp(0.6rem, 1vw + 2px, 0.7rem)"};
+  transition: font-size
+    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ease-in-out;
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -544,6 +553,9 @@ const DashboardBtn = styled.button`
   cursor: pointer;
   font-size: 0.6rem;
   margin-bottom: ${(props) => (props.scrolled === "scrolled" ? "4px" : "-6px")};
+  transition: margin-bottom
+    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ease-in-out;
 `;
 const ProfileBtn = styled.button`
   background-color: transparent;

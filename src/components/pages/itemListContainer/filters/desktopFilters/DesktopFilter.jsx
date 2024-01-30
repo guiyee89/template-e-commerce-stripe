@@ -568,7 +568,7 @@ const FilterHeader = styled.div`
   justify-content: center;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
-  align-items: flex-start;
+  align-items: center;
 `;
 const FilterBy = styled.p`
   font-weight: bold;
@@ -587,7 +587,7 @@ const ResetAllBtn = styled.button`
     bottom: 2px;
     left: 5.3%;
     width: 90%;
-    height: 1.3px;
+    height: 1px;
     background-color: black;
   }
   &:hover {
