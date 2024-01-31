@@ -307,7 +307,7 @@ export const CheckoutFormCart = ({
                               </ItemSizeColor>
                             </ItemData>
                             {item.quantity > 1 && (
-                              <ItemData style={{ marginTop: "-8px" }}>
+                              <ItemData style={{ marginTop: "-2px" }}>
                                 {hasDiscount ? (
                                   <SpanEachPrice>
                                     $ {item.discountPrice.toFixed(2)} each

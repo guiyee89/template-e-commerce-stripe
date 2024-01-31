@@ -304,7 +304,7 @@ const HeaderWrapper = styled.header`
   box-shadow: ${(props) =>
     props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.3s" : "0.3s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
   border-bottom: ${(props) =>
     props.scrolled === "scrolled"
@@ -337,7 +337,7 @@ const InsideNav = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "90px" : "110px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
   margin-top: 13px;
   @media screen and (max-width: 50rem) {
@@ -361,7 +361,7 @@ const NavListWrapper = styled.ul`
   margin-bottom: ${(props) =>
     props.scrolled === "scrolled" ? "-10px" : "-21px"};
   transition: margin-bottom
-    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
   padding-right: 24px;
   @media screen and (max-width: 50rem) {
@@ -467,7 +467,7 @@ const NavLink = styled(Link)`
       ? ".68rem"
       : "clamp(0.62rem, 2vw + 1px, 0.72rem);"};
   transition: font-size
-    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
@@ -510,7 +510,7 @@ const CategoryLink = styled(Link)`
       ? ".68rem"
       : "clamp(0.6rem, 1vw + 2px, 0.7rem)"};
   transition: font-size
-    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
@@ -554,7 +554,7 @@ const DashboardBtn = styled.button`
   font-size: 0.6rem;
   margin-bottom: ${(props) => (props.scrolled === "scrolled" ? "4px" : "-6px")};
   transition: margin-bottom
-    ${(props) => (props.scrolled === "scrolled" ? "0.35s" : "0.35s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
 `;
 const ProfileBtn = styled.button`

@@ -274,7 +274,7 @@ const HeaderWrapper = styled.header`
   position: sticky;
   top: 0px;
   height: ${(props) => (props.scrolled === "scrolled" ? "55px" : "90px")};
-  margin-top: -98px;
+  margin-top: -94px;
   transition: height
     ${(props) => (props.scrolled === "scrolled" ? "0.10s" : "0.10s")}
     ease-in-out;
