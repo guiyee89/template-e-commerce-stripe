@@ -68,7 +68,7 @@ export const Layout = () => {
 
             <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
 
-            <OutletWrapper isHome={isHome}>
+            <OutletWrapper isHome={isHome} isCheckout={isCheckout}>
               <Outlet />
             </OutletWrapper>
 
@@ -85,7 +85,7 @@ const Wrapper = styled.div`
   /* min-height: 100%; */
   overflow-x: clip;
   padding: ${({ isOpen, windowWidth }) =>
-    windowWidth > 800 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"}; 
+    windowWidth > 800 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"};
 `;
 
 const LoadingScreen = styled.div`
@@ -93,13 +93,12 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  min-height: 90vh;
+  min-height: ${({ isCheckout,  }) => isCheckout ? "0" : "90vh;"};
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgb(253 253 253);
   margin: auto;
-
   @media (max-width: 68rem) {
     padding-top: 0;
   }

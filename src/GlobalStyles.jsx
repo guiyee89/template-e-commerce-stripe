@@ -100,7 +100,7 @@ p, h1, h2, h3, h4, h5, h6 {
 #root {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   max-width: 100vw
 }
 
