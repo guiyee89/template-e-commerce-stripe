@@ -173,10 +173,10 @@ const Wrapper = styled.div`
   align-items: flex-start;
   -webkit-box-pack: center;
   justify-content: flex-end;
-  height: 700px;
+  height: 900px;
   width: 100%;
   max-width: 1300px;
-  margin: 0 auto 95px;
+  margin: 0 auto;
   padding-left: 65px;
 `;
 const Discount = styled.h4`

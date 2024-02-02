@@ -424,7 +424,7 @@ const FormItemsWrapper = styled.div`
   justify-content: center;
   grid-column: 1/13;
   height: 100%;
-  margin-bottom: 100px;
+  margin-bottom: 140px;
 `;
 const FormWrapper = styled.div`
   height: 100%;
@@ -435,7 +435,12 @@ const FormWrapper = styled.div`
   padding: 150px 40px 0;
   align-items: flex-end;
   @media (max-width: 1050px) {
-    padding: 150px 35px 0;
+    padding: 150px 18px 0;
+    min-width: 400px;
+  }
+  @media (max-width: 820px) {
+    padding: 150px 18px 0 10px;
+    min-width: 400px;
   }
 `;
 const Form = styled.form`
@@ -473,7 +478,7 @@ const LogBtn = styled.button`
     color: #4f4fe7;
   }
   :active {
-   color: #bdbdf0;
+    color: #bdbdf0;
   }
 `;
 const LogoutContainer = styled.div`
@@ -508,6 +513,9 @@ const CartTotalMainContainer = styled.div`
   min-width: 450px;
   background-color: rgb(236, 234, 234);
   padding: 150px 0px 40px;
+  @media (max-width: 970px) {
+    min-width: 400px;
+  }
 `;
 const CartTotalPriceContainer = styled.div`
   display: flex;
@@ -523,11 +531,14 @@ const CartTotalPriceContainer = styled.div`
     width: 1px;
     background: linear-gradient(rgba(0, 0, 0, 0.35) 2%, rgba(0, 0, 0, 0) 100%);
     @media (max-width: 1050px) {
-      margin-left: -36px;
+      margin-left: -18px;
     }
   }
   @media (max-width: 1050px) {
-    padding: 0 35px 0 35px;
+    padding: 0 15px 0 18px;
+  }
+  @media (max-width: 820px) {
+    padding: 0 10px 0 18px;
   }
 `;
 const ItemsDetailsContainer = styled.div`
@@ -539,7 +550,10 @@ const ItemsDetailsContainer = styled.div`
 `;
 const ItemsDetails = styled.div`
   display: flex;
-  width: 50%;
+  width: 54%;
+  @media (max-width: 1100px) {
+    width: 50%;
+  }
 `;
 const ImgContainer = styled.div`
   width: 68px;
@@ -559,14 +573,17 @@ const ItemSizeColor = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  @media (max-width: 1050px) {
+    flex-wrap: wrap;
+  }
 `;
 const SpanColor = styled.span`
-  font-size: clamp(0.6rem, 2vw, 0.78rem);
+  font-size: clamp(0.6rem, 1.1vw, 0.78rem);
   text-transform: capitalize;
   padding-right: 8px;
 `;
 const SpanSize = styled.span`
-  font-size: clamp(0.6rem, 2vw, 0.78rem);
+  font-size: clamp(0.6rem, 1.1vw, 0.78rem);
   text-transform: uppercase;
   padding-left: 8px;
 `;
