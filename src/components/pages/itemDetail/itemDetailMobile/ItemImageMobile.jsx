@@ -38,7 +38,7 @@ export const ItemImageMobile = ({
         source: selectedImage.source,
       });
     }
-  }, [filteredItem, selectedImage.source]);
+  }, [filteredItem]);
 
   const handleImageSwitch = (newIndex) => {
     setSelectedImage({ source: imagesToRender[newIndex], index: newIndex });

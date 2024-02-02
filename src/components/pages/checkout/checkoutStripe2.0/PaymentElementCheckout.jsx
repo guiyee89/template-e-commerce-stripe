@@ -52,7 +52,6 @@ export const PaymentElementCheckout = () => {
         <LoaderOverlay
           window={windowWidth}
           scrolled={scroll}
-          style={{ top: windowWidth < 900 && "0px", height:"100%" }}
         >
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </LoaderOverlay>
@@ -65,12 +64,18 @@ export const PaymentElementCheckout = () => {
       >
         <CheckoutContainer windowWidth={windowWidth}>
           <CartInfoContainer windowWidth={windowWidth}>
-            <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png" />
+            {/* <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png" /> */}
+            <div style={{ width: "100%" }}>
+              <StripeImg
+                src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
+                windowWidth={windowWidth}
+              />
+            </div>
             <TitleTotalContainer>
               <Title>We Shop</Title>
-              <Total>
+              {/* <Total>
                 {windowWidth > 750 ? <p>$ {total.toFixed(2)}</p> : null}
-              </Total>
+              </Total> */}
             </TitleTotalContainer>
             <ItemsContainer windowWidth={windowWidth}>
               {cart.map((product) => {
@@ -120,12 +125,19 @@ export const PaymentElementCheckout = () => {
                   </ItemWrapper>
                 );
               })}
+              {/* <TitleTotalContainer style={{ justifyContent: "flex-end" }}>
+                <Total >
+                  {windowWidth > 750 ? <p>$ {total.toFixed(2)}</p> : null}
+                </Total>
+              </TitleTotalContainer> */}
             </ItemsContainer>
           </CartInfoContainer>
-          <StripeImg
-            src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
-            windowWidth={windowWidth}
-          />
+          {/* <div style={{width:"100%",borderTop: "1px solid lightgray"}}>
+            <StripeImg
+              src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
+              windowWidth={windowWidth}
+            />
+          </div> */}
         </CheckoutContainer>
         <PaymentElementContainer windowWidth={windowWidth} data-aos="fade-left">
           <PaymentElement />
@@ -134,7 +146,7 @@ export const PaymentElementCheckout = () => {
               {isProcessing
                 ? "Processing ... "
                 : windowWidth > 750
-                ? "Pay"
+                ? `Pay $ ${total.toFixed(2)}`
                 : `Pay $ ${total.toFixed(2)}`}
             </span>
           </Button>
@@ -156,6 +168,7 @@ const CheckoutContainer = styled.div`
   flex-direction: column;
   -webkit-box-pack: justify;
   justify-content: space-between;
+  height: 500px;
   width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
   margin: 0;
@@ -205,7 +218,7 @@ const Total = styled.h2`
 const ItemsContainer = styled.div`
   overflow-y: auto;
   height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
   padding-right: 10px;
 `;
 const ItemWrapper = styled.div`
@@ -224,6 +237,7 @@ const ImgWrapper = styled.div`
 const ItemImg = styled.img`
   object-fit: contain;
   border: 1px solid lightgrey;
+  width: 100%;
 `;
 const ItemTitle = styled.h2`
   padding-bottom: 2px;
@@ -297,20 +311,37 @@ const PaymentElementContainer = styled.div`
   margin-top: 25px;
   position: relative;
   padding-left: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
+  padding-right: 24px;
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: -41px;
+    bottom: 0px;
+    left: 0px;
+    height: 110%;
+    width: 2px;
+    background: linear-gradient(rgba(0, 0, 0, 0.15) 64%, rgba(0, 0, 0, 0) 100%);
     width: ${(props) => (props.windowWidth > 750 ? "2px" : "0")};
-    background: linear-gradient(rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0) 100%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: ${(props) => (props.windowWidth > 850 ? "2px" : "0")};
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 `;
 const StripeImg = styled.img`
   width: ${(props) =>
-    props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "35%" : "22%"};
-  margin-top: 8px;
+    props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "30%" : "22%"};
+  /* margin-top: 21px; */
+  margin: -22px 0 0 -32px;
 `;
 
 const Button = styled.button`
@@ -318,11 +349,9 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   height: 46px;
-  position: absolute;
+  margin: -50px 0px 15px;
   border: none;
   border-radius: 4px;
-  right: 1px;
-  bottom: 0;
   width: 95%;
   :hover {
     box-shadow: rgba(0, 0, 0, 2.45) 0px 0px 10px;
@@ -330,13 +359,10 @@ const Button = styled.button`
 `;
 const LoaderOverlay = styled.div`
   position: fixed;
-  top: ${(props) => (props.scrolled === "scrolled" ? "64px" : "0.2px")};
-  transition: top
-    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
-    ease-in-out;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
   display: flex;
   justify-content: ${(props) => (props.window < 500 ? "flex-start" : "center")};

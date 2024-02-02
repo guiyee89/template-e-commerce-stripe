@@ -273,11 +273,11 @@ const SideCartWrapper = styled.div`
   height: 100%;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     min-width: 360px;
     width: 360px;
   }
-  @media (max-width:330px){
+  @media (max-width: 350px) {
     min-width: 275px;
     width: 275px;
   }
@@ -322,11 +322,16 @@ const ItemWrapper = styled.div`
 `;
 const ImgWrapper = styled.div`
   margin: 20px;
-  width: 72px;
+  min-width: 72px;
   height: 72px;
-  @media (max-width:330px){
+  @media (max-width: 550px) {
+    margin: 10px 20px 10px 20px;
+    min-width: 64px;
+    height: 64px;
+  }
+  @media (max-width: 500px) {
     margin: 10px;
-    width: 64px;
+    min-width: 64px;
     height: 64px;
   }
 `;
@@ -344,7 +349,7 @@ const QuantityWrapper = styled.div`
     width: 85px;
     margin: 8px 0px 10px 0px;
   }
-  @media (max-width: 330px) {
+  @media (max-width: 350px) {
     width: 70px;
     margin: 4px 0px 6px 0px;
   }
@@ -360,15 +365,15 @@ const ItemQuantity = styled.h4`
   font-size: 0.75rem;
 `;
 const ItemTitle = styled.h2`
-  font-weight: 500;
+  font-weight: 600;
   padding-bottom: 2px;
-  font-size: clamp(0.6rem, 3.1vw + 1px, 1rem);
+  font-size: clamp(0.6rem, 2vw + 1px, 1rem);
 `;
 const BtnQuantity = styled.button`
   width: 32px;
   border-radius: 5%;
   border: none;
-  @media (max-width: 330px) {
+  @media (max-width: 350px) {
     width: 20px;
   }
 `;
@@ -410,7 +415,7 @@ const CheckoutButton = styled.button`
     padding: 0;
     outline: 0;
   }
-  @media (max-width:330px){
+  @media (max-width: 350px) {
     width: 95%;
   }
 `;
@@ -437,14 +442,14 @@ const PriceDeleteWrapper = styled.div`
   position: relative;
   height: 94%;
   min-width: 100px;
-  @media (max-width: 330px) {
+  @media (max-width: 350px) {
     min-width: 76px;
   }
 `;
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.8rem, 3.1vw + 1px, 1rem);
+  font-size: clamp(0.8rem, 2.7vw + 1px, 1rem);
   font-style: italic;
   position: relative;
   display: inline-block;
@@ -453,7 +458,9 @@ const DiscountPrice = styled.span`
 const Price = styled.span`
   font-weight: 600;
   font-size: ${(props) =>
-    props.hasDiscount ? "0.7rem" : "clamp(0.8rem, 3.1vw + 1px, 1rem);"};
+    props.hasDiscount
+      ? "clamp(0.7rem, 2.7vw + 1px, 0.8rem)"
+      : "clamp(0.8rem, 2.7vw + 1px, 1rem)"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -480,7 +487,7 @@ const TotalPriceInfo = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   margin: 15px;
-  @media (max-width:330px){
+  @media (max-width: 350px) {
     margin: 15px 0px 0 8px;
     width: 100%;
   }
@@ -517,28 +524,28 @@ const InsideContentWrapper = styled.div`
   padding: 12px 0px 0 0;
   height: 100%;
   min-width: 190px;
-  @media (max-width: 550px) {
-    min-width: 120px;
+  @media (max-width: 600px) {
+    min-width: 165px;
   }
-  @media (max-width: 330px) {
+  @media (max-width: 350px) {
     min-width: 96px;
   }
 `;
 const Color = styled.p`
-  font-size: clamp(0.65rem, 2.7vw + 1px, 0.78rem);
+  font-size: clamp(0.6rem, 2.7vw + 1px, 0.78rem);
 `;
 const Size = styled.p`
-  font-size: clamp(0.65rem, 2.7vw + 1px, 0.78rem);
+  font-size: clamp(0.6rem, 2.7vw + 1px, 0.78rem);
 `;
 const Span = styled.span`
   font-weight: 500;
   padding-left: 1px;
-  font-size: clamp(0.65rem, 2.5vw + 1px, 0.77rem);
+  font-size: clamp(0.6rem, 2vw + 1px, 0.77rem);
   text-transform: capitalize;
 `;
 const Span2 = styled.span`
   font-weight: 500;
-  font-size: clamp(0.65rem, 2.5vw + 1px, 0.77rem);
+  font-size: clamp(0.6rem, 2vw + 1px, 0.77rem);
   width: 100%;
   text-transform: uppercase;
   text-align: center;

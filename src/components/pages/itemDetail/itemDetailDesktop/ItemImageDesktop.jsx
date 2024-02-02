@@ -11,8 +11,11 @@ export const ItemImageDesktop = ({
 }) => {
   const [selectedImage, setSelectedImage] = useState({ index: 0, source: "" });
   const [imagesToRender, setImagesToRender] = useState([]);
-  const filteredImagesToRender = imagesToRender.filter((image) => image !== null); //Render images - Avoid null values in array
-  const { progress, setProgress, setVisible, windowHeight } = useContext(GlobalToolsContext);
+  const filteredImagesToRender = imagesToRender.filter(
+    (image) => image !== null
+  ); //Render images - Avoid null values in array
+  const { progress, setProgress, setVisible, windowHeight } =
+    useContext(GlobalToolsContext);
   const [loadedImages, setLoadedImages] = useState(0);
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export const ItemImageDesktop = ({
         source: selectedImage.source,
       });
     }
-  }, [filteredItem, selectedImage.source]);
+  }, [filteredItem]);
 
   const handleImageClick = (image, index) => {
     setSelectedImage({ index, source: image });

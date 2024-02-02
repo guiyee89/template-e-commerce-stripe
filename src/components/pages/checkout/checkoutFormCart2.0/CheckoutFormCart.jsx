@@ -266,7 +266,7 @@ export const CheckoutFormCart = ({
                               : windowWidth < 1100
                               ? "95%"
                               : "110%",
-                          height: windowWidth < 750 ? "100%" : "645px",
+                          height: windowWidth < 750 ? "100%" : "617px",
                           padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
                         }}
                       >
@@ -757,9 +757,10 @@ const RingLoader = styled.div`
 const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
   font-size: 28px;
-  top: 4%;
-  left: ${(props) => (props.windowwidth < 750 ? "85%" : "93%")};
+  top: 3%;
+  left: ${(props) => (props.windowwidth < 750 ? "85%" : "96%")};
   position: absolute;
+  z-index: 2;
   @media (max-width: 750px) {
     top: 3%;
     left: 88%;
@@ -767,7 +768,7 @@ const CloseIconBtn = styled(CloseIcon)`
 `;
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "49%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
