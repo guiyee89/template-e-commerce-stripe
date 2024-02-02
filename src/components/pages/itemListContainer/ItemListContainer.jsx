@@ -83,6 +83,7 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products)
         console.log(uniqueProducts);
+        console.log(products)
         setTimeout(() => {
           setPageLoading(false);
           setProgressComplete(true);
