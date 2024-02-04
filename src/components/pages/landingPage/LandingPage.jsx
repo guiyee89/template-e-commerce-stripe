@@ -8,7 +8,6 @@ import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 /* import { AgregarFullDocs } from "../dashboard-auth/AgregarFullDocs";   */
 
-
 export const LandingPage = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -38,7 +37,7 @@ export const LandingPage = () => {
         ) : (
           <Title>¡on sale!</Title>
         )}
-        {/* <AgregarFullDocs />  */}  
+        {/* <AgregarFullDocs />  */}
         <CarouselWrapper>
           {windowWidth >= 1200 && <CarouselDesktop />}
           {windowWidth < 1200 && windowWidth >= 650 && <CarouselTablet />}
@@ -103,7 +102,9 @@ export const LandingPage = () => {
             <TextDiv>
               <TextDiv1>
                 <TextTitle>All our Shoes</TextTitle>
-                <TextPromo>30% <TextPromoSpan>off</TextPromoSpan></TextPromo>
+                <TextPromo>
+                  30% <TextPromoSpan>off</TextPromoSpan>
+                </TextPromo>
               </TextDiv1>
               <TextDiv2>
                 <TextSub>On second unit </TextSub>
@@ -122,12 +123,12 @@ export const LandingPage = () => {
   );
 };
 const Wrapper = styled.section`
-  max-width: 1320px;
+  max-width: 1460px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 36px 20px 0;
+  margin: 36px auto 0;
   overflow: hidden;
   @media (max-width: 700px) {
     margin-top: 25px;
@@ -149,14 +150,10 @@ const Title = styled.h1`
 `;
 const CarouselWrapper = styled.div`
   display: flex;
-  margin: -16px auto 0;
+  margin: -16px 25px 0;
   min-height: 470px;
-  @media (max-width: 83.75rem) {
-    max-width: 95%;
-  }
-  @media (max-width: 700px) {
-    max-width: 100%;
-  }
+  width: 100%;
+
   @media (max-width: 500px) {
     min-height: 0;
   }
@@ -175,7 +172,7 @@ const MiddleArticle = styled.article`
 `;
 const MiddleItemsImg = styled.img`
   transition: transform 0.29s ease-in-out 0.1s;
-  width: 645px;
+  width: 665px;
   height: 100%;
   object-fit: cover;
 `;
@@ -387,7 +384,7 @@ const StrechedArticle = styled.article`
   position: relative;
   width: 100%;
   height: 460px;
-  max-width: 1330px;
+  max-width: 1350px;
   background-color: #ddd8d8;
   margin: 95px 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 2px;
@@ -425,7 +422,7 @@ const LinkStreched = styled(Link)`
   }
 `;
 const TextTitle = styled.h3`
-  font-size: clamp(2.7rem, 3vw + .9rem, 5.3rem);
+  font-size: clamp(2.7rem, 3vw + 0.9rem, 5.3rem);
   font-family: "Gochi Hand", cursive;
 `;
 const TextPromo = styled.h3`
@@ -437,9 +434,9 @@ const TextPromo = styled.h3`
   margin-top: -8px;
 `;
 const TextPromoSpan = styled.span`
-   font-family: "Gochi Hand", cursive;
-   font-size: clamp(2.9rem, 3vw + 1rem, 5.3rem);
-`
+  font-family: "Gochi Hand", cursive;
+  font-size: clamp(2.9rem, 3vw + 1rem, 5.3rem);
+`;
 const TextSub = styled.h3`
   font-size: clamp(1rem, 1.3vw + 1rem, 1.4rem);
   font-family: "Playfair Display", serif;

@@ -16,13 +16,13 @@ export const NewsLetter = () => {
           />
           <Button type="submit">Subscribe</Button>
         </Form>
-       {/*  <Text>Follow us in our social media</Text> */}
+        {/*  <Text>Follow us in our social media</Text> */}
       </Wrapper>
     </>
   );
 };
 const Wrapper = styled.section`
-  height: 250px;
+  height: 270px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -30,7 +30,7 @@ const Wrapper = styled.section`
   justify-content: center;
   color: white;
   line-height: 2.5;
-  @media (max-width:900px){
+  @media (max-width: 900px) {
     height: 312px;
   }
 `;

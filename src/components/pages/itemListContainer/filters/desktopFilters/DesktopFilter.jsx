@@ -34,7 +34,6 @@ export const DesktopFilter = ({
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
-
   return (
     <>
       <FilterHeader>
@@ -563,12 +562,20 @@ export const DesktopFilter = ({
 
 const FilterHeader = styled.div`
   display: flex;
-  width: 90%;
+  width: 88%;
   -webkit-box-pack: center;
-  justify-content: center;
+  justify-content: space-evenly;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
+  -webkit-box-align: center;
   align-items: center;
+  @media (max-width: 1150px) {
+    width: 92.7%;
+  }
+  @media (max-width: 1050px) {
+    justify-content: flex-start;
+    padding-left: 4px;
+  }
 `;
 const FilterBy = styled.p`
   font-weight: bold;
@@ -624,6 +631,9 @@ const FilterWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   border-bottom: 1px solid lightgrey;
+  @media (max-width: 1150px) {
+    width: 100%;
+  }
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -647,11 +657,17 @@ const Loader = styled.div`
 `;
 const styles = {
   expandedAccordion: (windowWidth) => css`
-    margin: ${windowWidth < 1050 ? "0px" : "0px 10px 0 10px"} !important;
+    margin: ${windowWidth < 1050 ? "0px" : "0px 10px 0 0px"} !important;
     border-top: 1px solid lightgray;
     box-shadow: none;
     padding: 16px 0;
     width: 88%;
+    .MuiAccordionSummary-root {
+      padding: 0 0 0 16px;
+    }
+    .css-b0p2nz-MuiFormControlLabel-root {
+      margin-right: 0 !important ;
+    }
   `,
 };
 const selectStyle = {
