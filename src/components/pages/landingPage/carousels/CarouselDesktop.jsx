@@ -123,7 +123,8 @@ export const CarouselDesktop = () => {
               {discountProducts.slice(4, 8).map((product) => {
                 return (
                   <ItemWrapper key={product.id}>
-                    <LinkWrapper to={`/item-details/${product.id}`}
+                    <LinkWrapper
+                      to={`/item-details/${product.id}`}
                       onClick={() => {
                         event.preventDefault(); // Prevent immediate navigation
                         handleLoadTop();
@@ -161,7 +162,8 @@ export const CarouselDesktop = () => {
               {discountProducts.slice(8, 12).map((product) => {
                 return (
                   <ItemWrapper key={product.id}>
-                    <LinkWrapper to={`/item-details/${product.id}`}
+                    <LinkWrapper
+                      to={`/item-details/${product.id}`}
                       onClick={() => {
                         event.preventDefault(); // Prevent immediate navigation
                         handleLoadTop();
@@ -203,7 +205,7 @@ const Wrapper = styled.div`
   margin: 24px auto 110px;
   z-index: 0;
   max-height: 520px;
-  width: 1308px;
+  width: 100%;
 `;
 const LoaderWrapper = styled.div`
   display: flex;
@@ -213,8 +215,7 @@ const LoaderWrapper = styled.div`
   max-height: 450px;
 `;
 const StyledCarousel = styled(Carousel)`
-  max-width: 1308px;
-  /* height: 435px; */
+  width: 100%;
   position: relative;
   .carousel-slide {
     min-height: 300px;
@@ -235,11 +236,13 @@ const StyledCarousel = styled(Carousel)`
     width: 4.5%;
     left: 96.2%;
     bottom: 20%;
+    height: 92%;
   }
   .carousel-control-prev {
     width: 4.5%;
     left: -0.7%;
     bottom: 20%;
+    height: 92%;
   }
   .carousel-indicators [data-bs-target] {
     margin: 10px;
@@ -291,15 +294,18 @@ const CarouselInner = styled.div`
   max-width: 100%;
   display: flex;
   gap: 1rem;
+  justify-content: center;
 `;
 const ItemWrapper = styled.div`
   //esto ajusta el responsivnes junto con 100% del itemCard
-  max-height: 440px;
-  max-width: 315px;
+  /* max-height: 440px;
+  max-width: 315px; */
+  max-height: 485px;
+  max-width: 350px;
   width: 100%;
   padding-top: 1.5px;
   padding-bottom: 5px;
-  @media (max-width: 1300px){
+  @media (max-width: 1300px) {
     max-height: 400px;
   }
 `;

@@ -85,7 +85,7 @@ const Wrapper = styled.div`
   /* min-height: 100%; */
   overflow-x: clip;
   padding: ${({ isOpen, windowWidth }) =>
-    windowWidth > 800 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"};
+    windowWidth > 830 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"};
 `;
 
 const LoadingScreen = styled.div`
@@ -93,14 +93,20 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  min-height: ${({ isCheckout,  }) => isCheckout ? "0" : "90vh;"};
+  min-height: ${({ isCheckout }) => (isCheckout ? "0" : "90vh;")};
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgb(253 253 253);
-  margin: auto;
-  @media (max-width: 68rem) {
+  margin: 0 20px;
+  @media (max-width: 1150px) {
+    margin: 0 10px 0 5px;
+  }
+  @media (max-width: 1088px) {
     padding-top: 0;
+  }
+  @media (max-width: 900px) {
+    margin: 0 8px 0 8px;
   }
 `;
 
