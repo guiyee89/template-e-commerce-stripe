@@ -50,7 +50,7 @@ export const Payment = () => {
             amount: total * 100,
           }
         );
-
+  
         const { clientSecret } = response.data;
         setTimeout(() => {
           setClientSecret(clientSecret);

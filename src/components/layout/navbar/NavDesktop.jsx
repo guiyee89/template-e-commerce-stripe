@@ -436,7 +436,7 @@ const ImagesDropDown = styled.div`
   margin: ${(props) =>
     props.scrolled === "scrolled"
       ? "0px 20px 0px -17px"
-      : "0px 16px 0px -15px"};
+      : "0px 10px 0px -6px;"};
   border-left: 1px solid lightgrey;
 `;
 const Img = styled.img`

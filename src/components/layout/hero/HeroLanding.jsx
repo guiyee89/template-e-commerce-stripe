@@ -102,13 +102,12 @@ export const HeroLanding = () => {
 
 const Wrapper = styled.div`
   margin: 110px auto 0;
-  max-width: 1900px;
   z-index: 0;
   position: relative;
   max-height: 100%;
 `;
 const StyledCarousel = styled(Carousel)`
-  max-width: 1450px;
+  max-width: 1480px;
   margin: 0 auto;
   @media (max-width: 1100px) {
     margin: -17px 0 30px;
@@ -211,11 +210,11 @@ const CarouselImg = styled.img`
   object-fit: cover;
 `;
 const MarginWrapper = styled.div`
-  margin: 0 36px;
+  margin: 0 20px;
 `;
 
 const IconsWrapper = styled.div`
-  max-width: 1308px;
+  max-width: 1460px;
   display: flex;
   -webkit-box-pack: center;
   justify-content: space-around;

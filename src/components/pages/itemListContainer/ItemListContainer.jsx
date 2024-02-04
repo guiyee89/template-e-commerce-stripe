@@ -14,7 +14,6 @@ import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { DesktopFilterContainer } from "./filters/desktopFilters/DesktopFilterContainer";
 import { MobileFilterContainer } from "./filters/mobileFilters/MobileFilterContainer";
 
-
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ScrollRestorationWrapper = ({ children }) => {
   useScrollRestoration(); // Apply the scroll restoration hook
@@ -23,12 +22,9 @@ export const ScrollRestorationWrapper = ({ children }) => {
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ItemListContainer = () => {
-
-
   const [items, setItems] = useState([]); //Guardamos los items
-  const [allItems, setAllItems] = useState([])//Save all items to filter properly
+  const [allItems, setAllItems] = useState([]); //Save all items to filter properly
   const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
-  
 
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
   const {
@@ -81,9 +77,9 @@ export const ItemListContainer = () => {
         });
 
         setItems(uniqueProducts);
-        setAllItems(products)
+        setAllItems(products);
         console.log(uniqueProducts);
-        console.log(products)
+        console.log(products);
         setTimeout(() => {
           setPageLoading(false);
           setProgressComplete(true);
@@ -100,7 +96,6 @@ export const ItemListContainer = () => {
       clearTimeout(timer); // Clear the timeout if the component unmounts
     };
   }, [categoryName]);
-
 
   const [detailsFilters, setDetailsFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -230,12 +225,11 @@ const DesktopFilterWrapper = styled.aside`
   position: sticky;
   top: 110px;
   background-color: rgb(253, 253, 253);
-  @media (max-width:1200px){
+  @media (max-width: 1200px) {
     min-width: 228px;
   }
   @media (max-width: 1050px) {
     min-width: 200px;
-    padding-left: 5px;
   }
   @media (max-width: 900px) {
     display: none;
@@ -263,7 +257,6 @@ const ItemListWrapper = styled.div`
     width: 100%;
     grid-column: 1/13;
   }
-
 `;
 const ItemsFiltersWrapper = styled.div`
   display: grid;
@@ -272,6 +265,10 @@ const ItemsFiltersWrapper = styled.div`
   width: 100%;
   max-width: 1618px;
   margin-top: 38px;
+  margin-right: 20px;
+  @media (max-width: 1150px) {
+    margin-right: 10px;
+  }
   @media (max-width: 900px) {
     grid-column: 1/13;
     margin: 0 auto;

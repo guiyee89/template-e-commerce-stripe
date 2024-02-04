@@ -247,7 +247,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   max-width: 1400px;
   padding: 2px 0px 78px;
-  margin: 0px 10px 50px 0;
+  margin: 0px 0px 50px 0;
   gap: 1.1rem;
   -webkit-box-pack: center;
   justify-items: center;
@@ -288,14 +288,9 @@ const LoaderOverlay = styled.div`
       : "flex-start"};
   align-items: center;
   padding-left: ${(props) =>
-    props.windowWidth > 500
-      ? "0"
-      : props.isFilterOpen
-      ? "0"
-      : "80px"};
+    props.windowWidth > 500 ? "0" : props.isFilterOpen ? "0" : "80px"};
   z-index: 2;
 `;
-
 
 const ButtonsWrapper = styled.div`
   position: absolute;
@@ -527,8 +522,8 @@ const FilterContainer = styled.div`
       content: "";
       position: absolute;
       bottom: 0%;
-      left: -24px;
-      width: 109%;
+      left: -18px;
+      width: 111%;
       height: 1px;
       background-color: lightgray;
     }
