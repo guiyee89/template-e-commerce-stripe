@@ -368,7 +368,7 @@ const ItemQuantity = styled.h4`
 const ItemTitle = styled.h2`
   font-weight: 600;
   padding-bottom: 2px;
-  font-size: clamp(0.6rem, 2vw + 1px, 1rem);
+  font-size: clamp(0.6rem, 2.7vw + 1px, 1rem);
 `;
 const BtnQuantity = styled.button`
   width: 32px;
@@ -495,18 +495,18 @@ const TotalPriceInfo = styled.div`
 `;
 const TotalWrapper = styled.div`
   font-weight: bold;
-  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
+  font-size: clamp(1.05rem, 1.2vw + 0.5rem, 1.15rem);
   display: inherit;
 `;
 const SubTotalWrapper = styled.div`
   display: inherit;
   font-weight: 500;
   font-size: 1rem;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
 `;
 const DiscountWrapper = styled.div`
   display: inherit;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
 `;
 const TotalText = styled.h3`
   text-align: end;
@@ -518,7 +518,7 @@ const TotalDiscount = styled.h3`
   width: 100%;
   margin-right: 20px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
 `;
 const InsideContentWrapper = styled.div`
   width: auto;
@@ -558,10 +558,11 @@ const SubTotal = styled.h3`
   text-align: end;
   width: 100%;
   margin-right: 20px;
+  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
-  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
+  font-size: clamp(1.05rem, 1.2vw + 0.5rem, 1.15rem);
   padding-left: 46px;
   text-align: end;
   width: 100%;
