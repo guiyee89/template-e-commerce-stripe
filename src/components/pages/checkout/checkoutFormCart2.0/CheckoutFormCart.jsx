@@ -428,6 +428,7 @@ const FormItemsWrapper = styled.div`
   margin-bottom: 140px;
   @media (max-width: 850px) {
     flex-direction: column-reverse;
+    margin-bottom: 0;
   }
 `;
 const FormWrapper = styled.div`
@@ -443,10 +444,11 @@ const FormWrapper = styled.div`
     min-width: 400px;
   }
   @media (max-width: 850px) {
-    padding: 32px 4px 0px 4px;
+    padding: 0px 4px 80px 4px;
     width: 100%;
     min-width: auto;
     height: auto;
+    background-color: rgb(236, 234, 234);
   }
 `;
 const Form = styled.form`
@@ -458,16 +460,14 @@ const Form = styled.form`
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
   @media (max-width: 850px) {
-    width: fill-available;
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0px auto;
+    padding: 54px 78px 66px;
     max-width: none;
+    background-color: white;
   }
-  @media (max-width: 700px) {
-    width: 95%;
-  }
-  @media (max-width: 550px) {
-    margin: 0 10px;
+  @media (max-width: 650px) {
+    padding: 54px 18px 66px;
   }
 `;
 const Input = styled(TextField)`
@@ -542,7 +542,7 @@ const CartTotalMainContainer = styled.div`
   @media (max-width: 850px) {
     min-width: auto;
     width: 100%;
-    padding: 40px 0px 20px;
+    padding: 116px 0px 20px;
   }
 `;
 const CartTotalPriceContainer = styled.div`
@@ -877,7 +877,7 @@ const CartItemsContainer = styled.div`
   padding-bottom: 40px;
   max-height: 444px;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 8px;
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -899,7 +899,7 @@ const CartItemsContainer = styled.div`
     height: auto;
     max-height: 255px;
     overflow-y: auto;
-    background-color: rgb(242 241 241);
+    background-color: rgb(244 244 244);
     border-bottom: 1px solid lightgrey;
   }
 `;
