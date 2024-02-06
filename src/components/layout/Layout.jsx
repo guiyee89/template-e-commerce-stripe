@@ -98,15 +98,15 @@ const OutletWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: rgb(253 253 253);
-  margin: 0 20px;
+  margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 20px")};
   @media (max-width: 1150px) {
-    margin: 0 10px 0 5px;
+    margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 5px 0 5px")};
   }
   @media (max-width: 1088px) {
     padding-top: 0;
   }
   @media (max-width: 900px) {
-    margin: 0 8px 0 8px;
+    margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 8px 0 8px")};
   }
 `;
 
