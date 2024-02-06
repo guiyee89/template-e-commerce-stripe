@@ -745,7 +745,7 @@ const TotalPriceInfoMobileContainer = styled.div`
 
 const TotalWrapper = styled.div`
   font-weight: 600;
-  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.2rem);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.2rem);
   display: flex;
   justify-content: space-between;
   @media (max-width: 850px) {
@@ -759,7 +759,7 @@ const TotalWrapper = styled.div`
 const SubTotalWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
+  font-size: clamp(0.75rem, 1.5vw + 0.5rem, 0.9rem);
   @media (max-width: 850px) {
     width: 80%;
     margin: 0 auto;
@@ -789,7 +789,7 @@ const SubTotal = styled.h3`
 `;
 const TotalPrice = styled.h3`
   font-weight: bold;
-  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.3rem);
 `;
 
 const ConfirmStripe = styled.div`
