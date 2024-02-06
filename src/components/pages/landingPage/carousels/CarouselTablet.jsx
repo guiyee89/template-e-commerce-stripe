@@ -281,6 +281,12 @@ const StyledCarousel = styled(Carousel)`
     width: 5.5%;
     left: 96.2%;
     bottom: 20%;
+    @media (max-width:1200px){
+      left: 95.3%;
+    }
+    @media (max-width:1000px){
+      left: 95%;
+    }
   }
   .carousel-control-prev {
     width: 5.5%;
