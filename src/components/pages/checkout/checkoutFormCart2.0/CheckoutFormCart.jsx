@@ -280,8 +280,8 @@ export const CheckoutFormCart = ({
             )}
             <CartTotalMainContainer>
               <CartTotalPriceContainer>
+                <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
                 <CartItemsContainer>
-                  <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
                   {cart.map((item) => {
                     const itemTotalPrice = getItemPrice(item.id);
                     const hasDiscount = item.discountPrice;
@@ -443,11 +443,9 @@ const FormWrapper = styled.div`
   }
   @media (max-width: 850px) {
     padding: 32px 4px 0px 4px;
-    width: 75%;
-    align-items: center;
-  }
-  @media (max-width: 675px) {
     width: 100%;
+    min-width: auto;
+    height: auto;
   }
 `;
 const Form = styled.form`
@@ -460,8 +458,15 @@ const Form = styled.form`
   margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
   @media (max-width: 850px) {
     width: fill-available;
-    margin: 0 20px;
+    width: 80%;
+    margin: 0 auto;
     max-width: none;
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+  }
+  @media (max-width: 550px) {
+    margin: 0 10px;
   }
 `;
 const Input = styled(TextField)`
@@ -470,7 +475,6 @@ const Input = styled(TextField)`
 `;
 
 const ContactTitle = styled.h2`
-  text-align: ${(props) => (props.windowwidth < 851 ? "none" : "center")};
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
@@ -522,8 +526,8 @@ const OrderSummaryTitle = styled.h1`
   font-family: "Playfair Display", serif;
   @media (max-width: 850px) {
     padding-left: 3%;
+    margin-bottom: 0;
     background-color: rgb(236, 234, 234);
-    border-bottom: 1px solid lightgrey;
   }
 `;
 const CartTotalMainContainer = styled.div`
@@ -537,7 +541,8 @@ const CartTotalMainContainer = styled.div`
   @media (max-width: 850px) {
     min-width: auto;
     width: 100%;
-    padding: 110px 0px 40px;
+    padding: 40px 0px 30px;
+
   }
 `;
 const CartTotalPriceContainer = styled.div`
@@ -556,15 +561,21 @@ const CartTotalPriceContainer = styled.div`
     @media (max-width: 1050px) {
       margin-left: -18px;
     }
+    @media (max-width: 850px) {
+      display: none;
+    }
   }
   @media (max-width: 1050px) {
     padding: 0 15px 0 18px;
   }
-  @media (max-width: 820px) {
-    padding: 0 10px 0 18px;
+  @media (max-width: 850px) {
+    padding: 0 18px 0 18px;
+    width: 85%;
+    margin: 0 auto;
   }
-  @media (max-width: 520px) {
+  @media (max-width: 700px) {
     padding: 0 5px 0 5px;
+    width: 100%;
   }
 `;
 const ItemsDetailsContainer = styled.div`
@@ -588,8 +599,12 @@ const ItemsDetails = styled.div`
   }
 `;
 const ImgContainer = styled.div`
-  width: 68px;
+  min-width: 68px;
   height: 68px;
+  @media (max-width: 550px) {
+    min-width: 62px;
+    height: 62px;
+  }
 `;
 const Img = styled.img`
   border: 1px solid lightgray;
@@ -598,7 +613,7 @@ const Img = styled.img`
   object-fit: cover;
 `;
 const ItemData = styled.div`
-  padding: 0 0 5px 8px;
+  padding: 0 0 2px 8px;
   font-size: clamp(0.7rem, 2vw, 0.88rem);
   text-transform: capitalize;
 `;
@@ -719,27 +734,48 @@ const TotalPriceInfoMobileContainer = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 20px;
-  margin: 24px 0px 0px 0px;
-  border-top: 1px solid grey;
-  background-color: #f5f5dcc2;
+  padding: 32px 10px;
+  margin: 32px 0px 0px;
+
+  background-color: rgb(236, 234, 234);
 `;
 
 const TotalWrapper = styled.div`
   font-weight: 600;
-  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.2rem);
   display: flex;
   justify-content: space-between;
+  @media (max-width: 850px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+  }
 `;
 const SubTotalWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 1.2vw + 0.5rem, 0.9rem);
+  @media (max-width: 850px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+  }
 `;
 const DiscountWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 1.5vw + 0.5rem, 0.9rem);
+  @media (max-width: 850px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+  }
 `;
 const TotalText = styled.h3`
   text-align: end;
@@ -761,6 +797,9 @@ const ConfirmStripe = styled.div`
   padding: 40px 10px 0;
   margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0")};
   align-items: ${(props) => (props.windowwidth < 851 ? "center" : "flex-end")};
+  @media (max-width: 850px) {
+    padding: 0 10px 0;
+  }
 `;
 
 const ConfirmFormCartBtn = styled.button`
@@ -839,12 +878,13 @@ const CartItemsContainer = styled.div`
   @media (max-width: 850px) {
     max-width: none;
     width: 100%;
-    margin: 0 auto;
-    padding-bottom: 15px;
+    margin: 0px auto;
+    padding-top: 12px;
+    padding-bottom: 0px;
+    height: auto;
     max-height: 255px;
-    overflow-y: scroll;
-    border-bottom: 2px solid lightgrey;
-    background-color: rgb(247 247 247);
+    overflow-y: auto;
+    background-color: rgb(248 248 248);
   }
 `;
 const DiscountCouponWrapper = styled.div`
