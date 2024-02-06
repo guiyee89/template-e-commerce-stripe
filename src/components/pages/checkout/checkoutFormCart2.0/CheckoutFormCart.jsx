@@ -873,8 +873,24 @@ const style = {
   overflow: "auto",
 };
 const CartItemsContainer = styled.div`
-  max-width: 428px;
+  max-width: 430px;
   padding-bottom: 40px;
+  max-height: 444px;
+  overflow-y: auto;
+  padding-right: 4px;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
   @media (max-width: 850px) {
     max-width: none;
     width: 100%;
