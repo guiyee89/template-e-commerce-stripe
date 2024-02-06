@@ -425,6 +425,9 @@ const FormItemsWrapper = styled.div`
   grid-column: 1/13;
   height: 100%;
   margin-bottom: 140px;
+  @media (max-width: 850px) {
+    flex-direction: column-reverse;
+  }
 `;
 const FormWrapper = styled.div`
   height: 100%;
@@ -438,9 +441,13 @@ const FormWrapper = styled.div`
     padding: 150px 18px 0;
     min-width: 400px;
   }
-  @media (max-width: 820px) {
-    padding: 150px 18px 0 10px;
-    min-width: 400px;
+  @media (max-width: 850px) {
+    padding: 32px 4px 0px 4px;
+    width: 75%;
+    align-items: center;
+  }
+  @media (max-width: 675px) {
+    width: 100%;
   }
 `;
 const Form = styled.form`
@@ -451,6 +458,11 @@ const Form = styled.form`
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
+  @media (max-width: 850px) {
+    width: fill-available;
+    margin: 0 20px;
+    max-width: none;
+  }
 `;
 const Input = styled(TextField)`
   width: 350px;
@@ -458,7 +470,7 @@ const Input = styled(TextField)`
 `;
 
 const ContactTitle = styled.h2`
-  text-align: ${(props) => props.windowwidth < 851 && "center"};
+  text-align: ${(props) => (props.windowwidth < 851 ? "none" : "center")};
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
@@ -505,8 +517,14 @@ const DeliveryInfoTitle = styled.h2`
 const OrderSummaryTitle = styled.h1`
   font-size: clamp(1rem, 2vw, 1.15rem);
   font-weight: 600;
-  margin-bottom: 36px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
   font-family: "Playfair Display", serif;
+  @media (max-width: 850px) {
+    padding-left: 3%;
+    background-color: rgb(236, 234, 234);
+    border-bottom: 1px solid lightgrey;
+  }
 `;
 const CartTotalMainContainer = styled.div`
   width: 46%;
@@ -515,6 +533,11 @@ const CartTotalMainContainer = styled.div`
   padding: 150px 0px 40px;
   @media (max-width: 970px) {
     min-width: 400px;
+  }
+  @media (max-width: 850px) {
+    min-width: auto;
+    width: 100%;
+    padding: 110px 0px 40px;
   }
 `;
 const CartTotalPriceContainer = styled.div`
@@ -540,6 +563,9 @@ const CartTotalPriceContainer = styled.div`
   @media (max-width: 820px) {
     padding: 0 10px 0 18px;
   }
+  @media (max-width: 520px) {
+    padding: 0 5px 0 5px;
+  }
 `;
 const ItemsDetailsContainer = styled.div`
   display: flex;
@@ -547,6 +573,12 @@ const ItemsDetailsContainer = styled.div`
   align-items: center;
   margin-bottom: 12px;
   justify-content: space-around;
+  @media (max-width: 850px) {
+    justify-content: space-around;
+  }
+  @media (max-width: 550px) {
+    justify-content: space-evenly;
+  }
 `;
 const ItemsDetails = styled.div`
   display: flex;
@@ -568,6 +600,7 @@ const Img = styled.img`
 const ItemData = styled.div`
   padding: 0 0 5px 8px;
   font-size: clamp(0.7rem, 2vw, 0.88rem);
+  text-transform: capitalize;
 `;
 const ItemSizeColor = styled.div`
   display: flex;
@@ -640,7 +673,7 @@ const DeleteIconBtn = styled(DeleteIcon)`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.7rem, 1.3vw, 0.88rem);
+  font-size: clamp(0.78rem, 1.6vw, 0.88rem);
   font-style: italic;
   position: relative;
   text-align: center;
@@ -653,8 +686,8 @@ const Price = styled.span`
   font-weight: 600;
   font-size: ${(props) =>
     props.hasDiscount
-      ? "clamp(0.53rem, 1.2vw, .76rem);"
-      : "clamp(0.7rem, 1.3vw, .88rem);"};
+      ? "clamp(0.73rem, 1.6vw, .76rem);"
+      : "clamp(0.78rem, 1.6vw, .88rem);"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -667,6 +700,10 @@ const Price = styled.span`
     width: 58%;
     height: 1px;
     background-color: black;
+    @media (max-width: 850px) {
+      left: 21px;
+      width: 54%;
+    }
   }
 `;
 const TotalPriceInfoDesktopContainer = styled.div`
@@ -799,6 +836,16 @@ const style = {
 const CartItemsContainer = styled.div`
   max-width: 428px;
   padding-bottom: 40px;
+  @media (max-width: 850px) {
+    max-width: none;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 15px;
+    max-height: 255px;
+    overflow-y: scroll;
+    border-bottom: 2px solid lightgrey;
+    background-color: rgb(247 247 247);
+  }
 `;
 const DiscountCouponWrapper = styled.div`
   display: flex;

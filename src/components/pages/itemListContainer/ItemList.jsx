@@ -140,7 +140,7 @@ export const ItemList = ({
             }}
             renderItem={(item) => <PaginationItem component="div" {...item} />}
           />
-          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={35} />}
+          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={25} />}
         </PaginationWrapperTop>
         <ItemsQuantity>{productsQuantity} Products</ItemsQuantity>
       </HeaderContainer>
@@ -545,7 +545,10 @@ const FilterBtn = styled.div`
 
 const ClipLoaderTop = styled(ClipLoader)`
   position: absolute;
-  top: 210px;
+  top: -28px;
+  @media (max-width: 900px) {
+    top: -68px;
+  }
 `;
 const ClipLoaderBottom = styled(ClipLoader)`
   position: absolute;
@@ -556,6 +559,7 @@ const PaginationWrapperTop = styled.div`
   width: 33%;
   margin: 1px 10px 21px -8px;
   justify-content: center;
+  position: relative;
   @media (max-width: 900px) {
     width: 100%;
     margin: 10px 0 15px -2px;
