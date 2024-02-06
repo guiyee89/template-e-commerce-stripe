@@ -480,6 +480,9 @@ const ContactTitle = styled.h2`
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
   width: 100%;
+  @media (max-width: 850px) {
+    width: 65%;
+  }
 `;
 const LoginContainer = styled.div`
   width: 100%;
