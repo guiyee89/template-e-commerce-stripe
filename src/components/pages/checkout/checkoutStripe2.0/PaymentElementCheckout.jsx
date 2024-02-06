@@ -220,7 +220,19 @@ const Total = styled.h2`
 const ItemsContainer = styled.div`
   overflow-y: auto;
   height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
-  /* border-bottom: 1px solid lightgray; */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
   padding-right: 10px;
   @media (max-width: 750px) {
     border-bottom: 1px solid grey;
