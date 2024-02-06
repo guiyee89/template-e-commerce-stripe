@@ -49,10 +49,7 @@ export const PaymentElementCheckout = () => {
   return (
     <>
       {isProcessing && (
-        <LoaderOverlay
-          window={windowWidth}
-          scrolled={scroll}
-        >
+        <LoaderOverlay window={windowWidth} scrolled={scroll}>
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </LoaderOverlay>
       )}
@@ -173,6 +170,9 @@ const CheckoutContainer = styled.div`
   padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
   margin: 0;
   position: relative;
+  @media (max-width: 750px) {
+    height: auto;
+  }
 `;
 
 const CartInfoContainer = styled.div`
@@ -182,7 +182,9 @@ const CartInfoContainer = styled.div`
   gap: 0.9rem;
   padding-left: ${(props) => (props.windowWidth > 750 ? "15px" : "0")};
   position: relative;
-
+  @media (max-width: 750px) {
+    margin-bottom: 20px;
+  }
   &::before {
     content: "";
     position: absolute;
@@ -220,6 +222,9 @@ const ItemsContainer = styled.div`
   height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
   /* border-bottom: 1px solid lightgray; */
   padding-right: 10px;
+  @media (max-width: 750px) {
+    border-bottom: 1px solid grey;
+  }
 `;
 const ItemWrapper = styled.div`
   display: flex;
@@ -263,7 +268,7 @@ const PriceWrapper = styled.div`
 const BothPriceWrapper = styled.h4`
   display: flex;
   align-items: ${(props) =>
-    props.windowWidth < 750 ? "flex-start" : "flex-end"};
+    props.windowWidth < 750 ? "flex-end" : "flex-start"};
   gap: 0.1rem;
   flex-direction: column-reverse;
   margin: -10px 5px 0 0;
@@ -288,7 +293,7 @@ const Price = styled.span`
   position: relative;
   display: flex;
   justify-content: ${(props) =>
-    props.windowWidth < 750 ? "flex-start" : "flex-end"};
+    props.windowWidth < 750 ? "flex-end" : "flex-start"};
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   /* Add the following styles to create the strike-through line if hasDiscount is true */
   &::after {
@@ -311,7 +316,8 @@ const PaymentElementContainer = styled.div`
   margin-top: 25px;
   position: relative;
   padding-left: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
-  padding-right: 24px;
+  padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
+
   &::before {
     content: "";
     position: absolute;
@@ -340,8 +346,10 @@ const PaymentElementContainer = styled.div`
 const StripeImg = styled.img`
   width: ${(props) =>
     props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "30%" : "22%"};
-  /* margin-top: 21px; */
   margin: -22px 0 0 -32px;
+  @media (max-width: 750px) {
+    margin: -11px 0px 0px -15px;
+  }
 `;
 
 const Button = styled.button`
