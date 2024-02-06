@@ -260,7 +260,7 @@ export const CheckoutFormCart = ({
                       <Box
                         sx={{
                           ...style,
-                          top: windowWidth < 750 ? "50%" : "49%",
+                          top: windowWidth < 750 ? "50%" : "35%",
                           width:
                             windowWidth < 550
                               ? "100%"
