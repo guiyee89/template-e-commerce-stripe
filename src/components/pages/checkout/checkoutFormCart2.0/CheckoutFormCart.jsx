@@ -542,7 +542,7 @@ const CartTotalMainContainer = styled.div`
   @media (max-width: 850px) {
     min-width: auto;
     width: 100%;
-    padding: 40px 0px 30px;
+    padding: 40px 0px 20px;
   }
 `;
 const CartTotalPriceContainer = styled.div`
@@ -899,7 +899,8 @@ const CartItemsContainer = styled.div`
     height: auto;
     max-height: 255px;
     overflow-y: auto;
-    background-color: rgb(248 248 248);
+    background-color: rgb(242 241 241);
+    border-bottom: 1px solid lightgrey;
   }
 `;
 const DiscountCouponWrapper = styled.div`
