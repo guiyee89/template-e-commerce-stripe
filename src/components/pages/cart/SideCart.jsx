@@ -295,6 +295,7 @@ const ItemsContainer = styled.div`
   margin: 5px 5px 0;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   border-top: 1px solid lightgray;
   ::-webkit-scrollbar {
     width: 5px;

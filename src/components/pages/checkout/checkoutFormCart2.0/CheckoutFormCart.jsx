@@ -260,6 +260,7 @@ export const CheckoutFormCart = ({
                       <Box
                         sx={{
                           ...style,
+                          top: windowWidth < 750 ? "50%" : "49%",
                           width:
                             windowWidth < 550
                               ? "100%"
@@ -542,7 +543,6 @@ const CartTotalMainContainer = styled.div`
     min-width: auto;
     width: 100%;
     padding: 40px 0px 30px;
-
   }
 `;
 const CartTotalPriceContainer = styled.div`
@@ -794,6 +794,7 @@ const ConfirmStripe = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: 500px;
+  height: 60px;
   padding: 40px 10px 0;
   margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0")};
   align-items: ${(props) => (props.windowwidth < 851 ? "center" : "flex-end")};
@@ -861,7 +862,6 @@ const CloseIconBtn = styled(CloseIcon)`
 `;
 const style = {
   position: "absolute",
-  top: "49%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
@@ -879,8 +879,7 @@ const CartItemsContainer = styled.div`
     max-width: none;
     width: 100%;
     margin: 0px auto;
-    padding-top: 12px;
-    padding-bottom: 0px;
+    padding: 12px 8px 0 8px;
     height: auto;
     max-height: 255px;
     overflow-y: auto;
