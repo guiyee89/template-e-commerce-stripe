@@ -25,7 +25,7 @@ export const CartWidget = ({ totalItems }) => {
             horizontal: "left",
           }}
         >
-          <CartWrapper scrolled={scroll}>
+          <CartWrapper scrolled={scroll} windowWidth={windowWidth}>
             <ShoppingBagOutlinedIcon fontSize="medium" />
           </CartWrapper>
         </Contador>
@@ -70,5 +70,10 @@ const CartWrapper = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "none" : "none")};
   transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
     ease-in-out;
-  margin-top: ${(props) => (props.scrolled === "scrolled" ? "8px" : "8px")};
+  margin-top: ${(props) =>
+    props.windowWidth < 900
+      ? props.scrolled === "scrolled"
+        ? "0"
+        : "8px"
+      : "8px"};
 `;
