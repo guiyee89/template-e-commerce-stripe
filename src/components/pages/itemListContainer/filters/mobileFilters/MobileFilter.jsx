@@ -46,8 +46,10 @@ export const MobileFilter = ({
           <CloseIcon
             onClick={toggleFilterMenu}
             sx={{
-              fontSize: "35px",
+              fontSize: "25px",
               marginTop: "15px",
+              marginRight: "4px",
+              marginLeft: "-15px",
               cursor: "pointer",
             }}
           />
@@ -604,14 +606,14 @@ const ResetAllBtn = styled.button`
   font-weight: 500;
   border: none;
   background-color: transparent;
-  margin: 0px -5px 6px 20px;
+  margin: 0px -5px 2px 20px;
   position: relative;
   &::after {
     content: "";
     position: absolute;
-    bottom: 1px;
-    left: 6.4%;
-    width: 88%;
+    bottom: 2px;
+    left: 8.4%;
+    width: 86%;
     height: 1.5px;
     background-color: black;
   }
@@ -710,7 +712,7 @@ const OrderByBtn = styled.button`
     props.active ? "1px solid #857a7a" : "1px solid #8f8f8f89;"};
   font-weight: ${(props) => (props.active ? "500" : "500")};
   text-align: ${(props) => (props.active ? "center" : "normal")};
-/*   &:hover {
+  /*   &:hover {
     background-color: ${(props) => (props.active ? "#979797" : "lightgrey")};
   } */
 `;
