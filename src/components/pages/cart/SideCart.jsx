@@ -368,7 +368,7 @@ const ItemQuantity = styled.h4`
 const ItemTitle = styled.h2`
   font-weight: 600;
   padding-bottom: 2px;
-  font-size: clamp(0.6rem, 2.7vw + 1px, 1rem);
+  font-size: clamp(0.65rem, 5px + 0.8vw, 0.85rem);
 `;
 const BtnQuantity = styled.button`
   width: 32px;
@@ -525,28 +525,29 @@ const InsideContentWrapper = styled.div`
   padding: 12px 0px 0 0;
   height: 100%;
   min-width: 190px;
-  @media (max-width: 600px) {
+  @media (max-width: 870px) {
     min-width: 165px;
+    padding: 18px 0px 0 0;
   }
   @media (max-width: 350px) {
     min-width: 96px;
   }
 `;
 const Color = styled.p`
-  font-size: clamp(0.6rem, 2.7vw + 1px, 0.78rem);
+  font-size: clamp(0.58rem, 5px + 0.8vw, 0.78rem);
 `;
 const Size = styled.p`
-  font-size: clamp(0.6rem, 2.7vw + 1px, 0.78rem);
+  font-size: clamp(0.58rem, 5px + 0.8vw, 0.78rem);
 `;
 const Span = styled.span`
   font-weight: 500;
   padding-left: 1px;
-  font-size: clamp(0.6rem, 2vw + 1px, 0.77rem);
+  font-size: clamp(0.56rem, 5px + 0.8vw, 0.76rem);
   text-transform: capitalize;
 `;
 const Span2 = styled.span`
   font-weight: 500;
-  font-size: clamp(0.6rem, 2vw + 1px, 0.77rem);
+  font-size: clamp(0.56rem, 5px + 0.8vw, 0.76rem);
   width: 100%;
   text-transform: uppercase;
   text-align: center;
