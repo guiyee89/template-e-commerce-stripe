@@ -1,4 +1,3 @@
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { db } from "../../../../firebaseConfig";
@@ -29,12 +28,12 @@ export const CheckoutFormCartContainer = () => {
       cp: "",
     },
     onSubmit: (data) => {
-      setCheckoutLoading(true)
+      setCheckoutLoading(true);
       //Submit order data
       let order = {
         buyer: data,
         items: cart,
-        email: user.email,
+        email: user.email || data.email,
         item_price: cart.map((product) => ({
           unit_price: product.discountPrice || product.unit_price,
         })),
@@ -43,7 +42,7 @@ export const CheckoutFormCartContainer = () => {
       };
       localStorage.setItem("order", JSON.stringify(order));
       setConfirm(true);
-      setCheckoutLoading(false)
+      setCheckoutLoading(false);
       console.log(order);
     },
 
@@ -70,7 +69,6 @@ export const CheckoutFormCartContainer = () => {
       setShipmentCost(res.data().cost);
     });
   }, []);
-
 
   return (
     <>

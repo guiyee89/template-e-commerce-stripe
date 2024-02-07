@@ -439,7 +439,7 @@ const PriceDeleteWrapper = styled.div`
   flex-direction: column-reverse;
   -webkit-box-align: center;
   align-items: center;
-  margin: 13px 0px 44px;
+  margin: -29px 0px 11px;
   position: relative;
   height: 94%;
   min-width: 100px;

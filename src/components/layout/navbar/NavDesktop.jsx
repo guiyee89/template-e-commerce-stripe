@@ -552,7 +552,8 @@ const DashboardBtn = styled.button`
   border: none;
   cursor: pointer;
   font-size: 0.6rem;
-  margin-bottom: ${(props) => (props.scrolled === "scrolled" ? "4px" : "-6px")};
+  margin-bottom: ${(props) =>
+    props.scrolled === "scrolled" ? "-7px" : "-6px"};
   transition: margin-bottom
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
