@@ -105,7 +105,7 @@ export const AdminOrders = () => {
                       {formatDate(order.date.seconds)}
                     </TableCellData>
                     <TableCellData sx={{ minWidth: "70px" }}>
-                      $ {order.total}
+                      $ {order.total.toFixed(2)}
                     </TableCellData>
                     <TableCellData onClick={() => handleOpenProducts(order.id)}>
                       <span

@@ -41,11 +41,11 @@ export const BuyerDetails = ({ clientDetails }) => {
             Shipment Cost:{" "}
             <SpanCost style={{ fontSize: ".9rem", paddingLeft: "21px" }}>
               {" "}
-              $ {shipment_cost}
+              $ {shipment_cost.toFixed(2)}
             </SpanCost>
           </DataCost>
           <DataCostTotal>
-            Total: <SpanCost>$ {total}</SpanCost>
+            Total: <SpanCost>$ {total.toFixed(2)}</SpanCost>
           </DataCostTotal>
         </OrderCost>
       </BuyerDetailsWrapper>
