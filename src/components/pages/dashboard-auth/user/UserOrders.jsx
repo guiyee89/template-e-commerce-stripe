@@ -3,7 +3,7 @@ import { db } from "../../../../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { AuthContext } from "../../../context/AuthContext";
 import styled from "styled-components/macro";
-import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import { useNavigate } from "react-router-dom";
 
 export const UserOrders = () => {
@@ -72,5 +72,5 @@ const LogoutBtn = styled.button`
   font-size: 0.65rem;
   width: 100%;
   text-align: right;
-  margin: -25px 160px 0 0px;
+  margin: -25px 24px 0 0px;
 `;
