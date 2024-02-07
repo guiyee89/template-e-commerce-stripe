@@ -212,6 +212,23 @@ export const CheckoutFormCart = ({
                   />
                 </Form>
                 <TotalPriceInfoMobileContainer windowwidth={windowWidth}>
+                  <DiscountCouponWrapper>
+                    <Input
+                      label="Discount code"
+                      variant="outlined"
+                      name="discount"
+                      onChange={handleChange}
+                      helperText={errors.ciudad}
+                      error={errors.ciudad ? true : false}
+                      sx={{
+                        width: "70%",
+                        minWidth: "160px",
+                        backgroundColor: "white",
+                      }}
+                      size="medium"
+                    />
+                    <DiscountCouponBtn>Apply</DiscountCouponBtn>
+                  </DiscountCouponWrapper>
                   <SubTotalWrapper>
                     <TotalText>Subtotal:</TotalText>
                     <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
@@ -260,7 +277,7 @@ export const CheckoutFormCart = ({
                       <Box
                         sx={{
                           ...style,
-                          top: windowWidth < 750 ? "50%" : "35%",
+                          top: windowWidth < 750 ? "50%" : "46%",
                           width:
                             windowWidth < 550
                               ? "100%"
@@ -296,6 +313,8 @@ export const CheckoutFormCart = ({
                           <ItemInfoContainer>
                             <ItemData
                               style={{
+                                fontSize:
+                                  "clamp(0.7rem, 0.35vw + 0.5rem, 0.88rem)",
                                 fontWeight: "500",
                               }}
                             >
@@ -569,7 +588,7 @@ const CartTotalPriceContainer = styled.div`
     }
   }
   @media (max-width: 1050px) {
-    padding: 0 15px 0 18px;
+    padding: 0 5px 0 18px;
   }
   @media (max-width: 850px) {
     padding: 0 18px 0 18px;
@@ -617,7 +636,7 @@ const Img = styled.img`
 `;
 const ItemData = styled.div`
   padding: 0 0 2px 8px;
-  font-size: clamp(0.7rem, 2vw, 0.88rem);
+  font-size: clamp(0.7rem, 0.35vw + 0.5rem, 0.88rem);
   text-transform: capitalize;
 `;
 const ItemSizeColor = styled.div`
@@ -639,7 +658,7 @@ const SpanSize = styled.span`
   padding-left: 8px;
 `;
 const SpanEachPrice = styled.span`
-  font-size: clamp(0.6rem, 2vw, 0.78rem);
+  font-size: clamp(0.6rem, 0.35vw + 0.45rem, 0.7rem);
   font-weight: 600;
   color: grey;
 `;
@@ -681,7 +700,7 @@ const ItemPriceWrapper = styled.h4`
   align-items: center;
   gap: 0.1rem;
   flex-direction: column-reverse;
-  min-width: 90px;
+  min-width: 85px;
 `;
 const DeleteIconBtn = styled(DeleteIcon)`
   width: 0.8em !important;
@@ -691,7 +710,7 @@ const DeleteIconBtn = styled(DeleteIcon)`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.78rem, 1.6vw, 0.88rem);
+  font-size: clamp(0.75rem, 0.55vw + 0.45rem, 0.88rem);
   font-style: italic;
   position: relative;
   text-align: center;
@@ -704,8 +723,8 @@ const Price = styled.span`
   font-weight: 600;
   font-size: ${(props) =>
     props.hasDiscount
-      ? "clamp(0.73rem, 1.6vw, .76rem);"
-      : "clamp(0.78rem, 1.6vw, .88rem);"};
+      ? "clamp(0.68rem, 0.55vw + 0.45rem, .76rem)"
+      : "clamp(0.75rem, 0.55vw + 0.45rem, 0.88rem)"};
   font-style: italic;
   position: relative;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -719,8 +738,8 @@ const Price = styled.span`
     height: 1px;
     background-color: black;
     @media (max-width: 850px) {
-      left: 21px;
-      width: 54%;
+      left: 24px;
+      width: 49%;
     }
   }
 `;
@@ -878,9 +897,9 @@ const style = {
 const CartItemsContainer = styled.div`
   max-width: 430px;
   padding-bottom: 40px;
-  max-height: 444px;
+  max-height: 370px;
   overflow-y: auto;
-  padding-right: 8px;
+  padding: 16px 8px 20px 0;
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -900,7 +919,7 @@ const CartItemsContainer = styled.div`
     margin: 0px auto;
     padding: 12px 8px 0 8px;
     height: auto;
-    max-height: 255px;
+    max-height: 280px;
     overflow-y: auto;
     background-color: rgb(244 244 244);
     border-bottom: 1px solid lightgrey;
@@ -911,6 +930,18 @@ const DiscountCouponWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
+  @media (max-width: 850px) {
+    margin: 18px auto;
+    width: 81%;
+  }
+  @media (max-width: 700px) {
+    margin: 18px 14px;
+    width: 96%;
+  }
+  @media (max-width: 450px) {
+    margin: 18px 5px;
+    width: 95%;
+  }
 `;
 const DiscountCouponBtn = styled.button`
   border: 1px solid darkgray;

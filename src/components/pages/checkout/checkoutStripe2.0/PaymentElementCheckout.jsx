@@ -167,7 +167,7 @@ const CheckoutContainer = styled.div`
   justify-content: space-between;
   height: 500px;
   width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
-  padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
+  padding-right: ${(props) => (props.windowWidth > 750 ? "20px" : "0")};
   margin: 0;
   position: relative;
   @media (max-width: 750px) {
@@ -220,6 +220,7 @@ const Total = styled.h2`
 const ItemsContainer = styled.div`
   overflow-y: auto;
   height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
+  padding-right: ${(props) => (props.windowWidth < 1100 ? "0" : "10px")};
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -233,7 +234,6 @@ const ItemsContainer = styled.div`
   ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }
-  padding-right: 10px;
   @media (max-width: 750px) {
     border-bottom: 1px solid grey;
   }
@@ -279,8 +279,7 @@ const PriceWrapper = styled.div`
 `;
 const BothPriceWrapper = styled.h4`
   display: flex;
-  align-items: ${(props) =>
-    props.windowWidth < 750 ? "flex-end" : "flex-start"};
+  align-items: flex-end;
   gap: 0.1rem;
   flex-direction: column-reverse;
   margin: -10px 5px 0 0;
@@ -288,7 +287,7 @@ const BothPriceWrapper = styled.h4`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: clamp(0.82rem, 2vw, 0.94rem);
+  font-size: clamp(0.82rem, 0.8vw + 0.5rem, 0.94rem);
   font-style: italic;
   position: relative;
   display: inline-block;
@@ -299,13 +298,12 @@ const Price = styled.span`
   font-weight: 600;
   font-size: ${(props) =>
     props.hasDiscount
-      ? "clamp(.72rem, 2vw, .85rem)"
-      : "clamp(.82rem, 2vw, .94rem)"};
+      ? "clamp(.72rem, 0.8vw + 0.5rem, .85rem)"
+      : "clamp(0.82rem, 0.8vw + 0.5rem, 0.94rem);"};
   font-style: italic;
   position: relative;
   display: flex;
-  justify-content: ${(props) =>
-    props.windowWidth < 750 ? "flex-end" : "flex-start"};
+  justify-content: flex-end;
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   /* Add the following styles to create the strike-through line if hasDiscount is true */
   &::after {
@@ -320,7 +318,7 @@ const Price = styled.span`
 `;
 
 const PaymentElementContainer = styled.div`
-  width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
+  width: ${(props) => (props.windowWidth > 750 ? "62%" : "100%")};
   display: flex;
   flex-direction: column;
   align-items: stretch;
