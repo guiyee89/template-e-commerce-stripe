@@ -15,7 +15,6 @@ export const ProductsDetails = ({ clientProducts }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const { items, item_price } = clientProducts || {};
 
-
   return (
     <>
       <ProdcutsWrapper>
@@ -29,13 +28,18 @@ export const ProductsDetails = ({ clientProducts }) => {
           >
             <TableHead>
               <TableRow>
-                <TableCellTitle sx={{width: windowWidth < 500 ? "70px" : "120px", minWidth: "70px" }}></TableCellTitle>
-                <TableCellTitle >Product</TableCellTitle> 
+                <TableCellTitle
+                  sx={{
+                    width: windowWidth < 500 ? "70px" : "120px",
+                    minWidth: "70px",
+                  }}
+                ></TableCellTitle>
+                <TableCellTitle>Product</TableCellTitle>
                 <TableCellTitle>Color</TableCellTitle>
                 <TableCellTitle>Size</TableCellTitle>
                 <TableCellTitle>Price</TableCellTitle>
                 <TableCellTitle>Qty</TableCellTitle>
-                <TableCellTitle>Price</TableCellTitle>
+                <TableCellTitle>Total</TableCellTitle>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -46,13 +50,20 @@ export const ProductsDetails = ({ clientProducts }) => {
                   </TableCellData>
                   <TableCellData>{product.title}</TableCellData>
                   <TableCellData>{product.color}</TableCellData>
-                  <TableCellData sx={{textTransform:"uppercase!important"}}>{product.size}</TableCellData>
-                  <TableCellData>
-                    ${item_price?.[index]?.unit_price}
+                  <TableCellData sx={{ textTransform: "uppercase!important" }}>
+                    {product.size}
                   </TableCellData>
-                  <TableCellData sx={{fontWeight:"600"}}>{product.quantity}</TableCellData>
                   <TableCellData>
-                    ${item_price?.[index]?.unit_price * product.quantity}
+                    ${(item_price?.[index]?.unit_price).toFixed(2)}
+                  </TableCellData>
+                  <TableCellData sx={{ fontWeight: "600" }}>
+                    {product.quantity}
+                  </TableCellData>
+                  <TableCellData>
+                    $
+                    {(
+                      item_price?.[index]?.unit_price * product.quantity
+                    ).toFixed(2)}
                   </TableCellData>
                 </TableRow>
               ))}
@@ -84,12 +95,12 @@ const ProdcutsWrapper = styled.div`
 const TableCellTitle = styled(TableCell)`
   padding: 16px 8px !important;
   text-align: center !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 `;
 const TableCellData = styled(TableCell)`
   padding: 11.5px 0px !important;
   text-align: center !important;
-  text-transform:capitalize
+  text-transform: capitalize;
 `;
 const OrderImg = styled.img`
   width: 100%;
