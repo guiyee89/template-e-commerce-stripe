@@ -1,5 +1,5 @@
+/* import { BsEyeFill } from "react-icons/bs"; */
 import styled from "styled-components/macro";
-import { BsEyeFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Pagination, PaginationItem } from "@mui/material";
@@ -191,11 +191,11 @@ export const ItemList = ({
                   <Discount>-{product.discount}%</Discount>
                 )}
 
-                <ButtonsWrapper>
+                {/* <ButtonsWrapper>
                   <BtnSeeDetails>
                     <SeeDetails />
                   </BtnSeeDetails>
-                </ButtonsWrapper>
+                </ButtonsWrapper> */}
               </ItemCard>
               <InfoWrapper>
                 <ItemTitle>{product.title}</ItemTitle>
@@ -292,45 +292,6 @@ const LoaderOverlay = styled.div`
   z-index: 2;
 `;
 
-const ButtonsWrapper = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 0;
-  background-color: #873c3c;
-  width: 40px;
-  height: 40px;
-  opacity: 0;
-  transform: translateX(20px);
-  display: ${({ disabled }) => (disabled ? "none" : "block")};
-`;
-const SeeDetails = styled(BsEyeFill)`
-  color: black;
-  width: 60%;
-  height: 50%;
-  cursor: pointer;
-  transition: transform 0.19s ease-in-out 0.03s;
-`;
-const BtnSeeDetails = styled.span`
-  &:active {
-    background-color: #e3e0e0;
-    transition: background-color 0.1s ease-in-out;
-  }
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  &:hover {
-    background-color: #e1e1e1;
-    transition: background-color ease-in-out 0.3s;
-  }
-  &:hover ${SeeDetails} {
-    transform: scale(1.3);
-  }
-`;
 const ItemImg = styled.img`
   margin: 0 auto;
   overflow: hidden;
@@ -373,15 +334,15 @@ const ItemWrapper = styled(Link)`
   height: 100%;
   background-color: rgb(239, 237, 237);
   &:hover {
-    ${ButtonsWrapper} {
-      opacity: 1;
-      transform: translateX(-20px);
-      transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
-    }
     ${ItemImg} {
       transform: scale(1.11);
       mix-blend-mode: darken;
     }
+    /* ${ButtonsWrapper} {
+      opacity: 1;
+      transform: translateX(-20px);
+      transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+    } */
     /* ${InfoWrapper}, ${ImgWrapperLink} {
       background-color: white;
       transition: background-color ease-in-out 0.4s;
@@ -614,3 +575,42 @@ const ItemsQuantity = styled.p`
     margin: 8px 0px 8px 0px;
   }
 `;
+// const ButtonsWrapper = styled.div`
+//   position: absolute;
+//   top: 15px;
+//   right: 0;
+//   background-color: #873c3c;
+//   width: 40px;
+//   height: 40px;
+//   opacity: 0;
+//   transform: translateX(20px);
+//   display: ${({ disabled }) => (disabled ? "none" : "block")};
+// `;
+// const SeeDetails = styled(BsEyeFill)`
+//   color: black;
+//   width: 60%;
+//   height: 50%;
+//   cursor: pointer;
+//   transition: transform 0.19s ease-in-out 0.03s;
+// `;
+// const BtnSeeDetails = styled.span`
+//   &:active {
+//     background-color: #e3e0e0;
+//     transition: background-color 0.1s ease-in-out;
+//   }
+//   background-color: white;
+//   width: 100%;
+//   height: 100%;
+//   display: block;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #e1e1e1;
+//     transition: background-color ease-in-out 0.3s;
+//   }
+//   &:hover ${SeeDetails} {
+//     transform: scale(1.3);
+//   }
+// `;

@@ -147,7 +147,7 @@ export const MobileFilterContainer = ({
         const item = doc.data();
         const key = `${item.productId}-${item.color}`;
 
-        if (!uniqueItems.has(key)) {
+        if (!uniqueItems.has(key) && item.stock > 0) {
           uniqueItems.add(key);
           // Check if any color filter matches with any word in the item's color
           if (
