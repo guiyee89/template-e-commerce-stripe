@@ -286,7 +286,6 @@ const HeaderWrapper = styled.header`
     props.scrolled === "scrolled"
       ? "1px solid rgb(133 132 132 / 25%)"
       : "none"};
-
 `;
 const Nav = styled.nav`
   margin: 0 auto;
@@ -358,7 +357,7 @@ const SideMenuHeader = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "50px" : "65px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.2s" : "0.16s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.08s" : "0.16s")}
     ease-in-out;
 `;
 const LogoLink = styled(Link)`
