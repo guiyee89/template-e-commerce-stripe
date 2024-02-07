@@ -919,7 +919,7 @@ const CartItemsContainer = styled.div`
     margin: 0px auto;
     padding: 12px 8px 0 8px;
     height: auto;
-    max-height: 255px;
+    max-height: 280px;
     overflow-y: auto;
     background-color: rgb(244 244 244);
     border-bottom: 1px solid lightgrey;
