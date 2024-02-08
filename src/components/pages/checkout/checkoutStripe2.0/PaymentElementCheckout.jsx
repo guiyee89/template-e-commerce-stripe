@@ -219,7 +219,7 @@ const Total = styled.h2`
 `;
 const ItemsContainer = styled.div`
   overflow-y: auto;
-  height: ${(props) => (props.windowWidth > 750 ? "398px" : "168px")};
+  height: ${(props) => (props.windowWidth > 750 ? "398px" : "auto")};
   padding-right: ${(props) => (props.windowWidth < 1100 ? "0" : "10px")};
   ::-webkit-scrollbar {
     width: 5px;
@@ -236,6 +236,7 @@ const ItemsContainer = styled.div`
   }
   @media (max-width: 750px) {
     border-bottom: 1px solid grey;
+    max-height: 168px;
   }
 `;
 const ItemWrapper = styled.div`
@@ -358,7 +359,7 @@ const StripeImg = styled.img`
     props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "30%" : "22%"};
   margin: -22px 0 0 -32px;
   @media (max-width: 750px) {
-    margin: -11px 0px 0px -15px;
+    margin: -7px 0px 0px -15px;
   }
 `;
 
@@ -367,12 +368,15 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   height: 46px;
-  margin: -50px 0px 15px;
+  margin: -50px auto 15px;
   border: none;
   border-radius: 4px;
   width: 95%;
   :hover {
     box-shadow: rgba(0, 0, 0, 2.45) 0px 0px 10px;
+  }
+  @media (max-width: 750px) {
+    margin: -45px auto 15px;
   }
 `;
 const LoaderOverlay = styled.div`
