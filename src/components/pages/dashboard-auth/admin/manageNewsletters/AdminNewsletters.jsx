@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 export const AdminNewsletters = () => {
   return (
     <>
-      <NewslettersWrapper>AdminNewsletters</NewslettersWrapper>
+      <NewslettersWrapper>En construccion...</NewslettersWrapper>
     </>
   );
 };
