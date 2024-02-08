@@ -74,6 +74,6 @@ const CartWrapper = styled.div`
     props.windowWidth < 900
       ? props.scrolled === "scrolled"
         ? "0"
-        : "8px"
-      : "8px"};
+        : "3px"
+      : "3px"};
 `;
