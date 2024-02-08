@@ -74,6 +74,7 @@ const Button = styled.button`
 `;
 const Text = styled.p`
   letter-spacing: 1px;
+  line-height: 1.5;
   @media (max-width: 500px) {
     text-align: center;
   }
