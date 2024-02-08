@@ -275,7 +275,7 @@ export const NavDesktop = () => {
                       <ProfileBtn>
                         <h4>Profile</h4>
                         <AccountCircleSharpIcon
-                          sx={{ fontSize: "28px", marginBottom: "-6px" }}
+                          sx={{ fontSize: "28px" }}
                           onClick={() =>
                             /* navigate("/user-orders") */ window.location.assign(
                               "/user-orders"
@@ -552,8 +552,7 @@ const DashboardBtn = styled.button`
   border: none;
   cursor: pointer;
   font-size: 0.6rem;
-  margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-7px" : "-6px"};
+  margin-bottom: 1px;
   transition: margin-bottom
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
@@ -569,5 +568,5 @@ const LoginBtn = styled.button`
   border: none;
   font-size: 0.6rem;
   cursor: pointer;
-  margin-bottom: -6px;
+  margin-bottom: -3px;
 `;

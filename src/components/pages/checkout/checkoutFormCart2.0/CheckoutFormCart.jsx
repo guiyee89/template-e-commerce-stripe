@@ -284,7 +284,7 @@ export const CheckoutFormCart = ({
                               : windowWidth < 1100
                               ? "95%"
                               : "110%",
-                          height: windowWidth < 750 ? "100%" : "617px",
+                          height: windowWidth < 750 ? "85%" : "617px",
                           padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
                         }}
                       >
