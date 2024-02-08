@@ -276,7 +276,7 @@ const HeaderWrapper = styled.header`
   height: ${(props) => (props.scrolled === "scrolled" ? "55px" : "90px")};
   margin-top: -94px;
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.20s" : "0.20s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.15s" : "0.20s")}
     ease-in-out;
   z-index: 2;
   background-color: rgb(253 253 253);
