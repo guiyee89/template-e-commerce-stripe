@@ -1,4 +1,11 @@
-import { Box, Modal, TextField } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { CartContext } from "../../../context/CartContext";
@@ -104,9 +111,12 @@ export const CheckoutFormCart = ({
                         }}
                       >
                         <LogoutContainer>
-                          <p style={{ fontSize: ".9rem", fontWeight: "500" }}>
-                            {user.email}
-                          </p>
+                          <div style={{ display: "block" }}>
+                            <p style={{ paddingBottom: "8px" }}>Account</p>
+                            <p style={{ fontSize: ".9rem", fontWeight: "500" }}>
+                              {user.email}
+                            </p>
+                          </div>
 
                           <LogBtn
                             type="button"
@@ -159,6 +169,24 @@ export const CheckoutFormCart = ({
                       />
                     </>
                   )}
+                  <FormControlLabel
+                    sx={{
+                      width: "100%",
+                      marginTop: "20px",
+                      marginLeft: "2px",
+                    }}
+                    control={<Checkbox />}
+                    label={
+                      <Typography
+                        sx={{
+                          fontSize: "0.88rem",
+                          marginBottom: "-4px",
+                        }}
+                      >
+                        Email me with news and offers
+                      </Typography>
+                    }
+                  />
                   <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
                   <Input
                     label="Name"
@@ -499,6 +527,7 @@ const ContactTitle = styled.h2`
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
   width: 100%;
+  margin-bottom: 12px;
   @media (max-width: 850px) {
     width: 65%;
   }
@@ -528,9 +557,9 @@ const LogoutContainer = styled.div`
   font-size: 0.8rem;
   padding-right: 5px;
   height: 60px;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 1px solid lightgray;
-  padding-left: 4px;
+  padding: 8px 0 8px 4px;
 `;
 
 const DeliveryInfoTitle = styled.h2`

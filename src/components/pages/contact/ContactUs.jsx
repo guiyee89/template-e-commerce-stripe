@@ -2,6 +2,6 @@
 
 export const ContactUs = () => {
   return (
-    <div>El proceso de construccion...</div>
+    <div>En construccion...</div>
   )
 }
