@@ -49,7 +49,7 @@ const CartWidgetWrapper = styled.div`
     ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
     ease-in-out;
   padding: ${(props) =>
-    props.isOpen && props.windowWidth > 900 ? "0" : "0 1px 0 0"};
+    props.isOpen && props.windowWidth > 900 ? "0" : "0 0 0 0"};
 `;
 
 const Contador = styled(Badge)`
