@@ -2,11 +2,11 @@ import styled from "styled-components/macro";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
-
 import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
+
 
 export const PaymentElementCheckout = () => {
   const { cart, getTotalPrice, getItemPrice, clearCart } =
@@ -14,6 +14,7 @@ export const PaymentElementCheckout = () => {
   const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isPaymentElementLoaded, setPaymentElementLoaded] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const total = getTotalPrice();
@@ -61,7 +62,6 @@ export const PaymentElementCheckout = () => {
       >
         <CheckoutContainer windowWidth={windowWidth}>
           <CartInfoContainer windowWidth={windowWidth}>
-            {/* <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png" /> */}
             <div style={{ width: "100%" }}>
               <StripeImg
                 src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
@@ -70,9 +70,6 @@ export const PaymentElementCheckout = () => {
             </div>
             <TitleTotalContainer>
               <Title>We Shop</Title>
-              {/* <Total>
-                {windowWidth > 750 ? <p>$ {total.toFixed(2)}</p> : null}
-              </Total> */}
             </TitleTotalContainer>
             <ItemsContainer windowWidth={windowWidth}>
               {cart.map((product) => {
@@ -122,19 +119,8 @@ export const PaymentElementCheckout = () => {
                   </ItemWrapper>
                 );
               })}
-              {/* <TitleTotalContainer style={{ justifyContent: "flex-end" }}>
-                <Total >
-                  {windowWidth > 750 ? <p>$ {total.toFixed(2)}</p> : null}
-                </Total>
-              </TitleTotalContainer> */}
             </ItemsContainer>
           </CartInfoContainer>
-          {/* <div style={{width:"100%",borderTop: "1px solid lightgray"}}>
-            <StripeImg
-              src="https://res.cloudinary.com/derdim3m6/image/upload/v1705075558/web%20access/samples%20for%20e-commerce/i8bd2slbkkqfzyrhuwh7.png"
-              windowWidth={windowWidth}
-            />
-          </div> */}
         </CheckoutContainer>
         <PaymentElementContainer windowWidth={windowWidth} data-aos="fade-left">
           <PaymentElement />
