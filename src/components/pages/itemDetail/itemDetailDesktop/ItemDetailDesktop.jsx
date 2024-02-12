@@ -177,12 +177,12 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding-left: 65px;
+  padding: 50px 0 0 65px;
 `;
 const Discount = styled.h4`
   position: absolute;
   display: flex;
-  top: 10px;
+  top: 76px;
   right: 79.6%;
   width: 60px;
   height: 60px;
