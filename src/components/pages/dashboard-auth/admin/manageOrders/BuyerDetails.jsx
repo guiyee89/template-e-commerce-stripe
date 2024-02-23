@@ -1,5 +1,4 @@
 import styled from "styled-components/macro";
-import { TableCell } from "@mui/material";
 
 export const BuyerDetails = ({ clientDetails }) => {
   const { buyer, shipment_cost, total } = clientDetails || {};
@@ -9,29 +8,32 @@ export const BuyerDetails = ({ clientDetails }) => {
   return (
     <>
       <BuyerDetailsWrapper>
-        <BuyerTitle>Client Details:</BuyerTitle>
+        <BuyerTitle>Client Information:</BuyerTitle>
 
         <BuyerInfo>
           <BuyerData>
-            <Data>
+            <Data style={{ gap: "2.9rem" }}>
               Name: <Span>{buyer?.name}</Span>
             </Data>
-            <Data>
+            <Data style={{ gap: "2.9rem" }}>
               Email:{" "}
               <Span style={{ textTransform: "lowercase" }}>{buyer?.email}</Span>
             </Data>
-            <Data>
+            <Data style={{ gap: "2.5rem" }}>
               Phone: <Span>{buyer?.phone}</Span>
             </Data>
           </BuyerData>
           <ShippingData>
-            <Data>
+            <Data style={{ gap: "1.5rem" }}>
+              Country: <Span>{buyer?.country}</Span>
+            </Data>
+            <Data style={{ gap: "3.8rem" }}>
               City: <Span>{buyer?.ciudad}</Span>
             </Data>
-            <Data>
-              Post Code: <Span>{buyer?.cp}</Span>
+            <Data style={{ gap: "1.6rem" }}>
+              Zip Code: <Span>{buyer?.cp}</Span>
             </Data>
-            <Data>
+            <Data style={{ gap: "1.5rem" }}>
               Address: <Span>{buyer?.direccion}</Span>
             </Data>
           </ShippingData>
@@ -60,9 +62,10 @@ const BuyerDetailsWrapper = styled.div`
 `;
 const BuyerInfo = styled.div`
   display: flex;
-  padding: 26px 0 0 20px;
-  gap: 6rem;
-  @media (max-width: 500px){
+  padding: 26px 0px 0px 20px;
+  gap: 1rem;
+  flex-direction: column;
+  @media (max-width: 500px) {
     padding: 26px 0px 0px 10px;
     gap: 2rem;
   }
@@ -74,7 +77,6 @@ const BuyerTitle = styled.h2`
   border-bottom: 1px solid lightgray;
   text-transform: uppercase;
   font-size: 1.1rem;
-  text-decoration: underline;
 `;
 const BuyerData = styled.div`
   display: flex;
@@ -88,7 +90,6 @@ const ShippingData = styled.div`
 `;
 const Data = styled.p`
   display: flex;
-  flex-direction: column;
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: 900;
@@ -103,7 +104,7 @@ const DataCostTotal = styled.p`
   font-size: 1rem;
   font-weight: 900;
   position: relative;
-/*   &::after {
+  /*   &::after {
     content: "";
     position: absolute;
     bottom: 4%;
