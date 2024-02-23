@@ -17,10 +17,12 @@ export const CheckoutFormCartContainer = () => {
   const [shipmentCost, setShipmentCost] = useState(0);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   let total = getTotalPrice();
+  const [country, setCountry] = useState("");
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
       email: "" || user.email,
+      country: country,
       name: "",
       phone: "",
       ciudad: "",
@@ -31,7 +33,7 @@ export const CheckoutFormCartContainer = () => {
       setCheckoutLoading(true);
       //Submit order data
       let order = {
-        buyer: data,
+        buyer: { ...data, country },
         items: cart,
         email: user.email || data.email,
         item_price: cart.map((product) => ({
@@ -62,6 +64,12 @@ export const CheckoutFormCartContainer = () => {
     }),
   });
 
+  const handleCountryChange = (event) => {
+    const selectedCountry = event.target.value;
+    console.log("Selected country:", selectedCountry);
+    setCountry(selectedCountry);
+  };
+
   useEffect(() => {
     let shipmentCollection = collection(db, "shipment");
     let shipmentDoc = doc(shipmentCollection, "5cZm9Cs7S92K9ipH9KBn");
@@ -76,6 +84,8 @@ export const CheckoutFormCartContainer = () => {
         <CheckoutFormCart
           handleSubmit={handleSubmit}
           handleChange={handleChange}
+          handleCountryChange={handleCountryChange}
+          country={country}
           errors={errors}
           cart={cart}
           confirm={confirm}
