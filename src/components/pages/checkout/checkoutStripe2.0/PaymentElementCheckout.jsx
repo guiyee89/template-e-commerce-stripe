@@ -9,12 +9,11 @@ import { CartContext } from "../../../context/CartContext";
 
 
 export const PaymentElementCheckout = () => {
-  const { cart, getTotalPrice, getItemPrice, clearCart } =
-    useContext(CartContext);
+  const { cart, getTotalPrice, getItemPrice } = useContext(CartContext);
   const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isPaymentElementLoaded, setPaymentElementLoaded] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const total = getTotalPrice();
@@ -155,7 +154,8 @@ const CheckoutContainer = styled.div`
   width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "20px" : "0")};
   margin: 0;
-  position: relative;
+  position: sticky;
+  top: 0;
   @media (max-width: 750px) {
     height: auto;
   }
@@ -314,7 +314,7 @@ const PaymentElementContainer = styled.div`
   position: relative;
   padding-left: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
-
+  justify-content: space-between;
   &::before {
     content: "";
     position: absolute;
@@ -357,7 +357,7 @@ const Button = styled.button`
   margin: -50px auto 15px;
   border: none;
   border-radius: 4px;
-  width: 95%;
+  width: 92.5%;
   :hover {
     box-shadow: rgba(0, 0, 0, 2.45) 0px 0px 10px;
   }
@@ -377,4 +377,10 @@ const LoaderOverlay = styled.div`
   align-items: center;
   padding-left: ${(props) => (props.window < 500 ? "80px" : "0")};
   z-index: 2; /* Higher z-index to cover other elements */
+`;
+const RingLoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 84%;
 `;
