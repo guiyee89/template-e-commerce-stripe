@@ -7,8 +7,7 @@ import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
 
-
-export const PaymentElementCheckout = () => {
+export const PaymentElementCheckout = ({ shipmentCost }) => {
   const { cart, getTotalPrice, getItemPrice } = useContext(CartContext);
   const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
@@ -128,8 +127,8 @@ export const PaymentElementCheckout = () => {
               {isProcessing
                 ? "Processing ... "
                 : windowWidth > 750
-                ? `Pay $ ${total.toFixed(2)}`
-                : `Pay $ ${total.toFixed(2)}`}
+                ? `Pay $ ${(total + shipmentCost).toFixed(2)}`
+                : `Pay $ ${(total + shipmentCost).toFixed(2)}`}
             </span>
           </Button>
         </PaymentElementContainer>

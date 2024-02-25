@@ -14,17 +14,20 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { Payment } from "../checkoutStripe2.0/Payment";
+import { Payment } from "../stripeCheckout/Payment";
 import { AuthContext } from "../../../context/AuthContext";
 import { Ring } from "@uiball/loaders";
-import { ShippingButtons } from "./ShippingButtons";
-import { CartContainer } from "./CartContainer";
+import { ShippingButtons } from "../shipping/ShippingButtons";
+import { CartContainer } from "../checkoutCart/CartContainer";
 
-export const CheckoutFormCart = ({
+export const CheckoutForm = ({
   handleSubmit,
   handleChange,
   handleCountryChange,
   country,
+  handleStateChange,
+  state,
+  shipmentCost,
   errors,
   confirm,
   setConfirm,
@@ -180,7 +183,11 @@ export const CheckoutFormCart = ({
                     }
                   />
                   <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
+
+                  {/* Shipping Buttons component */}
                   <ShippingButtons />
+                  {/*  */}
+
                   <h3
                     style={{
                       width: "100%",
@@ -191,7 +198,29 @@ export const CheckoutFormCart = ({
                   >
                     Shipping Information
                   </h3>
-                  <FormControl fullWidth>
+                  <div style={{ display: "flex", width: "100%", gap: "1rem" }}>
+                    <Input
+                      label="Name"
+                      variant="outlined"
+                      name="name"
+                      onChange={handleChange}
+                      helperText={errors.name}
+                      error={errors.name ? true : false}
+                      sx={{ marginTop: "20px", width: "100%" }}
+                      size="medium"
+                    />
+                    <Input
+                      label="Last Name"
+                      variant="outlined"
+                      name="last name"
+                      onChange={handleChange}
+                      helperText={errors.lastName}
+                      error={errors.lastName ? true : false}
+                      sx={{ marginTop: "20px", width: "100%" }}
+                      size="medium"
+                    />
+                  </div>
+                  <FormControl fullWidth sx={{ margin: "20px 0" }}>
                     <InputLabel id="country">Country</InputLabel>
                     <Select
                       labelId="country"
@@ -201,29 +230,30 @@ export const CheckoutFormCart = ({
                       name="country"
                       onChange={handleCountryChange}
                     >
+                      <MenuItem value={`Argentina`}>Argentina</MenuItem>
                       <MenuItem value={`United States`}>United States</MenuItem>
                     </Select>
                   </FormControl>
-                  <Input
-                    label="Name"
-                    variant="outlined"
-                    name="name"
-                    onChange={handleChange}
-                    helperText={errors.name}
-                    error={errors.name ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
-                    size="medium"
-                  />
-                  <Input
-                    label="Phone"
-                    variant="outlined"
-                    name="phone"
-                    onChange={handleChange}
-                    helperText={errors.phone}
-                    error={errors.phone ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
-                    size="medium"
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="state">State</InputLabel>
+                    <Select
+                      labelId="state"
+                      id="state"
+                      value={state}
+                      label="State"
+                      name="state"
+                      onChange={handleStateChange}
+                    >
+                      {country === "Argentina" ? (
+                        <MenuItem value={`Buenos Aires`}>Buenos Aires</MenuItem>
+                      ) : (
+                        [
+                          <MenuItem key="arizona" value={`Arizona`}>Arizona</MenuItem>,
+                          <MenuItem key="delaware" value={`Delaware`}>Delaware</MenuItem>
+                        ]
+                      )}
+                    </Select>
+                  </FormControl>
                   <Input
                     label="City"
                     variant="outlined"
@@ -251,6 +281,16 @@ export const CheckoutFormCart = ({
                     onChange={handleChange}
                     helperText={errors.cp}
                     error={errors.cp ? true : false}
+                    sx={{ marginTop: "20px", width: "100%" }}
+                    size="medium"
+                  />
+                  <Input
+                    label="Phone (Optional)"
+                    variant="outlined"
+                    name="phone"
+                    onChange={handleChange}
+                    helperText={errors.phone}
+                    error={errors.phone ? true : false}
                     sx={{ marginTop: "20px", width: "100%" }}
                     size="medium"
                   />
@@ -302,14 +342,17 @@ export const CheckoutFormCart = ({
                         }}
                       >
                         <CloseIconBtn onClick={closeModal} />
-                        <Payment />
+                        <Payment shipmentCost={shipmentCost}/>
                       </Box>
                     </Modal>
                   )}
                 </ConfirmStripe>
               </FormWrapper>
             )}
-            <CartContainer />
+
+            {/* CartContainer component */}
+            <CartContainer shipmentCost={shipmentCost}/>
+            {/*  */}
           </FormItemsWrapper>
         </FormItemsContainer>
       </Wrapper>
@@ -387,7 +430,7 @@ const ContactTitle = styled.h2`
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 46px;
   @media (max-width: 850px) {
     width: 65%;
   }
@@ -426,7 +469,7 @@ const DeliveryInfoTitle = styled.h2`
   text-align: ${(props) => props.windowwidth < 851 && "center"};
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
-  margin-top: 55px;
+  margin: 60px 0 20px;
   font-weight: 600;
   width: 100%;
 `;

@@ -19,6 +19,7 @@ import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 
+
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const [myOrders, setMyOrders] = useState([]);
@@ -223,7 +224,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "60%",
+  width: "75%",
   bgcolor: "background.paper",
   boxShadow: 24,
   border: "none!important",

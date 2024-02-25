@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
+import CloseIcon from "@mui/icons-material/Close";
 
-export const BuyerDetails = ({ clientDetails }) => {
+export const BuyerDetails = ({ clientDetails, handleClose }) => {
   const { buyer, shipment_cost, total } = clientDetails || {};
   console.log(clientDetails);
   console.log(buyer);
@@ -8,11 +9,11 @@ export const BuyerDetails = ({ clientDetails }) => {
   return (
     <>
       <BuyerDetailsWrapper>
+        <CloseIconBtn onClick={handleClose} />
         <BuyerTitle>Client Information:</BuyerTitle>
-
         <BuyerInfo>
           <BuyerData>
-            <Data style={{ gap: "2.9rem" }}>
+            <Data style={{ gap: "2.97rem" }}>
               Name: <Span>{buyer?.name}</Span>
             </Data>
             <Data style={{ gap: "2.9rem" }}>
@@ -27,10 +28,13 @@ export const BuyerDetails = ({ clientDetails }) => {
             <Data style={{ gap: "1.5rem" }}>
               Country: <Span>{buyer?.country}</Span>
             </Data>
-            <Data style={{ gap: "3.8rem" }}>
+            <Data style={{ gap: "2.95rem" }}>
+              State: <Span>{buyer?.state}</Span>
+            </Data>
+            <Data style={{ gap: "3.7rem" }}>
               City: <Span>{buyer?.ciudad}</Span>
             </Data>
-            <Data style={{ gap: "1.6rem" }}>
+            <Data style={{ gap: "1.5rem" }}>
               Zip Code: <Span>{buyer?.cp}</Span>
             </Data>
             <Data style={{ gap: "1.5rem" }}>
@@ -95,24 +99,19 @@ const Data = styled.p`
   font-weight: 900;
 `;
 const DataCost = styled.p`
+  display: flex;
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 900;
+  justify-content: space-between;
 `;
 const DataCostTotal = styled.p`
+  display: flex;
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 900;
   position: relative;
-  /*   &::after {
-    content: "";
-    position: absolute;
-    bottom: 4%;
-    left: -1px;
-    width: 24%;
-    height: 1px;
-    background-color: black;
-  } */
+  justify-content: space-between;
 `;
 const Span = styled.span`
   font-weight: 500;
@@ -129,10 +128,22 @@ const OrderCost = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 230px;
-  padding: 15px 0px 20px 20px;
+  padding: 15px 40px 20px 20px;
   margin-top: 20px;
   border-top: 1px solid darkgrey;
   gap: 1rem;
   -webkit-box-pack: center;
   justify-content: center;
+`;
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  font-size: 28px;
+  top: 4%;
+  left: ${(props) => (props.windowWidth < 750 ? "85%" : "90%")};
+  position: absolute;
+  z-index: 2;
+  @media (max-width: 750px) {
+    top: 3%;
+    left: 88%;
+  }
 `;
