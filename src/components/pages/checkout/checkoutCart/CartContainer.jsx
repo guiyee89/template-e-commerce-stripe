@@ -5,7 +5,7 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TextField } from "@mui/material";
 
-export const CartContainer = () => {
+export const CartContainer = ({shipmentCost}) => {
   const {
     cart,
     getTotalPrice,
@@ -129,16 +129,20 @@ export const CartContainer = () => {
               <DiscountCouponBtn>Apply</DiscountCouponBtn>
             </DiscountCouponWrapper>
             <SubTotalWrapper>
-              <TotalText>Subtotal:</TotalText>
-              <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
+              <TotalText style={{ fontWeight: "500" }}>Subtotal:</TotalText>
+              <SubTotal>${subTotal.toFixed(2)}</SubTotal>
             </SubTotalWrapper>
             <DiscountWrapper>
               <TotalText>Discount:</TotalText>
-              <TotalDiscount>- $ {totalDiscount.toFixed(2)}</TotalDiscount>
+              <SubTotal>- ${totalDiscount.toFixed(2)}</SubTotal>
             </DiscountWrapper>
+            <ShippingWrapper>
+              <TotalText>Shipping Cost:</TotalText>
+              <SubTotal>$ {shipmentCost.toFixed(2)}</SubTotal>
+            </ShippingWrapper>
             <TotalWrapper>
               <TotalText>Total:</TotalText>
-              <TotalPrice>$ {total.toFixed(2)}</TotalPrice>
+              <TotalPrice>$ {(total + shipmentCost).toFixed(2)}</TotalPrice>
             </TotalWrapper>
           </TotalPriceInfoDesktopContainer>
         </CartTotalPriceContainer>
@@ -253,10 +257,22 @@ const DiscountWrapper = styled.div`
     width: 95%;
   }
 `;
+const ShippingWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.75rem, 1.5vw + 0.5rem, 0.9rem);
+  @media (max-width: 850px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+  }
+`;
 const TotalText = styled.h3`
   text-align: end;
 `;
-const TotalDiscount = styled.h3``;
+
 const SubTotal = styled.h3`
   font-weight: 500;
 `;
