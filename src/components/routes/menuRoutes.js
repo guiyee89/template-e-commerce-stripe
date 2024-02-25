@@ -1,5 +1,5 @@
-import { CheckoutFormCartContainer } from "../pages/checkout/checkoutFormCart2.0/CheckoutFormCartContainer";
-import { Completion } from "../pages/checkout/checkoutStripe2.0/Completion";
+import { CheckoutFormContainer } from "../pages/checkout/checkoutForm/CheckoutFormContainer";
+import { Completion } from "../pages/checkout/stripeCheckout/Completion";
 import { ContactUs } from "../pages/contact/ContactUs";
 import { AdminDashboard } from "../pages/dashboard-auth/admin/AdminDashboard";
 import { UserOrders } from "../pages/dashboard-auth/user/UserOrders";
@@ -38,7 +38,7 @@ export const menuRoutes = [
     {
         id: "checkout",
         path: "/checkout",
-        Element: CheckoutFormCartContainer
+        Element: CheckoutFormContainer
     },
     {
         id: "completion",

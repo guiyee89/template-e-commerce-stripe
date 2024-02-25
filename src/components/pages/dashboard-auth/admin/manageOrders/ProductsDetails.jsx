@@ -10,14 +10,16 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import CloseIcon from "@mui/icons-material/Close";
 
-export const ProductsDetails = ({ clientProducts }) => {
+export const ProductsDetails = ({ clientProducts, handleClose }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const { items, item_price } = clientProducts || {};
 
   return (
     <>
       <ProdcutsWrapper>
+        <CloseIconBtn onClick={handleClose} />
         <TableContainer component={Paper} sx={{ borderLeft: "1px solid grey" }}>
           <Table
             aria-label="simple table"
@@ -39,7 +41,9 @@ export const ProductsDetails = ({ clientProducts }) => {
                 <TableCellTitle>Size</TableCellTitle>
                 <TableCellTitle>Price</TableCellTitle>
                 <TableCellTitle>Qty</TableCellTitle>
-                <TableCellTitle>Total</TableCellTitle>
+                <TableCellTitle sx={{ paddingRight: "66px!important" }}>
+                  Total
+                </TableCellTitle>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -59,7 +63,7 @@ export const ProductsDetails = ({ clientProducts }) => {
                   <TableCellData sx={{ fontWeight: "600" }}>
                     {product.quantity}
                   </TableCellData>
-                  <TableCellData>
+                  <TableCellData sx={{ paddingRight: "66px!important" }}>
                     $
                     {(
                       item_price?.[index]?.unit_price * product.quantity
@@ -93,7 +97,7 @@ const ProdcutsWrapper = styled.div`
   }
 `;
 const TableCellTitle = styled(TableCell)`
-  padding: 16px 8px !important;
+  padding: 24px 8px !important;
   text-align: center !important;
   font-weight: 600 !important;
 `;
@@ -111,5 +115,17 @@ const OrderImg = styled.img`
   @media (max-width: 600px) {
     width: 55%;
     margin: 0px 0px 0px 15px;
+  }
+`;
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  font-size: 28px;
+  top: 8%;
+  left: ${(props) => (props.windowWidth < 750 ? "85%" : "94.3%")};
+  position: absolute;
+  z-index: 2;
+  @media (max-width: 750px) {
+    top: 3%;
+    left: 88%;
   }
 `;

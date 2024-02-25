@@ -10,7 +10,7 @@ import "aos/dist/aos.css";
 import { PaymentElementCheckout } from "./PaymentElementCheckout";
 import { CartContext } from "../../../context/CartContext";
 
-export const Payment = () => {
+export const Payment = ({shipmentCost}) => {
   const { cart, getTotalPrice } = useContext(CartContext);
   const [publishableKey, setPublishableKey] = useState(null);
   const [stripePromise, setStripePromise] = useState(null);
@@ -47,7 +47,7 @@ export const Payment = () => {
           "http://localhost:3000/create-payment-intent",
           {
             items: cart,
-            amount: total * 100,
+            amount: (total + shipmentCost) * 100,
           }
         );
 
@@ -76,7 +76,7 @@ export const Payment = () => {
           options={{ clientSecret }}
           onReady={() => setIsFormLoading(false)}
         >
-          <PaymentElementCheckout />
+          <PaymentElementCheckout shipmentCost={shipmentCost} />
         </Elements>
       )}
       {/* {isFormLoading && (

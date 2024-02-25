@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { db } from "../../../../firebaseConfig";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../../context/CartContext";
 import styled from "styled-components/macro";
 import { AuthContext } from "../../../context/AuthContext";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
-import { CheckoutFormCart } from "./CheckoutFormCart";
+import { CheckoutForm } from "./CheckoutForm";
 
-export const CheckoutFormCartContainer = () => {
+export const CheckoutFormContainer = () => {
   const { cart, getTotalPrice } = useContext(CartContext);
   const { windowWidth } = useContext(GlobalToolsContext);
   const [confirm, setConfirm] = useState(false);
@@ -18,12 +18,15 @@ export const CheckoutFormCartContainer = () => {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   let total = getTotalPrice();
   const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
       email: "" || user.email,
       country: country,
+      state: state,
       name: "",
+      lastName: "",
       phone: "",
       ciudad: "",
       direccion: "",
@@ -33,7 +36,7 @@ export const CheckoutFormCartContainer = () => {
       setCheckoutLoading(true);
       //Submit order data
       let order = {
-        buyer: { ...data, country },
+        buyer: { ...data, country, state },
         items: cart,
         email: user.email || data.email,
         item_price: cart.map((product) => ({
@@ -66,26 +69,60 @@ export const CheckoutFormCartContainer = () => {
 
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
-    console.log("Selected country:", selectedCountry);
     setCountry(selectedCountry);
   };
 
+  const handleStateChange = (event) => {
+    const selectedState = event.target.value;
+    setState(selectedState);
+  };
+
   useEffect(() => {
-    let shipmentCollection = collection(db, "shipment");
-    let shipmentDoc = doc(shipmentCollection, "5cZm9Cs7S92K9ipH9KBn");
-    getDoc(shipmentDoc).then((res) => {
-      setShipmentCost(res.data().cost);
-    });
-  }, []);
+    const fetchShipmentCost = async () => {
+      if (state) {
+        console.log(state);
+        try {
+          let shipmentCollection = collection(db, "shipment");
+          let shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
+          let docSnapshot = await getDoc(shipmentDoc);
+          const stateData = docSnapshot.data().state;
+          console.log("State data from Firestore:", stateData);
+
+          // Iterate over the stateData array to find the matching state
+          let selectedStateCost = 0;
+          stateData.forEach((item) => {
+            if (Object.keys(item)[0] === state.toLowerCase()) {
+              selectedStateCost = item[state.toLowerCase()];
+            }
+          });
+
+          // Check if the shipping cost for the selected state was found
+          if (selectedStateCost !== 0) {
+            setShipmentCost(selectedStateCost);
+            console.log(selectedStateCost);
+          } else {
+            console.error(`Shipping cost not found for state: ${state}`);
+          }
+        } catch (error) {
+          console.error("Error fetching shipment cost:", error);
+        }
+      }
+    };
+
+    fetchShipmentCost();
+  }, [state]);
 
   return (
     <>
       <Wrapper windowWidth={windowWidth}>
-        <CheckoutFormCart
+        <CheckoutForm
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           handleCountryChange={handleCountryChange}
           country={country}
+          handleStateChange={handleStateChange}
+          state={state}
+          shipmentCost={shipmentCost}
           errors={errors}
           cart={cart}
           confirm={confirm}
