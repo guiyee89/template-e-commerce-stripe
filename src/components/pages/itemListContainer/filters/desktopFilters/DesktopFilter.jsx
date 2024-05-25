@@ -719,11 +719,11 @@ const SizeCheckboxLabel = styled.label`
   display: flex;
   -webkit-box-align: center;
   align-items: center;
+  justify-content: center;
   margin-left: 8px;
   margin-right: 36px;
   margin-bottom: 25px;
   text-transform: uppercase;
-  justify-content: space-around;
   font-size: 0.88rem;
   &:hover {
     color: grey;

@@ -19,6 +19,7 @@ export const CheckoutFormContainer = () => {
   let total = getTotalPrice();
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
+  const [shipCostLoader, setShipCostLoader] = useState(false);
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
@@ -67,9 +68,13 @@ export const CheckoutFormContainer = () => {
     }),
   });
 
-  const handleCountryChange = (event) => {
+  const handleCountryChange = async (event) => {
     const selectedCountry = event.target.value;
     setCountry(selectedCountry);
+
+    if (selectedCountry !== country) {
+      setState("");
+    }
   };
 
   const handleStateChange = (event) => {
@@ -77,40 +82,107 @@ export const CheckoutFormContainer = () => {
     setState(selectedState);
   };
 
-  useEffect(() => {
-    const fetchShipmentCost = async () => {
-      if (state) {
-        console.log(state);
-        try {
-          let shipmentCollection = collection(db, "shipment");
-          let shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
-          let docSnapshot = await getDoc(shipmentDoc);
-          const stateData = docSnapshot.data().state;
-          console.log("State data from Firestore:", stateData);
+  // useEffect(() => {
+  //   let delay = 2200;
+  //   const fetchShipmentCost = async () => {
+  //     try {
+  //       let shouldLoad = false; // Flag to determine if the loader should be activated
 
-          // Iterate over the stateData array to find the matching state
+  //       if (country === "") {
+  //         setShipmentCost(0);
+  //       } else if (country.toLowerCase() !== "united states") {
+  //         shouldLoad = true; // Activate loader if the country is not United States
+  //         let shipmentCollection = collection(db, "shipment");
+  //         let shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
+  //         let docSnapshot = await getDoc(shipmentDoc);
+  //         const shipmentData = docSnapshot.data();
+  //         setShipmentCost(shipmentData.overseas);
+  //       } else if (country.toLowerCase() === "united states") {
+  //         // If country is United States, find the shipping cost for the selected state
+  //         setShipmentCost(0);
+
+  //         if (state) {
+  //           shouldLoad = true; // Activate loader on state change
+  //           const shipmentCollection = collection(db, "shipment");
+  //           const shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
+  //           const docSnapshot = await getDoc(shipmentDoc);
+  //           const shipmentData = docSnapshot.data();
+  //           const stateData = shipmentData.state;
+  //           let selectedStateCost = 0;
+  //           stateData.forEach((item) => {
+  //             if (Object.keys(item)[0] === state.toLowerCase()) {
+  //               selectedStateCost = item[state.toLowerCase()];
+  //             }
+  //           });
+  //           if (selectedStateCost !== 0) {
+  //             setShipmentCost(selectedStateCost);
+  //           } else {
+  //             console.error(`Shipping cost not found for state: ${state}`);
+  //           }
+  //         }
+  //       }
+
+  //       setShipCostLoader(shouldLoad); // Set loader state based on the flag
+  //     } catch (error) {
+  //       console.error("Error fetching shipment cost:", error);
+  //     }
+  //   };
+
+  //   const timer = setTimeout(fetchShipmentCost, delay);
+
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [country, state]);
+
+  useEffect(() => {
+    let delay = 2200;
+    const fetchShipmentCost = async () => {
+      try {
+        let shipmentCollection = collection(db, "shipment");
+        let shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
+        let docSnapshot = await getDoc(shipmentDoc);
+        const shipmentData = docSnapshot.data();
+
+        if (country === "") {
+          setShipmentCost(0);
+        } else if (country.toLowerCase() !== "united states") {
+          setShipCostLoader(true);
+          setShipmentCost(shipmentData.overseas);
+        } else {
+          setShipmentCost(0);
+        }
+
+        if (state) {
+          setShipCostLoader(true);
+          // If country is United States, find the shipping cost for the selected state
+          const stateData = shipmentData.state;
           let selectedStateCost = 0;
           stateData.forEach((item) => {
             if (Object.keys(item)[0] === state.toLowerCase()) {
               selectedStateCost = item[state.toLowerCase()];
             }
           });
-
-          // Check if the shipping cost for the selected state was found
           if (selectedStateCost !== 0) {
             setShipmentCost(selectedStateCost);
-            console.log(selectedStateCost);
           } else {
             console.error(`Shipping cost not found for state: ${state}`);
           }
-        } catch (error) {
-          console.error("Error fetching shipment cost:", error);
+
         }
+      } catch (error) {
+        console.error("Error fetching shipment cost:", error);
+      } finally {
+        setShipCostLoader(false); // Set shipCostLoader to false after the fetch operation completes
       }
     };
 
-    fetchShipmentCost();
-  }, [state]);
+    const timer = setTimeout(fetchShipmentCost, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [country, state]);
 
   return (
     <>
@@ -123,6 +195,7 @@ export const CheckoutFormContainer = () => {
           handleStateChange={handleStateChange}
           state={state}
           shipmentCost={shipmentCost}
+          shipCostLoader={shipCostLoader}
           errors={errors}
           cart={cart}
           confirm={confirm}

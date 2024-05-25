@@ -46,7 +46,7 @@ export const ShippingButtons = () => {
               backgroundColor: selectedValue === "ship" ? "#f0f5ff" : "none",
               borderTopLeftRadius: "8px",
               borderTopRightRadius: "8px",
-              padding: "8px",
+              padding: "6px",
               marginLeft: "0",
               ".css-ahj2mt-MuiTypography-root": {
                 fontSize: ".88rem",
@@ -75,14 +75,14 @@ export const ShippingButtons = () => {
               backgroundColor: selectedValue === "pick-up" ? "#f0f5ff" : "none",
               borderBottomLeftRadius: "8px",
               borderBottomRightRadius: "8px",
-              padding: "8px",
+              padding: "6px",
               marginLeft: "0",
               ".css-ahj2mt-MuiTypography-root": {
                 fontSize: ".88rem",
               },
             }}
             control={<Radio />}
-            label="Pick Up"
+            label="Pick up"
           />
         </RadioGroup>
       </FormControl>

@@ -6,9 +6,11 @@ import {  useNavigate } from "react-router-dom";
 import { AdminOrders } from "./manageOrders/AdminOrders";
 import { AdminNewsletters } from "./manageNewsletters/AdminNewsletters";
 import { ProductSearch } from "./manageProducts/ProductSearch";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
 export const AdminDashboard = () => {
   const { handleLogout } = useContext(AuthContext);
+  const { scroll } = useContext(GlobalToolsContext)
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("clientOrders");
 
@@ -42,7 +44,7 @@ export const AdminDashboard = () => {
             <DashboardBtn>newsletters</DashboardBtn>
           </DashboardList>
         </DashboardListContainer>
-        <LogoutBtn>
+        <LogoutBtn scrolled={scroll}>
           <h4>Logout</h4>
           <LogoutSharpIcon
             sx={{ fontSize: "25px" }}
@@ -144,10 +146,13 @@ const LogoutBtn = styled.button`
   border: none;
   font-size: 0.65rem;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   margin-right: 10px;
-  top: 28px;
+  top: ${(props) => (props.scrolled === "scrolled" ? "16px" : "28px")};
   right: 14%;
+  transition: top
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
+    ease-in-out;
   z-index: 2;
   @media (max-width: 950px) {
     right: 0;
