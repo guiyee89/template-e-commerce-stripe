@@ -298,7 +298,9 @@ const ItemImg = styled.img`
   transition: transform 0.19s ease-in-out 0.08s;
   cursor: pointer;
   mix-blend-mode: darken;
+  mask-image: linear-gradient(rgb(6, 6, 6), 98.5%, transparent);
 `;
+
 const ImgWrapperLink = styled.div`
   position: relative;
   background-color: rgb(239, 237, 237);

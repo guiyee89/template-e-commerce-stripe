@@ -28,6 +28,7 @@ export const CheckoutForm = ({
   handleStateChange,
   state,
   shipmentCost,
+  shipCostLoader,
   errors,
   confirm,
   setConfirm,
@@ -178,27 +179,66 @@ export const CheckoutForm = ({
                           marginBottom: "-4px",
                         }}
                       >
-                        Email me with news and offers
+                        <p>Email me with news and offers </p>
                       </Typography>
                     }
                   />
+                  <p
+                    style={{
+                      fontSize: ".8rem",
+                      width: "100%",
+                      textAlign: "left",
+                      paddingLeft: "33px",
+                    }}
+                  >
+                    ( 5% discount code )
+                  </p>
                   <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
-
                   {/* Shipping Buttons component */}
                   <ShippingButtons />
                   {/*  */}
-
                   <h3
                     style={{
                       width: "100%",
                       fontWeight: "600",
                       fontSize: "1.1rem",
-                      margin: "28px 0 28px",
+                      margin: "28px 0 14px",
                     }}
                   >
                     Shipping Information
                   </h3>
-                  <div style={{ display: "flex", width: "100%", gap: "1rem" }}>
+                  <FormControl
+                    fullWidth
+                    sx={{
+                      margin: "20px 0",
+                    }}
+                  >
+                    <InputLabel id="country">Country</InputLabel>
+                    <Select
+                      sx={{
+                        minHeight: "1.5375em!important",
+                      }}
+                      variant="filled"
+                      labelId="country"
+                      id="country"
+                      value={country}
+                      label="Country"
+                      name="country"
+                      onChange={handleCountryChange}
+                    >
+                      <MenuItem value={`Argentina`}>Argentina</MenuItem>
+                      <MenuItem value={`Canada`}>Canada</MenuItem>
+                      <MenuItem value={`United States`}>United States</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      gap: "1rem",
+                      margin: "10px 0 20px",
+                    }}
+                  >
                     <Input
                       label="Name"
                       variant="outlined"
@@ -206,7 +246,7 @@ export const CheckoutForm = ({
                       onChange={handleChange}
                       helperText={errors.name}
                       error={errors.name ? true : false}
-                      sx={{ marginTop: "20px", width: "100%" }}
+                      sx={{ width: "100%" }}
                       size="medium"
                     />
                     <Input
@@ -216,54 +256,72 @@ export const CheckoutForm = ({
                       onChange={handleChange}
                       helperText={errors.lastName}
                       error={errors.lastName ? true : false}
-                      sx={{ marginTop: "20px", width: "100%" }}
+                      sx={{ width: "100%" }}
                       size="medium"
                     />
                   </div>
-                  <FormControl fullWidth sx={{ margin: "20px 0" }}>
-                    <InputLabel id="country">Country</InputLabel>
-                    <Select
-                      labelId="country"
-                      id="country"
-                      value={country}
-                      label="Country"
-                      name="country"
-                      onChange={handleCountryChange}
-                    >
-                      <MenuItem value={`Argentina`}>Argentina</MenuItem>
-                      <MenuItem value={`United States`}>United States</MenuItem>
-                    </Select>
-                  </FormControl>
+
                   <FormControl fullWidth>
-                    <InputLabel id="state">State</InputLabel>
-                    <Select
-                      labelId="state"
-                      id="state"
-                      value={state}
-                      label="State"
-                      name="state"
-                      onChange={handleStateChange}
-                    >
-                      {country === "Argentina" ? (
-                        <MenuItem value={`Buenos Aires`}>Buenos Aires</MenuItem>
-                      ) : (
-                        [
-                          <MenuItem key="arizona" value={`Arizona`}>Arizona</MenuItem>,
-                          <MenuItem key="delaware" value={`Delaware`}>Delaware</MenuItem>
-                        ]
-                      )}
-                    </Select>
+                    {country === "United States" ? (
+                      <>
+                        <InputLabel id="state">State</InputLabel>
+                        <Select
+                          variant="filled"
+                          labelId="state"
+                          id="state"
+                          value={state}
+                          label="State"
+                          name="state"
+                          onChange={handleStateChange}
+                        >
+                          [<MenuItem value={`Arizona`}>Arizona</MenuItem>
+                          <MenuItem value={`Delaware`}>Delaware</MenuItem>
+                          <MenuItem value={`Ohio`}>Ohio</MenuItem>]
+                        </Select>
+                      </>
+                    ) : (
+                      <Input
+                        label="State / Province"
+                        variant="outlined"
+                        name="state"
+                        value={state}
+                        onChange={handleStateChange}
+                        helperText={errors.state}
+                        error={errors.state ? true : false}
+                        sx={{ width: "100%" }}
+                        size="medium"
+                      />
+                    )}
                   </FormControl>
-                  <Input
-                    label="City"
-                    variant="outlined"
-                    name="ciudad"
-                    onChange={handleChange}
-                    helperText={errors.ciudad}
-                    error={errors.ciudad ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
-                    size="medium"
-                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      gap: "1rem",
+                      margin: "24px 0 24px",
+                    }}
+                  >
+                    <Input
+                      label="City"
+                      variant="outlined"
+                      name="ciudad"
+                      onChange={handleChange}
+                      helperText={errors.ciudad}
+                      error={errors.ciudad ? true : false}
+                      sx={{ width: "100%" }}
+                      size="medium"
+                    />
+                    <Input
+                      label="Zip Code "
+                      variant="outlined"
+                      name="cp"
+                      onChange={handleChange}
+                      helperText={errors.cp}
+                      error={errors.cp ? true : false}
+                      sx={{ width: "100%" }}
+                      size="medium"
+                    />
+                  </div>
                   <Input
                     label="Address"
                     variant="outlined"
@@ -271,19 +329,10 @@ export const CheckoutForm = ({
                     onChange={handleChange}
                     helperText={errors.direccion}
                     error={errors.direccion ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
+                    sx={{ width: "100%" }}
                     size="medium"
                   />
-                  <Input
-                    label="Zip Code "
-                    variant="outlined"
-                    name="cp"
-                    onChange={handleChange}
-                    helperText={errors.cp}
-                    error={errors.cp ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
-                    size="medium"
-                  />
+
                   <Input
                     label="Phone (Optional)"
                     variant="outlined"
@@ -291,7 +340,7 @@ export const CheckoutForm = ({
                     onChange={handleChange}
                     helperText={errors.phone}
                     error={errors.phone ? true : false}
-                    sx={{ marginTop: "20px", width: "100%" }}
+                    sx={{ marginTop: "24px", width: "100%" }}
                     size="medium"
                   />
                 </Form>
@@ -342,7 +391,7 @@ export const CheckoutForm = ({
                         }}
                       >
                         <CloseIconBtn onClick={closeModal} />
-                        <Payment shipmentCost={shipmentCost}/>
+                        <Payment shipmentCost={shipmentCost} />
                       </Box>
                     </Modal>
                   )}
@@ -351,7 +400,10 @@ export const CheckoutForm = ({
             )}
 
             {/* CartContainer component */}
-            <CartContainer shipmentCost={shipmentCost}/>
+            <CartContainer
+              shipmentCost={shipmentCost}
+              shipCostLoader={shipCostLoader}
+            />
             {/*  */}
           </FormItemsWrapper>
         </FormItemsContainer>
@@ -409,6 +461,8 @@ const Form = styled.form`
   align-items: ${(props) =>
     props.windowwidth < 1050 ? "flex-start" : "center"};
   margin: ${(props) => (props.windowwidth < 851 ? "0" : "0")};
+  padding-top: 70px;
+  border-top: 1px solid lightgray;
   @media (max-width: 850px) {
     width: 100%;
     margin: 0px auto;
@@ -420,6 +474,7 @@ const Form = styled.form`
     padding: 54px 18px 66px;
   }
 `;
+
 const Input = styled(TextField)`
   width: 350px;
   padding-top: 12px;
@@ -430,7 +485,6 @@ const ContactTitle = styled.h2`
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
   width: 100%;
-  margin-bottom: 46px;
   @media (max-width: 850px) {
     width: 65%;
   }
@@ -469,7 +523,7 @@ const DeliveryInfoTitle = styled.h2`
   text-align: ${(props) => props.windowwidth < 851 && "center"};
   color: black;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
-  margin: 60px 0 20px;
+  margin: 60px 0 0;
   font-weight: 600;
   width: 100%;
 `;
