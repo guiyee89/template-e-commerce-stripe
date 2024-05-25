@@ -73,4 +73,6 @@ const LogoutBtn = styled.button`
   width: 100%;
   text-align: right;
   margin: -25px 24px 0 0px;
+  position: sticky;
+  top: 80px;
 `;

@@ -4,8 +4,9 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TextField } from "@mui/material";
+import { Ring } from "@uiball/loaders";
 
-export const CartContainer = ({shipmentCost}) => {
+export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
   const {
     cart,
     getTotalPrice,
@@ -129,19 +130,34 @@ export const CartContainer = ({shipmentCost}) => {
               <DiscountCouponBtn>Apply</DiscountCouponBtn>
             </DiscountCouponWrapper>
             <SubTotalWrapper>
-              <TotalText style={{ fontWeight: "500" }}>Subtotal:</TotalText>
+              <TotalText style={{ fontWeight: "500" }}>Subtotal</TotalText>
               <SubTotal>${subTotal.toFixed(2)}</SubTotal>
             </SubTotalWrapper>
             <DiscountWrapper>
-              <TotalText>Discount:</TotalText>
+              <TotalText>Discount</TotalText>
               <SubTotal>- ${totalDiscount.toFixed(2)}</SubTotal>
             </DiscountWrapper>
             <ShippingWrapper>
-              <TotalText>Shipping Cost:</TotalText>
-              <SubTotal>$ {shipmentCost.toFixed(2)}</SubTotal>
+              <TotalText>Shipping</TotalText>
+              {shipCostLoader ? (
+                <RingLoaderContainer>
+                  <p style={{ paddingRight: "8px", fontSize: ".78rem" }}>
+                    Calculating ...
+                  </p>
+                  <Ring size={20} lineWeight={6} speed={1} color="black" />
+                </RingLoaderContainer>
+              ) : (
+                <>
+                  {shipmentCost === 0 ? (
+                    <p> - - </p>
+                  ) : (
+                    <SubTotal>$ {shipmentCost.toFixed(2)}</SubTotal>
+                  )}
+                </>
+              )}
             </ShippingWrapper>
             <TotalWrapper>
-              <TotalText>Total:</TotalText>
+              <TotalText>Total</TotalText>
               <TotalPrice>$ {(total + shipmentCost).toFixed(2)}</TotalPrice>
             </TotalWrapper>
           </TotalPriceInfoDesktopContainer>
@@ -496,4 +512,10 @@ const DiscountCouponBtn = styled.button`
 const Input = styled(TextField)`
   width: 350px;
   padding-top: 12px;
+`;
+const RingLoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 84%;
 `;

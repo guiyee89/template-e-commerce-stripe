@@ -123,6 +123,7 @@ export const ItemImageDesktop = ({
 const Wrapper = styled.div`
   display: flex;
   width: 85%;
+  height: 100%;
   margin-left: -35px;
   margin-right: 20px;
 `;
@@ -154,7 +155,7 @@ const LoaderContainer = styled.div`
 `;
 const MainImgWrapper = styled.div`
   width: 100%;
-  height: 920px;
+ /*  min-height: 920px;  */
   top: 0;
   left: 0;
   display: flex;
@@ -164,12 +165,20 @@ const MainImgWrapper = styled.div`
 
 const MainImg = styled.img`
   width: 100%;
-  max-height: 100%;
   position: absolute;
   overflow: hidden;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   object-fit: cover;
   transform: ${({ translationDirection }) => translationDirection};
   opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
-  transition: transform 0.18s ease, opacity 0.2s ease;
+  transition: transform 0.10s ease, opacity 0.20s ease;
+  @media (min-width:1200px){
+    height: 80%;
+  }
+  @media (max-width:1199px){
+    min-height: 600px;
+  }
+  @media (max-width:1050px){
+    min-height: 500px;
+  }
 `;
