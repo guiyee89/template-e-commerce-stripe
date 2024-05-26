@@ -55,8 +55,7 @@ export const ItemDetailMobile = ({ selectedItem }) => {
 
   //Loaders for Color change function with GlobalToolsContext on FilterDetail
   const handleColorLoading = () => {
-
-    setImgSkeletonLoader(true); //Change TRUE for Skeleton rendering on Mobile
+    //setImgSkeletonLoader(true); //set Skeleton rendering on Mobile
     setVisible(true);
     setProgress(0);
   };

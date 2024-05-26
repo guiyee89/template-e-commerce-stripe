@@ -153,8 +153,8 @@ const CheckoutContainer = styled.div`
   width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "20px" : "0")};
   margin: 0;
-  position: sticky;
-  top: 0;
+  /* position: sticky;
+  top: 0; */
   @media (max-width: 750px) {
     height: auto;
   }

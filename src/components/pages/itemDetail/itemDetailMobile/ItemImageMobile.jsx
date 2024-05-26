@@ -130,7 +130,6 @@ const Wrapper = styled.div`
   flex-direction: column-reverse;
   align-items: flex-start;
   position: relative;
-  min-height: 360px;
 `;
 const StyledCarousel = styled(Carousel)`
   width: 100%;
@@ -197,7 +196,7 @@ const LoaderContainer = styled.div`
   @media (max-width: 950px) {
     min-height: ${(props) => (props.imgSkeleton ? "550px" : "550px")};
   }
-  @media (max-width: 550px) {
+  @media (max-width: 470px) {
     margin-bottom: 10px;
     width: 95%;
     min-height: ${(props) => (props.imgSkeleton ? "350px" : "350px")};
