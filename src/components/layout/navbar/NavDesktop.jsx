@@ -79,16 +79,16 @@ export const NavDesktop = () => {
                     </NavLink>
                   </NavList>
                   <ProductsDropDown scrolled={scroll}>
-                    <NavLink
-                      to="/all-products"
+                    <NavProducts
+                      /* to="/all-products" */
+                      // onClick={handleNavLinkClick}
                       scrolled={scroll}
-                      onClick={handleNavLinkClick}
                       onMouseEnter={() => setHoveredCategory("all-products")}
                       onMouseLeave={() => setHoveredCategory("all-products")}
                     >
                       products
-                    </NavLink>
-                    <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
+                    </NavProducts>
+                    <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
                     <DropDown scrolled={scroll}>
                       <DropDownContainer>
                         <CategoryList
@@ -376,7 +376,9 @@ const CategoryList = styled.li`
   margin: 12px 0 0;
 `;
 const ProductsDropDown = styled.div`
-  margin: 0px 0px -25px 10px;
+  cursor: pointer;
+  display: flex;
+  margin: 4.5px 0px -25px 10px;
   padding: 0px 24px;
   height: ${(props) => (props.scrolled === "scrolled" ? "38px" : "50px")};
 `;
@@ -455,6 +457,49 @@ const BuyNowBtn = styled.div`
   font-size: 0.65rem;
   text-decoration: underline;
   margin: 18px 0px 0px;
+`;
+const NavProducts = styled.p`
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  font-size: ${(props) =>
+    props.scrolled === "scrolled"
+      ? ".68rem"
+      : "clamp(0.62rem, 2vw + 1px, 0.72rem);"};
+  transition: font-size
+    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
+    ease-in-out;
+  background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left bottom;
+  transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  &:hover {
+    color: #68719d;
+    background-size: 100% 100%;
+  }
+  &:active {
+    color: #fafafa;
+    transition: background-color 0.05s ease-in-out;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0px;
+    width: 100%;
+    height: 1.1px;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.21s ease-in-out;
+  }
 `;
 const NavLink = styled(Link)`
   color: black;
