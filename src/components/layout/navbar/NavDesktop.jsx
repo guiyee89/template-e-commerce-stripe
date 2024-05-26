@@ -79,15 +79,13 @@ export const NavDesktop = () => {
                     </NavLink>
                   </NavList>
                   <ProductsDropDown scrolled={scroll}>
-                    <NavProducts
-                      /* to="/all-products" */
-                      // onClick={handleNavLinkClick}
+                    <NavProductsDropDown
                       scrolled={scroll}
                       onMouseEnter={() => setHoveredCategory("all-products")}
                       onMouseLeave={() => setHoveredCategory("all-products")}
                     >
                       products
-                    </NavProducts>
+                    </NavProductsDropDown>
                     <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
                     <DropDown scrolled={scroll}>
                       <DropDownContainer>
@@ -359,7 +357,7 @@ const NavListWrapper = styled.ul`
   display: flex;
   list-style: none;
   margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-10px" : "-21px"};
+    props.scrolled === "scrolled" ? "-10px" : "-26px"};
   transition: margin-bottom
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
@@ -458,7 +456,7 @@ const BuyNowBtn = styled.div`
   text-decoration: underline;
   margin: 18px 0px 0px;
 `;
-const NavProducts = styled.p`
+const NavProductsDropDown = styled.p`
   color: black;
   text-decoration: none;
   font-weight: 600;
@@ -477,29 +475,6 @@ const NavProducts = styled.p`
   background-position: left bottom;
   transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
     color 0.2s ease-in-out;
-  &:hover {
-    color: #68719d;
-    background-size: 100% 100%;
-  }
-  &:active {
-    color: #fafafa;
-    transition: background-color 0.05s ease-in-out;
-  }
-  &:hover::after {
-    transform: scaleX(1);
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0px;
-    width: 100%;
-    height: 1.1px;
-    background-color: black;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.21s ease-in-out;
-  }
 `;
 const NavLink = styled(Link)`
   color: black;
