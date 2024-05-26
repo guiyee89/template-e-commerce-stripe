@@ -412,6 +412,12 @@ const CarouselInner = styled.div`
   max-width: 100%;
   display: flex;
   gap: 0.4rem;
+  @media (max-width:540px){
+    min-height: 80%;
+  }
+  @media (max-width:440px){
+    min-height: 310px;
+  }
 `;
 const ItemWrapper = styled.div`
   //esto ajusta el responsivnes junto con 100% del itemCard
