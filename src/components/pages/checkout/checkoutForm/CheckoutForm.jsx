@@ -29,6 +29,7 @@ export const CheckoutForm = ({
   state,
   shipmentCost,
   shipCostLoader,
+  setShippingMethod,
   errors,
   confirm,
   setConfirm,
@@ -38,17 +39,18 @@ export const CheckoutForm = ({
   const { user, handleLogout } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputFilled, setInputFilled] = useState({});
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(true);
-    }, 350);
+    setIsLoading(true);
   }, []);
 
   // Use useEffect to open the modal when confirm becomes true
   useEffect(() => {
     if (confirm) {
-      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(true);
+      }, 2000);
     }
   }, [confirm]);
 
@@ -83,6 +85,31 @@ export const CheckoutForm = ({
       localStorage.removeItem("reloadOccurred");
     };
   }, [handleLogout]);
+
+  const handleInputChange = (event) => {
+    handleChange(event);
+    const { name, value } = event.target;
+    setInputFilled((prevState) => ({
+      ...prevState,
+      [name]: value !== "",
+    }));
+  };
+
+  const handleCountryChangeInternal = (event) => {
+    handleCountryChange(event);
+    setInputFilled((prevState) => ({
+      ...prevState,
+      country: event.target.value !== "",
+    }));
+  };
+
+  const handleStateChangeInternal = (event) => {
+    handleStateChange(event);
+    setInputFilled((prevState) => ({
+      ...prevState,
+      state: event.target.value !== "",
+    }));
+  };
 
   return (
     <>
@@ -157,10 +184,19 @@ export const CheckoutForm = ({
                         label="Email"
                         variant="outlined"
                         name="email"
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         helperText={errors.email}
                         error={errors.email ? true : false}
-                        sx={{ marginTop: "20px", width: "100%" }}
+                        sx={{
+                          marginTop: "20px",
+                          width: "100%",
+                          backgroundColor: inputFilled.email
+                            ? "#e8f0fe"
+                            : "transparent",
+                          "&.Mui-focused": {
+                            backgroundColor: "#e8f0fe",
+                          },
+                        }}
                         size="medium"
                       />
                     </>
@@ -194,9 +230,13 @@ export const CheckoutForm = ({
                     ( 5% discount code )
                   </p>
                   <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
+
                   {/* Shipping Buttons component */}
-                  <ShippingButtons />
+
+                  <ShippingButtons setShippingMethod={setShippingMethod} />
+
                   {/*  */}
+
                   <h3
                     style={{
                       width: "100%",
@@ -205,32 +245,8 @@ export const CheckoutForm = ({
                       margin: "28px 0 14px",
                     }}
                   >
-                    Shipping Information
+                    Billing Address
                   </h3>
-                  <FormControl
-                    fullWidth
-                    sx={{
-                      margin: "20px 0",
-                    }}
-                  >
-                    <InputLabel id="country">Country</InputLabel>
-                    <Select
-                      sx={{
-                        minHeight: "1.5375em!important",
-                      }}
-                      variant="filled"
-                      labelId="country"
-                      id="country"
-                      value={country}
-                      label="Country"
-                      name="country"
-                      onChange={handleCountryChange}
-                    >
-                      <MenuItem value={`Argentina`}>Argentina</MenuItem>
-                      <MenuItem value={`Canada`}>Canada</MenuItem>
-                      <MenuItem value={`United States`}>United States</MenuItem>
-                    </Select>
-                  </FormControl>
                   <div
                     style={{
                       display: "flex",
@@ -243,36 +259,90 @@ export const CheckoutForm = ({
                       label="Name"
                       variant="outlined"
                       name="name"
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       helperText={errors.name}
                       error={errors.name ? true : false}
-                      sx={{ width: "100%" }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: inputFilled.name
+                          ? "#e8f0fe"
+                          : "transparent",
+                        "&.Mui-focused": {
+                          backgroundColor: "#e8f0fe",
+                        },
+                      }}
                       size="medium"
                     />
                     <Input
                       label="Last Name"
                       variant="outlined"
                       name="last name"
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       helperText={errors.lastName}
                       error={errors.lastName ? true : false}
-                      sx={{ width: "100%" }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: inputFilled.lastName
+                          ? "#e8f0fe"
+                          : "transparent",
+                        "&.Mui-focused": {
+                          backgroundColor: "#e8f0fe",
+                        },
+                      }}
                       size="medium"
                     />
                   </div>
+                  <FormControl
+                    fullWidth
+                    sx={{
+                      margin: "20px 0",
+                    }}
+                  >
+                    <InputLabel id="country">Country</InputLabel>
+                    <Select
+                      variant="outlined"
+                      labelId="country"
+                      id="country"
+                      value={country}
+                      label="Country"
+                      name="country"
+                      onChange={handleCountryChangeInternal}
+                      sx={{
+                        minHeight: "1.5375em!important",
+                        backgroundColor: inputFilled.country
+                          ? "#e8f0fe"
+                          : "transparent",
+                        "&.Mui-focused": {
+                          backgroundColor: "#e8f0fe",
+                        },
+                      }}
+                    >
+                      <MenuItem value={`Argentina`}>Argentina</MenuItem>
+                      <MenuItem value={`Canada`}>Canada</MenuItem>
+                      <MenuItem value={`United States`}>United States</MenuItem>
+                    </Select>
+                  </FormControl>
 
                   <FormControl fullWidth>
                     {country === "United States" ? (
                       <>
                         <InputLabel id="state">State</InputLabel>
                         <Select
-                          variant="filled"
+                          variant="outlined"
                           labelId="state"
                           id="state"
                           value={state}
                           label="State"
                           name="state"
-                          onChange={handleStateChange}
+                          onChange={handleStateChangeInternal}
+                          sx={{
+                            backgroundColor: inputFilled.state
+                              ? "#e8f0fe"
+                              : "transparent",
+                            "&.Mui-focused": {
+                              backgroundColor: "#e8f0fe",
+                            },
+                          }}
                         >
                           [<MenuItem value={`Arizona`}>Arizona</MenuItem>
                           <MenuItem value={`Delaware`}>Delaware</MenuItem>
@@ -285,10 +355,18 @@ export const CheckoutForm = ({
                         variant="outlined"
                         name="state"
                         value={state}
-                        onChange={handleStateChange}
+                        onChange={handleStateChangeInternal}
                         helperText={errors.state}
                         error={errors.state ? true : false}
-                        sx={{ width: "100%" }}
+                        sx={{
+                          width: "100%",
+                          backgroundColor: inputFilled.state
+                            ? "#e8f0fe"
+                            : "transparent",
+                          "&.Mui-focused": {
+                            backgroundColor: "#e8f0fe",
+                          },
+                        }}
                         size="medium"
                       />
                     )}
@@ -305,20 +383,36 @@ export const CheckoutForm = ({
                       label="City"
                       variant="outlined"
                       name="ciudad"
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       helperText={errors.ciudad}
                       error={errors.ciudad ? true : false}
-                      sx={{ width: "100%" }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: inputFilled.ciudad
+                          ? "#e8f0fe"
+                          : "transparent",
+                        "&.Mui-focused": {
+                          backgroundColor: "#e8f0fe",
+                        },
+                      }}
                       size="medium"
                     />
                     <Input
                       label="Zip Code "
                       variant="outlined"
                       name="cp"
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       helperText={errors.cp}
                       error={errors.cp ? true : false}
-                      sx={{ width: "100%" }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: inputFilled.cp
+                          ? "#e8f0fe"
+                          : "transparent",
+                        "&.Mui-focused": {
+                          backgroundColor: "#e8f0fe",
+                        },
+                      }}
                       size="medium"
                     />
                   </div>
@@ -326,10 +420,18 @@ export const CheckoutForm = ({
                     label="Address"
                     variant="outlined"
                     name="direccion"
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     helperText={errors.direccion}
                     error={errors.direccion ? true : false}
-                    sx={{ width: "100%" }}
+                    sx={{
+                      width: "100%",
+                      backgroundColor: inputFilled.direccion
+                        ? "#e8f0fe"
+                        : "transparent",
+                      "&.Mui-focused": {
+                        backgroundColor: "#e8f0fe",
+                      },
+                    }}
                     size="medium"
                   />
 
@@ -337,10 +439,19 @@ export const CheckoutForm = ({
                     label="Phone (Optional)"
                     variant="outlined"
                     name="phone"
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     helperText={errors.phone}
                     error={errors.phone ? true : false}
-                    sx={{ marginTop: "24px", width: "100%" }}
+                    sx={{
+                      marginTop: "24px",
+                      width: "100%",
+                      backgroundColor: inputFilled.phone
+                        ? "#e8f0fe"
+                        : "transparent",
+                      "&.Mui-focused": {
+                        backgroundColor: "#e8f0fe",
+                      },
+                    }}
                     size="medium"
                   />
                 </Form>
@@ -354,6 +465,7 @@ export const CheckoutForm = ({
                     <SpanConfirmBtn isLoading={checkoutLoading}>
                       {checkoutLoading ? (
                         <RingLoader>
+                          <p style={{ paddingRight: "10px" }}>Processing...</p>
                           <Ring
                             size={25}
                             lineWeight={5}
@@ -362,7 +474,7 @@ export const CheckoutForm = ({
                           />
                         </RingLoader>
                       ) : (
-                        "Confirm"
+                        "pay now"
                       )}
                     </SpanConfirmBtn>
                   </ConfirmFormCartBtn>
@@ -534,7 +646,7 @@ const ConfirmStripe = styled.div`
   width: 100%;
   max-width: 500px;
   height: 60px;
-  padding: 40px 10px 0;
+  padding: 58px 1px 0 1px;
   margin: ${(props) => (props.windowwidth < 851 ? "20px auto" : "0")};
   align-items: ${(props) => (props.windowwidth < 851 ? "center" : "flex-end")};
   @media (max-width: 850px) {
@@ -558,7 +670,7 @@ const ConfirmFormCartBtn = styled.button`
   border-radius: 5px;
   box-shadow: 0 2px 0 #494a4b;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  background-color: #c8935f;
+  background-color: rgb(11, 63, 98);
   :active {
     transform: translateY(5px);
     padding: 0;
@@ -566,12 +678,15 @@ const ConfirmFormCartBtn = styled.button`
   }
 `;
 const SpanConfirmBtn = styled.span`
-  background: #f1f5f8;
+  background: rgb(20, 113, 175);
   display: block;
   padding: 0.5rem 1rem;
+  color: white;
   border-radius: 5px;
-  border: 2px solid #494a4b;
-  font-family: "Gochi Hand", cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid rgb(73, 74, 75);
+  text-transform: capitalize;
   :hover {
     transform: ${({ isLoading }) =>
       isLoading ? "none" : "translateY(-1.2px)"};
@@ -599,6 +714,7 @@ const CloseIconBtn = styled(CloseIcon)`
     left: 88%;
   }
 `;
+
 const style = {
   position: "absolute",
   left: "50%",
