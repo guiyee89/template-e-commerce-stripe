@@ -323,7 +323,8 @@ const Wrapper = styled.div`
   margin: 24px auto 110px;
   z-index: 0;
   max-height: 520px;
-  width: 636.4px;
+  /* width: 636.4px; */
+  width: 100%;
   @media (max-width: 800px) {
     margin: 24px auto 80px;
   }
@@ -412,10 +413,10 @@ const CarouselInner = styled.div`
   max-width: 100%;
   display: flex;
   gap: 0.4rem;
-  @media (max-width:540px){
+  @media (max-width: 540px) {
     min-height: 80%;
   }
-  @media (max-width:440px){
+  @media (max-width: 440px) {
     min-height: 310px;
   }
 `;
@@ -427,10 +428,10 @@ const ItemWrapper = styled.div`
   min-width: 135px;
   padding-top: 1.5px;
   padding-bottom: 5px;
-  @media (max-width:600px){
+  @media (max-width: 600px) {
     max-height: 380px;
   }
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     max-height: 320px;
   }
 `;
@@ -463,7 +464,7 @@ const InfoWrapper = styled.div`
 const CarouselItemPrice = styled.h4`
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
   font-weight: 600;
-  font-size: .80rem;
+  font-size: 0.8rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;
@@ -480,7 +481,7 @@ const CarouselItemPrice = styled.h4`
 const DiscountPrice = styled.span`
   color: #a83737;
   font-weight: 600;
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-style: italic;
   padding: 6px 0 8px 0;
   position: relative;

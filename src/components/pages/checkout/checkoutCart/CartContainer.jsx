@@ -21,6 +21,7 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
   const { windowWidth } = useContext(GlobalToolsContext);
+  console.log(shipmentCost)
 
   return (
     <>
@@ -151,7 +152,7 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                   {shipmentCost === 0 ? (
                     <p> - - </p>
                   ) : (
-                    <SubTotal>$ {shipmentCost.toFixed(2)}</SubTotal>
+                    <ShipmentCost>$ {shipmentCost.toFixed(2)}</ShipmentCost>
                   )}
                 </>
               )}
@@ -170,7 +171,7 @@ const CartTotalMainContainer = styled.div`
   width: 46%;
   min-width: 450px;
   background-color: rgb(236, 234, 234);
-  padding: 150px 0px 100px;
+  padding: 150px 0px 150px;
   @media (max-width: 970px) {
     min-width: 400px;
   }
@@ -288,7 +289,9 @@ const ShippingWrapper = styled.div`
 const TotalText = styled.h3`
   text-align: end;
 `;
-
+const ShipmentCost = styled.h3`
+  font-weight: 500;
+`;
 const SubTotal = styled.h3`
   font-weight: 500;
 `;

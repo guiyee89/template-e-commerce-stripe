@@ -357,7 +357,7 @@ const NavListWrapper = styled.ul`
   display: flex;
   list-style: none;
   margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-10px" : "-26px"};
+    props.scrolled === "scrolled" ? "-48px" : "-50px"};
   transition: margin-bottom
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
@@ -369,6 +369,7 @@ const NavListWrapper = styled.ul`
 const NavList = styled.li`
   padding: 0px 20px;
   height: 20px;
+  margin-top: 18px;
 `;
 const CategoryList = styled.li`
   margin: 12px 0 0;
@@ -376,9 +377,10 @@ const CategoryList = styled.li`
 const ProductsDropDown = styled.div`
   cursor: pointer;
   display: flex;
-  margin: 4.5px 0px -25px 10px;
+  margin: 22.5px 0px 21px 10px;
   padding: 0px 24px;
-  height: ${(props) => (props.scrolled === "scrolled" ? "38px" : "50px")};
+  height: 50px;
+
 `;
 const DropDown = styled.div`
   top: -109px;
@@ -475,6 +477,25 @@ const NavProductsDropDown = styled.p`
   background-position: left bottom;
   transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
     color 0.2s ease-in-out;
+    &:hover {
+    color: #68719d;
+    background-size: -100% 100%;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 31px;
+    left: 0px;
+    width: 100%;
+    height: 1.1px;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.21s ease-in-out;
+  }
 `;
 const NavLink = styled(Link)`
   color: black;

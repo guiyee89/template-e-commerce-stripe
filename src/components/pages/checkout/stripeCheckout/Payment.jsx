@@ -73,7 +73,7 @@ export const Payment = ({shipmentCost}) => {
       {stripePromise && clientSecret && (
         <Elements
           stripe={stripePromise}
-          options={{ clientSecret }}
+          options={{ clientSecret, locale: 'en' }}
           onReady={() => setIsFormLoading(false)}
         >
           <PaymentElementCheckout shipmentCost={shipmentCost} />

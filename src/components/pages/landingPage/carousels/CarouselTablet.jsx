@@ -246,7 +246,8 @@ const Wrapper = styled.div`
   margin: 24px auto 110px;
   z-index: 0;
   max-height: 520px;
- width:1110px;
+  /*  width: 1110px; */
+  width: 100%;
   @media (max-width: 800px) {
     margin: 24px auto 80px;
   }
@@ -281,10 +282,10 @@ const StyledCarousel = styled(Carousel)`
     width: 5.5%;
     left: 96.2%;
     bottom: 20%;
-    @media (max-width:1200px){
+    @media (max-width: 1200px) {
       left: 95.3%;
     }
-    @media (max-width:1000px){
+    @media (max-width: 1000px) {
       left: 95%;
     }
   }

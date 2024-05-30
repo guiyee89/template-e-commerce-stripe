@@ -1,4 +1,4 @@
-import { CheckoutFormContainer } from "../pages/checkout/checkoutForm/CheckoutFormContainer";
+import { CheckoutContainer } from "../pages/checkout/CheckoutContainer";
 import { Completion } from "../pages/checkout/stripeCheckout/Completion";
 import { ContactUs } from "../pages/contact/ContactUs";
 import { AdminDashboard } from "../pages/dashboard-auth/admin/AdminDashboard";
@@ -38,7 +38,7 @@ export const menuRoutes = [
     {
         id: "checkout",
         path: "/checkout",
-        Element: CheckoutFormContainer
+        Element: CheckoutContainer
     },
     {
         id: "completion",
