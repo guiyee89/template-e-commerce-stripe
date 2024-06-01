@@ -2,12 +2,23 @@ import { useState } from "react";
 import { useCount } from "../../hooks/useCount";
 import styled from "styled-components/macro";
 import { Ring } from "@uiball/loaders";
+import { useContext } from "react";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { useEffect } from "react";
 
 //Usamos los datos como parametros en ItemCount
 export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
   //Recibimos la data del contador y los productos del padre ProductDetail
   const { count, increment, decrement, reset } = useCount(initial, stock);
   const [isLoading, setIsLoading] = useState(true);
+  const { counterLoader, setCounterLoader } = useContext(GlobalToolsContext);
+
+  useEffect(() => {
+    setCounterLoader(true);
+    setTimeout(() => {
+      setCounterLoader(false);
+    }, 1500);
+  }, [count, counterLoader, setCounterLoader]);
 
   return (
     <>

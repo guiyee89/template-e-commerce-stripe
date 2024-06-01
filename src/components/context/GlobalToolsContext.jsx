@@ -60,6 +60,7 @@ const GlobalToolsProvider = ({ children }) => {
   const [buffer, setBuffer] = useState(10);
   const [visible, setVisible] = useState(false);
   const [progressComplete, setProgressComplete] = useState(false);
+  const [counterLoader, setCounterLoader] = useState(false);
 
   //////////        ////////////        ////////////        ///////////
   //                       Scroll Effect                      //
@@ -102,6 +103,8 @@ const GlobalToolsProvider = ({ children }) => {
     setVisible,
     progressComplete,
     setProgressComplete,
+    counterLoader,
+    setCounterLoader,
     scroll,
   };
 

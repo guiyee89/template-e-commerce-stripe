@@ -29,6 +29,7 @@ export const CheckoutForm = ({
   state,
   shipmentCost,
   shipCostLoader,
+  shippingMethod,
   setShippingMethod,
   errors,
   confirm,
@@ -252,7 +253,7 @@ export const CheckoutForm = ({
                       display: "flex",
                       width: "100%",
                       gap: "1rem",
-                      margin: "10px 0 20px",
+                      margin: "10px 0 0",
                     }}
                   >
                     <Input
@@ -515,6 +516,7 @@ export const CheckoutForm = ({
             <CartContainer
               shipmentCost={shipmentCost}
               shipCostLoader={shipCostLoader}
+              shippingMethod={shippingMethod}
             />
             {/*  */}
           </FormItemsWrapper>
@@ -698,7 +700,6 @@ const RingLoader = styled.div`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
-  height: 35px;
   align-items: center;
 `;
 
