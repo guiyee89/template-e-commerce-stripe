@@ -16,7 +16,6 @@ export const ItemDetailContainer = () => {
   const { id } = useParams();
   const [loadingColorFilter, setLoadingColorFilter] = useState(false); //Activate image loaders on color filter
 
-  
   const {
     windowWidth,
     setPageLoading,

@@ -7,12 +7,14 @@ import { TextField } from "@mui/material";
 import { Ring } from "@uiball/loaders";
 import { useState } from "react";
 import { useEffect } from "react";
+import ItemLoader from "../../../common/itemLoader/itemLoader";
 
 export const CartContainer = ({
   shipmentCost,
   shipCostLoader,
   shippingMethod,
 }) => {
+  const { windowWidth } = useContext(GlobalToolsContext);
   const {
     cart,
     getTotalPrice,
@@ -23,6 +25,7 @@ export const CartContainer = ({
     removeQuantity,
     addQuantity,
   } = useContext(CartContext);
+
   const total = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
@@ -34,39 +37,47 @@ export const CartContainer = ({
     cart.map((item) => getItemPrice(item.id))
   );
   const [currentDiscountPrices, setCurrentDiscountPrices] = useState(
-    cart.map((item) => item.discountPrice)
+    cart.map((item) => item.discountPrice * item.quantity)
   );
-  const { windowWidth, counterLoader, setCounterLoader } =
-    useContext(GlobalToolsContext);
+  const [itemLoaders, setLoader] = ItemLoader(); //Loader hook
 
   useEffect(() => {
     if (!shipCostLoader) {
       setCurrentTotal(total + shipmentCost);
     }
-  }, [shipCostLoader, total]);
+  }, [shipCostLoader]);
 
   useEffect(() => {
-    if (!counterLoader) {
+    if (!Object.values(itemLoaders).some((loader) => loader)) {
       setCurrentSubTotal(subTotal);
       setCurrentTotalDiscount(totalDiscount);
       setCurrentItemPrices(cart.map((item) => getItemPrice(item.id)));
-      setCurrentDiscountPrices(cart.map((item) => item.discountPrice));
+      setCurrentDiscountPrices(
+        cart.map((item) => item.discountPrice * item.quantity)
+      );
+      setCurrentTotal(total + shipmentCost);
     }
-  }, [counterLoader]);
+  }, [itemLoaders]);
 
-  //Handlers for loaders on quantity change
-  const handleLoader = (action) => {
-    setCounterLoader(true);
+  const handleLoader = (itemId, action) => {
+    setLoader(itemId, true);
     action();
     setTimeout(() => {
-      setCounterLoader(false);
-    }, 600);
+      setLoader(itemId, false);
+    }, 480);
   };
 
-  const handleAddQuantity = (itemId) => handleLoader(() => addQuantity(itemId));
+  const handleAddQuantity = (itemId) =>
+    handleLoader(itemId, () => addQuantity(itemId));
   const handleRemoveQuantity = (itemId) =>
-    handleLoader(() => removeQuantity(itemId));
-  const handleRemoveById = (itemId) => handleLoader(() => removeById(itemId));
+    handleLoader(itemId, () => removeQuantity(itemId));
+  const handleRemoveById = (itemId) => {
+    setLoader(itemId, true);
+    setTimeout(() => {
+      removeById(itemId);
+      setLoader(itemId, false);
+    }, 480);
+  };
 
   return (
     <>
@@ -78,6 +89,7 @@ export const CartContainer = ({
               const currentItemPrice = currentItemPrices[index];
               const currentDiscountPrice = currentDiscountPrices[index];
               const hasDiscount = item.discountPrice;
+              const isLoading = itemLoaders[item.id] || false;
 
               return (
                 <ItemsDetailsContainer key={item.id}>
@@ -104,7 +116,7 @@ export const CartContainer = ({
                         <ItemData style={{ marginTop: "-2px" }}>
                           {hasDiscount ? (
                             <SpanEachPrice>
-                              $ {currentDiscountPrice.toFixed(2)} each
+                              $ {hasDiscount.toFixed(2)} each
                             </SpanEachPrice>
                           ) : (
                             <SpanEachPrice>
@@ -125,7 +137,7 @@ export const CartContainer = ({
                         {" "}
                         -{" "}
                       </BtnQuantity>
-                      {counterLoader === true ? (
+                      {isLoading ? (
                         <RingLoaderContainer>
                           <Ring
                             size={20}
@@ -151,7 +163,7 @@ export const CartContainer = ({
                     <ItemPriceWrapper hasDiscount={hasDiscount}>
                       {hasDiscount && (
                         <DiscountPrice>
-                          $ {(currentDiscountPrice * item.quantity).toFixed(2)}
+                          $ {currentDiscountPrice.toFixed(2)}
                         </DiscountPrice>
                       )}
                       <Price hasDiscount={hasDiscount}>
@@ -172,9 +184,6 @@ export const CartContainer = ({
                 label="Discount code"
                 variant="outlined"
                 name="discount"
-                // onChange={handleChange}
-                // helperText={errors.ciudad}
-                // error={errors.ciudad ? true : false}
                 sx={{
                   width: "70%",
                   minWidth: "160px",

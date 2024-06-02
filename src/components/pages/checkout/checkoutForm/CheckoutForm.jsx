@@ -216,7 +216,7 @@ export const CheckoutForm = ({
                           marginBottom: "-4px",
                         }}
                       >
-                        <p>Email me with news and offers </p>
+                        Email me with news and offers
                       </Typography>
                     }
                   />

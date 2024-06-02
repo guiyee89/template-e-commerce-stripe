@@ -6,53 +6,84 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useEffect } from "react";
 
-//Usamos los datos como parametros en ItemCount
-export const ItemCount = ({ initial = 1, stock, onAddToCart }) => {
-  //Recibimos la data del contador y los productos del padre ProductDetail
+export const ItemCount = ({
+  initial = 1,
+  stock,
+  onAddToCart,
+  counterLoading,
+  setCounterLoading,
+  onCountChange,
+}) => {
   const { count, increment, decrement, reset } = useCount(initial, stock);
-  const [isLoading, setIsLoading] = useState(true);
-  const { counterLoader, setCounterLoader } = useContext(GlobalToolsContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const { visible } = useContext(GlobalToolsContext);
 
   useEffect(() => {
-    setCounterLoader(true);
+    if (visible) {
+      setTimeout(() => {
+        reset();
+      }, 1300);
+    }
+  }, [visible]);
+
+  useEffect(() => {
+    if (onCountChange) {
+      onCountChange(count);
+    }
+  }, [count, onCountChange]);
+
+  const handleIncrement = () => {
+    setCounterLoading(true);
+    increment();
     setTimeout(() => {
-      setCounterLoader(false);
-    }, 1500);
-  }, [count, counterLoader, setCounterLoader]);
+      setCounterLoading(false);
+    }, 450);
+  };
+
+  const handleDecrement = () => {
+    setCounterLoading(true);
+    decrement();
+    setTimeout(() => {
+      setCounterLoading(false);
+    }, 450);
+  };
 
   return (
-    <>
-      <Wrapper>
-        <CountButton onClick={decrement} disabled={count === 1}>
-          -
-        </CountButton>
-        <CountNumber> {count} </CountNumber>
-        <CountButton onClick={increment} disabled={count >= stock}>
-          +
-        </CountButton>
-        <AddCartBtn
-          onClick={() => {
-            onAddToCart(count);
-            setTimeout(() => {
-              setIsLoading(true);
-            }, 1500);
+    <Wrapper>
+      <CountButton onClick={handleDecrement} disabled={count === 1}>
+        -
+      </CountButton>
+      {counterLoading ? (
+        <CounterLoader>
+          <Ring size={16} lineWeight={5} speed={1} color="black" />
+        </CounterLoader>
+      ) : (
+        <CountNumber>{count}</CountNumber>
+      )}
+      <CountButton onClick={handleIncrement} disabled={count >= stock}>
+        +
+      </CountButton>
+      <AddCartBtn
+        onClick={() => {
+          onAddToCart(count);
+          setTimeout(() => {
             setIsLoading(false);
-          }}
-          disabled={stock === 0 || count > stock || isLoading === false}
-        >
-          {isLoading === false ? (
-            <RingLoader>
-              <Ring size={25} lineWeight={5} speed={1} color="black" />
-            </RingLoader>
-          ) : (
-            <SpanAddCart>Add to Cart</SpanAddCart>
-          )}
-        </AddCartBtn>
-      </Wrapper>
-    </>
+          }, 1500);
+          setIsLoading(true);
+        }}
+        disabled={stock === 0 || count > stock || isLoading}
+      >
+        {isLoading ? (
+          <AddLoader>
+            <Ring size={25} lineWeight={5} speed={1} color="black" />
+          </AddLoader>
+        ) : (
+          <SpanAddCart>Add to Cart</SpanAddCart>
+        )}
+      </AddCartBtn>
+    </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   display: flex;
   gap: 1.2rem;
@@ -117,7 +148,16 @@ const SpanAddCart = styled.span`
       isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
   }
 `;
-const RingLoader = styled.div`
+const CounterLoader = styled.div`
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0.35rem 0;
+  width: 24px;
+  cursor: not-allowed;
+`;
+const AddLoader = styled.div`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
@@ -133,4 +173,7 @@ const CountNumber = styled.span`
   font-size: 1.4rem;
   font-weight: bold;
   color: black;
+  display: flex;
+  width: 24px;
+  justify-content: center;
 `;
