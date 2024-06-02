@@ -12,7 +12,6 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
   const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const total = getTotalPrice();

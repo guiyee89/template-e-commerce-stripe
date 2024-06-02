@@ -102,14 +102,12 @@ export const CheckoutContainer = () => {
           if (country === "") {
             setShipmentCost(0);
           } else if (country.toLowerCase() !== "united states") {
-            setShipCostLoader(true);
             setShipmentCost(shipmentData.overseas);
           } else {
             setShipmentCost(0);
           }
 
           if (state) {
-            setShipCostLoader(true);
             // If country is United States, find the shipping cost for the selected state
             const stateData = shipmentData.state;
             let selectedStateCost = 0;
@@ -128,14 +126,20 @@ export const CheckoutContainer = () => {
       } catch (error) {
         console.error("Error fetching shipment cost:", error);
       } finally {
-        setShipCostLoader(false); // Set shipCostLoader to false after the fetch operation completes
+        setTimeout(() => {
+          setShipCostLoader(false);
+        }, 1500);
       }
     };
 
+    setShipCostLoader(true);
     if (shippingMethod === "ship") {
       fetchShipmentCost();
     } else {
       setShipmentCost(0);
+      setTimeout(() => {
+        setShipCostLoader(false);
+      }, 1200);
     }
   }, [shippingMethod, country, state]);
 
@@ -152,6 +156,7 @@ export const CheckoutContainer = () => {
           shipmentCost={shipmentCost}
           setShipmentCost={setShipmentCost}
           shipCostLoader={shipCostLoader}
+          shippingMethod={shippingMethod}
           setShippingMethod={setShippingMethod}
           errors={errors}
           cart={cart}

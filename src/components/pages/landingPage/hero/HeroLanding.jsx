@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { InfoIcons } from "../../common/infoIcons/InfoIcons";
 import { useContext } from "react";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import NextButtonSVG from "../../../assets/arrow-right-336-svgrepo-com.svg";
-import PrevButtonSVG from "../../../assets/arrow-left-335-svgrepo-com.svg";
+import NextButtonSVG from "../../../../assets/arrow-right-336-svgrepo-com.svg";
+import PrevButtonSVG from "../../../../assets/arrow-left-335-svgrepo-com.svg";
+import { InfoIcons } from "../../../common/infoIcons/InfoIcons";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
 export const HeroLanding = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
@@ -21,7 +21,7 @@ export const HeroLanding = () => {
       <StyledCarousel
         activeIndex={index}
         onSelect={handleSelect}
-        interval={4200}
+        interval={3500}
       >
         <CarouselItem>
           <picture>

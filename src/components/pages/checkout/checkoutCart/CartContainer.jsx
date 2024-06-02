@@ -5,8 +5,16 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TextField } from "@mui/material";
 import { Ring } from "@uiball/loaders";
+import { useState } from "react";
+import { useEffect } from "react";
+import ItemLoader from "../../../common/itemLoader/itemLoader";
 
-export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
+export const CartContainer = ({
+  shipmentCost,
+  shipCostLoader,
+  shippingMethod,
+}) => {
+  const { windowWidth } = useContext(GlobalToolsContext);
   const {
     cart,
     getTotalPrice,
@@ -17,11 +25,59 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
     removeQuantity,
     addQuantity,
   } = useContext(CartContext);
+
   const total = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
-  const { windowWidth } = useContext(GlobalToolsContext);
-  console.log(shipmentCost)
+  const [currentTotal, setCurrentTotal] = useState(total);
+  const [currentSubTotal, setCurrentSubTotal] = useState(subTotal);
+  const [currentTotalDiscount, setCurrentTotalDiscount] =
+    useState(totalDiscount);
+  const [currentItemPrices, setCurrentItemPrices] = useState(
+    cart.map((item) => getItemPrice(item.id))
+  );
+  const [currentDiscountPrices, setCurrentDiscountPrices] = useState(
+    cart.map((item) => item.discountPrice * item.quantity)
+  );
+  const [itemLoaders, setLoader] = ItemLoader(); //Loader hook
+
+  useEffect(() => {
+    if (!shipCostLoader) {
+      setCurrentTotal(total + shipmentCost);
+    }
+  }, [shipCostLoader]);
+
+  useEffect(() => {
+    if (!Object.values(itemLoaders).some((loader) => loader)) {
+      setCurrentSubTotal(subTotal);
+      setCurrentTotalDiscount(totalDiscount);
+      setCurrentItemPrices(cart.map((item) => getItemPrice(item.id)));
+      setCurrentDiscountPrices(
+        cart.map((item) => item.discountPrice * item.quantity)
+      );
+      setCurrentTotal(total + shipmentCost);
+    }
+  }, [itemLoaders]);
+
+  const handleLoader = (itemId, action) => {
+    setLoader(itemId, true);
+    action();
+    setTimeout(() => {
+      setLoader(itemId, false);
+    }, 480);
+  };
+
+  const handleAddQuantity = (itemId) =>
+    handleLoader(itemId, () => addQuantity(itemId));
+  const handleRemoveQuantity = (itemId) =>
+    handleLoader(itemId, () => removeQuantity(itemId));
+  const handleRemoveById = (itemId) => {
+    setLoader(itemId, true);
+    setTimeout(() => {
+      removeById(itemId);
+      setLoader(itemId, false);
+    }, 480);
+  };
 
   return (
     <>
@@ -29,9 +85,11 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
         <CartTotalPriceContainer>
           <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
           <CartItemsContainer>
-            {cart.map((item) => {
-              const itemTotalPrice = getItemPrice(item.id);
+            {cart.map((item, index) => {
+              const currentItemPrice = currentItemPrices[index];
+              const currentDiscountPrice = currentDiscountPrices[index];
               const hasDiscount = item.discountPrice;
+              const isLoading = itemLoaders[item.id] || false;
 
               return (
                 <ItemsDetailsContainer key={item.id}>
@@ -58,7 +116,7 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                         <ItemData style={{ marginTop: "-2px" }}>
                           {hasDiscount ? (
                             <SpanEachPrice>
-                              $ {item.discountPrice.toFixed(2)} each
+                              $ {hasDiscount.toFixed(2)} each
                             </SpanEachPrice>
                           ) : (
                             <SpanEachPrice>
@@ -72,18 +130,27 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                   <ItemData>
                     <QuantityWrapper windowwidth={windowWidth}>
                       <BtnQuantity
-                        onClick={() => removeQuantity(item.id)}
+                        onClick={() => handleRemoveQuantity(item.id)}
                         disabled={item.quantity === 1}
                         style={{ width: "33%" }}
                       >
                         {" "}
                         -{" "}
                       </BtnQuantity>
-
-                      <ItemQuantity>{item.quantity}</ItemQuantity>
-
+                      {isLoading ? (
+                        <RingLoaderContainer>
+                          <Ring
+                            size={20}
+                            lineWeight={6}
+                            speed={1}
+                            color="black"
+                          />
+                        </RingLoaderContainer>
+                      ) : (
+                        <ItemQuantity>{item.quantity}</ItemQuantity>
+                      )}
                       <BtnQuantity
-                        onClick={() => addQuantity(item.id)}
+                        onClick={() => handleAddQuantity(item.id)}
                         disabled={item.stock === item.quantity}
                         style={{ width: "33%" }}
                       >
@@ -96,18 +163,17 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                     <ItemPriceWrapper hasDiscount={hasDiscount}>
                       {hasDiscount && (
                         <DiscountPrice>
-                          $ {(item.discountPrice * item.quantity).toFixed(2)}
+                          $ {currentDiscountPrice.toFixed(2)}
                         </DiscountPrice>
                       )}
                       <Price hasDiscount={hasDiscount}>
-                        $ {itemTotalPrice.toFixed(2)}
+                        $ {currentItemPrice.toFixed(2)}
                       </Price>
                     </ItemPriceWrapper>
                   ) : (
-                    <Price>$ {itemTotalPrice.toFixed(2)}</Price>
+                    <Price>$ {currentItemPrice.toFixed(2)}</Price>
                   )}
-
-                  <DeleteIconBtn onClick={() => removeById(item.id)} />
+                  <DeleteIconBtn onClick={() => handleRemoveById(item.id)} />
                 </ItemsDetailsContainer>
               );
             })}
@@ -118,9 +184,6 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                 label="Discount code"
                 variant="outlined"
                 name="discount"
-                // onChange={handleChange}
-                // helperText={errors.ciudad}
-                // error={errors.ciudad ? true : false}
                 sx={{
                   width: "70%",
                   minWidth: "160px",
@@ -132,14 +195,18 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
             </DiscountCouponWrapper>
             <SubTotalWrapper>
               <TotalText style={{ fontWeight: "500" }}>Subtotal</TotalText>
-              <SubTotal>${subTotal.toFixed(2)}</SubTotal>
+              <SubTotal>${currentSubTotal.toFixed(2)}</SubTotal>
             </SubTotalWrapper>
             <DiscountWrapper>
               <TotalText>Discount</TotalText>
-              <SubTotal>- ${totalDiscount.toFixed(2)}</SubTotal>
+              <SubTotal>- ${currentTotalDiscount.toFixed(2)}</SubTotal>
             </DiscountWrapper>
             <ShippingWrapper>
-              <TotalText>Shipping</TotalText>
+              {shippingMethod === "pick_up" ? (
+                <p style={{ textAlign: "end" }}>Pick up</p>
+              ) : (
+                <p style={{ textAlign: "end" }}>Shipping</p>
+              )}
               {shipCostLoader ? (
                 <RingLoaderContainer>
                   <p style={{ paddingRight: "8px", fontSize: ".78rem" }}>
@@ -149,7 +216,9 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
                 </RingLoaderContainer>
               ) : (
                 <>
-                  {shipmentCost === 0 ? (
+                  {shippingMethod === "pick_up" ? (
+                    <p style={{ fontWeight: "600", fontSize: ".8rem" }}>FREE</p>
+                  ) : shipmentCost === 0 ? (
                     <p> - - </p>
                   ) : (
                     <ShipmentCost>$ {shipmentCost.toFixed(2)}</ShipmentCost>
@@ -159,7 +228,7 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
             </ShippingWrapper>
             <TotalWrapper>
               <TotalText>Total</TotalText>
-              <TotalPrice>$ {(total + shipmentCost).toFixed(2)}</TotalPrice>
+              <TotalPrice>$ {currentTotal.toFixed(2)}</TotalPrice>
             </TotalWrapper>
           </TotalPriceInfoDesktopContainer>
         </CartTotalPriceContainer>
@@ -167,6 +236,7 @@ export const CartContainer = ({ shipmentCost, shipCostLoader }) => {
     </>
   );
 };
+
 const CartTotalMainContainer = styled.div`
   width: 46%;
   min-width: 450px;

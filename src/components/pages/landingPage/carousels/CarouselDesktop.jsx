@@ -77,7 +77,7 @@ export const CarouselDesktop = () => {
         <StyledCarousel
           activeIndex={index}
           onSelect={handleSelect}
-          interval={55200}
+          interval={4500}
         >
           <CarouselItem>
             <CarouselInner>
