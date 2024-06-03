@@ -21,6 +21,7 @@ import { db } from "../../../../../firebaseConfig";
 import { useContext, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import { DeleteImages } from "./deleteImages/DeleteImages";
 
 export const ProductList = ({
   products,
@@ -78,6 +79,8 @@ export const ProductList = ({
   return (
     <>
       <ProductListWrapper>
+        {/* DELETE UNUSED IMAGES BUTTON COMPONENT */}
+        {/* <DeleteImages /> */}
         <ProductsButtonsContainer windowWidth={windowWidth}>
           <div>
             <TextFieldInput

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore,/*  getAnalytics  */} from "firebase/firestore";
+import { collection, getDocs, getFirestore,/*  getAnalytics  */ } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage"
 import { v4 } from "uuid"
 
 
@@ -94,9 +94,48 @@ export const uploadFile = async (file) => {
   });
 };
 
-export const deleteFile = async (file) => {
-  const storageRef = ref(storage, v4())
-  await deleteFile(storageRef, file)
-  // let url = await getDownloadURL(storageRef)
-  // return url
-}
+// export const deleteFile = async (file) => {
+//   const storageRef = ref(storage, v4())
+//   await deleteFile(storageRef, file)
+//   // let url = await getDownloadURL(storageRef)
+//   // return url
+// };
+
+const getAllImageUrlsFromFirestore = async () => {
+  const itemsCollection = collection(db, "products");
+  const productsSnapshot = await getDocs(itemsCollection);
+  const imageUrls = new Set();
+
+  productsSnapshot.forEach(doc => {
+    const product = doc.data();
+    product.img.forEach(url => {
+      if (url) imageUrls.add(url);
+    });
+  });
+
+  return imageUrls;
+};
+
+export const deleteUnusedImages = async () => {
+  try {
+    // Get all image URLs currently used in Firestore
+    const usedImageUrls = await getAllImageUrlsFromFirestore();
+
+    // List all files in the Firebase Storage
+    const storageRef = ref(storage);
+    const filesSnapshot = await listAll(storageRef);
+    const deletePromises = filesSnapshot.items.map(async (fileRef) => {
+      const fileUrl = await getDownloadURL(fileRef);
+
+      if (!usedImageUrls.has(fileUrl)) {
+        // If the image URL is not used in Firestore, delete it from Storage
+        await deleteObject(fileRef);
+        console.log(`Deleted unused image: ${fileUrl}`);
+      }
+    });
+
+    await Promise.all(deletePromises);
+  } catch (error) {
+    console.error("Error deleting unused images:", error);
+  }
+};
