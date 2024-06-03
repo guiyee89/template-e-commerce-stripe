@@ -196,10 +196,10 @@ const LoaderContainer = styled.div`
   @media (max-width: 950px) {
     min-height: ${(props) => (props.imgSkeleton ? "550px" : "550px")};
   }
-  @media (max-width: 550px) {
+  @media (max-width: 470px) {
     margin-bottom: 10px;
     width: 95%;
-    min-height: ${(props) => (props.imgSkeleton ? "370px" : "370px")};
+    min-height: ${(props) => (props.imgSkeleton ? "350px" : "350px")};
   }
   @media (max-width: 330px) {
     min-height: ${(props) => (props.imgSkeleton ? "320px" : "320px")};

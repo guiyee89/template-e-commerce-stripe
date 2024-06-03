@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import { ItemCount } from "../../../common/itemCount/ItemCount";
 import { FilterDetail } from "../filterDetails/FilterDetail";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { ItemImageDesktop } from "./ItemImageDesktop";
 import { Ring } from "@uiball/loaders";
@@ -17,6 +17,8 @@ export const ItemDetailDesktop = ({
   const hasDiscount = "discount" in selectedItem;
   const { setProgress, setVisible } = useContext(GlobalToolsContext);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false); //Activate size loader
+  const [counterLoading, setCounterLoading] = useState(false);
+  
 
   //On add to cart if selectedItem or filteredItem
   const onAddToCart = (quantity) => {
@@ -144,6 +146,8 @@ export const ItemDetailDesktop = ({
                   initial={1}
                   onAddToCart={onAddToCart}
                   disabled={loadingSizeFilter}
+                  counterLoading={counterLoading}
+                  setCounterLoading={setCounterLoading}
                 />
               )}
             </ItemCountWrapper>
@@ -229,7 +233,7 @@ const DiscountPrice = styled.span`
   font-weight: 600;
   font-size: 1.13rem;
   font-style: italic;
-  padding: 6px 0 8px 0;
+  padding: 6px 0 6px 0;
   position: relative;
   &::after {
     content: ${(props) => (props.hasDiscount ? "''" : "none")};

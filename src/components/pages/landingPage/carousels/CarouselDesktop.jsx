@@ -77,7 +77,7 @@ export const CarouselDesktop = () => {
         <StyledCarousel
           activeIndex={index}
           onSelect={handleSelect}
-          interval={55200}
+          interval={54500}
         >
           <CarouselItem>
             <CarouselInner>
@@ -202,10 +202,13 @@ export const CarouselDesktop = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 24px auto 110px;
+  margin: 24px auto 115px;
   z-index: 0;
   max-height: 520px;
   width: 100%;
+  @media (max-width:1300px){
+    margin: 24px auto 75px;
+  }
 `;
 const LoaderWrapper = styled.div`
   display: flex;
@@ -253,6 +256,9 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-indicators {
     bottom: -75px;
+    @media (max-width: 1300px) {
+      bottom: -50px;
+    }
   }
   .carousel-inner {
     overflow: hidden;
@@ -262,7 +268,7 @@ const StyledCarousel = styled(Carousel)`
 `;
 
 const CarouselItem = styled(Carousel.Item)`
-  height: 100%;
+  height: 440px;
   .carousel-item {
     position: relative;
     display: none;
@@ -292,15 +298,14 @@ const CarouselImg = styled.img`
 `;
 const CarouselInner = styled.div`
   max-width: 100%;
+  height: 100%;
   display: flex;
   gap: 1rem;
+  align-items: center;
   justify-content: center;
 `;
 const ItemWrapper = styled.div`
-  //esto ajusta el responsivnes junto con 100% del itemCard
-  /* max-height: 440px;
-  max-width: 315px; */
-  max-height: 485px;
+  height: 100%;
   max-width: 350px;
   width: 100%;
   padding-top: 1.5px;

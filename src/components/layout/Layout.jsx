@@ -3,16 +3,16 @@ import { Outlet, useLocation } from "react-router-dom";
 import { menuRoutes } from "../routes/menuRoutes";
 import { Footer } from "./footer/Footer";
 import styled from "styled-components/macro";
-import { HeroLanding } from "./hero/HeroLanding";
 import { NewsLetter } from "./newsletter/NewsLetter";
 import useScrollRestoration from "../hooks/useScrollRestoration";
-import { HeroSmall } from "./hero/HeroSmall";
 import { SideCart } from "../pages/cart/SideCart";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalToolsContext } from "../context/GlobalToolsContext";
 import { NavMobile } from "./navbar/NavMobile";
 import { NavDesktop } from "./navbar/NavDesktop";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
+import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
+import { HeroSmall } from "../pages/landingPage/hero/HeroSmall";
 
 ////////////////////////////////////////////////////
 
