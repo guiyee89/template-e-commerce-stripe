@@ -120,6 +120,7 @@ export const SideCart = () => {
             {cart.map((product) => {
               const itemPrice = getItemPrice(product.id); //Buscar item x id en la funcion getItemPrice
               const hasDiscount = product.discountPrice; //Variable de Item con descuento
+              console.log(itemPrice)
               return (
                 <ItemWrapper key={product.id}>
                   <ImgWrapper>
