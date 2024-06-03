@@ -27,7 +27,7 @@ export const SideCart = () => {
   const { isOpen, toggleSideCart } = useContext(GlobalToolsContext);
   const totalPrice = getTotalPrice();
   const subTotal = getSubTotal();
-  const totalDiscount = getTotalDiscount([]);
+  const totalDiscount = getTotalDiscount();
   const [currentTotal, setCurrentTotal] = useState(totalPrice);
   const [currentSubTotal, setCurrentSubTotal] = useState(subTotal);
   const [currentTotalDiscount, setCurrentTotalDiscount] =
@@ -41,6 +41,40 @@ export const SideCart = () => {
   const [itemLoaders, setLoader] = ItemLoader(); //Loader hook
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Object.values(itemLoaders).some((loader) => loader)) {
+      setCurrentSubTotal(subTotal);
+      setCurrentTotalDiscount(totalDiscount);
+      setCurrentItemPrices(cart.map((item) => getItemPrice(item.id)));
+      setCurrentDiscountPrices(
+        cart.map((item) => item.discountPrice * item.quantity)
+      );
+      setCurrentTotal(totalPrice);
+    }
+    console.log(currentDiscountPrices);
+    console.log(currentItemPrices);
+  }, [itemLoaders, totalPrice, subTotal, totalDiscount, getItemPrice]);
+
+  const handleLoader = (itemId, action) => {
+    setLoader(itemId, true);
+    action();
+    setTimeout(() => {
+      setLoader(itemId, false);
+    }, 480);
+  };
+
+  const handleAddQuantity = (itemId) =>
+    handleLoader(itemId, () => addQuantity(itemId));
+  const handleRemoveQuantity = (itemId) =>
+    handleLoader(itemId, () => removeQuantity(itemId));
+  const handleRemoveById = (itemId) => {
+    setLoader(itemId, true);
+    setTimeout(() => {
+      removeById(itemId);
+      setLoader(itemId, false);
+    }, 480);
+  };
 
   const realizarCompraWithTimeout = () => {
     setCheckoutLoading(true);
@@ -108,42 +142,6 @@ export const SideCart = () => {
     toggleSideCart();
   };
 
-  useEffect(() => {
-    if (!Object.values(itemLoaders).some((loader) => loader)) {
-      setCurrentSubTotal(subTotal);
-      setCurrentTotalDiscount(totalDiscount);
-      setCurrentItemPrices(cart.map((item) => getItemPrice(item.id)));
-      setCurrentDiscountPrices(
-        cart.map((item) => item.discountPrice * item.quantity)
-      );
-      setCurrentTotal(totalPrice);
-    }
-    console.log(currentDiscountPrices)
-    console.log(currentItemPrices)
-  }, [itemLoaders , totalPrice, subTotal, totalDiscount, getItemPrice]);
-
-
-
-  const handleLoader = (itemId, action) => {
-    setLoader(itemId, true);
-    action();
-    setTimeout(() => {
-      setLoader(itemId, false);
-    }, 480);
-  };
-
-  const handleAddQuantity = (itemId) =>
-    handleLoader(itemId, () => addQuantity(itemId));
-  const handleRemoveQuantity = (itemId) =>
-    handleLoader(itemId, () => removeQuantity(itemId));
-  const handleRemoveById = (itemId) => {
-    setLoader(itemId, true);
-    setTimeout(() => {
-      removeById(itemId);
-      setLoader(itemId, false);
-    }, 480);
-  };
-
   return (
     <>
       <TransparentDiv
@@ -170,7 +168,7 @@ export const SideCart = () => {
               const currentDiscountPrice = currentDiscountPrices[index];
               const hasDiscount = product.discountPrice;
               const isLoading = itemLoaders[product.id] || false;
-              console.log(cart)
+
               return (
                 <ItemWrapper key={product.id}>
                   <ImgWrapper>
