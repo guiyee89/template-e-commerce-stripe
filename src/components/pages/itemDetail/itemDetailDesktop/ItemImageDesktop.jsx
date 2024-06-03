@@ -143,6 +143,7 @@ const ImgAside = styled.img`
       : "rgba(0, 0, 0, 0.65) 0px 0px 3px"};
   border: ${({ isSelected }) => (isSelected ? "1px solid black" : "none")};
   width: ${({ isSelected }) => (isSelected ? "63%" : "60%")};
+  min-width: ${({ isSelected }) => (isSelected ? "78px" : "70px")};
   height: ${({ isSelected }) => (isSelected ? "11%" : "10.7%")};
   object-fit: cover;
 `;
@@ -179,6 +180,6 @@ const MainImg = styled.img`
     min-height: 600px;
   }
   @media (max-width:1050px){
-    min-height: 500px;
+    min-height: 522px;
   }
 `;

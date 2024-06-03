@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const HeroSmall = () => {

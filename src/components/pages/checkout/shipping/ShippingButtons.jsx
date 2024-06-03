@@ -8,11 +8,13 @@ import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useState } from "react";
 
-export const ShippingButtons = () => {
+export const ShippingButtons = ({ setShippingMethod }) => {
   const [selectedValue, setSelectedValue] = useState("ship");
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    const value = event.target.value;
+    setSelectedValue(value);
+    setShippingMethod(value);
   };
 
   return (
@@ -60,19 +62,19 @@ export const ShippingButtons = () => {
               position: "absolute",
               right: "20px",
               bottom: "20px",
-              color: selectedValue === "pick-up" && "#1773b0",
+              color: selectedValue === "pick_up" && "#1773b0",
             }}
             fontSize="small"
           />
           <FormControlLabel
-            value="pick-up"
+            value="pick_up"
             sx={{
               width: "100%",
               border:
-                selectedValue === "pick-up"
+                selectedValue === "pick_up"
                   ? "1px solid #1773b0"
                   : "1px solid lightgrey",
-              backgroundColor: selectedValue === "pick-up" ? "#f0f5ff" : "none",
+              backgroundColor: selectedValue === "pick_up" ? "#f0f5ff" : "none",
               borderBottomLeftRadius: "8px",
               borderBottomRightRadius: "8px",
               padding: "6px",
