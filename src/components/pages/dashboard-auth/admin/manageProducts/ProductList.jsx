@@ -32,7 +32,7 @@ export const ProductList = ({
   fetchItemsByProductId,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
-
+ 
   // Sort items by color and size
   const customSort = (itemA, itemB) => {
     // First, compare by color
@@ -80,7 +80,7 @@ export const ProductList = ({
     <>
       <ProductListWrapper>
         {/* DELETE UNUSED IMAGES BUTTON COMPONENT */}
-        {/* <DeleteImages /> */}
+        <DeleteImages />
         <ProductsButtonsContainer windowWidth={windowWidth}>
           <div>
             <TextFieldInput

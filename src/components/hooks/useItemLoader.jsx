@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ItemLoader = () => {
+const useItemLoader = () => {
     const [itemLoaders, setItemLoaders] = useState({});
   
     const setLoader = (itemId, isLoading) => {
@@ -10,4 +10,4 @@ const ItemLoader = () => {
     return [itemLoaders, setLoader];
   };
   
-  export default ItemLoader;
+  export default useItemLoader;
