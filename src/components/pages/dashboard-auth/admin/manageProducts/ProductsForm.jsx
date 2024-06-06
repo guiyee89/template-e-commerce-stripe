@@ -29,6 +29,7 @@
 //     4: false,
 //     5: false,
 //   });
+
 //   const [file, setFile] = useState({
 //     1: [],
 //     2: [],
@@ -44,6 +45,7 @@
 //     4: false,
 //     5: false,
 //   });
+
 //   const [newProduct, setNewProduct] = useState({
 //     productId: "",
 //     title: "",
@@ -58,6 +60,13 @@
 //     img: [],
 //     secondUnit: "",
 //   });
+
+//   // Set existing images for rendering
+//   useEffect(() => {
+//     if (selectedItem) {
+//       setExistingImages(selectedItem.img);
+//     }
+//   }, [selectedItem]);
 
 //   ///////*****         HANDLE CHANGE        ******///////
 //   const handleChange = (e) => {
@@ -78,13 +87,6 @@
 
 //   /////*****         HANDLE IMAGE INPUTS        ******///////
 
-//   // Set existing images for rendering
-//   useEffect(() => {
-//     if (selectedItem) {
-//       setExistingImages(selectedItem.img);
-//     }
-//   }, [selectedItem]);
-
 //   // Activate states for handling image uploading queues
 //   const handleImage = (inputNumber) => {
 //     setIsQueueProcessing(true);
@@ -101,11 +103,23 @@
 //     } catch (error) {}
 //   };
 
-//   useEffect(() => {
+//   //fetch original image URL and replace for resized image URL
+//   const getResizedImageUrl = async (originalUrl) => {
+//     try {
+//       // Construct the URL for the resized image based on the original URL
+//       const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x600$1");
 
+//       // Return the resized URL
+//       return resizedUrl;
+//     } catch (error) {
+//       console.error("Error getting resized image URL:", error);
+//       throw error; // Rethrow the error to handle it in the caller function
+//     }
+//   };
+
+//   useEffect(() => {
 //     const handleImageQueue = async () => {
 //       if (imageQueue.length > 0) {
-//         console.log(imageQueue);
 //         const { inputNumber, selectedFiles } = imageQueue[0];
 
 //         try {
@@ -115,11 +129,31 @@
 
 //           const newUrls = await Promise.all(imageUrlPromises);
 
-//           // Set the uploaded image URL to the corresponding input number
+//           // Fetch the download URL again to ensure we have the correct resized URL
+//           const resizedUrlsPromises = newUrls.map(async (newUrl) => {
+//             const resizedUrl = await getResizedImageUrl(newUrl); // Replace getResizedImageUrl with your function to get the resized URL
+//             return resizedUrl;
+//           });
+
+//           const resizedUrls = await Promise.all(resizedUrlsPromises);
+
+//           // Directly update existingImages state
+//           setExistingImages((prevImages) => {
+//             const updatedImages = [...prevImages];
+//             updatedImages[inputNumber - 1] = resizedUrls[0];
+//             console.log("Updated existingImages:", updatedImages); // Debug log
+//             return updatedImages;
+//           });
+
+//           // Set the uploaded image URLs to the corresponding input numbers
 //           if (selectedItem) {
 //             setSelectedItem((prevSelectedItem) => {
 //               const imgCopy = [...(prevSelectedItem.img || [])];
-//               imgCopy[inputNumber - 1] = newUrls[0];
+//               imgCopy[inputNumber - 1] = resizedUrls[0];
+//               console.log("Updated selectedItem:", {
+//                 ...prevSelectedItem,
+//                 img: imgCopy,
+//               }); // Debug log
 //               return {
 //                 ...prevSelectedItem,
 //                 img: imgCopy,
@@ -128,7 +162,11 @@
 //           } else {
 //             setNewProduct((prevProduct) => {
 //               const imgCopy = [...(prevProduct.img || [])];
-//               imgCopy[inputNumber - 1] = newUrls[0];
+//               imgCopy[inputNumber - 1] = resizedUrls[0];
+//               console.log("Updated newProduct:", {
+//                 ...prevProduct,
+//                 img: imgCopy,
+//               }); // Debug log
 //               return {
 //                 ...prevProduct,
 //                 img: imgCopy,
@@ -150,14 +188,10 @@
 //             [inputNumber]: true,
 //           }));
 
-//           // Find the index of the processed item in the queue
-//           const processedItemIndex = imageQueue.findIndex(
-//             (item) => item.inputNumber === inputNumber
-//           );
 //           // Remove the processed item from the queue
 //           setImageQueue((prevQueue) => {
 //             const updatedQueue = [...prevQueue];
-//             updatedQueue.shift(processedItemIndex, 1);
+//             updatedQueue.shift(); // Use shift to remove the first item
 //             return updatedQueue;
 //           });
 //         }
@@ -166,78 +200,12 @@
 //         setIsQueueProcessing(false);
 //       }
 //     };
+
 //     // Call handleImageQueue initially
 //     handleImageQueue();
-//   }, [imageQueue, selectedItem, newProduct, uploadFile]);
-
-//   // CODE SNIPPET: Confirm all image together into there imageQueue array
-//   // // Function to handle the confirmation of all images
-//   // const handleConfirmAllImages = () => {
-//   //   // Iterate over all selected files and trigger handleImage
-//   //   for (let inputNumber = 1; inputNumber <= 5; inputNumber++) {
-//   //     if (file[inputNumber].length > 0 && !isLoading[inputNumber]) {
-//   //       handleImage(inputNumber);
-//   //     }
-//   //   }
-//   // };
-
-//   // // Set a queue for each image being uploaded
-//   // useEffect(() => {
-//   //   const handleImageQueue = async () => {
-//   //     if (imageQueue.length > 0) {
-//   //       const { inputNumber } = imageQueue[0];
-//   //       // Check if the corresponding isLoading state is false
-
-//   //       try {
-//   //         const { inputNumber, selectedFiles } = imageQueue[0];
-//   //         const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
-//   //           const imageUrl = await uploadFile(selectedFile);
-//   //           return imageUrl;
-//   //         });
-//   //         const newUrls = await Promise.all(imageUrlPromises);
-
-//   //         if (selectedItem) {
-//   //           const imgCopy = selectedItem.img ? [...selectedItem.img] : [];
-//   //           imgCopy[inputNumber - 1] = newUrls[0];
-//   //           setSelectedItem((prevSelectedItem) => ({
-//   //             ...prevSelectedItem,
-//   //             img: imgCopy,
-//   //           }));
-//   //         } else {
-//   //           const imgCopy = newProduct.img ? [...newProduct.img] : [];
-//   //           imgCopy[inputNumber - 1] = newUrls[0];
-//   //           setNewProduct((prevProduct) => ({
-//   //             ...prevProduct,
-//   //             img: imgCopy,
-//   //           }));
-//   //         }
-//   //       } finally {
-//   //         // Reset the loading state after the upload is complete or if an error occurs
-//   //         setIsLoading((prevLoading) => ({
-//   //           ...prevLoading,
-//   //           [inputNumber]: false,
-//   //         }));
-//   //         // Remove the processed item from the queue
-//   //         setImageQueue((prevQueue) => prevQueue.slice(1));
-
-//   //         // Set the confirmedImageUpload state for this input to true
-//   //         setConfirmedImageUpload((prevConfirmedImageUpload) => ({
-//   //           ...prevConfirmedImageUpload,
-//   //           [inputNumber]: true,
-//   //         }));
-//   //       }
-//   //     }
-//   //   };
-//   //   handleImageQueue();
-//   //   if (imageQueue.length < 1) {
-//   //     setIsQueueProcessing(false);
-//   //   }
-//   // }, [imageQueue, selectedItem]);
-
-//   // Set a queue for each image being uploaded
+//   }, [imageQueue, selectedItem, newProduct, uploadFile, existingImages]);
 
 //   // Merge the selected files with the existing files for the input
-
 //   const handleFileInputChange = (inputNumber, selectedFiles) => {
 //     const updatedFiles = { ...file };
 //     updatedFiles[inputNumber] = [
@@ -626,12 +594,12 @@
 //                           {image ? (
 //                             <img
 //                               src={image}
-//                               alt={`image uploaded (refresh)`}
+//                               alt={`image uploaded ${index + 1}`}
 //                               style={{
 //                                 width: "100%",
 //                                 height: "100%",
 //                                 objectFit: "cover",
-//                                 fontSize:"0.7rem"
+//                                 fontSize: ".7rem",
 //                               }}
 //                             />
 //                           ) : (
@@ -687,12 +655,12 @@
 //                             // Render the uploaded image if confirmed
 //                             <img
 //                               src={
-//                                 file[slotIndex].length > 0
-//                                   ? URL.createObjectURL(file[slotIndex][0])
+//                                 existingImages[slotIndex].length > 0
+//                                   ? existingImages[slotIndex]
 //                                   : ""
-//                               }
+//                               } // Access URL directly
 //                               alt={
-//                                 file[slotIndex].length > 0
+//                                 existingImages[slotIndex].length > 0
 //                                   ? "Product Image"
 //                                   : "No Image Available"
 //                               }
@@ -881,6 +849,13 @@ export const ProductsForm = ({
   let [allSelectedFiles, setAllSelectedFiles] = useState([]);
   const [isQueueProcessing, setIsQueueProcessing] = useState(false); // Use a queue to handle concurrency of handleImage
   const [imageQueue, setImageQueue] = useState([]);
+  const [imageUrls, setImageUrls] = useState({
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+  });
 
   const [isLoading, setIsLoading] = useState({
     1: false,
@@ -905,6 +880,7 @@ export const ProductsForm = ({
     4: false,
     5: false,
   });
+
   const [newProduct, setNewProduct] = useState({
     productId: "",
     title: "",
@@ -919,6 +895,13 @@ export const ProductsForm = ({
     img: [],
     secondUnit: "",
   });
+
+  // Set existing images for rendering
+  useEffect(() => {
+    if (selectedItem) {
+      setExistingImages(selectedItem.img);
+    }
+  }, [selectedItem]);
 
   ///////*****         HANDLE CHANGE        ******///////
   const handleChange = (e) => {
@@ -939,13 +922,6 @@ export const ProductsForm = ({
 
   /////*****         HANDLE IMAGE INPUTS        ******///////
 
-  // Set existing images for rendering
-  useEffect(() => {
-    if (selectedItem) {
-      setExistingImages(selectedItem.img);
-    }
-  }, [selectedItem]);
-
   // Activate states for handling image uploading queues
   const handleImage = (inputNumber) => {
     setIsQueueProcessing(true);
@@ -962,8 +938,25 @@ export const ProductsForm = ({
     } catch (error) {}
   };
 
+  //Upload img and obtain URL of RESIZED image from Firebase Storage
+  // const handleImageUpload = async (selectedFile) => {
+  //   try {
+  //     // Upload the file and get the original URL
+  //     const originalUrl = await uploadFile(selectedFile);
+
+  //     // Fetch the resized URL based on the original URL
+  //     const resizedUrl = await getResizedImageUrl(originalUrl);
+
+  //     // Return the resized URL
+  //     return resizedUrl;
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //     throw error;
+  //   }
+  // };
+
   //fetch original image URL and replace for resized image URL
-  const getResizedImageUrl = async (originalUrl, inputNumber) => {
+  const getResizedImageUrl = async (originalUrl) => {
     try {
       // Construct the URL for the resized image based on the original URL
       const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x600$1");
@@ -983,85 +976,40 @@ export const ProductsForm = ({
 
         try {
           const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
-            return await uploadFile(selectedFile);
+            const imageUrl = URL.createObjectURL(selectedFile);
+            return await getResizedImageUrl(imageUrl);
           });
 
           const newUrls = await Promise.all(imageUrlPromises);
 
-          // Fetch the download URL again to ensure we have the correct resized URL
-          const resizedUrlsPromises = newUrls.map(async (newUrl) => {
-            const resizedUrl = await getResizedImageUrl(newUrl); // Replace getResizedImageUrl with your function to get the resized URL
-            return resizedUrl;
+          // Update the imageUrls state with the new image URLs
+          setImageUrls((prevImageUrls) => ({
+            ...prevImageUrls,
+            [inputNumber - 1]: newUrls[0], // Correct slot for 1-based index
+          }));
+
+          // Optionally update the existingImages state if needed
+          setExistingImages((prevImages) => {
+            const updatedImages = [...prevImages];
+            updatedImages[inputNumber - 1] = newUrls[0]; // Correct slot for 1-based index
+            return updatedImages;
           });
 
-          const resizedUrls = await Promise.all(resizedUrlsPromises);
-
-          // Update the file state with the new resized image URL
-          // setFile((prevFile) => {
-          //   const updatedFile = { ...prevFile };
-          //   updatedFile[inputNumber] = [
-          //     {
-          //       url: resizedUrls[0], // Assuming the resized image URL is the first one in the array
-          //     },
-          //   ];
-          //   return updatedFile;
-          // });
-
-          // Set the uploaded image URLs to the corresponding input numbers
-          if (selectedItem) {
-            setSelectedItem((prevSelectedItem) => {
-              const imgCopy = [...(prevSelectedItem.img || [])];
-              imgCopy[inputNumber - 1] = resizedUrls[0];
-              return {
-                ...prevSelectedItem,
-                img: imgCopy,
-              };
-            });
-          } else {
-            setNewProduct((prevProduct) => {
-              const imgCopy = [...(prevProduct.img || [])];
-              imgCopy[inputNumber - 1] = resizedUrls[0];
-              return {
-                ...prevProduct,
-                img: imgCopy,
-              };
-            });
-          }
+          // Rest of your code...
         } catch (error) {
           console.error("Error uploading image:", error);
         } finally {
-          // Reset the loading state after the upload is complete or if an error occurs
-          setIsLoading((prevLoading) => ({
-            ...prevLoading,
-            [inputNumber]: false,
-          }));
-
-          // Set the confirmedImageUpload state for this input to true
-          setConfirmedImageUpload((prevConfirmedImageUpload) => ({
-            ...prevConfirmedImageUpload,
-            [inputNumber]: true,
-          }));
-
-          // Find the index of the processed item in the queue
-          const processedItemIndex = imageQueue.findIndex(
-            (item) => item.inputNumber === inputNumber
-          );
-          // Remove the processed item from the queue
-          setImageQueue((prevQueue) => {
-            const updatedQueue = [...prevQueue];
-            updatedQueue.shift(processedItemIndex, 1);
-            return updatedQueue;
-          });
+          // Rest of your code...
         }
       } else {
         // No more items in the queue, set isQueueProcessing to false
         setIsQueueProcessing(false);
       }
     };
+
     // Call handleImageQueue initially
     handleImageQueue();
-  }, [imageQueue, selectedItem, newProduct, uploadFile]);
-
+  }, [imageQueue, uploadFile, existingImages, imageUrls]);
 
   // Merge the selected files with the existing files for the input
   const handleFileInputChange = (inputNumber, selectedFiles) => {
@@ -1481,7 +1429,6 @@ export const ProductsForm = ({
                   </ImageContainer>
                 ) : (
                   <ImageContainer>
-                    {/* Render 5 empty slots here for newProduct*/}
                     {[1, 2, 3, 4, 5].map((slotIndex) => (
                       <div
                         key={slotIndex}
@@ -1512,13 +1459,9 @@ export const ProductsForm = ({
                           {confirmedImageUpload[slotIndex] ? (
                             // Render the uploaded image if confirmed
                             <img
-                              src={
-                                file[slotIndex].length > 0
-                                  ? URL.createObjectURL(file[slotIndex][0])
-                                  : ""
-                              }
+                              src={imageUrls[slotIndex]} // Access URL from state
                               alt={
-                                file[slotIndex].length > 0
+                                imageUrls[slotIndex]
                                   ? "Product Image"
                                   : "No Image Available"
                               }
