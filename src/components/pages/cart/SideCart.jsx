@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components/macro";
 import { CartContext } from "../../context/CartContext";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -10,6 +10,7 @@ import { db } from "../../../firebaseConfig";
 import { useState } from "react";
 import { Ring } from "@uiball/loaders";
 import Swal from "sweetalert2";
+import useItemLoader from "../../hooks/useItemLoader";
 
 export const SideCart = () => {
   const {
@@ -27,8 +28,43 @@ export const SideCart = () => {
   const totalPrice = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
+  const [currentTotal, setCurrentTotal] = useState(totalPrice);
+  const [currentSubTotal, setCurrentSubTotal] = useState(subTotal);
+  const [currentTotalDiscount, setCurrentTotalDiscount] =
+    useState(totalDiscount);
+  const [itemLoaders, setLoader] = useItemLoader(); //Loader hook
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Object.values(itemLoaders).some((loader) => loader)) {
+      setCurrentSubTotal(subTotal);
+      setCurrentTotalDiscount(totalDiscount);
+      setCurrentTotal(totalPrice);
+    }
+  }, [itemLoaders, totalPrice]);
+
+  const handleLoader = (itemId, action) => {
+    setLoader(itemId, true);
+    action();
+    setTimeout(() => {
+      setLoader(itemId, false);
+    }, 480);
+  };
+
+  const handleAddQuantity = (itemId) =>
+    handleLoader(itemId, () => addQuantity(itemId));
+
+  const handleRemoveQuantity = (itemId) =>
+    handleLoader(itemId, () => removeQuantity(itemId));
+
+  const handleRemoveById = (itemId) => {
+    setLoader(itemId, true);
+    setTimeout(() => {
+      removeById(itemId);
+      setLoader(itemId, false);
+    }, 480);
+  };
 
   const realizarCompraWithTimeout = () => {
     setCheckoutLoading(true);
@@ -118,9 +154,10 @@ export const SideCart = () => {
         <CartWrapper key="cart-wrapper">
           <ItemsContainer>
             {cart.map((product) => {
-              const itemPrice = getItemPrice(product.id); //Buscar item x id en la funcion getItemPrice
-              const hasDiscount = product.discountPrice; //Variable de Item con descuento
-              console.log(itemPrice)
+              const itemPrice = getItemPrice(product.id);
+              const hasDiscount = product.discountPrice;
+              const isLoading = itemLoaders[product.id] || false;
+
               return (
                 <ItemWrapper key={product.id}>
                   <ImgWrapper>
@@ -138,15 +175,17 @@ export const SideCart = () => {
 
                     <QuantityWrapper>
                       <BtnQuantity
-                        onClick={() => removeQuantity(product.id)}
+                        onClick={() => handleRemoveQuantity(product.id)}
                         disabled={product.quantity === 1}
                       >
                         {" "}
                         -{" "}
                       </BtnQuantity>
+
                       <ItemQuantity>{product.quantity}</ItemQuantity>
+
                       <BtnQuantity
-                        onClick={() => addQuantity(product.id)}
+                        onClick={() => handleAddQuantity(product.id)}
                         disabled={product.stock === product.quantity}
                       >
                         {" "}
@@ -155,7 +194,16 @@ export const SideCart = () => {
                     </QuantityWrapper>
                   </InsideContentWrapper>
                   <PriceDeleteWrapper>
-                    {hasDiscount ? (
+                    {isLoading ? (
+                      <PriceLoader>
+                        <Ring
+                          size={20}
+                          lineWeight={6}
+                          speed={1}
+                          color="black"
+                        />
+                      </PriceLoader>
+                    ) : hasDiscount ? (
                       <ItemPriceWrapper hasDiscount={hasDiscount}>
                         {hasDiscount && (
                           <DiscountPrice>
@@ -172,8 +220,9 @@ export const SideCart = () => {
                     ) : (
                       <Price>$ {itemPrice.toFixed(2)}</Price>
                     )}
-
-                    <DeleteIconBtn onClick={() => removeById(product.id)} />
+                    <DeleteIconBtn onClick={() => handleRemoveById(product.id)}>
+                      <DeleteIcon />
+                    </DeleteIconBtn>
                   </PriceDeleteWrapper>
                 </ItemWrapper>
               );
@@ -185,22 +234,22 @@ export const SideCart = () => {
                 <TotalPriceInfo>
                   <SubTotalWrapper>
                     <TotalText colSpan="1">Subtotal:</TotalText>
-                    <SubTotal>$ {subTotal.toFixed(2)}</SubTotal>
+                    <SubTotal>${currentSubTotal.toFixed(2)}</SubTotal>
                   </SubTotalWrapper>
                   <DiscountWrapper>
                     <TotalText colSpan="1">Discount:</TotalText>
                     <TotalDiscount>
-                      - $ {totalDiscount.toFixed(2)}
+                      -${currentTotalDiscount.toFixed(2)}
                     </TotalDiscount>
                   </DiscountWrapper>
                   <TotalWrapper>
                     <TotalText colSpan="1">Total:</TotalText>
-                    <TotalPrice>$ {totalPrice.toFixed(2)}</TotalPrice>
+                    <TotalPrice>${currentTotal.toFixed(2)}</TotalPrice>
                   </TotalWrapper>
                 </TotalPriceInfo>
                 <div
                   style={{
-                    width: "width: 100%",
+                    width: "100%",
                     height: "80px",
                     display: "flex",
                     alignItems: "center",
@@ -209,14 +258,14 @@ export const SideCart = () => {
                   <CheckoutButton onClick={realizarCompraWithTimeout}>
                     <SpanCheckout isLoading={checkoutLoading}>
                       {checkoutLoading ? (
-                        <RingLoader>
+                        <CheckoutLoader>
                           <Ring
                             size={25}
                             lineWeight={5}
                             speed={1}
                             color="black"
                           />
-                        </RingLoader>
+                        </CheckoutLoader>
                       ) : (
                         "Check out"
                       )}
@@ -379,6 +428,7 @@ const BtnQuantity = styled.button`
     width: 20px;
   }
 `;
+
 const DeleteIconBtn = styled(DeleteIcon)`
   position: absolute;
   width: 0.8em !important;
@@ -574,7 +624,13 @@ const EmptyCartMessage = styled.p`
   height: 400%;
   margin: 0 auto;
 `;
-const RingLoader = styled.div`
+const PriceLoader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+`;
+const CheckoutLoader = styled.div`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;

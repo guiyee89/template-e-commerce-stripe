@@ -110,8 +110,6 @@ export const ItemList = ({
     }, 550);
   }, []);
 
-  console.log(isFilterOpen);
-
   ///////////////////////////                  /////////////////////////////
   return (
     <>
@@ -184,7 +182,16 @@ export const ItemList = ({
                   {imgskeleton === true ? (
                     <ClipLoader color="#8f501a" size={30} />
                   ) : (
-                    <ItemImg src={product.img[0]} alt={product.title} />
+                    <ItemImg
+                      src={product.img[0]}
+                      alt={product.title}
+                      role="presentation"
+                      // srcSet={`${product.img[0]} 300w`}
+                      // sizes="(max-width: 600px) 300px, (max-width: 900px) 600px, 900px"
+                      // decoding="async"
+                      // fetchpriority="high"
+                      /* loading="lazy" */
+                    />
                   )}
                 </ImgWrapperLink>
                 {hasDiscount && product.discount !== null && (
@@ -298,7 +305,7 @@ const ItemImg = styled.img`
   transition: transform 0.19s ease-in-out 0.08s;
   cursor: pointer;
   mix-blend-mode: darken;
-  mask-image: linear-gradient(rgb(6, 6, 6), 98.5%, transparent);
+  /* mask-image: linear-gradient(rgb(6, 6, 6), 98.5%, transparent); */
 `;
 
 const ImgWrapperLink = styled.div`
@@ -309,6 +316,7 @@ const ImgWrapperLink = styled.div`
   align-items: center;
   overflow: hidden;
   cursor: pointer;
+  /* align-items: flex-start; */
   &:hover ${ItemImg} {
     transform: scale(1.11);
   }

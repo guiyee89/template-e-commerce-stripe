@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 import { Ring } from "@uiball/loaders";
 import { useState } from "react";
 import { useEffect } from "react";
-import ItemLoader from "../../../common/itemLoader/itemLoader";
+import useItemLoader from "../../../hooks/useItemLoader";
 
 export const CartContainer = ({
   shipmentCost,
@@ -39,7 +39,8 @@ export const CartContainer = ({
   const [currentDiscountPrices, setCurrentDiscountPrices] = useState(
     cart.map((item) => item.discountPrice * item.quantity)
   );
-  const [itemLoaders, setLoader] = ItemLoader(); //Loader hook
+  const [prevQuantities, setPrevQuantities] = useState(0);
+  const [itemLoaders, setLoader] = useItemLoader(); //Loader hook
 
   useEffect(() => {
     if (!shipCostLoader) {
@@ -56,6 +57,7 @@ export const CartContainer = ({
         cart.map((item) => item.discountPrice * item.quantity)
       );
       setCurrentTotal(total + shipmentCost);
+      setPrevQuantities(cart.map((item) => item.quantity));
     }
   }, [itemLoaders]);
 
@@ -90,6 +92,7 @@ export const CartContainer = ({
               const currentDiscountPrice = currentDiscountPrices[index];
               const hasDiscount = item.discountPrice;
               const isLoading = itemLoaders[item.id] || false;
+              const counterLoading = prevQuantities[index];
 
               return (
                 <ItemsDetailsContainer key={item.id}>
@@ -112,18 +115,36 @@ export const CartContainer = ({
                           <SpanSize>{item.size}</SpanSize>
                         </ItemSizeColor>
                       </ItemData>
-                      {item.quantity > 1 && (
-                        <ItemData style={{ marginTop: "-2px" }}>
-                          {hasDiscount ? (
-                            <SpanEachPrice>
-                              $ {hasDiscount.toFixed(2)} each
-                            </SpanEachPrice>
-                          ) : (
-                            <SpanEachPrice>
-                              $ {item.unit_price.toFixed(2)} each
-                            </SpanEachPrice>
-                          )}
-                        </ItemData>
+                      {item.quantity > 1 ? (
+                        isLoading && counterLoading === 1 ? (
+                          <div></div>
+                        ) : (
+                          <ItemData style={{ marginTop: "-2px" }}>
+                            {hasDiscount ? (
+                              <SpanEachPrice>
+                                $ {item.discountPrice.toFixed(2)} each
+                              </SpanEachPrice>
+                            ) : (
+                              <SpanEachPrice>
+                                $ {item.unit_price.toFixed(2)} each
+                              </SpanEachPrice>
+                            )}
+                          </ItemData>
+                        )
+                      ) : (
+                        item.quantity > 2 && (
+                          <ItemData style={{ marginTop: "-2px" }}>
+                            {hasDiscount ? (
+                              <SpanEachPrice>
+                                $ {item.discountPrice.toFixed(2)} each
+                              </SpanEachPrice>
+                            ) : (
+                              <SpanEachPrice>
+                                $ {item.unit_price.toFixed(2)} each
+                              </SpanEachPrice>
+                            )}
+                          </ItemData>
+                        )
                       )}
                     </ItemInfoContainer>
                   </ItemsDetails>
