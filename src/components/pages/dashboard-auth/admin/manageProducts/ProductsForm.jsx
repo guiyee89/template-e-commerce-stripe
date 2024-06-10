@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
@@ -7,7 +8,9 @@ import { db, uploadFile } from "../../../../../firebaseConfig";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
+import { bouncy } from "ldrs";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+bouncy.register();
 
 export const ProductsForm = ({
   selectedItem,
@@ -20,8 +23,17 @@ export const ProductsForm = ({
   const [existingImages, setExistingImages] = useState([]);
   let [allSelectedFiles, setAllSelectedFiles] = useState([]);
   const [isQueueProcessing, setIsQueueProcessing] = useState(false); // Use a queue to handle concurrency of handleImage
-  const [imageQueue, setImageQueue] = useState([]);
+  const [imageQueue, setImageQueue] = useState([]); // State for manage images loading order
 
+  //Loader after image upload success
+  const [isLoadingImage, setIsLoadingImage] = useState({
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+  });
+  //Loader while image upload
   const [isLoading, setIsLoading] = useState({
     1: false,
     2: false,
@@ -29,6 +41,7 @@ export const ProductsForm = ({
     4: false,
     5: false,
   });
+
   const [file, setFile] = useState({
     1: [],
     2: [],
@@ -36,7 +49,7 @@ export const ProductsForm = ({
     4: [],
     5: [],
   });
-
+  //Confirmed image upload state
   const [confirmedImageUpload, setConfirmedImageUpload] = useState({
     1: false,
     2: false,
@@ -44,6 +57,7 @@ export const ProductsForm = ({
     4: false,
     5: false,
   });
+
   const [newProduct, setNewProduct] = useState({
     productId: "",
     title: "",
@@ -58,6 +72,13 @@ export const ProductsForm = ({
     img: [],
     secondUnit: "",
   });
+
+  //Render images if selectedItem
+  useEffect(() => {
+    if (selectedItem) {
+      setExistingImages(selectedItem.img);
+    }
+  }, [selectedItem]);
 
   ///////*****         HANDLE CHANGE        ******///////
   const handleChange = (e) => {
@@ -78,13 +99,6 @@ export const ProductsForm = ({
 
   /////*****         HANDLE IMAGE INPUTS        ******///////
 
-  // Set existing images for rendering
-  useEffect(() => {
-    if (selectedItem) {
-      setExistingImages(selectedItem.img);
-    }
-  }, [selectedItem]);
-
   // Activate states for handling image uploading queues
   const handleImage = (inputNumber) => {
     setIsQueueProcessing(true);
@@ -101,24 +115,127 @@ export const ProductsForm = ({
     } catch (error) {}
   };
 
+  //fetch original image URL and replace for resized image URL
+  const getResizedImageUrl = async (originalUrl) => {
+    try {
+      // Construct the URL for the resized image based on the original URL
+      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x600$1");
+
+      // Return the resized URL
+      return resizedUrl;
+    } catch (error) {
+      console.error("Error getting resized image URL:", error);
+      throw error;
+    }
+  };
+
+  // useEffect(() => {
+  //   const handleImageQueue = async () => {
+  //     if (imageQueue.length > 0) {
+  //       const { inputNumber, selectedFiles } = imageQueue[0];
+
+  //       try {
+  //         const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
+  //           return await uploadFile(selectedFile);
+  //         });
+
+  //         const newUrls = await Promise.all(imageUrlPromises);
+
+  //         // Fetch the download URL again to ensure we have the correct resized URL
+  //         const resizedUrlsPromises = newUrls.map(async (newUrl) => {
+  //           const resizedUrl = await getResizedImageUrl(newUrl); // Replace getResizedImageUrl to get the resized URL
+  //           return resizedUrl;
+  //         });
+
+  //         const resizedUrls = await Promise.all(resizedUrlsPromises);
+
+  //         // Set the uploaded image URLs to the corresponding input numbers
+  //         if (selectedItem) {
+  //           setSelectedItem((prevSelectedItem) => {
+  //             const imgCopy = [...(prevSelectedItem.img || [])];
+  //             imgCopy[inputNumber - 1] = resizedUrls[0];
+  //             return {
+  //               ...prevSelectedItem,
+  //               img: imgCopy,
+  //             };
+  //           });
+  //         } else {
+  //           setNewProduct((prevProduct) => {
+  //             const imgCopy = [...(prevProduct.img || [])];
+  //             imgCopy[inputNumber - 1] = resizedUrls[0];
+  //             return {
+  //               ...prevProduct,
+  //               img: imgCopy,
+  //             };
+  //           });
+  //         }
+  //       } catch (error) {
+  //         console.error("Error uploading image:", error);
+  //       } finally {
+  //         // Reset the loading state after the upload is complete or if an error occurs
+  //         setIsLoading((prevLoading) => ({
+  //           ...prevLoading,
+  //           [inputNumber]: false,
+  //         }));
+
+  //         setIsLoadingImage((prevLoading) => ({
+  //           ...prevLoading,
+  //           [inputNumber]: true,
+  //         }));
+
+  //         // Set the confirmedImageUpload state for this input to true
+  //         setConfirmedImageUpload((prevConfirmedImageUpload) => ({
+  //           ...prevConfirmedImageUpload,
+  //           [inputNumber]: true,
+  //         }));
+
+  //         // Remove the processed item from the queue
+  //         setImageQueue((prevQueue) => {
+  //           const updatedQueue = [...prevQueue];
+  //           updatedQueue.shift(); // Use shift to remove the first item
+  //           return updatedQueue;
+  //         });
+
+  //         setTimeout(() => {
+  //           setIsLoadingImage((prevLoading) => ({
+  //             ...prevLoading,
+  //             [inputNumber]: false,
+  //           }));
+  //         }, 2000);
+  //       }
+  //     } else {
+  //       // No more items in the queue, set isQueueProcessing to false
+  //       setIsQueueProcessing(false);
+  //     }
+  //   };
+  //   // Call handleImageQueue initially
+  //   handleImageQueue();
+  // }, [imageQueue, selectedItem, newProduct]);
+
   useEffect(() => {
     const handleImageQueue = async () => {
       if (imageQueue.length > 0) {
-        console.log(imageQueue);
         const { inputNumber, selectedFiles } = imageQueue[0];
-
+  
         try {
-          const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
-            return await uploadFile(selectedFile);
-          });
-
-          const newUrls = await Promise.all(imageUrlPromises);
-
-          // Set the uploaded image URL to the corresponding input number
+          const newUrls = await Promise.all(
+            selectedFiles.map(async (selectedFile) => {
+              return await uploadFile(selectedFile);
+            })
+          );
+  
+          const resizedUrls = await Promise.all(
+            newUrls.map(async (newUrl) => {
+              const resizedUrl = await getResizedImageUrl(newUrl);
+              return resizedUrl;
+            })
+          );
+  
+          // Set the uploaded image URLs to the corresponding input numbers
           if (selectedItem) {
             setSelectedItem((prevSelectedItem) => {
               const imgCopy = [...(prevSelectedItem.img || [])];
-              imgCopy[inputNumber - 1] = newUrls[0];
+              imgCopy[inputNumber - 1] = resizedUrls[0];
               return {
                 ...prevSelectedItem,
                 img: imgCopy,
@@ -127,7 +244,7 @@ export const ProductsForm = ({
           } else {
             setNewProduct((prevProduct) => {
               const imgCopy = [...(prevProduct.img || [])];
-              imgCopy[inputNumber - 1] = newUrls[0];
+              imgCopy[inputNumber - 1] = resizedUrls[0];
               return {
                 ...prevProduct,
                 img: imgCopy,
@@ -142,101 +259,45 @@ export const ProductsForm = ({
             ...prevLoading,
             [inputNumber]: false,
           }));
-
+  
+          setIsLoadingImage((prevLoading) => ({
+            ...prevLoading,
+            [inputNumber]: true,
+          }));
+  
           // Set the confirmedImageUpload state for this input to true
           setConfirmedImageUpload((prevConfirmedImageUpload) => ({
             ...prevConfirmedImageUpload,
             [inputNumber]: true,
           }));
-
-          // Find the index of the processed item in the queue
-          const processedItemIndex = imageQueue.findIndex(
-            (item) => item.inputNumber === inputNumber
-          );
+  
           // Remove the processed item from the queue
           setImageQueue((prevQueue) => {
             const updatedQueue = [...prevQueue];
-            updatedQueue.shift(processedItemIndex, 1);
+            updatedQueue.shift(); // Use shift to remove the first item
             return updatedQueue;
           });
+  
+          setTimeout(() => {
+            setIsLoadingImage((prevLoading) => ({
+              ...prevLoading,
+              [inputNumber]: false,
+            }));
+          }, 2000);
         }
       } else {
         // No more items in the queue, set isQueueProcessing to false
         setIsQueueProcessing(false);
       }
     };
+  
     // Call handleImageQueue initially
-    handleImageQueue();
-  }, [imageQueue, selectedItem, newProduct, uploadFile]);
-
-  // CODE SNIPPET: Confirm all image together into there imageQueue array
-  // // Function to handle the confirmation of all images
-  // const handleConfirmAllImages = () => {
-  //   // Iterate over all selected files and trigger handleImage
-  //   for (let inputNumber = 1; inputNumber <= 5; inputNumber++) {
-  //     if (file[inputNumber].length > 0 && !isLoading[inputNumber]) {
-  //       handleImage(inputNumber);
-  //     }
-  //   }
-  // };
-
-  // // Set a queue for each image being uploaded
-  // useEffect(() => {
-  //   const handleImageQueue = async () => {
-  //     if (imageQueue.length > 0) {
-  //       const { inputNumber } = imageQueue[0];
-  //       // Check if the corresponding isLoading state is false
-
-  //       try {
-  //         const { inputNumber, selectedFiles } = imageQueue[0];
-  //         const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
-  //           const imageUrl = await uploadFile(selectedFile);
-  //           return imageUrl;
-  //         });
-  //         const newUrls = await Promise.all(imageUrlPromises);
-
-  //         if (selectedItem) {
-  //           const imgCopy = selectedItem.img ? [...selectedItem.img] : [];
-  //           imgCopy[inputNumber - 1] = newUrls[0];
-  //           setSelectedItem((prevSelectedItem) => ({
-  //             ...prevSelectedItem,
-  //             img: imgCopy,
-  //           }));
-  //         } else {
-  //           const imgCopy = newProduct.img ? [...newProduct.img] : [];
-  //           imgCopy[inputNumber - 1] = newUrls[0];
-  //           setNewProduct((prevProduct) => ({
-  //             ...prevProduct,
-  //             img: imgCopy,
-  //           }));
-  //         }
-  //       } finally {
-  //         // Reset the loading state after the upload is complete or if an error occurs
-  //         setIsLoading((prevLoading) => ({
-  //           ...prevLoading,
-  //           [inputNumber]: false,
-  //         }));
-  //         // Remove the processed item from the queue
-  //         setImageQueue((prevQueue) => prevQueue.slice(1));
-
-  //         // Set the confirmedImageUpload state for this input to true
-  //         setConfirmedImageUpload((prevConfirmedImageUpload) => ({
-  //           ...prevConfirmedImageUpload,
-  //           [inputNumber]: true,
-  //         }));
-  //       }
-  //     }
-  //   };
-  //   handleImageQueue();
-  //   if (imageQueue.length < 1) {
-  //     setIsQueueProcessing(false);
-  //   }
-  // }, [imageQueue, selectedItem]);
-
-  // Set a queue for each image being uploaded
-
+    if (imageQueue.length > 0) {
+      handleImageQueue();
+    }
+  }, [imageQueue, selectedItem, newProduct]);
+  
   // Merge the selected files with the existing files for the input
-
   const handleFileInputChange = (inputNumber, selectedFiles) => {
     const updatedFiles = { ...file };
     updatedFiles[inputNumber] = [
@@ -284,12 +345,23 @@ export const ProductsForm = ({
   };
 
   const handleDeleteImage = (inputNumber) => {
+    setIsLoadingImage((prevLoading) => ({
+      ...prevLoading,
+      [inputNumber]: true,
+    }));
+
     const imgCopy = [...(selectedItem?.img || [])];
     // Mark the deleted slot as empty
     imgCopy[inputNumber - 1] = null;
 
     if (selectedItem) {
       setSelectedItem({ ...selectedItem, img: imgCopy });
+      setTimeout(() => {
+        setIsLoadingImage((prevLoading) => ({
+          ...prevLoading,
+          [inputNumber]: false,
+        }));
+      }, 2000);
     } else {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
@@ -297,6 +369,7 @@ export const ProductsForm = ({
       }));
     }
   };
+
 
   ////////////          SUBMIT          //////////////
   const handleSubmit = async (e) => {
@@ -592,125 +665,145 @@ export const ProductsForm = ({
                       <div
                         key={index}
                         style={{
-                          height: "19%",
-                          paddingTop: "5px",
-                          borderTop: "1px solid lightgray",
-                          borderBottom: "1px solid lightgrey",
+                          display: "flex",
+                          height: "170px",
                         }}
                       >
-                        <p
-                          style={{
-                            textAlign: "center",
-                            marginLeft: windowWidth < 600 ? "0px" : "35px",
-                            marginBottom: "-21px",
-                            paddingTop: "5px",
-                          }}
-                        >
-                          {index + 1}
-                        </p>{" "}
-                        <CloseIcon
-                          onClick={() => handleDeleteImage(index + 1)}
-                          sx={{ cursor: "pointer", display: "flex" }}
-                          fontSize="small"
-                        />
-                        <div
-                          style={{
-                            width: "70px",
-                            height: "80px",
-                            marginLeft: windowWidth < 600 ? "0px" : "35px",
-                            border: image ? "1px solid gray" : "none",
-                            marginBottom: "20px",
-                          }}
-                        >
-                          {image ? (
-                            <img
-                              src={image}
-                              alt={`imagen de producto ${index + 1}`}
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                              }}
-                            />
-                          ) : (
-                            <label
-                              style={{
-                                height: "80px",
+                        <ImgPlaceHolder>
+                          <p>{index + 1}</p>{" "}
+                          <div
+                            style={{
+                              width: "85px",
+                              height: "100px",
+                            }}
+                          >
+                            {isLoadingImage[index + 1] ? (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "85px",
+                                  height: "100px",
+                                  border: "1px solid gray",
+                                }}
+                              >
+                                <l-bouncy
+                                  size="25"
+                                  speed="1.75"
+                                  color="black"
+                                ></l-bouncy>
+                              </div>
+                            ) : image ? (
+                              <img
+                                src={image}
+                                alt={`image uploaded ${index + 1}`}
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                  fontSize: ".7rem",
+                                  border: "1px solid gray",
+                                }}
+                              />
+                            ) : (
+                              <label
+                                style={{
+                                  height: "100px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  textAlign: "center",
+                                  border: "1px solid gray",
+                                  fontSize: ".68rem",
+                                }}
+                              >
+                                Imagen
+                              </label>
+                            )}
+                          </div>
+                          {image && (
+                            <DeleteIcon
+                              onClick={() => handleDeleteImage(index + 1)}
+                              sx={{
+                                cursor: "pointer",
                                 display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                textAlign: "center",
-                                border: "1px solid gray",
-                                fontSize: ".68rem",
+                                height: "2em",
                               }}
-                            >
-                              Imagen
-                            </label>
+                              fontSize="small"
+                            />
                           )}
-                        </div>
+                        </ImgPlaceHolder>
                       </div>
                     ))}
                   </ImageContainer>
                 ) : (
                   <ImageContainer>
-                    {/* Render 5 empty slots here for newProduct*/}
                     {[1, 2, 3, 4, 5].map((slotIndex) => (
                       <div
                         key={slotIndex}
                         style={{
-                          height: "19%",
-                          paddingTop: "5px",
-                          borderTop: "1px solid lightgray",
-                          borderBottom: "1px solid lightgrey",
+                          display: "flex",
+                          flexDirection: "column",
+                          height: "170px",
+                          position: "relative",
                         }}
                       >
                         <p
                           style={{
                             textAlign: "center",
-                            marginLeft: windowWidth < 600 ? "0px" : "35px",
                           }}
                         >
                           {slotIndex}
                         </p>{" "}
                         <div
                           style={{
-                            width: "70px",
-                            height: "80px",
-                            marginLeft: windowWidth < 600 ? "0px" : "35px",
+                            width: "85px",
+                            height: "100px",
                             border: "1px solid gray",
-                            marginBottom: "20px",
                           }}
                         >
                           {confirmedImageUpload[slotIndex] ? (
-                            // Render the uploaded image if confirmed
-                            <img
-                              src={
-                                file[slotIndex].length > 0
-                                  ? URL.createObjectURL(file[slotIndex][0])
-                                  : ""
-                              }
-                              alt={
-                                file[slotIndex].length > 0
-                                  ? "Product Image"
-                                  : "No Image Available"
-                              }
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                              }}
-                            />
+                            <>
+                              <img
+                                src={
+                                  file[slotIndex].length > 0
+                                    ? URL.createObjectURL(file[slotIndex][0])
+                                    : ""
+                                }
+                                alt={
+                                  file[slotIndex].length > 0
+                                    ? "Image uploaded"
+                                    : "No Image Available"
+                                }
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              {/* <DeleteIcon
+                                onClick={() => handleDeleteImage(slotIndex)}
+                                sx={{
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  marginTop: "8px",
+                                  height: "2em",
+                                  width: "100%",
+                                  fontSize: ".65rem",
+                                }}
+                              /> */}
+                            </>
                           ) : (
                             // Render this if not confirmed
                             <label
                               style={{
-                                height: "80px",
+                                height: "100px",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                textAlign: "center",
                                 fontSize: ".68rem",
-                                border: "1px solid lightgray",
                               }}
                             >
                               Imagen
@@ -724,32 +817,27 @@ export const ProductsForm = ({
 
                 <InputsContainer>
                   {[1, 2, 3, 4, 5].map((inputNumber) => (
-                    <div
-                      key={inputNumber}
-                      style={{
-                        height: "19%",
-                        paddingTop: "5px",
-                        borderTop: "1px solid lightgray",
-                        borderBottom: "1px solid lightgrey",
-                        width: "98%",
-                      }}
-                    >
+                    <div key={inputNumber}>
                       <h2
                         style={{
-                          margin: "-3px 14px 0 20px",
+                          textAlign: "center",
                           paddingTop: "10px",
                         }}
                       >
-                        {inputNumber === 1 ? "Imagen Principal" : "(Opcional)"}{" "}
+                        {/* {inputNumber === 1 ? "Imagen Principal" : "(Opcional)"}{" "} */}
                       </h2>
-                      <ImageDiv>
+                      <LoadBtnContainer>
                         <LoadImgBtn
                           component="label"
                           variant="contained"
-                          startIcon={<CloudUploadIcon />}
+                          startIcon={
+                            confirmedImageUpload[inputNumber] === false &&
+                            isLoading[inputNumber] === false && (
+                              <CloudUploadIcon />
+                            )
+                          }
                           size="small"
                           sx={{
-                            margin: "5px 60px 20px 10px",
                             fontSize: "0.6125rem",
                             "& .MuiButton-label": {
                               display: "flex",
@@ -759,10 +847,19 @@ export const ProductsForm = ({
                           }}
                           disabled={file[inputNumber].length > 0}
                         >
-                          {file[inputNumber].length > 0 ||
-                          isLoading[inputNumber]
-                            ? "Modificar"
-                            : "Cargar"}
+                          {file[inputNumber].length > 0 &&
+                          !isLoading[inputNumber] ? (
+                            <TaskAltIcon color="success" fontSize="small" />
+                          ) : !isLoading[inputNumber] ? (
+                            "Cargar"
+                          ) : (
+                            <Ring
+                              size={20}
+                              lineWeight={7}
+                              speed={1}
+                              color="black"
+                            />
+                          )}
                           <input
                             type="file"
                             id={`fileInput${inputNumber}`}
@@ -783,29 +880,26 @@ export const ProductsForm = ({
                               sx={{
                                 cursor: "pointer",
                                 position: "absolute",
-                                right: "50%",
+                                top: "-22px",
+                                left: "42px",
                               }}
                               fontSize="small"
                               onClick={() => handleCancelFile(inputNumber)}
                             />
-                            {isLoading[inputNumber] ? (
-                              <div style={{ marginLeft: "-15px" }}>
-                                <Ring
-                                  size={25}
-                                  lineWeight={7}
-                                  speed={1}
-                                  color="black"
-                                />
-                              </div>
-                            ) : (
+                            {/* <CancelBtn
+                              onClick={() => handleCancelFile(inputNumber)}
+                            >
+                              cancel{" "}
+                            </CancelBtn> */}
+                            {!isLoading[inputNumber] && (
                               <>
                                 {confirmedImageUpload[inputNumber] === true ? (
-                                  <div style={{ marginLeft: "-15px" }}>
-                                    <TaskAltIcon
-                                      color="success"
-                                      fontSize="large"
-                                    />
-                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  ></div>
                                 ) : (
                                   <ConfirmImgLoadBtn
                                     variant="contained"
@@ -814,6 +908,9 @@ export const ProductsForm = ({
                                       marginTop: "5px",
                                       paddingBottom: "3px",
                                       fontSize: "0.6125rem",
+                                      position: "absolute",
+                                      top: "-4px",
+                                      lineHeight: "1.95",
                                     }}
                                     onClick={
                                       /* handleConfirmAllImages */ () =>
@@ -823,14 +920,14 @@ export const ProductsForm = ({
                                       display: isLoading[inputNumber] && "none",
                                     }}
                                   >
-                                    Confirmar
+                                    confirm
                                   </ConfirmImgLoadBtn>
                                 )}
                               </>
                             )}
                           </div>
                         )}
-                      </ImageDiv>
+                      </LoadBtnContainer>
                     </div>
                   ))}
                 </InputsContainer>
@@ -898,6 +995,7 @@ const ProductInfo = styled.div`
 `;
 const InfoImageContainer = styled.div`
   display: flex;
+  flex-direction: column;
   @media (max-width: 56.25rem) {
     flex-direction: column;
   }
@@ -906,34 +1004,25 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const ImageDiv = styled.div`
+const LoadBtnContainer = styled.div`
   display: flex;
-  -webkit-box-align: center;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  justify-content: space-between;
-  margin: 21px 0px 0 10px;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
 `;
 const CancelUploadedFile = styled(CloseIcon)`
-  @media (max-width: 900px) {
-    left: 30%;
-  }
-  @media (max-width: 570px) {
-    left: 36%;
-  }
-  @media (max-width: 500px) {
-    left: 40%;
-  }
-  @media (max-width: 392px) {
-    left: 44%;
-  }
+  width: 0.8em !important;
+  top: -18px !important;
+  left: 84px !important;
 `;
 const ImagesInputsContainer = styled.div`
   display: flex;
+  flex-direction: column-reverse;
+  -webkit-box-pack: start;
   justify-content: flex-start;
-  width: 85%;
-  margin-left: 15px;
+  margin-top: 20px;
+  padding-top: 24px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 6px;
   @media (max-width: 500px) {
     margin-left: 0px;
     width: 98%;
@@ -941,10 +1030,19 @@ const ImagesInputsContainer = styled.div`
 `;
 const InputsContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 98%;
+  justify-content: space-around;
+  height: 48px;
 `;
 const ImageContainer = styled.div`
   display: flex;
+  justify-content: space-around;
+  margin: 12px 0 40px;
+`;
+const ImgPlaceHolder = styled.div`
+  display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
 `;

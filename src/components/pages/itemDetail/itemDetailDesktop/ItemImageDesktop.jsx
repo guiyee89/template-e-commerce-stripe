@@ -173,13 +173,17 @@ const MainImg = styled.img`
   transform: ${({ translationDirection }) => translationDirection};
   opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
   transition: transform 0.10s ease, opacity 0.20s ease;
-  @media (min-width:1200px){
-    height: 80%;
+  height: 92%;
+  @media (max-width:1320px){
+    height: 85%;
   }
-  @media (max-width:1199px){
-    min-height: 600px;
+  @media (max-width:1235px){
+    height: 78%;
   }
-  @media (max-width:1050px){
-    min-height: 522px;
+  @media (max-width:1160px){
+    height: 72%;
+  }
+  @media (max-width:1070px){
+    height: 60%;
   }
 `;

@@ -41,8 +41,6 @@ export const ProductSearch = () => {
     setIsChanged(!isChanged); // Toggle isChanged to trigger useEffect
   };
 
-  console.log(products);
-
   return (
     <>
       <ProductList
