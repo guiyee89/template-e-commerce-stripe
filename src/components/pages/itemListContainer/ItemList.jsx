@@ -316,6 +316,7 @@ const ImgWrapperLink = styled.div`
   align-items: center;
   overflow: hidden;
   cursor: pointer;
+  /* align-items: flex-start; */
   &:hover ${ItemImg} {
     transform: scale(1.11);
   }

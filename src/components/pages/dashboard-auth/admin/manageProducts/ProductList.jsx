@@ -35,15 +35,31 @@ export const ProductList = ({
  
   // Sort items by color and size
   const customSort = (itemA, itemB) => {
+    // Define custom order for alphabetic sizes
+    const sizeOrder = ['xs', 's', 'm', 'l', 'xl', 'xxl'];
+  
     // First, compare by color
     if (itemA.color < itemB.color) return -1;
     if (itemA.color > itemB.color) return 1;
-    // If colors are the same, compare by size
-    if (itemA.size < itemB.size) return -1;
-    if (itemA.size > itemB.size) return 1;
-    // If both color and size are the same, items are considered equal
-    return 0;
+  
+    // Check if sizes are numeric or alphabetic
+    const isNumericA = !isNaN(itemA.size);
+    const isNumericB = !isNaN(itemB.size);
+  
+    if (isNumericA && isNumericB) {
+      // If both sizes are numeric, compare as numbers
+      return itemA.size - itemB.size;
+    } else if (!isNumericA && !isNumericB) {
+      // If both sizes are alphabetic, compare based on the custom order
+      const indexA = sizeOrder.indexOf(itemA.size.toLowerCase());
+      const indexB = sizeOrder.indexOf(itemB.size.toLowerCase());
+      return indexA - indexB;
+    } else {
+      // If one is numeric and the other is alphabetic, prioritize alphabetic
+      return isNumericA ? 1 : -1;
+    }
   };
+
   // Sort the items array
   Array.isArray(products) && products.sort(customSort);
 
