@@ -343,6 +343,7 @@ const CarouselInner = styled.div`
   max-width: 100%;
   display: flex;
   gap: 1rem;
+  justify-content: center;
   @media (max-width: 43.75rem) {
     gap: 0.5rem;
   }

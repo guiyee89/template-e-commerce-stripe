@@ -23,7 +23,7 @@ import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const [myOrders, setMyOrders] = useState([]);
-  console.log(myOrders.sort((a, b) => b.date.seconds - a.date.seconds));
+ 
 
   useEffect(() => {
     const ordersCollection = collection(db, "orders");

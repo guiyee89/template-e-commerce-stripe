@@ -11,14 +11,14 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { ProductsForm } from "./ProductsForm";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../firebaseConfig";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import { DeleteImages } from "./deleteImages/DeleteImages";
@@ -31,40 +31,43 @@ export const ProductList = ({
   setSearchProduct,
   fetchItemsByProductId,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const { windowWidth } = useContext(GlobalToolsContext);
- 
-  // Sort items by color and size
+  const [newlyCopiedIds, setNewlyCopiedIds] = useState([]);
+
+  // Sort items by color and size - highlight the last sorted item
   const customSort = (itemA, itemB) => {
-    // Define custom order for alphabetic sizes
-    const sizeOrder = ['xs', 's', 'm', 'l', 'xl', 'xxl'];
-  
+    const sizeOrder = ["xs", "s", "m", "l", "xl", "xxl"];
     // First, compare by color
     if (itemA.color < itemB.color) return -1;
     if (itemA.color > itemB.color) return 1;
-  
     // Check if sizes are numeric or alphabetic
     const isNumericA = !isNaN(itemA.size);
     const isNumericB = !isNaN(itemB.size);
-  
     if (isNumericA && isNumericB) {
       // If both sizes are numeric, compare as numbers
-      return itemA.size - itemB.size;
+      const sizeComparison = itemA.size - itemB.size;
+      if (sizeComparison !== 0) return sizeComparison;
     } else if (!isNumericA && !isNumericB) {
       // If both sizes are alphabetic, compare based on the custom order
       const indexA = sizeOrder.indexOf(itemA.size.toLowerCase());
       const indexB = sizeOrder.indexOf(itemB.size.toLowerCase());
-      return indexA - indexB;
+      const sizeComparison = indexA - indexB;
+      if (sizeComparison !== 0) return sizeComparison;
     } else {
       // If one is numeric and the other is alphabetic, prioritize alphabetic
       return isNumericA ? 1 : -1;
     }
+    // Compare by createdAt timestamp if colors and sizes are equal
+    if (new Date(itemA.createdAt) < new Date(itemB.createdAt)) return -1;
+    if (new Date(itemA.createdAt) > new Date(itemB.createdAt)) return 1;
+    // If both items are equal in all criteria, return 0
+    return 0;
   };
 
   // Sort the items array
   Array.isArray(products) && products.sort(customSort);
-
-  const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleClose = () => {
     setOpen(false);
@@ -75,16 +78,32 @@ export const ProductList = ({
     setOpen(true);
   };
 
+  //Copy product function
   const copyProduct = async (id) => {
     const itemsCollection = collection(db, "products");
     const selectedProduct = products.find((product) => product.id === id);
+
+    const copyItem = {
+      ...selectedProduct,
+      createdAt: new Date().toISOString(), //Check date to mantain item list order
+    };
+
     // Remove the 'id' field to let Firebase generate a new ID
-    const copyItem = { ...selectedProduct };
     delete copyItem.id;
 
-    await addDoc(itemsCollection, copyItem);
+    const docRef = await addDoc(itemsCollection, copyItem);
+
+    const newId = docRef.id;
 
     setIsChanged();
+
+    // Add the newly copied item ID to the list
+    setNewlyCopiedIds([...newlyCopiedIds, newId]);
+
+    setTimeout(() => {
+      // Remove the newly copied item ID from the list after 4 seconds
+      setNewlyCopiedIds(newlyCopiedIds.filter((itemId) => itemId !== newId));
+    }, 5000);
   };
 
   const deleteProduct = async (id) => {
@@ -92,10 +111,12 @@ export const ProductList = ({
     setIsChanged(); // Toggle isChanged to trigger useEffect
   };
 
+  useEffect(() => {
+    console.log(products);
+  }, []);
   return (
     <>
       <ProductListWrapper>
-        {/* DELETE UNUSED IMAGES BUTTON COMPONENT */}
         <DeleteImages />
         <ProductsButtonsContainer windowWidth={windowWidth}>
           <div>
@@ -186,10 +207,18 @@ export const ProductList = ({
                   <TableBody>
                     {Array.isArray(products) &&
                       products.map((product) => (
-                        <TableRow
+                        <AnimatedTableRow
                           key={product.id}
+                          className={
+                            newlyCopiedIds.includes(product.id)
+                              ? "highlighted"
+                              : ""
+                          }
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },
+                            backgroundColor: newlyCopiedIds.includes(product.id)
+                              ? "rgba(253, 253, 253, 0.8)"
+                              : "inherit",
                           }}
                         >
                           <TableCell align="center" component="th" scope="row">
@@ -272,7 +301,7 @@ export const ProductList = ({
                               <DeleteIcon />
                             </IconButton>
                           </TableCell>
-                        </TableRow>
+                        </AnimatedTableRow>
                       ))}
                   </TableBody>
                 </Table>
@@ -301,6 +330,19 @@ export const ProductList = ({
     </>
   );
 };
+
+// Add CSS for the highlighted effect
+const highlightAnimation = keyframes`
+  0% { background-color: #d9fafd; }
+  50% { background-color: #e6fbfd;; }
+  100% { background-color: #d9fafd; }
+`;
+
+const AnimatedTableRow = styled(TableRow)`
+  &.highlighted {
+    animation: ${highlightAnimation} 1.2s alternate 5;
+  }
+`;
 const ProductListWrapper = styled.div`
   width: 80%;
   margin: 80px 0 100px 0;
