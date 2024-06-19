@@ -128,7 +128,7 @@ export const ProductsForm = ({
   const getResizedImageUrl = async (originalUrl) => {
     try {
       // Construct the URL for the resized image based on the original URL
-      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x600$1");
+      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x800$1");
 
       // Return the resized URL
       return resizedUrl;
@@ -396,27 +396,6 @@ export const ProductsForm = ({
     setIsChanged();
   };
 
-  // Define a mapping of color names to CSS color values
-  const colorMapping = {
-    black: "#000000",
-    white: "#ffffff",
-    grey: "#8e8e8e",
-    blue: "#2626e4",
-    purple: "#dc10ce",
-    pink: "#ea7baf",
-    red: "#e81a1a",
-    orange: "#f49d2c",
-    yellow: "#e6d21a",
-    green: "#24df13",
-    brown: "#682f21",
-  };
-
-  // Function to determine if the text should be white based on the background color
-  const isDarkColor = (color) => {
-    const darkColors = ["#000000", "#2626e4", "#dc10ce", "#e81a1a", "#682f21"];
-    return darkColors.includes(color);
-  };
-
   //YUP VALIDATION
   //que no se valide mientras escribo, sino al hacer submit
   // validateOnChange: false,
@@ -572,58 +551,6 @@ export const ProductsForm = ({
                       sx={{ fontSize: "14px", lineHeight: ".8" }}
                       id="demo-simple-select-label"
                     >
-                      Color
-                    </InputLabel>
-                    <InputSelect
-                      label="Color"
-                      variant="outlined"
-                      name="color"
-                      defaultValue={selectedItem ? selectedItem.color : ""}
-                      onChange={handleChange}
-                      size="small"
-                      // helperText={errors.color}
-                      // error={errors.color ? true : false}
-                      sx={{ marginBottom: "18px" }}
-                      renderValue={(selected) => (
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            backgroundColor: colorMapping[selected],
-                            color: isDarkColor(colorMapping[selected])
-                              ? "white"
-                              : "black",
-                            padding: "5px 10px",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          {selected.charAt(0).toUpperCase() + selected.slice(1)}
-                        </div>
-                      )}
-                    >
-                      {Object.keys(colorMapping).map((color) => (
-                        <MenuItem
-                          key={color}
-                          value={color}
-                          style={{
-                            backgroundColor: colorMapping[color],
-                            color: isDarkColor(colorMapping[color])
-                              ? "white"
-                              : "black",
-                          }}
-                        >
-                          {color.charAt(0).toUpperCase() + color.slice(1)}
-                        </MenuItem>
-                      ))}
-                    </InputSelect>
-                  </FormControl>
-                </Div>
-                <Div>
-                  <FormControl>
-                    <InputLabel
-                      sx={{ fontSize: "14px", lineHeight: ".8" }}
-                      id="demo-simple-select-label"
-                    >
                       Size
                     </InputLabel>
                     <InputSelect
@@ -683,6 +610,22 @@ export const ProductsForm = ({
                           ]}
                     </InputSelect>
                   </FormControl>
+                </Div>
+                <Div>
+                  <Input
+                    label="Color"
+                    variant="outlined"
+                    name="color"
+                    defaultValue={selectedItem?.color}
+                    onChange={handleChange}
+                    size="small"
+                    // helperText={errors.stock}
+                    // error={errors.stock ? true : false}
+                    sx={{ marginBottom: "18px" }}
+                    InputLabelProps={{
+                      style: { fontSize: "14px" },
+                    }}
+                  />
                 </Div>
                 <Div>
                   <Input

@@ -21,7 +21,7 @@ import { db } from "../../../../../firebaseConfig";
 import { useContext, useEffect, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
-import { DeleteImages } from "./deleteImages/DeleteImages";
+ import { DeleteImages } from "./deleteImages/DeleteImages";
 
 export const ProductList = ({
   products,
@@ -117,7 +117,7 @@ export const ProductList = ({
   return (
     <>
       <ProductListWrapper>
-        <DeleteImages />
+         <DeleteImages />  *
         <ProductsButtonsContainer windowWidth={windowWidth}>
           <div>
             <TextFieldInput
@@ -183,7 +183,9 @@ export const ProductList = ({
                   products={products}
                 />
               </DiscountFormContainer>
-              <TableContainer>
+              <TableContainer
+                sx={{ boxShadow:"rgba(0, 0, 0, 0.65) 0px 2px 6px", padding:"24px"}}
+              >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead
                     sx={{ position: "sticky", top: "0", zIndex: "100" }}
@@ -344,8 +346,8 @@ const AnimatedTableRow = styled(TableRow)`
   }
 `;
 const ProductListWrapper = styled.div`
-  width: 80%;
-  margin: 80px 0 100px 0;
+  width: 100%;
+  margin: 32px 0 100px 0;
   @media (max-width: 950px) {
     width: 100%;
   }
@@ -353,11 +355,11 @@ const ProductListWrapper = styled.div`
 const ProductsButtonsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${(props) => (props.windowWidth < 600 ? "1rem" : "8.1rem")};
+  gap: ${(props) => (props.windowWidth < 600 ? "1rem" : "1rem")};
   justify-content: ${(props) =>
-    props.windowWidth < 750 ? "space-between" : "center"};
+    props.windowWidth < 750 ? "space-between" : "flex-start"};
   margin: ${(props) =>
-    props.windowWidth < 750 ? "0 16px 0 0" : "0 0 0 -67px"};
+    props.windowWidth < 750 ? "0 16px 0 0" : "8px 0 0 32px"};
 `;
 
 const TextFieldInput = styled(TextField)`
@@ -369,7 +371,7 @@ const TextFieldInput = styled(TextField)`
 const AddButton = styled(Button)``;
 
 const ProductListContainer = styled.div`
-  margin-top: 30px;
+  margin: 30px 0 0 24px;
 `;
 const ImgCell = styled(TableCell)`
   width: 9%;

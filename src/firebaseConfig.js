@@ -122,7 +122,7 @@ const getAllImageUrlsFromFirestore = async () => {
 };
 
 const getResizedImageUrl = (url) => {
-  return url.replace(/(\.[^.]*)?$/, "_600x600$1");
+  return url.replace(/(\.[^.]*)?$/, "_600x800$1");
 };
 
 export const deleteUnusedImages = async () => {
