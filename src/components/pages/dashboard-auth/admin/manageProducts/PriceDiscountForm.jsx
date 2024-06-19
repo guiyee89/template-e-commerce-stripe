@@ -150,14 +150,17 @@ const FormWrapper = styled.div`
   max-height: 600px;
   overflow-y: auto;
   padding: 20px 6px;
+  margin-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.65) 0px 3px 5px;
 `;
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
-  justify-content: ${(props) => (props.windowWidth < 750 ? "flex-start" : "center")};
-  margin: ${(props) => (props.windowWidth < 750 ? "0" : "0px 0px 0px -238px;")};
+  justify-content: ${(props) =>
+    props.windowWidth < 750 ? "flex-start" : "flex-start"};
+  margin: ${(props) => (props.windowWidth < 750 ? "0" : "0px 0px 0px 100px;")};
 `;
 const Div = styled.div`
   width: 100%;

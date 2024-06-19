@@ -18,23 +18,30 @@ export const ItemImageDesktop = ({
     useContext(GlobalToolsContext);
   const [loadedImages, setLoadedImages] = useState(0);
 
+
   useEffect(() => {
     if (selectedItem) {
       setImagesToRender(selectedItem.img.slice(0, 5));
-      setSelectedImage({ image: selectedItem.img[0], index: 0 });
+      setSelectedImage({ index: 0, source: selectedItem.img[0] });
     }
   }, [selectedItem]);
 
   useEffect(() => {
     if (filteredItem && Object.keys(filteredItem).length > 0) {
       setImagesToRender(filteredItem.img.slice(0, 5));
-      // Find the selected image index in the filtered item's images
+
+      // Preserve the selectedImage index if the source exists in the new filtered images
       const selectedImageIndex = filteredItem.img.indexOf(selectedImage.source);
 
-      setSelectedImage({
-        index: selectedImageIndex !== -1 ? selectedImageIndex : 0,
-        source: selectedImage.source,
-      });
+      if (selectedImageIndex !== -1) {
+        setSelectedImage({
+          index: selectedImageIndex,
+          source: selectedImage.source,
+        });
+      } else {
+        // If the source is not found, fallback to the first image of filtered item
+        setSelectedImage({ index: 0, source: filteredItem.img[0] });
+      }
     }
   }, [filteredItem]);
 
@@ -156,7 +163,7 @@ const LoaderContainer = styled.div`
 `;
 const MainImgWrapper = styled.div`
   width: 100%;
- /*  min-height: 920px;  */
+  /*  min-height: 920px;  */
   top: 0;
   left: 0;
   display: flex;
@@ -172,18 +179,18 @@ const MainImg = styled.img`
   object-fit: cover;
   transform: ${({ translationDirection }) => translationDirection};
   opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
-  transition: transform 0.10s ease, opacity 0.20s ease;
+  transition: transform 0.1s ease, opacity 0.2s ease;
   height: 92%;
-  @media (max-width:1320px){
+  @media (max-width: 1320px) {
     height: 85%;
   }
-  @media (max-width:1235px){
+  @media (max-width: 1235px) {
     height: 78%;
   }
-  @media (max-width:1160px){
+  @media (max-width: 1160px) {
     height: 72%;
   }
-  @media (max-width:1070px){
+  @media (max-width: 1070px) {
     height: 60%;
   }
 `;

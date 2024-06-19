@@ -93,7 +93,7 @@ export const ItemDetailMobile = ({ selectedItem }) => {
             <FilterWrapper>
               <FilterDetail
                 selectedItem={selectedItem}
-                onFilterItemChange={handleFilterItemChange}
+                handleFilterItemChange={handleFilterItemChange}
                 handleSizeLoading={handleSizeLoading}
                 handleColorLoading={handleColorLoading}
               />

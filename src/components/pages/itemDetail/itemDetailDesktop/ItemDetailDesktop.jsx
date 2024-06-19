@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import { ItemCount } from "../../../common/itemCount/ItemCount";
 import { FilterDetail } from "../filterDetails/FilterDetail";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { ItemImageDesktop } from "./ItemImageDesktop";
 import { Ring } from "@uiball/loaders";
@@ -18,7 +18,10 @@ export const ItemDetailDesktop = ({
   const { setProgress, setVisible } = useContext(GlobalToolsContext);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false); //Activate size loader
   const [counterLoading, setCounterLoading] = useState(false);
-  console.log(selectedItem)
+  
+  useEffect(() => {
+    console.log(selectedItem)
+  },[selectedItem])
 
   //On add to cart if selectedItem or filteredItem
   const onAddToCart = (quantity) => {
@@ -91,7 +94,7 @@ export const ItemDetailDesktop = ({
             <FilterWrapper>
               <FilterDetail
                 selectedItem={selectedItem}
-                onFilterItemChange={handleFilterItemChange}
+                handleFilterItemChange={handleFilterItemChange}
                 handleSizeLoading={handleSizeLoading}
                 handleColorLoading={handleColorLoading}
               />
