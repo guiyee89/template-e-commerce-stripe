@@ -1,4 +1,11 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -24,6 +31,7 @@ export const ProductsForm = ({
   let [allSelectedFiles, setAllSelectedFiles] = useState([]);
   const [isQueueProcessing, setIsQueueProcessing] = useState(false); // Use a queue to handle concurrency of handleImage
   const [imageQueue, setImageQueue] = useState([]); // State for manage images loading order
+  const [categoryValue, setCategoryValue] = useState("");
 
   //Loader after image upload success
   const [isLoadingImage, setIsLoadingImage] = useState({
@@ -95,6 +103,7 @@ export const ProductsForm = ({
         [name]: isNaN(value) ? value : parseInt(value, 10),
       }));
     }
+    setCategoryValue(value);
   };
 
   /////*****         HANDLE IMAGE INPUTS        ******///////
@@ -119,7 +128,7 @@ export const ProductsForm = ({
   const getResizedImageUrl = async (originalUrl) => {
     try {
       // Construct the URL for the resized image based on the original URL
-      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x600$1");
+      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_600x800$1");
 
       // Return the resized URL
       return resizedUrl;
@@ -129,108 +138,26 @@ export const ProductsForm = ({
     }
   };
 
-  // useEffect(() => {
-  //   const handleImageQueue = async () => {
-  //     if (imageQueue.length > 0) {
-  //       const { inputNumber, selectedFiles } = imageQueue[0];
-
-  //       try {
-  //         const imageUrlPromises = selectedFiles.map(async (selectedFile) => {
-  //           return await uploadFile(selectedFile);
-  //         });
-
-  //         const newUrls = await Promise.all(imageUrlPromises);
-
-  //         // Fetch the download URL again to ensure we have the correct resized URL
-  //         const resizedUrlsPromises = newUrls.map(async (newUrl) => {
-  //           const resizedUrl = await getResizedImageUrl(newUrl); // Replace getResizedImageUrl to get the resized URL
-  //           return resizedUrl;
-  //         });
-
-  //         const resizedUrls = await Promise.all(resizedUrlsPromises);
-
-  //         // Set the uploaded image URLs to the corresponding input numbers
-  //         if (selectedItem) {
-  //           setSelectedItem((prevSelectedItem) => {
-  //             const imgCopy = [...(prevSelectedItem.img || [])];
-  //             imgCopy[inputNumber - 1] = resizedUrls[0];
-  //             return {
-  //               ...prevSelectedItem,
-  //               img: imgCopy,
-  //             };
-  //           });
-  //         } else {
-  //           setNewProduct((prevProduct) => {
-  //             const imgCopy = [...(prevProduct.img || [])];
-  //             imgCopy[inputNumber - 1] = resizedUrls[0];
-  //             return {
-  //               ...prevProduct,
-  //               img: imgCopy,
-  //             };
-  //           });
-  //         }
-  //       } catch (error) {
-  //         console.error("Error uploading image:", error);
-  //       } finally {
-  //         // Reset the loading state after the upload is complete or if an error occurs
-  //         setIsLoading((prevLoading) => ({
-  //           ...prevLoading,
-  //           [inputNumber]: false,
-  //         }));
-
-  //         setIsLoadingImage((prevLoading) => ({
-  //           ...prevLoading,
-  //           [inputNumber]: true,
-  //         }));
-
-  //         // Set the confirmedImageUpload state for this input to true
-  //         setConfirmedImageUpload((prevConfirmedImageUpload) => ({
-  //           ...prevConfirmedImageUpload,
-  //           [inputNumber]: true,
-  //         }));
-
-  //         // Remove the processed item from the queue
-  //         setImageQueue((prevQueue) => {
-  //           const updatedQueue = [...prevQueue];
-  //           updatedQueue.shift(); // Use shift to remove the first item
-  //           return updatedQueue;
-  //         });
-
-  //         setTimeout(() => {
-  //           setIsLoadingImage((prevLoading) => ({
-  //             ...prevLoading,
-  //             [inputNumber]: false,
-  //           }));
-  //         }, 2000);
-  //       }
-  //     } else {
-  //       // No more items in the queue, set isQueueProcessing to false
-  //       setIsQueueProcessing(false);
-  //     }
-  //   };
-  //   // Call handleImageQueue initially
-  //   handleImageQueue();
-  // }, [imageQueue, selectedItem, newProduct]);
-
+  //Image queue processing
   useEffect(() => {
     const handleImageQueue = async () => {
       if (imageQueue.length > 0) {
         const { inputNumber, selectedFiles } = imageQueue[0];
-  
+
         try {
           const newUrls = await Promise.all(
             selectedFiles.map(async (selectedFile) => {
               return await uploadFile(selectedFile);
             })
           );
-  
+
           const resizedUrls = await Promise.all(
             newUrls.map(async (newUrl) => {
               const resizedUrl = await getResizedImageUrl(newUrl);
               return resizedUrl;
             })
           );
-  
+
           // Set the uploaded image URLs to the corresponding input numbers
           if (selectedItem) {
             setSelectedItem((prevSelectedItem) => {
@@ -259,25 +186,25 @@ export const ProductsForm = ({
             ...prevLoading,
             [inputNumber]: false,
           }));
-  
+
           setIsLoadingImage((prevLoading) => ({
             ...prevLoading,
             [inputNumber]: true,
           }));
-  
+
           // Set the confirmedImageUpload state for this input to true
           setConfirmedImageUpload((prevConfirmedImageUpload) => ({
             ...prevConfirmedImageUpload,
             [inputNumber]: true,
           }));
-  
+
           // Remove the processed item from the queue
           setImageQueue((prevQueue) => {
             const updatedQueue = [...prevQueue];
             updatedQueue.shift(); // Use shift to remove the first item
             return updatedQueue;
           });
-  
+
           setTimeout(() => {
             setIsLoadingImage((prevLoading) => ({
               ...prevLoading,
@@ -290,13 +217,12 @@ export const ProductsForm = ({
         setIsQueueProcessing(false);
       }
     };
-  
     // Call handleImageQueue initially
     if (imageQueue.length > 0) {
       handleImageQueue();
     }
   }, [imageQueue, selectedItem, newProduct]);
-  
+
   // Merge the selected files with the existing files for the input
   const handleFileInputChange = (inputNumber, selectedFiles) => {
     const updatedFiles = { ...file };
@@ -369,7 +295,6 @@ export const ProductsForm = ({
       }));
     }
   };
-
 
   ////////////          SUBMIT          //////////////
   const handleSubmit = async (e) => {
@@ -594,6 +519,99 @@ export const ProductsForm = ({
                   />
                 </Div>
                 <Div>
+                  <FormControl>
+                    <InputLabel
+                      sx={{ fontSize: "14px", lineHeight: ".8" }}
+                      id="demo-simple-select-label"
+                    >
+                      Product Category
+                    </InputLabel>
+                    <InputSelect
+                      label="Product Category"
+                      variant="outlined"
+                      name="category"
+                      defaultValue={selectedItem ? selectedItem.category : ""}
+                      onChange={handleChange}
+                      size="small"
+                      //helperText={errors.category}
+                      //error={errors.category ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                    >
+                      <MenuItem value={"bags"}>Bags</MenuItem>
+                      <MenuItem value={"hoodies"}>Hoodies</MenuItem>
+                      <MenuItem value={"pants"}>Pants</MenuItem>
+                      <MenuItem value={"shoes"}>Shoes</MenuItem>
+                      <MenuItem value={"shirts"}>Shirts</MenuItem>
+                    </InputSelect>
+                  </FormControl>
+                </Div>
+                <Div>
+                  <FormControl>
+                    <InputLabel
+                      sx={{ fontSize: "14px", lineHeight: ".8" }}
+                      id="demo-simple-select-label"
+                    >
+                      Size
+                    </InputLabel>
+                    <InputSelect
+                      label="Size"
+                      variant="outlined"
+                      name="size"
+                      defaultValue={selectedItem ? selectedItem.size : ""}
+                      onChange={handleChange}
+                      size="small"
+                      //helperText={errors.category}
+                      //error={errors.category ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                    >
+                      {categoryValue === "shoes" || categoryValue === "bags"
+                        ? [
+                            <MenuItem key={39} value={39}>
+                              39
+                            </MenuItem>,
+                            <MenuItem key={40} value={40}>
+                              40
+                            </MenuItem>,
+                            <MenuItem key={41} value={41}>
+                              41
+                            </MenuItem>,
+                            <MenuItem key={42} value={42}>
+                              42
+                            </MenuItem>,
+                            <MenuItem key={43} value={43}>
+                              43
+                            </MenuItem>,
+                            <MenuItem key={44} value={44}>
+                              44
+                            </MenuItem>,
+                            <MenuItem key={45} value={45}>
+                              45
+                            </MenuItem>,
+                          ]
+                        : [
+                            <MenuItem key={"xs"} value={"xs"}>
+                              X Small
+                            </MenuItem>,
+                            <MenuItem key={"s"} value={"s"}>
+                              Small
+                            </MenuItem>,
+                            <MenuItem key={"m"} value={"m"}>
+                              Medium
+                            </MenuItem>,
+                            <MenuItem key={"l"} value={"l"}>
+                              Large
+                            </MenuItem>,
+                            <MenuItem key={"xl"} value={"xl"}>
+                              X Large
+                            </MenuItem>,
+                            <MenuItem key={"xxl"} value={"xxl"}>
+                              XX Large
+                            </MenuItem>,
+                          ]}
+                    </InputSelect>
+                  </FormControl>
+                </Div>
+                <Div>
                   <Input
                     label="Color"
                     variant="outlined"
@@ -601,24 +619,8 @@ export const ProductsForm = ({
                     defaultValue={selectedItem?.color}
                     onChange={handleChange}
                     size="small"
-                    // helperText={errors.color}
-                    // error={errors.color ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Talle (Ejemplo: s - m - l - 41 -42 - 43)"
-                    variant="outlined"
-                    name="size"
-                    defaultValue={selectedItem?.size}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.size}
-                    // error={errors.size ? true : false}
+                    // helperText={errors.stock}
+                    // error={errors.stock ? true : false}
                     sx={{ marginBottom: "18px" }}
                     InputLabelProps={{
                       style: { fontSize: "14px" },
@@ -635,22 +637,6 @@ export const ProductsForm = ({
                     size="small"
                     // helperText={errors.description}
                     // error={errors.description ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Categoria del Producto"
-                    variant="outlined"
-                    name="category"
-                    defaultValue={selectedItem?.category}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.category}
-                    // error={errors.category ? true : false}
                     sx={{ marginBottom: "18px" }}
                     InputLabelProps={{
                       style: { fontSize: "14px" },
@@ -964,6 +950,11 @@ const Form = styled.form`
   flex-direction: column;
   margin: 0 auto;
   width: 90%;
+`;
+const InputSelect = styled(Select)`
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 12.5px 5px;
+  }
 `;
 const Input = styled(TextField)`
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {

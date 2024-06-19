@@ -6,7 +6,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const FilterDetail = ({
   selectedItem,
-  onFilterItemChange,
+  handleFilterItemChange,
   handleSizeLoading,
   handleColorLoading,
 }) => {
@@ -93,10 +93,10 @@ export const FilterDetail = ({
           }));
         }
       }
-      onFilterItemChange(filterSelection); //responible to set new item by color or sizes and render it
+      handleFilterItemChange(filterSelection); //responible to set new item by color or sizes and render it
       setFilteredItem(filterSelection || {});
     }
-  }, [selectedFilters, relatedItems, onFilterItemChange]);
+  }, [selectedFilters, relatedItems, handleFilterItemChange]);
 
   /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
   //                                            LOGIC FOR COLOR & SIZE RENDERING                                                             //
