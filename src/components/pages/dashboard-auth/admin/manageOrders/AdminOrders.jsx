@@ -19,11 +19,9 @@ import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 
-
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const [myOrders, setMyOrders] = useState([]);
-  console.log(myOrders.sort((a, b) => b.date.seconds - a.date.seconds));
 
   useEffect(() => {
     const ordersCollection = collection(db, "orders");
@@ -74,14 +72,8 @@ export const AdminOrders = () => {
   return (
     <>
       <OrdersWrapper>
-        <TableContainer component={Paper} sx={{ borderLeft: "1px solid grey" }}>
-          <Table
-            aria-label="simple table"
-            sx={{
-              borderLeft: "1px solid darkgrey",
-              borderRight: " 1px solid darkgrey",
-            }}
-          >
+        <TableOrderContainer component={Paper}>
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCellTitle sx={{ width: "160px" }}>
@@ -147,7 +139,7 @@ export const AdminOrders = () => {
                 ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableOrderContainer>
         <Modal
           sx={{ maxWidth: "1000px", margin: "0 auto" }}
           open={openProducts}
@@ -181,10 +173,13 @@ export const AdminOrders = () => {
   );
 };
 const OrdersWrapper = styled.div`
-  margin-top: 50px;
-  box-shadow: 0px -3px 1px rgba(0, 0, 0, 0.15);
+  margin: 50px 10px;
   overflow-x: auto;
   width: 85%;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   @media (max-width: 1000px) {
     width: 95%;
   }
@@ -203,10 +198,18 @@ const OrdersWrapper = styled.div`
     background-color: #f1f1f1;
   }
 `;
+const TableOrderContainer = styled(TableContainer)`
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  width: 100%;
+  overflow-x: auto;
+  box-shadow: none!important;
+  border-radius: none!important;
+`;
 const TableCellTitle = styled(TableCell)`
   padding: 16px 8px !important;
   text-align: center !important;
-  border-bottom: 5px solid lightgrey !important;
+  border-bottom: 2px solid lightgrey !important;
   border-left: 2px solid lightgrey;
   border-right: 2px solid lightgrey;
   font-size: 0.975rem;

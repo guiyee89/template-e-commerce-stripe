@@ -75,24 +75,6 @@ export const forgotPassword = async (email) => {
 // /******   STORAGE   ******/
 const storage = getStorage(app)
 
-// export const uploadFile = async (file) => {
-//   return new Promise((resolve, reject) => {
-//     const fileName = file.name;
-//     const storageRef = ref(storage, fileName);
-//     // const storageRef = ref(storage, v4())
-
-//     // Add a delay before uploading the file
-//     setTimeout(async () => {
-//       try {
-//         await uploadBytes(storageRef, file);
-//         const url = await getDownloadURL(storageRef);
-//         resolve(url);
-//       } catch (error) {
-//         reject(error);
-//       }
-//     }, 1000); // Adjust the delay time as needed
-//   });
-// };
 export const uploadFile = async (file, retries = 3) => {
   const uploadAttempt = async (attempt) => {
     return new Promise((resolve, reject) => {
@@ -115,7 +97,6 @@ export const uploadFile = async (file, retries = 3) => {
       }, 1500);
     });
   };
-
   return uploadAttempt(0);
 };
 
@@ -141,7 +122,7 @@ const getAllImageUrlsFromFirestore = async () => {
 };
 
 const getResizedImageUrl = (url) => {
-  return url.replace(/(\.[^.]*)?$/, "_600x600$1");
+  return url.replace(/(\.[^.]*)?$/, "_600x800$1");
 };
 
 export const deleteUnusedImages = async () => {
@@ -175,41 +156,3 @@ export const deleteUnusedImages = async () => {
 };
 
 
-// const getAllImageUrlsFromFirestore = async () => {
-//   const itemsCollection = collection(db, "products");
-//   const productsSnapshot = await getDocs(itemsCollection);
-//   const imageUrls = new Set();
-
-//   productsSnapshot.forEach(doc => {
-//     const product = doc.data();
-//     product.img.forEach(url => {
-//       if (url) imageUrls.add(url);
-//     });
-//   });
-//   console.log(productsSnapshot)
-//   return imageUrls;
-// };
-
-// export const deleteUnusedImages = async () => {
-//   try {
-//     // Get all image URLs currently used in Firestore
-//     const usedImageUrls = await getAllImageUrlsFromFirestore();
-
-//     // List all files in the Firebase Storage
-//     const storageRef = ref(storage);
-//     const filesSnapshot = await listAll(storageRef);
-//     const deletePromises = filesSnapshot.items.map(async (fileRef) => {
-//       const fileUrl = await getDownloadURL(fileRef);
-
-//       if (!usedImageUrls.has(fileUrl)) {
-//         // If the image URL is not used in Firestore, delete it from Storage
-//         await deleteObject(fileRef);
-//         console.log(`Deleted unused image: ${fileUrl}`);
-//       }
-//     });
-
-//     await Promise.all(deletePromises);
-//   } catch (error) {
-//     console.error("Error deleting unused images:", error);
-//   }
-// };

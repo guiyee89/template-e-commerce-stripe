@@ -110,10 +110,11 @@ export const CheckoutContainer = () => {
           if (state) {
             // If country is United States, find the shipping cost for the selected state
             const stateData = shipmentData.state;
+            console.log(stateData)
             let selectedStateCost = 0;
             stateData.forEach((item) => {
-              if (Object.keys(item)[0] === state.toLowerCase()) {
-                selectedStateCost = item[state.toLowerCase()];
+              if (Object.keys(item)[0] === state) {
+                selectedStateCost = item[state];
               }
             });
             if (selectedStateCost !== 0) {
@@ -141,6 +142,7 @@ export const CheckoutContainer = () => {
         setShipCostLoader(false);
       }, 1200);
     }
+    console.log(shipmentCost)
   }, [shippingMethod, country, state]);
 
   return (
