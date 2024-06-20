@@ -8,7 +8,7 @@ import "ldrs/helix";
 // import { DeleteImages } from "./productList/deleteImages/DeleteImages";
 
 
-export const ProductContainer = () => {
+export const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState(""); // State to store the productId for searching
   const [foundProduct, setFoundProduct] = useState(false);
@@ -50,7 +50,7 @@ export const ProductContainer = () => {
   if (productLoading) {
     return (
       <BouncyLoader>
-        <l-helix size="55" speed="1.25" color="black"></l-helix>
+        <l-helix size="35" speed="1.25" color="black"></l-helix>
       </BouncyLoader>
     );
   }
