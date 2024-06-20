@@ -3,10 +3,13 @@ import styled from "styled-components/macro";
 export const AdminNewsletters = () => {
   return (
     <>
-      <NewslettersWrapper>En construccion...</NewslettersWrapper>
+      <NewslettersWrapper>
+        <p style={{ textAlign: "center" }}>En construccion...</p>
+      </NewslettersWrapper>
     </>
   );
 };
 const NewslettersWrapper = styled.div`
-    margin: 50px 0;
-`
+  width: 100%;
+  margin: 50px 0;
+`;

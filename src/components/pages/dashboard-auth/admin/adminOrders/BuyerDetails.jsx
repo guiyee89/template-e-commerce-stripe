@@ -1,10 +1,14 @@
 import styled from "styled-components/macro";
 import CloseIcon from "@mui/icons-material/Close";
+import { useEffect } from "react";
 
 export const BuyerDetails = ({ clientDetails, handleClose }) => {
   const { buyer, shipment_cost, total } = clientDetails || {};
-  console.log(clientDetails);
-  console.log(buyer);
+
+  useEffect(() => {
+    console.log(clientDetails);
+    console.log(buyer);
+  }, []);
 
   return (
     <>
@@ -14,7 +18,7 @@ export const BuyerDetails = ({ clientDetails, handleClose }) => {
         <BuyerInfo>
           <BuyerData>
             <Data style={{ gap: "2.97rem" }}>
-              Name: <Span>{buyer?.name}</Span>
+              Name: <Span>{buyer?.name} {buyer?.lastName}</Span>
             </Data>
             <Data style={{ gap: "2.9rem" }}>
               Email:{" "}

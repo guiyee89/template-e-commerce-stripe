@@ -277,7 +277,7 @@ export const CheckoutForm = ({
                     <Input
                       label="Last Name"
                       variant="outlined"
-                      name="last name"
+                      name="lastName"
                       onChange={handleInputChange}
                       helperText={errors.lastName}
                       error={errors.lastName ? true : false}

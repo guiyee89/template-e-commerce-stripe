@@ -3,8 +3,8 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components/macro";
-import { db } from "../../../../../firebaseConfig";
-import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../../../../context/GlobalToolsContext";
+import { db } from "../../../../../../firebaseConfig";
 
 export const PriceDiscountForm = ({ setIsChanged, products }) => {
   const [getDiscount, setGetDiscount] = useState();
