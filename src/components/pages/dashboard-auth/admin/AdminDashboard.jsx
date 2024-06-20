@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AdminOrders } from "./adminOrders/AdminOrders";
 import { AdminNewsletters } from "./adminNewsletters/AdminNewsletters";
-import { ProductContainer } from "./adminProducts/ProductContainer";
+import { AdminProducts } from "./adminProducts/AdminProducts";
 import { AdminShipping } from "./adminShipping/AdminShipping";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
@@ -58,7 +58,7 @@ export const AdminDashboard = () => {
           </LogoutBtn>
         </DashboardNavigation>
         {selectedOption === "clientOrders" && <AdminOrders />}
-        {selectedOption === "manageProducts" && <ProductContainer />}
+        {selectedOption === "manageProducts" && <AdminProducts />}
         {selectedOption === "newsletters" && <AdminNewsletters />}
         {selectedOption === "shipping" && <AdminShipping />}
       </DashboardContainer>
