@@ -1,18 +1,41 @@
 import { Button, TextField } from "@mui/material";
-import { collection, doc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import "ldrs/helix";
 
-export const AdminShipping = ({ shippingData }) => {
+export const AdminShipping = () => {
+  const [shippingData, setShippingData] = useState([]);
   const [shippingCost, setShippingCost] = useState(shippingData);
+  const [shippingLoading, setShippingLoading] = useState(true);
   const { windowWidth } = useContext(GlobalToolsContext);
 
   useEffect(() => {
     setShippingCost(shippingData);
-    console.log(shippingCost);
+  }, [shippingData]);
+
+  useEffect(() => {
+    const fetchShipping = async () => {
+      const shippingCollection = collection(db, "shipment");
+      const q = query(shippingCollection);
+      try {
+        const snapshot = await getDocs(q);
+        const shipping = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setShippingData(shipping);
+        setTimeout(() => {
+          setShippingLoading(false);
+        }, 1200);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchShipping();
   }, [shippingData]);
 
   const handleChange = (e, id, stateName) => {
@@ -65,6 +88,14 @@ export const AdminShipping = ({ shippingData }) => {
 
     console.log("Data updated successfully");
   };
+
+  if (shippingLoading) {
+    return (
+      <BouncyLoader>
+        <l-helix size="55" speed="1.25" color="black"></l-helix>
+      </BouncyLoader>
+    );
+  }
 
   return (
     <FormWrapper>
@@ -137,6 +168,14 @@ export const AdminShipping = ({ shippingData }) => {
     </FormWrapper>
   );
 };
+const BouncyLoader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 175px;
+  padding-bottom: 250px;
+`;
 
 const FormWrapper = styled.div`
   width: 80%;
