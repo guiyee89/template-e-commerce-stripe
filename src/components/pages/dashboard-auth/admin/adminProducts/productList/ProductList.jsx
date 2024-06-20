@@ -21,7 +21,7 @@ import { db } from "../../../../../../firebaseConfig";
 import { useContext, useEffect, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../../context/GlobalToolsContext";
-//import { DeleteImages } from "./deleteImages/DeleteImages";
+import { Ring } from "@uiball/loaders";
 
 export const ProductList = ({
   products,
@@ -35,6 +35,7 @@ export const ProductList = ({
   const [selectedItem, setSelectedItem] = useState(null);
   const { windowWidth } = useContext(GlobalToolsContext);
   const [newlyCopiedIds, setNewlyCopiedIds] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   // Sort items by color and size - highlight the last sorted item
   const customSort = (itemA, itemB) => {
@@ -123,68 +124,88 @@ export const ProductList = ({
     setIsChanged(); // Toggle isChanged to trigger useEffect
   };
 
-  useEffect(() => {
-    console.log(products);
-  }, []);
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    setSearchLoading(true);
+    setTimeout(() => {
+      fetchItemsByProductId(searchProduct);
+      setSearchLoading(false);
+    }, 1000);
+  };
 
   return (
     <>
       <ProductListWrapper>
-        {/* <DeleteImages /> */}
-        <ProductsButtonsContainer windowWidth={windowWidth}>
-          <div>
-            <TextFieldInput
-              label="Buscar por ID"
-              variant="outlined"
-              name="id"
-              value={searchProduct}
-              onChange={(e) => setSearchProduct(e.target.value)}
-              sx={{
-                marginTop: "12px",
-                marginLeft: "8px",
-                width: "130px",
-                "&.MuiInputBase-input": {
-                  padding: "10.5px 14px",
-                },
-              }}
-              InputLabelProps={{
-                style: { fontSize: "12px", zIndex: "0" },
-              }}
-            />
-            <Button
-              variant="contained"
-              sx={{
-                marginLeft: "10px",
-                marginTop: "18px",
-                marginRight: "68px",
-                fontSize: "0.7rem",
-                backgroundColor: "black",
-                "&:hover": {
-                  backgroundColor: "#4b4d4e",
-                },
-              }}
-              onClick={() => fetchItemsByProductId()}
-            >
-              Buscar
-            </Button>
-          </div>
-          <div style={{ marginLeft: "7px" }}>
-            <AddButton
-              variant="contained"
-              sx={{
-                marginTop: "17px",
-                fontSize: "0.7rem",
-                backgroundColor: "black",
-                "&:hover": {
-                  backgroundColor: "#4b4d4e",
-                },
-              }}
-              onClick={() => handleOpen(null)}
-            >
-              Nuevo Producto
-            </AddButton>
-          </div>
-        </ProductsButtonsContainer>
+        <form onSubmit={handleSearchSubmit}>
+          <ProductsButtonsContainer windowWidth={windowWidth}>
+            <div>
+              <TextFieldInput
+                label="Buscar por ID"
+                variant="outlined"
+                name="id"
+                value={searchProduct}
+                onChange={(e) => setSearchProduct(e.target.value)}
+                sx={{
+                  marginTop: "12px",
+                  marginLeft: "8px",
+                  width: "130px",
+                  "&.MuiInputBase-input": {
+                    padding: "10.5px 14px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: { fontSize: "12px", zIndex: "0" },
+                }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  marginLeft: "10px",
+                  marginTop: "18px",
+                  marginRight: "68px",
+                  fontSize: "0.7rem",
+                  backgroundColor: "black",
+                  "&:hover": {
+                    backgroundColor: "#4b4d4e",
+                  },
+                }}
+              >
+                {searchLoading ? (
+                  <div
+                    style={{
+                      width: "48.6px",
+                      height: "20px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems:"center"
+                    }}
+                  >
+                    <Ring size={15} lineWeight={4} speed={1} color="white" />
+                  </div>
+                ) : (
+                  "Search"
+                )}
+              </Button>
+            </div>
+            <div style={{ marginLeft: "7px" }}>
+              <AddButton
+                variant="contained"
+                sx={{
+                  marginTop: "17px",
+                  fontSize: "0.7rem",
+                  backgroundColor: "black",
+                  "&:hover": {
+                    backgroundColor: "#4b4d4e",
+                  },
+                }}
+                onClick={() => handleOpen(null)}
+              >
+                Nuevo Producto
+              </AddButton>
+            </div>
+          </ProductsButtonsContainer>
+        </form>
         <ProductListContainer>
           {foundProduct === true && (
             <>

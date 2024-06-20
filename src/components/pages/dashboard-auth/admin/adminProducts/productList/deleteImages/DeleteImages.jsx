@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { deleteUnusedImages } from "../../../../../../firebaseConfig";
-
+import { deleteUnusedImages } from "../../../../../../../firebaseConfig";
 
 export const DeleteImages = () => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -12,12 +11,10 @@ export const DeleteImages = () => {
   };
 
   return (
-    <div>
+    <div style={{ position: "absolute", right: "0", top: "20px" }}>
       <button onClick={handleDeleteUnusedImages} disabled={isDeleting}>
         {isDeleting ? "Cleaning up..." : "Delete Unused Images"}
       </button>
     </div>
   );
 };
-
-

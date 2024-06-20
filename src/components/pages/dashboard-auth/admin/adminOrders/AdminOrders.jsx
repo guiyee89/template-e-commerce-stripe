@@ -18,8 +18,8 @@ import TopicOutlinedIcon from "@mui/icons-material/TopicOutlined";
 import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
-import { bouncy } from "ldrs";
-bouncy.register();
+import "ldrs/helix";
+
 
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
@@ -82,7 +82,7 @@ export const AdminOrders = () => {
   if (orderLoading) {
     return (
       <BouncyLoader>
-        <l-bouncy size="45" speed="1.25" color="black"></l-bouncy>
+        <l-helix size="55" speed="1.25" color="black"></l-helix>
       </BouncyLoader>
     );
   }
@@ -200,8 +200,10 @@ const BouncyLoader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 200px;
+  padding-right: 175px;
+  padding-bottom: 250px;
 `;
+
 
 const OrdersWrapper = styled.div`
   margin: 50px 10px;

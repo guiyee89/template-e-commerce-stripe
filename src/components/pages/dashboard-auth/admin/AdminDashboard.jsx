@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled, { css } from "styled-components/macro";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AdminOrders } from "./adminOrders/AdminOrders";
 import { AdminNewsletters } from "./adminNewsletters/AdminNewsletters";
-import { ProductSearch } from "./manageProducts/ProductContainer";
+import { ProductContainer } from "./adminProducts/ProductContainer";
 import { AdminShipping } from "./adminShipping/AdminShipping";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
-import { bouncy } from "ldrs";
-bouncy.register();
 
 export const AdminDashboard = () => {
   const { handleLogout } = useContext(AuthContext);
@@ -60,7 +58,7 @@ export const AdminDashboard = () => {
           </LogoutBtn>
         </DashboardNavigation>
         {selectedOption === "clientOrders" && <AdminOrders />}
-        {selectedOption === "manageProducts" && <ProductSearch />}
+        {selectedOption === "manageProducts" && <ProductContainer />}
         {selectedOption === "newsletters" && <AdminNewsletters />}
         {selectedOption === "shipping" && <AdminShipping />}
       </DashboardContainer>
@@ -70,16 +68,16 @@ export const AdminDashboard = () => {
 
 const DashboardContainer = styled.div`
   width: 100%;
+  max-width: 1110px;
   height: 100%;
   display: flex;
-  -webkit-box-pack: end;
   justify-content: center;
   margin: 90px auto;
 `;
 
 const DashboardNavigation = styled.nav`
   width: 206px;
-  height: 500px;
+  height: 750px;
   margin-top: 50px;
   @media (max-width: 1088px) {
     margin-top: 69px;

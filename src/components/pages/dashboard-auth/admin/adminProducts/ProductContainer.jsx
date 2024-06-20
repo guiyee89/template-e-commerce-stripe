@@ -4,8 +4,9 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect } from "react";
 import { db } from "../../../../../firebaseConfig";
 import { ProductList } from "./productList/ProductList";
-import { bouncy } from "ldrs";
-bouncy.register();
+import "ldrs/helix";
+// import { DeleteImages } from "./productList/deleteImages/DeleteImages";
+
 
 export const ProductContainer = () => {
   const [products, setProducts] = useState([]);
@@ -49,21 +50,30 @@ export const ProductContainer = () => {
   if (productLoading) {
     return (
       <BouncyLoader>
-        <l-bouncy size="45" speed="1.25" color="black"></l-bouncy>
+        <l-helix size="55" speed="1.25" color="black"></l-helix>
       </BouncyLoader>
     );
   }
 
   return (
     <>
-      <ProductList
-        products={products}
-        setIsChanged={handleIsChanged}
-        foundProduct={foundProduct}
-        searchProduct={searchProduct}
-        setSearchProduct={setSearchProduct}
-        fetchItemsByProductId={() => fetchItemsByProductId(searchProduct)} // Pass the function with the current searchProduct
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+        }}
+      >
+        {/* <DeleteImages /> */}
+        <ProductList
+          products={products}
+          setIsChanged={handleIsChanged}
+          foundProduct={foundProduct}
+          searchProduct={searchProduct}
+          setSearchProduct={setSearchProduct}
+          fetchItemsByProductId={() => fetchItemsByProductId(searchProduct)} // Pass the function with the current searchProduct
+        />
+      </div>
     </>
   );
 };
@@ -73,5 +83,6 @@ const BouncyLoader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 200px;
+  padding-right: 175px;
+  padding-bottom: 250px;
 `;

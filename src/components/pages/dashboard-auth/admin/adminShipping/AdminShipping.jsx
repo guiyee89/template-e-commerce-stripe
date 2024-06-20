@@ -5,8 +5,7 @@ import { useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
-import { bouncy } from "ldrs";
-bouncy.register();
+import "ldrs/helix";
 
 export const AdminShipping = () => {
   const [shippingData, setShippingData] = useState([]);
@@ -93,7 +92,7 @@ export const AdminShipping = () => {
   if (shippingLoading) {
     return (
       <BouncyLoader>
-        <l-bouncy size="45" speed="1.25" color="black"></l-bouncy>
+        <l-helix size="55" speed="1.25" color="black"></l-helix>
       </BouncyLoader>
     );
   }
@@ -174,7 +173,8 @@ const BouncyLoader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 200px;
+  padding-right: 175px;
+  padding-bottom: 250px;
 `;
 
 const FormWrapper = styled.div`
