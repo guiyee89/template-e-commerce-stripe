@@ -82,7 +82,7 @@ export const AdminOrders = () => {
   if (orderLoading) {
     return (
       <BouncyLoader>
-        <l-helix size="55" speed="1.25" color="black"></l-helix>
+        <l-helix size="35" speed="1.25" color="black"></l-helix>
       </BouncyLoader>
     );
   }
