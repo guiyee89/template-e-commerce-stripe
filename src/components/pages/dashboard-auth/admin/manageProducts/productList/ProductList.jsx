@@ -17,11 +17,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { ProductsForm } from "./ProductsForm";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../../../../firebaseConfig";
+import { db } from "../../../../../../firebaseConfig";
 import { useContext, useEffect, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
-import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
- import { DeleteImages } from "./deleteImages/DeleteImages";
+import { GlobalToolsContext } from "../../../../../context/GlobalToolsContext";
+//import { DeleteImages } from "./deleteImages/DeleteImages";
 
 export const ProductList = ({
   products,
@@ -39,9 +39,11 @@ export const ProductList = ({
   // Sort items by color and size - highlight the last sorted item
   const customSort = (itemA, itemB) => {
     const sizeOrder = ["xs", "s", "m", "l", "xl", "xxl"];
+
     // First, compare by color
     if (itemA.color < itemB.color) return -1;
     if (itemA.color > itemB.color) return 1;
+
     // Check if sizes are numeric or alphabetic
     const isNumericA = !isNaN(itemA.size);
     const isNumericB = !isNaN(itemB.size);
@@ -83,9 +85,17 @@ export const ProductList = ({
     const itemsCollection = collection(db, "products");
     const selectedProduct = products.find((product) => product.id === id);
 
+    //Create date to mantain order of new items (createdAt field)
+    let originalCreatedAt = new Date();
+    if (selectedProduct.createdAt) {
+      const parsedDate = new Date(selectedProduct.createdAt);
+      if (!isNaN(parsedDate)) {
+        originalCreatedAt = parsedDate;
+      }
+    }
     const copyItem = {
       ...selectedProduct,
-      createdAt: new Date().toISOString(), //Check date to mantain item list order
+      createdAt: new Date(originalCreatedAt.getTime() + 1).toISOString(), // Slight delay to ensure it appears last
     };
 
     // Remove the 'id' field to let Firebase generate a new ID
@@ -101,8 +111,10 @@ export const ProductList = ({
     setNewlyCopiedIds([...newlyCopiedIds, newId]);
 
     setTimeout(() => {
-      // Remove the newly copied item ID from the list after 4 seconds
-      setNewlyCopiedIds(newlyCopiedIds.filter((itemId) => itemId !== newId));
+      // Remove the newly highlighted copied item ID from the list
+      setNewlyCopiedIds((prevIds) =>
+        prevIds.filter((itemId) => itemId !== newId)
+      );
     }, 5000);
   };
 
@@ -114,10 +126,11 @@ export const ProductList = ({
   useEffect(() => {
     console.log(products);
   }, []);
+
   return (
     <>
       <ProductListWrapper>
-         <DeleteImages />  *
+        {/* <DeleteImages /> */}
         <ProductsButtonsContainer windowWidth={windowWidth}>
           <div>
             <TextFieldInput
@@ -184,7 +197,10 @@ export const ProductList = ({
                 />
               </DiscountFormContainer>
               <TableContainer
-                sx={{ boxShadow:"rgba(0, 0, 0, 0.65) 0px 2px 6px", padding:"24px"}}
+                sx={{
+                  boxShadow: "rgba(0, 0, 0, 0.65) 0px 2px 6px",
+                  padding: "24px",
+                }}
               >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead
@@ -211,6 +227,7 @@ export const ProductList = ({
                       products.map((product) => (
                         <AnimatedTableRow
                           key={product.id}
+                          label="New"
                           className={
                             newlyCopiedIds.includes(product.id)
                               ? "highlighted"
@@ -289,8 +306,15 @@ export const ProductList = ({
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ padding: "4px", minWidth: "130px" }}
+                            sx={{
+                              padding: "4px",
+                              minWidth: "130px",
+                              position: "relative",
+                            }}
                           >
+                            {newlyCopiedIds.includes(product.id) && (
+                              <NewLabel>New</NewLabel>
+                            )}
                             <IconButton onClick={() => handleOpen(product)}>
                               <EditIcon />
                             </IconButton>
@@ -333,18 +357,6 @@ export const ProductList = ({
   );
 };
 
-// Add CSS for the highlighted effect
-const highlightAnimation = keyframes`
-  0% { background-color: #d9fafd; }
-  50% { background-color: #e6fbfd;; }
-  100% { background-color: #d9fafd; }
-`;
-
-const AnimatedTableRow = styled(TableRow)`
-  &.highlighted {
-    animation: ${highlightAnimation} 1.2s alternate 5;
-  }
-`;
 const ProductListWrapper = styled.div`
   width: 100%;
   margin: 32px 0 100px 0;
@@ -380,6 +392,30 @@ const Img = styled.img`
   min-width: 60px;
   height: 70px;
   object-fit: contain;
+`;
+// Add CSS for the highlighted effect
+const highlightAnimation = keyframes`
+  0% { background-color: #d9fafd; }
+  50% { background-color: #e6fbfd;; }
+  100% { background-color: #d9fafd; }
+`;
+
+const AnimatedTableRow = styled(TableRow)`
+  &.highlighted {
+    animation: ${highlightAnimation} 1.2s alternate 5;
+  }
+`;
+const NewLabel = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 2px 4px;
+  padding: 2px 6px;
+  background-color: #f50057;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 4px;
 `;
 const style = {
   position: "absolute",

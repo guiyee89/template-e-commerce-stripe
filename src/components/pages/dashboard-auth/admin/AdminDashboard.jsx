@@ -1,99 +1,70 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled, { css } from "styled-components/macro";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { AdminOrders } from "./manageOrders/AdminOrders";
-import { AdminNewsletters } from "./manageNewsletters/AdminNewsletters";
-import { ProductSearch } from "./manageProducts/ProductSearch";
-import { AdminShipping } from "./manageShipping/AdminShipping";
-import { db } from "../../../../firebaseConfig";
+import { AdminOrders } from "./adminOrders/AdminOrders";
+import { AdminNewsletters } from "./adminNewsletters/AdminNewsletters";
+import { ProductSearch } from "./manageProducts/ProductContainer";
+import { AdminShipping } from "./adminShipping/AdminShipping";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
-import { collection, getDocs, query } from "firebase/firestore";
+import { bouncy } from "ldrs";
+bouncy.register();
 
 export const AdminDashboard = () => {
   const { handleLogout } = useContext(AuthContext);
   const { scroll } = useContext(GlobalToolsContext);
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("clientOrders");
-  const [shippingData, setShippingData] = useState([]);
-  const [shippingLoading, setShippingLoading] = useState(false);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    if (option === "shipping") {
-      setShippingLoading(true);
-      setTimeout(() => {
-        handleShippingFetch();
-      }, 2000);
-    }
-  };
-
-  const handleShippingFetch = async () => {
-    const shippingCollection = collection(db, "shipment");
-    const q = query(shippingCollection);
-    const snapshot = await getDocs(q);
-    const shipping = snapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setShippingData(shipping);
-    setShippingLoading(false);
   };
 
   return (
-    <>
-      <div style={{ width: "80%"}}>
-        <DashboardContainer>
-          <DashboardNavigation>
-            <DashboardListContainer>
-              <DashboardList
-                onClick={() => handleOptionClick("clientOrders")}
-                active={selectedOption === "clientOrders"}
-              >
-                <DashboardBtn>client orders</DashboardBtn>
-              </DashboardList>
-
-              <DashboardList
-                onClick={() => handleOptionClick("manageProducts")}
-                active={selectedOption === "manageProducts"}
-              >
-                <DashboardBtn>manage products</DashboardBtn>
-              </DashboardList>
-
-              <DashboardList
-                onClick={() => handleOptionClick("newsletters")}
-                active={selectedOption === "newsletters"}
-              >
-                <DashboardBtn>newsletters</DashboardBtn>
-              </DashboardList>
-              <DashboardList
-                onClick={() => handleOptionClick("shipping")}
-                active={selectedOption === "shipping"}
-              >
-                <DashboardBtn>shipping</DashboardBtn>
-              </DashboardList>
-            </DashboardListContainer>
-            <LogoutBtn scrolled={scroll}>
-              <h4>Logout</h4>
-              <LogoutSharpIcon
-                sx={{ fontSize: "25px" }}
-                onClick={() => handleLogout(navigate("/"))}
-              />
-            </LogoutBtn>
-          </DashboardNavigation>
-          {selectedOption === "clientOrders" && <AdminOrders />}
-          {selectedOption === "manageProducts" && <ProductSearch />}
-          {selectedOption === "newsletters" && <AdminNewsletters />}
-          {selectedOption === "shipping" &&
-            (shippingLoading ? (
-              <div style={{width:"100%"}}>Loading...</div> // Show loading indicator during the delay
-            ) : (
-              <AdminShipping shippingData={shippingData} />
-            ))}
-        </DashboardContainer>
-      </div>
-    </>
+    <div style={{ width: "80%" }}>
+      <DashboardContainer>
+        <DashboardNavigation>
+          <DashboardListContainer>
+            <DashboardList
+              onClick={() => handleOptionClick("clientOrders")}
+              active={selectedOption === "clientOrders"}
+            >
+              <DashboardBtn>client orders</DashboardBtn>
+            </DashboardList>
+            <DashboardList
+              onClick={() => handleOptionClick("manageProducts")}
+              active={selectedOption === "manageProducts"}
+            >
+              <DashboardBtn>manage products</DashboardBtn>
+            </DashboardList>
+            <DashboardList
+              onClick={() => handleOptionClick("newsletters")}
+              active={selectedOption === "newsletters"}
+            >
+              <DashboardBtn>newsletters</DashboardBtn>
+            </DashboardList>
+            <DashboardList
+              onClick={() => handleOptionClick("shipping")}
+              active={selectedOption === "shipping"}
+            >
+              <DashboardBtn>shipping</DashboardBtn>
+            </DashboardList>
+          </DashboardListContainer>
+          <LogoutBtn scrolled={scroll}>
+            <h4>Logout</h4>
+            <LogoutSharpIcon
+              sx={{ fontSize: "25px" }}
+              onClick={() => handleLogout(navigate("/"))}
+            />
+          </LogoutBtn>
+        </DashboardNavigation>
+        {selectedOption === "clientOrders" && <AdminOrders />}
+        {selectedOption === "manageProducts" && <ProductSearch />}
+        {selectedOption === "newsletters" && <AdminNewsletters />}
+        {selectedOption === "shipping" && <AdminShipping />}
+      </DashboardContainer>
+    </div>
   );
 };
 
@@ -108,7 +79,7 @@ const DashboardContainer = styled.div`
 
 const DashboardNavigation = styled.nav`
   width: 206px;
-  height: 100%;
+  height: 500px;
   margin-top: 50px;
   @media (max-width: 1088px) {
     margin-top: 69px;
@@ -118,8 +89,8 @@ const DashboardNavigation = styled.nav`
 const DashboardListContainer = styled.ul`
   display: flex;
   flex-direction: column;
-  height: 55%;
-  gap: 1rem;
+  height: 72%;
+  gap: 2rem;
   padding: 20px 4px;
   box-shadow: rgba(0, 0, 0, 0.65) -3px 0px 9px;
   border-top-left-radius: 10px;
@@ -207,7 +178,7 @@ const LogoutBtn = styled.button`
   position: fixed;
   margin-right: 10px;
   top: ${(props) => (props.scrolled === "scrolled" ? "16px" : "28px")};
-  right: 14%;
+  right: 4%;
   transition: top
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
     ease-in-out;
@@ -215,4 +186,12 @@ const LogoutBtn = styled.button`
   @media (max-width: 950px) {
     right: 0;
   }
+`;
+
+const BouncyLoader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 230px;
 `;

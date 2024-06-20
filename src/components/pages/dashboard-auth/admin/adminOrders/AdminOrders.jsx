@@ -18,32 +18,45 @@ import TopicOutlinedIcon from "@mui/icons-material/TopicOutlined";
 import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import { bouncy } from "ldrs";
+bouncy.register();
 
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
+  const [openProducts, setOpenProducts] = useState(false);
+  const [clientProducts, setClientProducts] = useState(null);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [clientDetails, setClientDetails] = useState(null);
   const [myOrders, setMyOrders] = useState([]);
+  const [orderLoading, setOrderLoading] = useState(true);
 
   useEffect(() => {
-    const ordersCollection = collection(db, "orders");
-
-    getDocs(ordersCollection)
-      .then((res) => {
-        const newArray = res.docs.map((order) => ({
-          ...order.data(),
-          id: order.id,
+    const fetchOrders = async () => {
+      try {
+        const ordersCollection = collection(db, "orders");
+        const querySnapshot = await getDocs(ordersCollection);
+        const newArray = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
         }));
         setMyOrders(newArray);
-      })
-      .catch((error) => console.log(error));
+        setTimeout(() => {
+          setOrderLoading(false); // Set loading to false once data is fetched
+        }, 1200);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setTimeout(() => {
+          setOrderLoading(false); // Set loading to false once data is fetched
+        }, 1200);
+      }
+    };
+    fetchOrders();
   }, []);
 
   const formatDate = (seconds) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(seconds * 1000).toLocaleDateString("en-US", options);
   };
-
-  const [openProducts, setOpenProducts] = useState(false);
-  const [clientProducts, setClientProducts] = useState(null);
 
   const handleOpenProducts = (orderId) => {
     const selectedOrder = myOrders.find((order) => order.id === orderId);
@@ -52,9 +65,6 @@ export const AdminOrders = () => {
       setOpenProducts(true);
     }
   };
-
-  const [openDetails, setOpenDetails] = useState(false);
-  const [clientDetails, setClientDetails] = useState(null);
 
   const handleOpenDetails = (orderId) => {
     const selectedOrder = myOrders.find((order) => order.id === orderId);
@@ -68,6 +78,14 @@ export const AdminOrders = () => {
     setOpenProducts(false);
     setOpenDetails(false);
   };
+
+  if (orderLoading) {
+    return (
+      <BouncyLoader>
+        <l-bouncy size="45" speed="1.25" color="black"></l-bouncy>
+      </BouncyLoader>
+    );
+  }
 
   return (
     <>
@@ -124,7 +142,11 @@ export const AdminOrders = () => {
                             : "7px!important",
                       }}
                     >
-                      {order?.buyer?.name}{" "}
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <span>{order?.buyer?.name}</span>
+                        <span>{order?.buyer?.lastName}</span>
+                      </div>
+
                       <span
                         style={{
                           width: "35%",
@@ -172,6 +194,15 @@ export const AdminOrders = () => {
     </>
   );
 };
+
+const BouncyLoader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 200px;
+`;
+
 const OrdersWrapper = styled.div`
   margin: 50px 10px;
   overflow-x: auto;
@@ -203,8 +234,8 @@ const TableOrderContainer = styled(TableContainer)`
   color: rgba(0, 0, 0, 0.87);
   width: 100%;
   overflow-x: auto;
-  box-shadow: none!important;
-  border-radius: none!important;
+  box-shadow: none !important;
+  border-radius: none !important;
 `;
 const TableCellTitle = styled(TableCell)`
   padding: 16px 8px !important;
