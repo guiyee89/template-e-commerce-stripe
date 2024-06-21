@@ -20,7 +20,6 @@ import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import "ldrs/helix";
 
-
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const [openProducts, setOpenProducts] = useState(false);
@@ -42,12 +41,12 @@ export const AdminOrders = () => {
         setMyOrders(newArray);
         setTimeout(() => {
           setOrderLoading(false); // Set loading to false once data is fetched
-        }, 1200);
+        }, 700);
       } catch (error) {
         console.error("Error fetching orders:", error);
         setTimeout(() => {
           setOrderLoading(false); // Set loading to false once data is fetched
-        }, 1200);
+        }, 700);
       }
     };
     fetchOrders();
@@ -92,8 +91,8 @@ export const AdminOrders = () => {
       <OrdersWrapper>
         <TableOrderContainer component={Paper}>
           <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
+            <TableHead sx={{ backgroundColor: "#bac7e194" }}>
+              <TableRow sx={{ textTransform: "uppercase", fontSize: ".9rem" }}>
                 <TableCellTitle sx={{ width: "160px" }}>
                   Order ID
                 </TableCellTitle>
@@ -197,18 +196,17 @@ export const AdminOrders = () => {
 
 const BouncyLoader = styled.div`
   width: 100%;
+  grid-column: 2/6;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 175px;
-  padding-bottom: 250px;
 `;
 
-
 const OrdersWrapper = styled.div`
+  grid-column: 2/7;
   margin: 50px 10px;
   overflow-x: auto;
-  width: 85%;
+  width: 100%;
   height: 100%;
   box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
   border-top-right-radius: 10px;

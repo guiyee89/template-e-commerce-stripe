@@ -30,7 +30,7 @@ export const AdminShipping = () => {
         setShippingData(shipping);
         setTimeout(() => {
           setShippingLoading(false);
-        }, 1200);
+        }, 800);
       } catch (error) {
         console.log(error);
       }
@@ -98,7 +98,7 @@ export const AdminShipping = () => {
   }
 
   return (
-    <FormWrapper>
+    <ShippingFormWrapper>
       <Form onSubmit={handleSubmit}>
         {shippingCost.map((shipping) => (
           <ShippingContainer key={shipping.id}>
@@ -165,7 +165,7 @@ export const AdminShipping = () => {
           Confirm Changes
         </SubmitBtn>
       </Form>
-    </FormWrapper>
+    </ShippingFormWrapper>
   );
 };
 const BouncyLoader = styled.div`
@@ -173,13 +173,13 @@ const BouncyLoader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 175px;
-  padding-bottom: 250px;
+  grid-column: 2/6;
 `;
 
-const FormWrapper = styled.div`
-  width: 80%;
+const ShippingFormWrapper = styled.div`
+  width: 100%;
   margin: 50px 10px;
+  grid-column: 2/7;
 `;
 
 const Form = styled.form`

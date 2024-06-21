@@ -32,6 +32,7 @@ export const ProductsForm = ({
   const [isQueueProcessing, setIsQueueProcessing] = useState(false); // Use a queue to handle concurrency of handleImage
   const [imageQueue, setImageQueue] = useState([]); // State for manage images loading order
   const [categoryValue, setCategoryValue] = useState("");
+  const [sizeValue, setSizeValue] = useState("");
 
   //Loader after image upload success
   const [isLoadingImage, setIsLoadingImage] = useState({
@@ -85,14 +86,23 @@ export const ProductsForm = ({
   useEffect(() => {
     if (selectedItem) {
       setExistingImages(selectedItem.img);
+      setCategoryValue(selectedItem.category || "");
+      setSizeValue(selectedItem.size || "");
     }
   }, [selectedItem]);
 
   ///////*****         HANDLE CHANGE        ******///////
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "category") {
+      setCategoryValue(value);
+    }
+    if (name === "size") {
+      setSizeValue(value);
+    }
+
     if (selectedItem) {
-      // Check if the input is a number and set the size accordingly
       setSelectedItem((prevSelectedItem) => ({
         ...prevSelectedItem,
         [name]: isNaN(value) ? value : parseInt(value, 10),
@@ -103,7 +113,6 @@ export const ProductsForm = ({
         [name]: isNaN(value) ? value : parseInt(value, 10),
       }));
     }
-    setCategoryValue(value);
   };
 
   /////*****         HANDLE IMAGE INPUTS        ******///////
@@ -422,211 +431,200 @@ export const ProductsForm = ({
           <Form onSubmit={handleSubmit}>
             <InfoImageContainer>
               <ProductInfo>
-                <Div>
-                  <Input
-                    label="ID del Producto"
-                    variant="outlined"
-                    name="productId"
-                    defaultValue={selectedItem?.productId}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.productId}
-                    // error={errors.productId ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Nombre del producto"
-                    variant="outlined"
-                    name="title"
-                    defaultValue={selectedItem?.title}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.title}
-                    // error={errors.title ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Subtitulo del producto"
-                    variant="outlined"
-                    name="subtitle"
-                    defaultValue={selectedItem?.subtitle}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.subtitle}
-                    // error={errors.subtitle ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Precio"
-                    variant="outlined"
-                    name="unit_price"
-                    defaultValue={selectedItem?.unit_price}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.unit_price}
-                    // error={errors.unit_price ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Descuento en %"
-                    variant="outlined"
-                    name="discount"
-                    defaultValue={selectedItem?.discount}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.discount}
-                    // error={errors.discount ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <Input
-                    label="Stock"
-                    variant="outlined"
-                    name="stock"
-                    defaultValue={selectedItem?.stock}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.stock}
-                    // error={errors.stock ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
-                <Div>
-                  <FormControl>
-                    <InputLabel
-                      sx={{ fontSize: "14px", lineHeight: ".8" }}
-                      id="demo-simple-select-label"
-                    >
-                      Product Category
-                    </InputLabel>
-                    <InputSelect
-                      label="Product Category"
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    width: "100%",
+                  }}
+                >
+                  <Div>
+                    <Input
+                      label="ID del Producto"
                       variant="outlined"
-                      name="category"
-                      defaultValue={selectedItem ? selectedItem.category : ""}
+                      name="productId"
+                      defaultValue={selectedItem?.productId}
                       onChange={handleChange}
                       size="small"
-                      //helperText={errors.category}
-                      //error={errors.category ? true : false}
+                      // helperText={errors.productId}
+                      // error={errors.productId ? true : false}
                       sx={{ marginBottom: "18px" }}
-                    >
-                      <MenuItem value={"bags"}>Bags</MenuItem>
-                      <MenuItem value={"hoodies"}>Hoodies</MenuItem>
-                      <MenuItem value={"pants"}>Pants</MenuItem>
-                      <MenuItem value={"shoes"}>Shoes</MenuItem>
-                      <MenuItem value={"shirts"}>Shirts</MenuItem>
-                    </InputSelect>
-                  </FormControl>
-                </Div>
-                <Div>
-                  <FormControl>
-                    <InputLabel
-                      sx={{ fontSize: "14px", lineHeight: ".8" }}
-                      id="demo-simple-select-label"
-                    >
-                      Size
-                    </InputLabel>
-                    <InputSelect
-                      label="Size"
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                  <Div>
+                    <Input
+                      label="Nombre del producto"
                       variant="outlined"
-                      name="size"
-                      defaultValue={selectedItem ? selectedItem.size : ""}
+                      name="title"
+                      defaultValue={selectedItem?.title}
                       onChange={handleChange}
                       size="small"
-                      //helperText={errors.category}
-                      //error={errors.category ? true : false}
+                      // helperText={errors.title}
+                      // error={errors.title ? true : false}
                       sx={{ marginBottom: "18px" }}
-                    >
-                      {categoryValue === "shoes" || categoryValue === "bags"
-                        ? [
-                            <MenuItem key={39} value={39}>
-                              39
-                            </MenuItem>,
-                            <MenuItem key={40} value={40}>
-                              40
-                            </MenuItem>,
-                            <MenuItem key={41} value={41}>
-                              41
-                            </MenuItem>,
-                            <MenuItem key={42} value={42}>
-                              42
-                            </MenuItem>,
-                            <MenuItem key={43} value={43}>
-                              43
-                            </MenuItem>,
-                            <MenuItem key={44} value={44}>
-                              44
-                            </MenuItem>,
-                            <MenuItem key={45} value={45}>
-                              45
-                            </MenuItem>,
-                          ]
-                        : [
-                            <MenuItem key={"xs"} value={"xs"}>
-                              X Small
-                            </MenuItem>,
-                            <MenuItem key={"s"} value={"s"}>
-                              Small
-                            </MenuItem>,
-                            <MenuItem key={"m"} value={"m"}>
-                              Medium
-                            </MenuItem>,
-                            <MenuItem key={"l"} value={"l"}>
-                              Large
-                            </MenuItem>,
-                            <MenuItem key={"xl"} value={"xl"}>
-                              X Large
-                            </MenuItem>,
-                            <MenuItem key={"xxl"} value={"xxl"}>
-                              XX Large
-                            </MenuItem>,
-                          ]}
-                    </InputSelect>
-                  </FormControl>
-                </Div>
-                <Div>
-                  <Input
-                    label="Color"
-                    variant="outlined"
-                    name="color"
-                    defaultValue={selectedItem?.color}
-                    onChange={handleChange}
-                    size="small"
-                    // helperText={errors.stock}
-                    // error={errors.stock ? true : false}
-                    sx={{ marginBottom: "18px" }}
-                    InputLabelProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                  />
-                </Div>
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                  <Div>
+                    <Input
+                      label="Subtitulo del producto"
+                      variant="outlined"
+                      name="subtitle"
+                      defaultValue={selectedItem?.subtitle}
+                      onChange={handleChange}
+                      size="small"
+                      // helperText={errors.subtitle}
+                      // error={errors.subtitle ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    width: "100%",
+                  }}
+                >
+                  <Div>
+                    <Input
+                      label="Precio"
+                      variant="outlined"
+                      name="unit_price"
+                      defaultValue={selectedItem?.unit_price}
+                      onChange={handleChange}
+                      size="small"
+                      // helperText={errors.unit_price}
+                      // error={errors.unit_price ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                  <Div>
+                    <Input
+                      label="Descuento en %"
+                      variant="outlined"
+                      name="discount"
+                      defaultValue={selectedItem?.discount}
+                      onChange={handleChange}
+                      size="small"
+                      // helperText={errors.discount}
+                      // error={errors.discount ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                  <Div>
+                    <Input
+                      label="Stock"
+                      variant="outlined"
+                      name="stock"
+                      defaultValue={selectedItem?.stock}
+                      onChange={handleChange}
+                      size="small"
+                      // helperText={errors.stock}
+                      // error={errors.stock ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    width: "100%",
+                  }}
+                >
+                  <Div style={{ width: "223px" }}>
+                    <FormControl>
+                      <InputLabel
+                        sx={{ fontSize: "14px", lineHeight: ".8" }}
+                        id="demo-simple-select-label"
+                      >
+                        Product Category
+                      </InputLabel>
+                      <InputSelect
+                        label="Product Category"
+                        variant="outlined"
+                        name="category"
+                        defaultValue={selectedItem ? selectedItem.category : ""}
+                        onChange={handleChange}
+                        size="small"
+                        //helperText={errors.category}
+                        //error={errors.category ? true : false}
+                        sx={{ marginBottom: "18px" }}
+                      >
+                        <MenuItem value={"bags"}>Bags</MenuItem>
+                        <MenuItem value={"hoodies"}>Hoodies</MenuItem>
+                        <MenuItem value={"pants"}>Pants</MenuItem>
+                        <MenuItem value={"shoes"}>Shoes</MenuItem>
+                        <MenuItem value={"shirts"}>Shirts</MenuItem>
+                      </InputSelect>
+                    </FormControl>
+                  </Div>
+                  <Div style={{ width: "223px" }}>
+                    <FormControl>
+                      <InputLabel
+                        sx={{ fontSize: "14px", lineHeight: ".8" }}
+                        id="size-label"
+                      >
+                        Size
+                      </InputLabel>
+                      <InputSelect
+                        labelId="size-label"
+                        id="size"
+                        name="size"
+                        value={sizeValue}
+                        onChange={handleChange}
+                        size="small"
+                        sx={{ marginBottom: "18px" }}
+                      >
+                        {categoryValue === "shoes" || categoryValue === "bags"
+                          ? [39, 40, 41, 42, 43, 44, 45].map((size) => (
+                              <MenuItem key={size} value={size}>
+                                {size}
+                              </MenuItem>
+                            ))
+                          : ["xs", "s", "m", "l", "xl", "xxl"].map((size) => (
+                              <MenuItem key={size} value={size}>
+                                {size.toUpperCase()}
+                              </MenuItem>
+                            ))}
+                      </InputSelect>
+                    </FormControl>
+                  </Div>
+                  <Div style={{ width: "223px" }}>
+                    <Input
+                      label="Color"
+                      variant="outlined"
+                      name="color"
+                      defaultValue={selectedItem?.color}
+                      onChange={handleChange}
+                      size="small"
+                      // helperText={errors.stock}
+                      // error={errors.stock ? true : false}
+                      sx={{ marginBottom: "18px" }}
+                      InputLabelProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                    />
+                  </Div>
+                </div>
                 <Div>
                   <Input
                     label="Descripción del Producto"
@@ -941,7 +939,7 @@ export const ProductsForm = ({
 
 const FormWrapper = styled.div`
   width: 100%;
-  max-height: 600px;
+  height: 100%;
   overflow-y: auto;
   padding: 20px 12px;
 `;
@@ -983,6 +981,10 @@ const SuccessMessage = styled.p`
 `;
 const ProductInfo = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 40px 20px 20px;
 `;
 const InfoImageContainer = styled.div`
   display: flex;
