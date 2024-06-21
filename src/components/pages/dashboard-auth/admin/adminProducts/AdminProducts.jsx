@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { db } from "../../../../../firebaseConfig";
 import { ProductList } from "./productList/ProductList";
 import "ldrs/helix";
-// import { DeleteImages } from "./productList/deleteImages/DeleteImages";
+import { DeleteImages } from "./productList/deleteImages/DeleteImages";
 
 
 export const AdminProducts = () => {
@@ -37,7 +37,7 @@ export const AdminProducts = () => {
       fetchItemsByProductId(1);
       setTimeout(() => {
         setProductLoading(false);
-      }, 1200);
+      }, 700);
     } else {
       fetchItemsByProductId(searchProduct);
     }
@@ -62,9 +62,10 @@ export const AdminProducts = () => {
           display: "flex",
           flexDirection: "column",
           position: "relative",
+          gridColumn:"2/7"
         }}
       >
-        {/* <DeleteImages /> */}
+         <DeleteImages /> 
         <ProductList
           products={products}
           setIsChanged={handleIsChanged}
@@ -80,9 +81,8 @@ export const AdminProducts = () => {
 
 const BouncyLoader = styled.div`
   width: 100%;
+  grid-column: 2/6;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 175px;
-  padding-bottom: 250px;
 `;

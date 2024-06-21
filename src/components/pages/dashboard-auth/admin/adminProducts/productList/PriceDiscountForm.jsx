@@ -96,7 +96,6 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
         <FormWrapper>
           <Form onSubmit={handleSubmit} windowWidth={windowWidth}>
             <div>
-              {/* <h2 style={{ fontSize: ".9rem", textAlign: "center" }}>Precio</h2> */}
               <Input
                 label="Precio"
                 variant="outlined"
@@ -112,9 +111,6 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
               />
             </div>
             <div>
-              {/* <h2 style={{ fontSize: ".9rem", textAlign: "center" }}>
-                Descuento en %
-              </h2> */}
               <Input
                 label=/* {getDiscount ? "" : "Ejemplo: 10%"} */ "Descuento en %"
                 variant="outlined"
@@ -147,11 +143,12 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
 };
 const FormWrapper = styled.div`
   width: 100%;
-  max-height: 600px;
   overflow-y: auto;
   padding: 20px 6px;
   margin-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.65) 0px 3px 5px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px -1px 4px;
 `;
 const Form = styled.form`
   display: flex;
