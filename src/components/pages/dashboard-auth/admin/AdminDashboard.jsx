@@ -20,7 +20,7 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div style={{ width: "80%" }}>
+    <div style={{ width: "100%" }}>
       <DashboardContainer>
         <DashboardNavigation>
           <DashboardListContainer>
@@ -28,25 +28,33 @@ export const AdminDashboard = () => {
               onClick={() => handleOptionClick("clientOrders")}
               active={selectedOption === "clientOrders"}
             >
-              <DashboardBtn>client orders</DashboardBtn>
+              <DashboardBtn>
+                <SpanBtn>client orders</SpanBtn>
+              </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("manageProducts")}
               active={selectedOption === "manageProducts"}
             >
-              <DashboardBtn>manage products</DashboardBtn>
+              <DashboardBtn>
+                <SpanBtn>manage products</SpanBtn>
+              </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("newsletters")}
               active={selectedOption === "newsletters"}
             >
-              <DashboardBtn>newsletters</DashboardBtn>
+              <DashboardBtn>
+                <SpanBtn>newsletters</SpanBtn>
+              </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("shipping")}
               active={selectedOption === "shipping"}
             >
-              <DashboardBtn>shipping</DashboardBtn>
+              <DashboardBtn>
+                <SpanBtn>shipping</SpanBtn>
+              </DashboardBtn>
             </DashboardList>
           </DashboardListContainer>
           <LogoutBtn scrolled={scroll}>
@@ -70,15 +78,20 @@ const DashboardContainer = styled.div`
   width: 100%;
   max-width: 1110px;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   justify-content: center;
   margin: 90px auto;
 `;
 
 const DashboardNavigation = styled.nav`
   width: 206px;
-  height: 750px;
+  height: 565px;
   margin-top: 50px;
+  box-shadow: rgba(0, 0, 0, 0.65) -3px 0px 9px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgb(186 199 225 / 40%);
   @media (max-width: 1088px) {
     margin-top: 69px;
   }
@@ -87,19 +100,35 @@ const DashboardNavigation = styled.nav`
 const DashboardListContainer = styled.ul`
   display: flex;
   flex-direction: column;
-  height: 72%;
-  gap: 2rem;
-  padding: 20px 4px;
-  box-shadow: rgba(0, 0, 0, 0.65) -3px 0px 9px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  height: 97%;
+  width: 94%;
+  gap: 1rem;
+  padding-top: 32px;
+  margin: 7px auto 0px 13px;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  background-color: rgb(245, 245, 245);
+  box-shadow: rgba(0, 0, 0, 0.45) -1px 0px 4px;
+  align-items: flex-start;
+`;
+const SpanBtn = styled.span`
+  position: relative;
+  display: inline-block;
 `;
 
 const DashboardList = styled.li`
   height: 50px;
-  width: 200px;
+  width: 87%;
   text-align: center;
   display: flex;
+  margin: 0 auto;
+  -webkit-box-align: center;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -107,7 +136,7 @@ const DashboardList = styled.li`
   background-repeat: no-repeat;
   background-size: 0% 100%;
   background-position: left bottom;
-  transition: background-size 0.1s ease-in-out, font-size 0.1s ease-in-out,
+  transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
     color 0.2s ease-in-out;
 
   ${({ active }) =>
@@ -116,18 +145,6 @@ const DashboardList = styled.li`
       color: #545f93;
       background-size: 100% 100%;
       border-radius: 6px;
-      /* &::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 5.2px;
-        width: 95.3%;
-        height: 1.1px;
-        background-color: black;
-        transform: scaleX(1);
-        transform-origin: left center;
-        transition: transform 0.21s ease-in-out;
-      } */
     `}
   &:hover {
     color: rgb(87, 98, 158);
@@ -136,18 +153,7 @@ const DashboardList = styled.li`
   }
   &:active {
     color: #b5b1dd;
-    transition: background-color 0.05s ease-in-out;
-    /* &::after {
-      content: "";
-      position: absolute;
-      bottom: -2px;
-      width: 98%;
-      height: 1.1px;
-      background-color: black;
-      transform: scaleX(1);
-      transform-origin: left center;
-      transition: transform 0.21s ease-in-out 0s;
-    } */
+    transition: background-color 0.1s ease-in-out;
   }
 `;
 
@@ -184,12 +190,4 @@ const LogoutBtn = styled.button`
   @media (max-width: 950px) {
     right: 0;
   }
-`;
-
-const BouncyLoader = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 230px;
 `;

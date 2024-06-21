@@ -12,4 +12,5 @@ export const AdminNewsletters = () => {
 const NewslettersWrapper = styled.div`
   width: 100%;
   margin: 50px 0;
+  grid-column: 2/7;
 `;
