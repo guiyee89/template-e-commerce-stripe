@@ -129,8 +129,10 @@ export const ItemImageDesktop = ({
 
 const Wrapper = styled.div`
   display: flex;
-  width: 85%;
-  height: 100%;
+  /* width: 85%;
+  height: 100%; */
+   width: 70%;
+  height: 100%; 
   margin-left: -35px;
   margin-right: 20px;
 `;

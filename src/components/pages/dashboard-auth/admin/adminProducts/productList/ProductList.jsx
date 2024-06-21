@@ -178,7 +178,7 @@ export const ProductList = ({
                       height: "20px",
                       display: "flex",
                       justifyContent: "center",
-                      alignItems:"center"
+                      alignItems: "center",
                     }}
                   >
                     <Ring size={15} lineWeight={4} speed={1} color="white" />
@@ -219,15 +219,18 @@ export const ProductList = ({
               </DiscountFormContainer>
               <TableContainer
                 sx={{
-                  boxShadow: "rgba(0, 0, 0, 0.65) 0px 2px 6px",
-                  padding: "24px",
+                  boxShadow: "rgba(0, 0, 0, 0.45) 0px 0px 3px;",
+                  padding: "12px 10px",
                 }}
               >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead
-                    sx={{ position: "sticky", top: "0", zIndex: "100" }}
+                    sx={{
+                      backgroundColor: "#bac7e194",
+                      fontWeight: "bold",
+                    }}
                   >
-                    <TableRow sx={{ position: "sticky", top: "0" }}>
+                    <TableRow>
                       <TableCell align="center">ID</TableCell>
                       <TableCell align="center">Imagen</TableCell>
                       <TableCell align="center">Titulo</TableCell>
@@ -237,9 +240,7 @@ export const ProductList = ({
                       <TableCell align="center">Size</TableCell>
                       <TableCell align="center">Color</TableCell>
                       <TableCell align="center">Categoria</TableCell>
-                      <TableCell align="center">
-                        Editar / Copiar / Borrar
-                      </TableCell>
+                      <TableCell align="center">Actions</TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -380,7 +381,10 @@ export const ProductList = ({
 
 const ProductListWrapper = styled.div`
   width: 100%;
-  margin: 32px 0 100px 0;
+  margin: 50px 0px 100px 8px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
   @media (max-width: 950px) {
     width: 100%;
   }
@@ -404,7 +408,7 @@ const TextFieldInput = styled(TextField)`
 const AddButton = styled(Button)``;
 
 const ProductListContainer = styled.div`
-  margin: 30px 0 0 24px;
+  margin: 30px 16px 12px 16px;
 `;
 const ImgCell = styled(TableCell)`
   width: 9%;
@@ -443,7 +447,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "100%",
+  width: "90%",
+  height:"90%",
   bgcolor: "background.paper",
   border: "none!importat",
   boxShadow: 24,
