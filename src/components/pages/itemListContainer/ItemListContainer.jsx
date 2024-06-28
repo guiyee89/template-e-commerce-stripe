@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ItemList } from "./ItemList";
 import { db } from "../../../firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components/macro";
@@ -38,6 +38,7 @@ export const ItemListContainer = () => {
     pageLoading,
     setPageLoading,
   } = useContext(GlobalToolsContext);
+  
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
@@ -50,36 +51,38 @@ export const ItemListContainer = () => {
       setProgress(8);
       try {
         const itemsCollection = collection(db, "products");
-        let filterCollection = itemsCollection;
-
-        if (categoryName) {
-          filterCollection = query(
-            itemsCollection,
-            where("category", "==", categoryName)
-          );
-        }
-
-        const res = await getDocs(filterCollection);
+        const res = await getDocs(itemsCollection);
         const products = res.docs.map((productDoc) => ({
           ...productDoc.data(),
           id: productDoc.id,
         }));
         console.log("Fetching data...");
-        // Remove duplicates based on productId and color
+
+        // Filter and sort products
+        let filteredProducts = products;
+
+        if (categoryName) {
+          filteredProducts = filteredProducts.filter(
+            (product) => product.category === categoryName
+          );
+        }
+
         const uniqueProducts = [];
-        const seen = new Set();
-        products.forEach((product) => {
-          const key = `${product.productId}-${product.color}`;
-          if (!seen.has(key) && product.stock > 0) {
-            uniqueProducts.push(product);
-            seen.add(key);
+        const uniqueProductsMap = new Map();
+
+        filteredProducts.forEach((product) => {
+          const keys = `${product.productId}-${product.color}`;
+          if (!uniqueProductsMap.has(keys) || new Date(uniqueProductsMap.get(keys).createdAt) > new Date(product.createdAt))
+          {
+            uniqueProductsMap.set(keys, product);
           }
         });
 
+        uniqueProducts.push(...Array.from(uniqueProductsMap.values()));
+
         setItems(uniqueProducts);
         setAllItems(products);
-        console.log(uniqueProducts);
-        console.log(products);
+
         setTimeout(() => {
           setPageLoading(false);
           setProgressComplete(true);
@@ -96,62 +99,6 @@ export const ItemListContainer = () => {
       clearTimeout(timer); // Clear the timeout if the component unmounts
     };
   }, [categoryName]);
-
-  // useEffect(() => {
-  //   setPageLoading(true);
-  //   const delay = 650;
-  //   console.log("mounting ItemListContainer");
-  //   const fetchData = async () => {
-  //     setVisible(true);
-  //     setProgress(8);
-  //     try {
-  //       const itemsCollection = collection(db, "products");
-  //       let filterCollection = itemsCollection;
-
-  //       if (categoryName) {
-  //         filterCollection = query(
-  //           itemsCollection,
-  //           where("category", "==", categoryName)
-  //         );
-  //       }
-
-  //       const res = await getDocs(filterCollection);
-  //       const products = res.docs.map((productDoc) => ({
-  //         ...productDoc.data(),
-  //         id: productDoc.id,
-  //       }));
-  //       console.log("Fetching data...");
-  //       // Remove duplicates based on productId and color
-  //       const uniqueProducts = [];
-  //       const seen = new Set();
-  //       products.forEach((product) => {
-  //         const key = `${product.productId}-${product.color}`;
-  //         if (!seen.has(key)) {
-  //           uniqueProducts.push(product);
-  //           seen.add(key);
-  //         }
-  //       });
-
-  //       setItems(uniqueProducts);
-  //       setAllItems(products);
-  //       console.log(uniqueProducts);
-  //       console.log(products);
-  //       setTimeout(() => {
-  //         setPageLoading(false);
-  //         setProgressComplete(true);
-  //         if (progressComplete === true) {
-  //           setProgress(100);
-  //         }
-  //       }, 250);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   const timer = setTimeout(fetchData, delay);
-  //   return () => {
-  //     clearTimeout(timer); // Clear the timeout if the component unmounts
-  //   };
-  // }, [categoryName]);
 
   const [detailsFilters, setDetailsFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);

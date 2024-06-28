@@ -328,7 +328,7 @@ const InfoWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: 1px 0px 13px 33px;
-  background-color: rgb(239 237 237);
+  /* background-color: rgb(239 237 237); */
   @media (max-width: 600px) {
     padding: 0px 0px 0px 18px;
   }
@@ -342,7 +342,7 @@ const ItemWrapper = styled(Link)`
   min-width: ${(props) => props.imgskeleton && "100%"};
   max-width: 430px;
   height: 100%;
-  background-color: rgb(239, 237, 237);
+  /* background-color: rgb(239, 237, 237); */
   &:hover {
     ${ItemImg} {
       transform: scale(1.11);
