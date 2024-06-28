@@ -97,7 +97,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
           <Form onSubmit={handleSubmit} windowWidth={windowWidth}>
             <div>
               <Input
-                label="Precio"
+                label="Price"
                 variant="outlined"
                 name="unit_price"
                 value={getPrice || ""}
@@ -112,7 +112,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
             </div>
             <div>
               <Input
-                label=/* {getDiscount ? "" : "Ejemplo: 10%"} */ "Descuento en %"
+                label="Discount ( % )"
                 variant="outlined"
                 name="discount"
                 value={getDiscount || ""}
@@ -133,7 +133,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
                 backgroundColor: "#1e4a75",
               }}
             >
-              Confirmar
+              Confirm
             </SubmitBtn>
           </Form>
         </FormWrapper>

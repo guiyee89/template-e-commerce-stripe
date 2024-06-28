@@ -85,29 +85,16 @@ export const ProductList = ({
   const copyProduct = async (id) => {
     const itemsCollection = collection(db, "products");
     const selectedProduct = products.find((product) => product.id === id);
-
-    //Create date to mantain order of new items (createdAt field)
-    let originalCreatedAt = new Date();
-    if (selectedProduct.createdAt) {
-      const parsedDate = new Date(selectedProduct.createdAt);
-      if (!isNaN(parsedDate)) {
-        originalCreatedAt = parsedDate;
-      }
-    }
     const copyItem = {
       ...selectedProduct,
-      createdAt: new Date(originalCreatedAt.getTime() + 1).toISOString(), // Slight delay to ensure it appears last
+      createdAt: new Date().toISOString(), // Set createdAt to current date and time
     };
-
     // Remove the 'id' field to let Firebase generate a new ID
     delete copyItem.id;
-
     const docRef = await addDoc(itemsCollection, copyItem);
-
     const newId = docRef.id;
 
     setIsChanged();
-
     // Add the newly copied item ID to the list
     setNewlyCopiedIds([...newlyCopiedIds, newId]);
 
@@ -132,6 +119,10 @@ export const ProductList = ({
       setSearchLoading(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
   return (
     <>
@@ -188,12 +179,12 @@ export const ProductList = ({
                 )}
               </Button>
             </div>
-            <div style={{ marginLeft: "7px" }}>
+            <div style={{ margin: "1px 0 0 7px" }}>
               <AddButton
                 variant="contained"
                 sx={{
                   marginTop: "17px",
-                  fontSize: "0.7rem",
+                  fontSize: "0.67rem",
                   backgroundColor: "black",
                   "&:hover": {
                     backgroundColor: "#4b4d4e",
@@ -201,7 +192,24 @@ export const ProductList = ({
                 }}
                 onClick={() => handleOpen(null)}
               >
-                Nuevo Producto
+                <p
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    lineHeight: "1.05",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "1.2rem",
+                      fontWeight: "bold",
+                      paddingRight: "0.5rem",
+                    }}
+                  >
+                    +
+                  </span>
+                  add product
+                </p>
               </AddButton>
             </div>
           </ProductsButtonsContainer>
@@ -275,7 +283,7 @@ export const ProductList = ({
                           >
                             <Img src={product.img[0]} />
                           </ImgCell>
-                          <TableCell align="center" component="th" scope="row">
+                          <TableCell align="center" component="th" scope="row" sx={{textTransform:"capitalize"}}>
                             {product.title}
                           </TableCell>
                           <TableCell align="center" component="th" scope="row">
@@ -312,9 +320,26 @@ export const ProductList = ({
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ textTransform: "capitalize" }}
+                            sx={{
+                              textTransform: "capitalize",
+                              whiteSpace: "normal",
+                              lineHeight: "1.2",
+                              padding: "0",
+                              minWidth: "100px",                 
+                            }}
                           >
-                            {product.color}
+                            {product.color.map((color, index) => (
+                              <span
+                                key={color}
+                                style={{
+                                  fontSize:index === 0 ? ".85rem" : ".65rem",
+                                  fontWeight: index === 0 ? "600" : "normal", 
+                                }}
+                              >
+                                {index > 0 && <br />}
+                                {color}
+                              </span>
+                            ))}
                           </TableCell>
                           <TableCell
                             align="center"
@@ -381,6 +406,7 @@ export const ProductList = ({
 
 const ProductListWrapper = styled.div`
   width: 100%;
+  min-height: 565px;
   margin: 50px 0px 100px 8px;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
@@ -394,9 +420,9 @@ const ProductsButtonsContainer = styled.div`
   flex-wrap: wrap;
   gap: ${(props) => (props.windowWidth < 600 ? "1rem" : "1rem")};
   justify-content: ${(props) =>
-    props.windowWidth < 750 ? "space-between" : "flex-start"};
+    props.windowWidth < 750 ? "space-between" : "space-around"};
   margin: ${(props) =>
-    props.windowWidth < 750 ? "0 16px 0 0" : "8px 0 0 32px"};
+    props.windowWidth < 750 ? "0 16px 0 0" : "8px 0px 0px 7px;"};
 `;
 
 const TextFieldInput = styled(TextField)`
@@ -420,9 +446,9 @@ const Img = styled.img`
 `;
 // Add CSS for the highlighted effect
 const highlightAnimation = keyframes`
-  0% { background-color: #d9fafd; }
-  50% { background-color: #e6fbfd;; }
-  100% { background-color: #d9fafd; }
+  0% { background-color: #c6f3f7; }
+  50% { background-color: #c6f3f7; }
+  100% { background-color: #c6f3f7; }
 `;
 
 const AnimatedTableRow = styled(TableRow)`
@@ -447,8 +473,9 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "90%",
-  height:"90%",
+  width: "82%",
+  height: "90%",
+  borderRadius: "12px",
   bgcolor: "background.paper",
   border: "none!importat",
   boxShadow: 24,

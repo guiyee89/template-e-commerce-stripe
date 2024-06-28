@@ -141,9 +141,9 @@ export const AdminOrders = () => {
                             : "7px!important",
                       }}
                     >
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span>{order?.buyer?.name}</span>
-                        <span>{order?.buyer?.lastName}</span>
+                      <div style={{ display: "flex", flexDirection: "column", textTransform:"lowercase" }}>
+                        <span >{order?.buyer?.name}</span>
+                        <span >{order?.buyer?.lastName}</span>
                       </div>
 
                       <span

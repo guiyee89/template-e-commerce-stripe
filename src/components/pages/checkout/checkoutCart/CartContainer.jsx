@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { CartContext } from "../../../context/CartContext";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
@@ -104,15 +104,22 @@ export const CartContainer = ({
                       <ItemData
                         style={{
                           fontSize: "clamp(0.7rem, 0.35vw + 0.5rem, 0.88rem)",
-                          fontWeight: "500",
+                          fontWeight: "600",
                         }}
                       >
                         {item.title}
                       </ItemData>
                       <ItemData>
                         <ItemSizeColor>
-                          <SpanColor>{item.color}</SpanColor>/
-                          <SpanSize>{item.size}</SpanSize>
+                          <Color>
+                            {item.color.map((color, index) => (
+                              <SpanColor key={color} secondary={index > 0}>
+                                {color}
+                                {index < item.color.length - 1 && " - "}
+                              </SpanColor>
+                            ))}
+                          </Color>
+                          /<SpanSize>{item.size}</SpanSize>
                         </ItemSizeColor>
                       </ItemData>
                       {item.quantity > 1 ? (
@@ -480,13 +487,24 @@ const ItemSizeColor = styled.div`
     flex-wrap: wrap;
   }
 `;
+const Color = styled.p`
+  width: 70%;
+  font-size: clamp(0.55rem, 5px + 0.8vw, 0.73rem);
+`;
+
 const SpanColor = styled.span`
-  font-size: clamp(0.6rem, 1.1vw, 0.78rem);
-  text-transform: capitalize;
-  padding-right: 8px;
+  font-weight: ${({ secondary }) => (secondary ? "normal" : "500")};
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      color: #888;
+      font-size: clamp(0.45rem, 1.1vw, 0.65rem);
+    `}
+  padding-right: 2px;
 `;
 const SpanSize = styled.span`
-  font-size: clamp(0.6rem, 1.1vw, 0.78rem);
+  font-weight: 500;
+  font-size: clamp(0.57rem, 1.1vw, 0.73rem);
   text-transform: uppercase;
   padding-left: 8px;
 `;

@@ -94,7 +94,7 @@ export const uploadFile = async (file, retries = 3) => {
             reject(error);
           }
         }
-      }, 1500);
+      }, 2000);
     });
   };
   return uploadAttempt(0);
@@ -122,7 +122,7 @@ const getAllImageUrlsFromFirestore = async () => {
 };
 
 const getResizedImageUrl = (url) => {
-  return url.replace(/(\.[^.]*)?$/, "_600x800$1");
+  return url.replace(/(\.[^.]*)?$/, "_1200x1600$1");
 };
 
 export const deleteUnusedImages = async () => {

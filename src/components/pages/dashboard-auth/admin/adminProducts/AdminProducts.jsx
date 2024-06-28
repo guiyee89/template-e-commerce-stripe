@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { db } from "../../../../../firebaseConfig";
 import { ProductList } from "./productList/ProductList";
 import "ldrs/helix";
-import { DeleteImages } from "./productList/deleteImages/DeleteImages";
+//import { DeleteImages } from "./productList/deleteImages/DeleteImages";
 
 
 export const AdminProducts = () => {
@@ -65,7 +65,7 @@ export const AdminProducts = () => {
           gridColumn:"2/7"
         }}
       >
-         <DeleteImages /> 
+        {/* <DeleteImages />  */}
         <ProductList
           products={products}
           setIsChanged={handleIsChanged}
