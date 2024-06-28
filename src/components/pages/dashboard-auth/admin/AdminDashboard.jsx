@@ -8,6 +8,10 @@ import { AdminNewsletters } from "./adminNewsletters/AdminNewsletters";
 import { AdminProducts } from "./adminProducts/AdminProducts";
 import { AdminShipping } from "./adminShipping/AdminShipping";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 
 export const AdminDashboard = () => {
   const { handleLogout } = useContext(AuthContext);
@@ -28,30 +32,34 @@ export const AdminDashboard = () => {
               onClick={() => handleOptionClick("clientOrders")}
               active={selectedOption === "clientOrders"}
             >
+              <ListAltIcon />
               <DashboardBtn>
-                <SpanBtn>client orders</SpanBtn>
+                <SpanBtn>orders</SpanBtn>
               </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("manageProducts")}
               active={selectedOption === "manageProducts"}
             >
+              <Inventory2OutlinedIcon />
               <DashboardBtn>
-                <SpanBtn>manage products</SpanBtn>
+                <SpanBtn>inventory</SpanBtn>
               </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("newsletters")}
               active={selectedOption === "newsletters"}
             >
+              <CampaignOutlinedIcon />
               <DashboardBtn>
-                <SpanBtn>newsletters</SpanBtn>
+                <SpanBtn>subscribers</SpanBtn>
               </DashboardBtn>
             </DashboardList>
             <DashboardList
               onClick={() => handleOptionClick("shipping")}
               active={selectedOption === "shipping"}
             >
+              <LocalShippingOutlinedIcon />
               <DashboardBtn>
                 <SpanBtn>shipping</SpanBtn>
               </DashboardBtn>
@@ -128,6 +136,7 @@ const DashboardList = styled.li`
   text-align: center;
   display: flex;
   margin: 0 auto;
+  padding: 10px;
   -webkit-box-align: center;
   align-items: center;
   justify-content: center;
@@ -159,15 +168,16 @@ const DashboardList = styled.li`
 
 const DashboardBtn = styled.button`
   color: black;
-  width: 100%;
+  width: 70%;
   height: 100%;
+  margin-left: 14px;
+  text-align: left;
   background-color: transparent;
   border: none;
   text-decoration: none;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: clamp(0.6rem, 1vw + 2px, 0.8rem);
-
+  font-size: clamp(0.6rem, 2px + 1vw, 0.8rem);
   &:active {
     color: #9593dd;
     transition: background-color 0.1s ease-in-out;

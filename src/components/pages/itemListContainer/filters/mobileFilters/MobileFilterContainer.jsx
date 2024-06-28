@@ -4,7 +4,6 @@ import { db } from "../../../../../firebaseConfig";
 import { useParams } from "react-router-dom";
 import { MobileFilter } from "./MobileFilter";
 
-
 export const MobileFilterContainer = ({
   items,
   allItems,
@@ -12,7 +11,6 @@ export const MobileFilterContainer = ({
   setCurrentPage,
   setItemLoader,
 }) => {
-
   //////////           ////////////           ////////////           ///////////           ///////////
   //                       STATE FOR DIFFERENT FILTERS                        //
   const [detailsFilters, setDetailsFilters] = useState({
@@ -71,17 +69,20 @@ export const MobileFilterContainer = ({
   //----------       COLOR MAPING      ----------//
   // Define a mapping of color names to CSS color values
   const colorMapping = {
-    black: "#000000",
-    white: "#ffffff",
-    grey: "#8e8e8e",
-    blue: "#2626e4",
-    purple: "#dc10ce",
-    pink: "#ea7baf",
-    red: "#e81a1a",
-    orange: "#f49d2c",
-    yellow: "#e6d21a",
-    green: "#24df13",
-    brown: "#682f21",
+    Black: "#000000",
+    White: "#ffffff",
+    Grey: "#8e8e8e",
+    "Light Blue": "#269be4",
+    Blue: "#2626e4",
+    Navy: "#04046e",
+    Purple: "#dc10ce",
+    Pink: "#ea7baf",
+    Red: "#e81a1a",
+    Orange: "#f49d2c",
+    Yellow: "#e6d21a",
+    "Light Green": "#67dd4d",
+    Green: "#24df13",
+    Brown: "#682f21",
   };
   //function to find first color
   // const getFirstColorWord = (color) => {

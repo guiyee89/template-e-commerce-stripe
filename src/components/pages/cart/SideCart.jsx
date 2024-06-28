@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { CartContext } from "../../context/CartContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
@@ -167,10 +167,16 @@ export const SideCart = () => {
                     <ItemTitle>{product.title}</ItemTitle>
 
                     <Color>
-                      Color: <Span>{product.color}</Span>
+                      Color:{" "}
+                      {product.color.map((color, index) => (
+                        <SpanColor key={color} secondary={index > 0}>
+                          {color}
+                          {index < product.color.length - 1 && " - "}
+                        </SpanColor>
+                      ))}
                     </Color>
                     <Size>
-                      Size: <Span2>{product.size}</Span2>
+                      Size: <SpanSize>{product.size}</SpanSize>
                     </Size>
 
                     <QuantityWrapper>
@@ -585,18 +591,24 @@ const InsideContentWrapper = styled.div`
   }
 `;
 const Color = styled.p`
-  font-size: clamp(0.58rem, 5px + 0.8vw, 0.78rem);
+  width: 88%;
+  font-size: clamp(0.55rem, 5px + 0.8vw, 0.73rem);
+`;
+
+const SpanColor = styled.span`
+  font-weight: ${({ secondary }) => (secondary ? "normal" : "bold")};
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      color: #888;
+      font-size: 0.65rem;
+    `}
 `;
 const Size = styled.p`
   font-size: clamp(0.58rem, 5px + 0.8vw, 0.78rem);
 `;
-const Span = styled.span`
-  font-weight: 500;
-  padding-left: 1px;
-  font-size: clamp(0.56rem, 5px + 0.8vw, 0.76rem);
-  text-transform: capitalize;
-`;
-const Span2 = styled.span`
+
+const SpanSize = styled.span`
   font-weight: 500;
   font-size: clamp(0.56rem, 5px + 0.8vw, 0.76rem);
   width: 100%;
