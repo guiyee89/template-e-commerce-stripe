@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { db } from "../../../../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
@@ -10,16 +10,12 @@ export const FilterDetail = ({
   handleSizeLoading,
   handleColorLoading,
 }) => {
-  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
   const [selectedFilters, setSelectedFilters] = useState({
-    color: null,
+    color: [],
     size: null,
   });
-  const [relatedItems, setRelatedItems] = useState([]); //Items related to the selectedItem prop
+  const [relatedItems, setRelatedItems] = useState([]);
   const [filteredItem, setFilteredItem] = useState({});
-
-  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
-  //                         FETCH ITEMS RELATED TO "selectedItem" BY productId PROPERTY             (Firestore database)              //
 
   useEffect(() => {
     const fetchRelatedItems = () => {
@@ -41,29 +37,28 @@ export const FilterDetail = ({
           console.error("Error fetching related items:", error);
         });
     };
-    // Fetch related items only once when the component mounts
+
     fetchRelatedItems();
-    // Set the color and size checkboxes according to the selectedItem at first rendering
+
     setSelectedFilters({
-      color: selectedItem.color,
+      color: selectedItem?.color,
       size: selectedItem.size,
     });
+    console.log(selectedFilters);
+    console.log(selectedItem);
+    console.log(relatedItems);
   }, [selectedItem]);
 
-  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
-  //                                      HANDLING OF COLOR AND SIZE SELECTION ON-CHANGE  +  LOADERS                                         //
-
-  // Function to handle color filter selection change
-  const handleColorChange = (color) => {
+  const handleColorChange = (colorArray) => {
     setTimeout(() => {
       setSelectedFilters((prevFilters) => ({
         ...prevFilters,
-        color: color,
+        color: colorArray,
       }));
     }, 1200);
     handleColorLoading();
   };
-  // Function to handle size filter selection change
+
   const handleSizeChange = (size) => {
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
@@ -72,60 +67,55 @@ export const FilterDetail = ({
     handleSizeLoading();
   };
 
-  // Function to handle size and color filter selection change
   useEffect(() => {
     const { color, size } = selectedFilters;
     if (color && size) {
       let filterSelection = relatedItems.find(
-        (item) => item.color === color && item.size === size
+        (item) =>
+          JSON.stringify(item.color) === JSON.stringify(color) &&
+          item.size === size
       );
       if (!filterSelection) {
-        // If no item matches the selected combination of color and size, find the first item that has color and size properties
         filterSelection = relatedItems.find(
-          (item) => item.color === color && item.size
+          (item) => JSON.stringify(item.color) === JSON.stringify(color)
         );
-        // Set an available selectedFilters "size" when selecting a new "color" in case filteredItem doesn't have current "size"
         if (filterSelection) {
-          filterSelection = relatedItems.find((item) => item.color === color);
           setSelectedFilters((prevFilters) => ({
             ...prevFilters,
             size: filterSelection.size,
           }));
         }
       }
-      handleFilterItemChange(filterSelection); //responible to set new item by color or sizes and render it
+      handleFilterItemChange(filterSelection);
       setFilteredItem(filterSelection || {});
     }
   }, [selectedFilters, relatedItems, handleFilterItemChange]);
 
-  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
-  //                                            LOGIC FOR COLOR & SIZE RENDERING                                                             //
-  //Create map for properties existing "color"
   const uniqueColors = Array.from(
-    new Set(relatedItems.map((item) => item.color))
+    new Set(relatedItems.map((item) => JSON.stringify(item.color)))
   );
 
-  //Render custom "size" for clothing or map existing "size" for shoes
   const renderSizes = () => {
     const customStringSizes = ["xs", "s", "m", "l", "xl", "xxl"];
     const customNumberSizes = [39, 40, 41, 42, 43, 44, 45];
 
     if (typeof selectedItem.size === "string") {
-      // If selectedItem.size is a string, render customStringSizes
       return customStringSizes;
     } else if (typeof selectedItem.size === "number") {
-      // If selectedItem.size is a number, render customNumberSizes
       return customNumberSizes;
     }
     return [];
   };
 
-  //Manipulate "size" enabling/disabling by selecting a "color" checking which sizes are available
-  const getAvailableSizesForColor = (color) => {
+  const getAvailableSizesForColor = (colorArray) => {
     return Array.from(
       new Set(
         relatedItems
-          .filter((item) => item.color === color && item.stock > 0)
+          .filter(
+            (item) =>
+              JSON.stringify(item.color) === JSON.stringify(colorArray) &&
+              item.stock > 0
+          )
           .map((item) => item.size)
       )
     );
@@ -134,51 +124,64 @@ export const FilterDetail = ({
     ? getAvailableSizesForColor(selectedFilters.color)
     : [];
 
-  /////////////     /////////////      ////////////       ////////////      ////////////      /////////////      /////////////     ////////////
-  //                                                   RENDERING                                                                             //
   return (
     <>
       <Wrapper>
-        {/* Color filter */}
         <ColorContainer>
           <ColorText>
             Color:{" "}
-            <ColorSpan>
-              {Object.keys(filteredItem).length > 0
-                ? filteredItem.color
-                : selectedItem.color}
-            </ColorSpan>
+            {Object.keys(filteredItem).length > 0
+              ? filteredItem.color.map((color, index) => (
+                  <ColorSpan key={color} secondary={index > 0}>
+                    {color}
+                    {index < filteredItem.color.length - 1 && " - "}
+                  </ColorSpan>
+                ))
+              : selectedItem.color.map((color, index) => (
+                  <ColorSpan key={color} secondary={index > 0}>
+                    {color}
+                    {index < selectedItem.color.length - 1 && " - "}
+                  </ColorSpan>
+                ))}
           </ColorText>
           <ColorImagesContainer>
-            {uniqueColors.map((color) => {
+            {uniqueColors.map((colorString) => {
+              //Identify color array as a whole if it has more than 1 color
+              const colorArray = JSON.parse(colorString);
               const itemsWithCurrentColor = relatedItems.filter(
-                (item) => item.color === color
+                (item) =>
+                  JSON.stringify(item.color) === JSON.stringify(colorArray)
               );
 
               if (itemsWithCurrentColor.length > 0) {
                 return (
-                  <ColorCheckboxWrapper key={color}>
+                  <ColorCheckboxWrapper key={colorString}>
                     <ColorCheckbox
-                      id={`color-${color}`}
-                      checked={selectedFilters.color === color}
-                      onChange={() => handleColorChange(color)}
+                      id={`color-${colorString}`}
+                      checked={
+                        JSON.stringify(selectedFilters.color) ===
+                        JSON.stringify(colorArray)
+                      }
+                      onChange={() => handleColorChange(colorArray)}
                     />
                     <ColorImage
                       src={itemsWithCurrentColor[0].img[0]}
-                      alt={color}
+                      alt={colorArray.join(", ")}
                     />
                   </ColorCheckboxWrapper>
                 );
               } else {
                 return (
-                  <ColorCheckboxWrapper key={color}>
+                  <ColorCheckboxWrapper key={colorString}>
                     <ColorCheckbox
-                      id={`color-${color}`}
-                      checked={selectedFilters.color === color}
-                      onChange={() => handleColorChange(color)}
+                      id={`color-${colorString}`}
+                      checked={
+                        JSON.stringify(selectedFilters.color) ===
+                        JSON.stringify(colorArray)
+                      }
+                      onChange={() => handleColorChange(colorArray)}
                     />
-                    {/* Placeholder representation when there are no related items with the current color */}
-                    <ColorRepresentation color={color} />
+                    <ColorRepresentation color={colorArray[0]} />
                   </ColorCheckboxWrapper>
                 );
               }
@@ -186,7 +189,6 @@ export const FilterDetail = ({
           </ColorImagesContainer>
         </ColorContainer>
 
-        {/* Size filter */}
         <SizeContainer>
           <SizeText>
             Size:{" "}
@@ -211,7 +213,7 @@ export const FilterDetail = ({
                   />
                   <SizeCheckboxLabel
                     htmlFor={`size-${size}`}
-                    checked={SizeCheckboxLabel && "white"}
+                    checked={selectedFilters.size === size}
                     isSizeAvailable={isSizeAvailable}
                   >
                     {size}
@@ -302,8 +304,15 @@ const ColorText = styled.p`
   text-transform: capitalize;
   font-weight: 500;
 `;
+
 const ColorSpan = styled.span`
-  font-weight: bold;
+  font-weight: ${({ secondary }) => (secondary ? "normal" : "bold")};
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      color: #464545;
+      font-size: 0.9rem;
+    `}
 `;
 
 const SizeText = styled.p`
