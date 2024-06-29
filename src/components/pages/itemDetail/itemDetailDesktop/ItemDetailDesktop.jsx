@@ -221,10 +221,12 @@ const Title = styled.h1`
   margin-top: -11px;
   margin-bottom: -32px;
   text-align: center;
+  text-transform: capitalize;
 `;
 const SubTitle = styled.h2`
   font-size: 1.3rem;
   text-align: center;
+  text-transform: capitalize;
 `;
 const FilterWrapper = styled.div`
   width: 95%;

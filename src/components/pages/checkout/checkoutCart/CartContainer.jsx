@@ -488,7 +488,7 @@ const ItemSizeColor = styled.div`
   }
 `;
 const Color = styled.p`
-  width: 70%;
+  width: 60%;
   font-size: clamp(0.55rem, 5px + 0.8vw, 0.73rem);
 `;
 
