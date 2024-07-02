@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../../../../firebaseConfig";
+import { db } from "../../../../firebaseConfig";
 import { useParams } from "react-router-dom";
-import { MobileFilter } from "./MobileFilter";
+import { DesktopFilter } from "./desktopFilters/DesktopFilter";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
+import { MobileFilter } from "./mobileFilters/MobileFilter";
+import styled from "styled-components/macro";
 
-export const MobileFilterContainer = ({
+export const FilterContainer = ({
   items,
   allItems,
   onFilterChange,
   setCurrentPage,
   setItemLoader,
+  filteredItems,
+  isFilterOpen,
+  toggleFilterMenu,
 }) => {
+  
+  const { windowWidth } = useContext(GlobalToolsContext);
+
   //////////           ////////////           ////////////           ///////////           ///////////
   //                       STATE FOR DIFFERENT FILTERS                        //
   const [detailsFilters, setDetailsFilters] = useState({
@@ -20,33 +29,37 @@ export const MobileFilterContainer = ({
     orderBy: "",
   });
 
+  const getRelatedItems = (items) => {
+    // Assuming related items are stored in a variable or fetched from a database
+    return allItems.filter((relatedItem) =>
+      items.some(
+        (item) =>
+          item.productId === relatedItem.productId && relatedItem.stock > 0
+      )
+    );
+  };
+  // Fetch related items based on filteredItems
+  const relatedItems = getRelatedItems(filteredItems);
+
   //////////           ////////////           ////////////           ///////////           ///////////
   //      MAPING COLORS, SIZE, CATEGORIES AND QUANTITY FOR EACH FILTER        //
 
-  //----------       CATEGORY MAPING      ---------//
-  const availableCategory = Array.from(
-    new Set(items.map((item) => item.category))
-  ).filter((category) => category !== undefined);
-
-  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
-
-  const handleCategorySelect = (selectedCategory) => {
-    const isCategorySelected = selectedCategoryOrder.includes(selectedCategory);
-
-    if (!isCategorySelected) {
-      const newOrder = [selectedCategory, ...selectedCategoryOrder];
-      setSelectedCategoryOrder(newOrder);
-    } else {
-      const newOrder = selectedCategoryOrder.filter(
-        (category) => category !== selectedCategory
-      );
-      setSelectedCategoryOrder(newOrder);
-    }
-  };
   //----------        SIZE MAPING       ----------//
+
+  // Calculate available sizes from filteredItems and related items
   const availableSizes = Array.from(
+    new Set([...filteredItems, ...relatedItems].map((item) => item.size))
+  ).filter((size) => size !== undefined);
+
+  // Get all sizes to determine which ones should be disabled
+  const allSizes = Array.from(
     new Set(allItems.map((item) => item.size))
   ).filter((size) => size !== undefined);
+
+  // Sizes to disable
+  const disabledSizes = allSizes.filter(
+    (size) => !availableSizes.includes(size)
+  );
 
   const [selectedSizeOrder, setSelectedSizeOrder] = useState([]);
 
@@ -66,7 +79,9 @@ export const MobileFilterContainer = ({
       setSelectedSizeOrder(newOrder);
     }
   };
+
   //----------       COLOR MAPING      ----------//
+
   // Define a mapping of color names to CSS color values
   const colorMapping = {
     Black: "#000000",
@@ -90,6 +105,29 @@ export const MobileFilterContainer = ({
   //   console.log(words);
   //   return words[0];
   // };
+
+  const isFilteringByColor =
+    detailsFilters.color && detailsFilters.color.length > 0;
+
+  // Determine available colors based on the filter criteria
+  const availableColors = Array.from(
+    new Set(
+      (isFilteringByColor ? allItems : filteredItems).flatMap(
+        (item) => item.color
+      )
+    )
+  ).filter((color) => color !== undefined);
+
+  // Determine all colors across all items
+  const allColors = Array.from(
+    new Set(allItems.flatMap((item) => item.color))
+  ).filter((color) => color !== undefined);
+
+  // Colors to disable only when not filtering by color
+  const disabledColors = isFilteringByColor
+    ? []
+    : allColors.filter((color) => !availableColors.includes(color));
+
   const [selectedColorOrder, setSelectedColorOrder] = useState([]);
 
   const handleColorSelect = (selectedColor) => {
@@ -109,6 +147,50 @@ export const MobileFilterContainer = ({
     }
   };
 
+  //----------       CATEGORY MAPING      ---------//
+  const availableCategory = Array.from(
+    new Set(items.map((item) => item.category))
+  ).filter((category) => category !== undefined);
+
+  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
+
+  const handleCategorySelect = (selectedCategory) => {
+    const isCategorySelected = selectedCategoryOrder.includes(selectedCategory);
+
+    if (!isCategorySelected) {
+      const newOrder = [selectedCategory, ...selectedCategoryOrder];
+      setSelectedCategoryOrder(newOrder);
+    } else {
+      const newOrder = selectedCategoryOrder.filter(
+        (category) => category !== selectedCategory
+      );
+      setSelectedCategoryOrder(newOrder);
+    }
+  };
+
+  // Helper function to determine if a size is numeric
+  const isNumericSize = (size) => !isNaN(size);
+
+  // Determine if there is any selected size and if it's numeric or string
+  const selectedSizeType =
+    selectedSizeOrder.length > 0
+      ? isNumericSize(selectedSizeOrder[0])
+        ? "numeric"
+        : "string"
+      : null;
+
+  // Function to determine if a category should be disabled
+  const isCategoryDisabled = (category) => {
+    if (!selectedSizeType) return false; // No size selected, no categories disabled
+    const categorySizes = allItems
+      .filter((item) => item.category === category)
+      .map((item) => item.size);
+
+    return selectedSizeType === "numeric"
+      ? categorySizes.some((size) => isNaN(size))
+      : categorySizes.some((size) => !isNaN(size));
+  };
+
   // Clear selected sizes order and get back to available sizes
   const clearOrderedFilters = () => {
     setSelectedSizeOrder([]);
@@ -117,12 +199,13 @@ export const MobileFilterContainer = ({
   };
 
   //////////           ////////////           ////////////           ///////////           ///////////
-  //                                FILTERING LOGIC FOR ALL ITEMS                                  //
+  //                                FILTERING LOGIC FOR allItems                                  //
+
   const { categoryName } = useParams();
 
   // Fetch items from Firestore Database and filter accordingly on selection
   const fetchFilteredItems = async () => {
-    console.log("fetching MobileFilter...");
+    console.log("fetching DesktopFilter...");
     try {
       const filteredCollection = collection(db, "products");
       let queryFilters = [];
@@ -135,9 +218,6 @@ export const MobileFilterContainer = ({
       if (detailsFilters.size.length > 0) {
         queryFilters.push(where("size", "in", detailsFilters.size));
       }
-      /* if (detailsFilters.color.length > 0) {
-       queryFilters.push(where("color", "in", detailsFilters.color));
-    }    */
 
       const filteredQuery = query(filteredCollection, ...queryFilters);
       const querySnapshot = await getDocs(filteredQuery);
@@ -196,9 +276,6 @@ export const MobileFilterContainer = ({
           return priceB - priceA;
         });
       }
-
-      console.log(orderedItems);
-
       onFilterChange(orderedItems, detailsFilters, setItemLoader(false));
     } catch (error) {
       console.error("Error fetching filtered items:", error);
@@ -261,7 +338,7 @@ export const MobileFilterContainer = ({
         [filterName]: value,
       }));
       setCurrentPage(1); //Set pagiination to 1 if filters changed
-    }, 750);
+    }, 550);
     setItemLoader(true); //Activate Loader for filters
   };
 
@@ -275,7 +352,6 @@ export const MobileFilterContainer = ({
 
   //////////           ////////////           ////////////           ///////////           ///////////
   //           LOADER            //
-
   const loadingReset = false;
 
   const handleResetFilters = () => {
@@ -332,24 +408,97 @@ export const MobileFilterContainer = ({
   //////////           ////////////           ////////////           ///////////           ///////////
   return (
     <>
-      <MobileFilter
-        detailsFilters={detailsFilters}
-        setDetailsFilters={setDetailsFilters}
-        handleResetFilters={handleResetFilters}
-        clearOrderedFilters={clearOrderedFilters}
-        loadingReset={loadingReset}
-        handleDetailsFilterChange={handleDetailsFilterChange}
-        selectedCategoryOrder={selectedCategoryOrder}
-        handleCategorySelect={handleCategorySelect}
-        availableCategory={availableCategory}
-        selectedSizeOrder={selectedSizeOrder}
-        handleSizeSelect={handleSizeSelect}
-        availableSizes={availableSizes}
-        selectedColorOrder={selectedColorOrder}
-        handleColorSelect={handleColorSelect}
-        colorMapping={colorMapping}
-        updateFilterArray={updateFilterArray}
-      />
+      {windowWidth > 900 ? (
+        <DesktopFilterWrapper scrolled={scroll}>
+          <DesktopFilter
+            loadingReset={loadingReset}
+            detailsFilters={detailsFilters}
+            setDetailsFilters={setDetailsFilters}
+            handleResetFilters={handleResetFilters}
+            clearOrderedFilters={clearOrderedFilters}
+            handleDetailsFilterChange={handleDetailsFilterChange}
+            selectedCategoryOrder={selectedCategoryOrder}
+            handleCategorySelect={handleCategorySelect}
+            availableCategory={availableCategory}
+            isCategoryDisabled={isCategoryDisabled}
+            selectedSizeOrder={selectedSizeOrder}
+            handleSizeSelect={handleSizeSelect}
+            availableSizes={availableSizes}
+            disabledSizes={disabledSizes}
+            selectedColorOrder={selectedColorOrder}
+            handleColorSelect={handleColorSelect}
+            colorMapping={colorMapping}
+            availableColors={availableColors}
+            disabledColors={disabledColors}
+            updateFilterArray={updateFilterArray}
+          />
+        </DesktopFilterWrapper>
+      ) : (
+        <MobileFilterWrapper
+          isFilterOpen={isFilterOpen}
+          onClick={toggleFilterMenu}
+        >
+          <MobileFilter
+            loadingReset={loadingReset}
+            detailsFilters={detailsFilters}
+            setDetailsFilters={setDetailsFilters}
+            handleResetFilters={handleResetFilters}
+            clearOrderedFilters={clearOrderedFilters}
+            handleDetailsFilterChange={handleDetailsFilterChange}
+            selectedCategoryOrder={selectedCategoryOrder}
+            handleCategorySelect={handleCategorySelect}
+            availableCategory={availableCategory}
+            isCategoryDisabled={isCategoryDisabled}
+            selectedSizeOrder={selectedSizeOrder}
+            handleSizeSelect={handleSizeSelect}
+            availableSizes={availableSizes}
+            disabledSizes={disabledSizes}
+            selectedColorOrder={selectedColorOrder}
+            handleColorSelect={handleColorSelect}
+            colorMapping={colorMapping}
+            availableColors={availableColors}
+            disabledColors={disabledColors}
+            updateFilterArray={updateFilterArray}
+          />
+        </MobileFilterWrapper>
+      )}
     </>
   );
 };
+const DesktopFilterWrapper = styled.aside`
+  display: flex;
+  grid-column: 1 / 2;
+  gap: 0.5rem;
+  flex-direction: column;
+  margin: 5px 8px 0px 0px;
+  height: 750px;
+  min-width: 250px;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: sticky;
+  top: 110px;
+  background-color: rgb(253, 253, 253);
+  @media (max-width: 1200px) {
+    min-width: 228px;
+  }
+  @media (max-width: 1050px) {
+    min-width: 200px;
+  }
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+const MobileFilterWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  right: ${({ isFilterOpen }) => (isFilterOpen ? "-420px" : "0")};
+  transition: right 0.3s ease-in-out;
+  z-index: 3;
+  min-width: 225px;
+  max-width: 320px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+`;
