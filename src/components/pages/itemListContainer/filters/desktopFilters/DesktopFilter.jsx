@@ -24,12 +24,16 @@ export const DesktopFilter = ({
   selectedCategoryOrder,
   handleCategorySelect,
   availableCategory,
+  isCategoryDisabled,
   selectedSizeOrder,
   handleSizeSelect,
   availableSizes,
+  disabledSizes,
   selectedColorOrder,
   handleColorSelect,
   colorMapping,
+  availableColors,
+  disabledColors,
   updateFilterArray,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
@@ -170,7 +174,7 @@ export const DesktopFilter = ({
           </AccordionSummary>
           <ClearFilterBtn
             onClick={() => {
-              //Reset section filters
+              // Reset section filters
               setDetailsFilters((prevFilters) => ({
                 ...prevFilters,
                 category: "",
@@ -193,7 +197,7 @@ export const DesktopFilter = ({
                 control={
                   <Checkbox
                     sx={{
-                      color: "#949495",
+                      color: "#050505",
                       width: "2.2rem",
                       "&.Mui-checked": {
                         color: "black",
@@ -227,49 +231,54 @@ export const DesktopFilter = ({
             ))}
             {availableCategory
               .filter((category) => !selectedCategoryOrder.includes(category))
-              .map((category, index) => (
-                <FormControlLabel
-                  key={index}
-                  sx={{
-                    ...selectStyle,
-                    marginBottom: "3px",
-                    textTransform: "capitalize",
-                  }}
-                  control={
-                    <Checkbox
-                      sx={{
-                        color: "#949495",
-                        width: "2.2rem",
-                        "&.Mui-checked": {
-                          color: "black",
+              .map((category, index) => {
+                const isDisabled = isCategoryDisabled(category);
+                return (
+                  <FormControlLabel
+                    key={index}
+                    sx={{
+                      ...selectStyle,
+                      marginBottom: "3px",
+                      textTransform: "capitalize",
+                    }}
+                    control={
+                      <Checkbox
+                        sx={{
+                          color: "#615d5d",
                           width: "2.2rem",
-                        },
-                      }}
-                      checked={detailsFilters.category.includes(category)}
-                      onChange={(e) => {
-                        handleDetailsFilterChange(
-                          "category",
-                          updateFilterArray(
-                            detailsFilters.category,
-                            category,
-                            e.target.checked
-                          )
-                        );
-                        handleCategorySelect(category);
-                      }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      sx={{
-                        fontSize: "0.88rem",
-                      }}
-                    >
-                      {category}
-                    </Typography>
-                  }
-                />
-              ))}
+                          "&.Mui-checked": {
+                            color: "black",
+                            width: "2.2rem",
+                          },
+                        }}
+                        checked={detailsFilters.category.includes(category)}
+                        disabled={isDisabled}
+                        onChange={(e) => {
+                          handleDetailsFilterChange(
+                            "category",
+                            updateFilterArray(
+                              detailsFilters.category,
+                              category,
+                              e.target.checked
+                            )
+                          );
+                          handleCategorySelect(category);
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography
+                        sx={{
+                          fontSize: "0.88rem",
+                          color: isDisabled ? "grey" : "black",
+                        }}
+                      >
+                        {category}
+                      </Typography>
+                    }
+                  />
+                );
+              })}
           </AccordionDetails>
         </Accordion>
 
@@ -381,6 +390,7 @@ export const DesktopFilter = ({
                         <SizeCheckboxInput
                           type="checkbox"
                           checked={detailsFilters.size.includes(size)}
+                          disabled={disabledSizes.includes(size)}
                           onChange={(e) => {
                             handleDetailsFilterChange(
                               "size",
@@ -440,7 +450,7 @@ export const DesktopFilter = ({
           </AccordionSummary>
           <ClearFilterBtn
             onClick={() => {
-              //Reset section filters
+              // Reset section filters
               setDetailsFilters((prevFilters) => ({
                 ...prevFilters,
                 color: "",
@@ -475,7 +485,6 @@ export const DesktopFilter = ({
                             "color",
                             updateFilterArray(
                               detailsFilters.color,
-                              /* getFirstColorWord(colorKey), */ //get first word value of property "color" in the object
                               colorKey,
                               e.target.checked
                             )
@@ -499,7 +508,7 @@ export const DesktopFilter = ({
               ))}
 
               {/* Render available colors */}
-              {Object.keys(colorMapping)
+              {availableColors
                 .filter((colorKey) => !selectedColorOrder.includes(colorKey))
                 .map((colorKey, index) => {
                   const checkBoxColors = colorMapping[colorKey].split(" , ");
@@ -524,12 +533,12 @@ export const DesktopFilter = ({
                               background: checkBoxStyle,
                             }}
                             checked={detailsFilters.color.includes(colorKey)}
+                            disabled={disabledColors.includes(colorKey)}
                             onChange={(e) => {
                               handleDetailsFilterChange(
                                 "color",
                                 updateFilterArray(
                                   detailsFilters.color,
-                                  /* getFirstColorWord(colorKey), */ //get first word value of property "color" in the object
                                   colorKey,
                                   e.target.checked
                                 )
