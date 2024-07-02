@@ -21,6 +21,7 @@ export const DesktopFilterContainer = ({
     orderBy: "",
   });
 
+  
   //////////           ////////////           ////////////           ///////////           ///////////
   //      MAPING COLORS, SIZE, CATEGORIES AND QUANTITY FOR EACH FILTER        //
 
@@ -121,7 +122,7 @@ export const DesktopFilterContainer = ({
   };
 
   //////////           ////////////           ////////////           ///////////           ///////////
-  //                                FILTERING LOGIC FOR ALL ITEMS                                  //
+  //                                FILTERING LOGIC FOR allItems                                  //
 
   const { categoryName } = useParams();
 
@@ -198,9 +199,6 @@ export const DesktopFilterContainer = ({
           return priceB - priceA;
         });
       }
-
-      console.log(orderedItems);
-
       onFilterChange(orderedItems, detailsFilters, setItemLoader(false));
     } catch (error) {
       console.error("Error fetching filtered items:", error);
@@ -263,7 +261,7 @@ export const DesktopFilterContainer = ({
         [filterName]: value,
       }));
       setCurrentPage(1); //Set pagiination to 1 if filters changed
-    }, 750);
+    }, 550);
     setItemLoader(true); //Activate Loader for filters
   };
 

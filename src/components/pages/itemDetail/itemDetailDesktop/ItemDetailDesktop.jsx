@@ -18,10 +18,6 @@ export const ItemDetailDesktop = ({
   const { setProgress, setVisible } = useContext(GlobalToolsContext);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false); //Activate size loader
   const [counterLoading, setCounterLoading] = useState(false);
-  
-  useEffect(() => {
-    console.log(selectedItem)
-  },[selectedItem])
 
   //On add to cart if selectedItem or filteredItem
   const onAddToCart = (quantity) => {
@@ -221,10 +217,12 @@ const Title = styled.h1`
   margin-top: -11px;
   margin-bottom: -32px;
   text-align: center;
+  text-transform: capitalize;
 `;
 const SubTitle = styled.h2`
   font-size: 1.3rem;
   text-align: center;
+  text-transform: capitalize;
 `;
 const FilterWrapper = styled.div`
   width: 95%;

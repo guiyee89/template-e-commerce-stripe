@@ -425,6 +425,7 @@ const ItemTitle = styled.h2`
   font-weight: 600;
   padding-bottom: 2px;
   font-size: clamp(0.65rem, 5px + 0.8vw, 0.85rem);
+  text-transform: capitalize;
 `;
 const BtnQuantity = styled.button`
   width: 32px;
@@ -596,7 +597,7 @@ const Color = styled.p`
 `;
 
 const SpanColor = styled.span`
-  font-weight: ${({ secondary }) => (secondary ? "normal" : "bold")};
+  font-weight: ${({ secondary }) => (secondary ? "normal" : "500")};
   ${({ secondary }) =>
     secondary &&
     css`
