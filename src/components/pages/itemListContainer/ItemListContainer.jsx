@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ItemList } from "./ItemList";
 import { db } from "../../../firebaseConfig";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components/macro";
@@ -25,6 +25,11 @@ export const ItemListContainer = () => {
   const [items, setItems] = useState([]); //Guardamos los items
   const [allItems, setAllItems] = useState([]); //Save all items to filter properly
   const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
+  const [detailsFilters, setDetailsFilters] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsNotFound, setItemsNotFound] = useState(false);
+  const [itemLoader, setItemLoader] = useState(false);
 
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
   const {
@@ -38,17 +43,16 @@ export const ItemListContainer = () => {
     pageLoading,
     setPageLoading,
   } = useContext(GlobalToolsContext);
-  
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
     setPageLoading(true);
-    const delay = 650;
-    console.log("mounting ItemListContainer");
+    const delay = 500;
+
     const fetchData = async () => {
-      setVisible(true);
-      setProgress(8);
+      // setVisible(true);
+      // setProgress(8);
       try {
         const itemsCollection = collection(db, "products");
         const res = await getDocs(itemsCollection);
@@ -56,7 +60,6 @@ export const ItemListContainer = () => {
           ...productDoc.data(),
           id: productDoc.id,
         }));
-        console.log("Fetching data...");
 
         // Filter and sort products
         let filteredProducts = products;
@@ -72,8 +75,11 @@ export const ItemListContainer = () => {
 
         filteredProducts.forEach((product) => {
           const keys = `${product.productId}-${product.color}`;
-          if (!uniqueProductsMap.has(keys) || new Date(uniqueProductsMap.get(keys).createdAt) > new Date(product.createdAt))
-          {
+          if (
+            !uniqueProductsMap.has(keys) ||
+            new Date(uniqueProductsMap.get(keys).createdAt) >
+              new Date(product.createdAt)
+          ) {
             uniqueProductsMap.set(keys, product);
           }
         });
@@ -83,13 +89,13 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products);
 
-        setTimeout(() => {
-          setPageLoading(false);
-          setProgressComplete(true);
-          if (progressComplete === true) {
-            setProgress(100);
-          }
-        }, 250);
+        // setTimeout(() => {
+        setPageLoading(false);
+        setProgressComplete(true);
+        // if (progressComplete === true) {
+        //   setProgress(100);
+        // }
+        // }, 150);
       } catch (err) {
         console.error(err);
       }
@@ -100,18 +106,12 @@ export const ItemListContainer = () => {
     };
   }, [categoryName]);
 
-  const [detailsFilters, setDetailsFilters] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsNotFound, setItemsNotFound] = useState(false);
-  const [itemLoader, setItemLoader] = useState(false);
-
   const handleFilterChange = (filteredItems, detailsFilters) => {
     setItemsNotFound(false);
     if (filteredItems.length > 0) {
       setFilteredItems(filteredItems);
       setDetailsFilters(detailsFilters);
-      window.scrollTo({ behavior: "instant" });
+      window.scrollTo({ top: 150, behavior: "instant" });
     } else {
       setFilteredItems([]);
       setDetailsFilters([]);
@@ -140,7 +140,7 @@ export const ItemListContainer = () => {
         {pageLoading ? (
           <LoaderWrapper>
             {windowWidth > 600 ? (
-              <Ring size={32} lineWeight={7} speed={1} color="black" />
+              <Ring size={30} lineWeight={6} speed={1} color="black" />
             ) : (
               <Ring size={27} lineWeight={6} speed={1} color="black" />
             )}
@@ -185,6 +185,7 @@ export const ItemListContainer = () => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     itemLoader={itemLoader}
+                    detailsFilters={detailsFilters}
                   />
                 </ItemListWrapper>
               </ItemsFiltersWrapper>

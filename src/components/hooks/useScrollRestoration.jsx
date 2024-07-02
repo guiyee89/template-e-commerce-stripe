@@ -16,4 +16,3 @@ const useScrollRestoration = () => {
 };
 
 export default useScrollRestoration;
-

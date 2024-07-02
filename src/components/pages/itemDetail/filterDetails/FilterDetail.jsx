@@ -44,9 +44,6 @@ export const FilterDetail = ({
       color: selectedItem?.color,
       size: selectedItem.size,
     });
-    console.log(selectedFilters);
-    console.log(selectedItem);
-    console.log(relatedItems);
   }, [selectedItem]);
 
   const handleColorChange = (colorArray) => {

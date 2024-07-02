@@ -276,7 +276,7 @@ const HeaderWrapper = styled.header`
   height: ${(props) => (props.scrolled === "scrolled" ? "55px" : "90px")};
   margin-top: -94px;
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.15s" : "0.20s")}
+    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.10s")}
     ease-in-out;
   z-index: 2;
   background-color: rgb(253 253 253);
@@ -342,7 +342,7 @@ const MenuIconBtn = styled(MenuIcon)`
   font-size: 1.6875rem !important;
   margin-top: ${(props) => (props.scrolled === "scrolled" ? "15px" : "21px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.1s")} ease-in-out;
+    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")} ease-in-out;
   @media (max-width: 900px) {
     padding-left: 2px;
   }
@@ -366,7 +366,7 @@ const SideMenuHeader = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "50px" : "65px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.1s")} ease-in-out;
+    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")} ease-in-out;
   @media (max-width: 900px) {
     width: ${(props) => (props.scrolled === "scrolled" ? "40px" : "45px")};
     margin-top: ${(props) => (props.scrolled === "scrolled" ? "10px" : "8px")};

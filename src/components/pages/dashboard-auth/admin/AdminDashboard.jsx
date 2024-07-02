@@ -191,7 +191,7 @@ const LogoutBtn = styled.button`
   cursor: pointer;
   position: fixed;
   margin-right: 10px;
-  top: ${(props) => (props.scrolled === "scrolled" ? "16px" : "28px")};
+  top: ${(props) => (props.scrolled === "scrolled" ? "16px" : "16px")};
   right: 4%;
   transition: top
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}

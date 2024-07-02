@@ -168,7 +168,7 @@ export const ItemList = ({
                 handleLoadDetail(product.id);
                 setTimeout(() => {
                   navigate(`/item-details/${product.id}`);
-                }, 1500);
+                }, 900);
               }}
               imgskeleton="false"
             >
@@ -392,6 +392,7 @@ const ItemTitle = styled.h2`
 const ItemSubTitle = styled.h3`
   font-size: clamp(0.7rem, 2vw + 1px, 0.8rem);
   color: black;
+  text-transform: capitalize;
 `;
 const DiscountPrice = styled.span`
   color: #a83737;
