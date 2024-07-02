@@ -516,7 +516,8 @@ export const ProductsForm = ({
                       textTransform: "uppercase",
                       fontWeight: "500",
                       borderTop: "1px solid darkgrey",
-                      paddingTop: "30px",
+                      padding: "30px 0 30px",
+                      textDecoration:"underline",
                     }}
                   >
                     Product Information
@@ -592,7 +593,8 @@ export const ProductsForm = ({
                     style={{
                       textTransform: "uppercase",
                       fontWeight: "500",
-                      padding: "30px 0 25px",
+                      padding: "30px 0 30px",
+                      textDecoration:"underline",
                       textAlign: "center",
                     }}
                   >
@@ -709,6 +711,7 @@ export const ProductsForm = ({
                           display: "flex",
                           flexDirection: "row",
                           justifyContent: "space-between",
+                          alignItems:"center",
                           border: "1px solid darkgrey",
                           borderRadius: "4px",
                           padding: "2px",
@@ -722,6 +725,7 @@ export const ProductsForm = ({
                             fontSize: ".7rem",
                             marginRight: "10px",
                             padding: "8px 0",
+                            height:"30px"
                           }}
                           size="medium"
                           variant="contained"
@@ -1267,7 +1271,7 @@ const ImagesInputsContainer = styled.div`
   -webkit-box-pack: start;
   justify-content: flex-start;
   margin: 0px auto 28px;
-  width: 100%;
+  width: 90%;
   padding-top: 24px;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 14px 10px -14px;
   @media (max-width: 500px) {

@@ -28,14 +28,14 @@ export const ItemDetailContainer = () => {
   // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "productId" PARA RENDERIZAR
   useEffect(() => {
     setPageLoading(true);
-    const delay = 250;
+    const delay = 400;
     const fetchItem = async () => {
       try {
         setVisible(true);
         setLoadingColorFilter(true);
         const itemCollection = collection(db, "products");
         const refDoc = doc(itemCollection, id);
-        console.log("fetching from ItemDetailContainer");
+
         await getDoc(refDoc).then((response) => {
           setSelectedItem({
             ...response.data(),
@@ -52,7 +52,6 @@ export const ItemDetailContainer = () => {
       } catch (err) {
         console.log(err);
       }
-      console.log(selectedItem);
     };
     const timer = setTimeout(fetchItem, delay); // Fix here: Change fetchData to fetchItem
     return () => {

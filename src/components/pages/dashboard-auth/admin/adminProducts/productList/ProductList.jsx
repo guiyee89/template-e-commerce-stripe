@@ -333,7 +333,7 @@ export const ProductList = ({
                                 key={color}
                                 style={{
                                   fontSize:index === 0 ? ".85rem" : ".65rem",
-                                  fontWeight: index === 0 ? "600" : "normal", 
+                                  fontWeight: index === 0 ? "500" : "normal", 
                                 }}
                               >
                                 {index > 0 && <br />}
@@ -345,7 +345,7 @@ export const ProductList = ({
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ textTransform: "capitalize" }}
+                            sx={{ textTransform: "capitalize", fontWeight:"500" }}
                           >
                             {product.category}
                           </TableCell>
@@ -357,6 +357,7 @@ export const ProductList = ({
                               padding: "4px",
                               minWidth: "130px",
                               position: "relative",
+                              fontWeight:"500"
                             }}
                           >
                             {newlyCopiedIds.includes(product.id) && (
@@ -443,6 +444,7 @@ const Img = styled.img`
   min-width: 60px;
   height: 70px;
   object-fit: contain;
+  border: 1px solid lightgray;
 `;
 // Add CSS for the highlighted effect
 const highlightAnimation = keyframes`

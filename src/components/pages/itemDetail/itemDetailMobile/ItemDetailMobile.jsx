@@ -231,11 +231,13 @@ const Title = styled.h1`
   font-size: 2.4rem;
   font-weight: bold;
   letter-spacing: -2px;
+  text-transform: capitalize;
 `;
 const SubTitle = styled.h2`
   font-size: 1.3rem;
   text-align: center;
   margin: 0 0 8px;
+  text-transform: capitalize;
 `;
 
 const FilterWrapper = styled.div`
