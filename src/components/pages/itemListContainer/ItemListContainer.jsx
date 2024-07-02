@@ -158,6 +158,7 @@ export const ItemListContainer = () => {
                       onFilterChange={handleFilterChange}
                       setCurrentPage={setCurrentPage}
                       setItemLoader={setItemLoader}
+                      filteredItems={filteredItems}
                     />
                   </DesktopFilterWrapper>
                 )}
