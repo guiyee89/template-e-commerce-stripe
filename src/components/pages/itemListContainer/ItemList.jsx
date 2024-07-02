@@ -168,7 +168,7 @@ export const ItemList = ({
                 handleLoadDetail(product.id);
                 setTimeout(() => {
                   navigate(`/item-details/${product.id}`);
-                }, 1500);
+                }, 900);
               }}
               imgskeleton="false"
             >

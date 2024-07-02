@@ -18,10 +18,6 @@ export const ItemDetailDesktop = ({
   const { setProgress, setVisible } = useContext(GlobalToolsContext);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false); //Activate size loader
   const [counterLoading, setCounterLoading] = useState(false);
-  
-  useEffect(() => {
-    console.log(selectedItem)
-  },[selectedItem])
 
   //On add to cart if selectedItem or filteredItem
   const onAddToCart = (quantity) => {

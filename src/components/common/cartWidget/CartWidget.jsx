@@ -38,16 +38,16 @@ const CartWidgetWrapper = styled.div`
   margin-bottom: ${(props) =>
     props.windowWidth > 900
       ? props.scrolled === "scrolled"
-        ? "-11px"
+        ? "-13px"
         : "-13px"
       : props.windowWidth < 900
       ? props.scrolled === "scrolled"
-        ? "-4px"
+        ? "-10px"
         : "-10px"
       : "0"};
-  transition: margin-bottom
+  /* transition: margin-bottom
     ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
-    ease-in-out;
+    ease-in-out; */
   padding: ${(props) =>
     props.isOpen && props.windowWidth > 900 ? "0" : "0 0 0 0"};
 `;
@@ -68,12 +68,12 @@ const Contador = styled(Badge)`
 `;
 const CartWrapper = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "none" : "none")};
-  transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
-    ease-in-out;
+  /* transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
+    ease-in-out; */
   margin-top: ${(props) =>
     props.windowWidth < 900
       ? props.scrolled === "scrolled"
-        ? "0"
+        ? "3px"
         : "3px"
       : "3px"};
 `;
