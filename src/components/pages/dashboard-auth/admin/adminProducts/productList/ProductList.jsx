@@ -18,7 +18,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { ProductsForm } from "./ProductsForm";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../../firebaseConfig";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
@@ -103,7 +103,7 @@ export const ProductList = ({
       setNewlyCopiedIds((prevIds) =>
         prevIds.filter((itemId) => itemId !== newId)
       );
-    }, 5000);
+    }, 10000);
   };
 
   const deleteProduct = async (id) => {
@@ -120,10 +120,7 @@ export const ProductList = ({
     }, 1000);
   };
 
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
-
+ 
   return (
     <>
       <ProductListWrapper>
@@ -448,14 +445,14 @@ const Img = styled.img`
 `;
 // Add CSS for the highlighted effect
 const highlightAnimation = keyframes`
-  0% { background-color: #c6f3f7; }
-  50% { background-color: #c6f3f7; }
-  100% { background-color: #c6f3f7; }
+  0% { background-color: #a7dadf; }
+  50% { background-color: #cff6f1; }
+  100% { background-color: #a7dadf; }
 `;
 
 const AnimatedTableRow = styled(TableRow)`
   &.highlighted {
-    animation: ${highlightAnimation} 1.2s alternate 5;
+    animation: ${highlightAnimation} 1s alternate 10;
   }
 `;
 const NewLabel = styled.span`

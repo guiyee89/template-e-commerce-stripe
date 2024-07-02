@@ -10,8 +10,8 @@ export const DesktopFilterContainer = ({
   onFilterChange,
   setCurrentPage,
   setItemLoader,
+  filteredItems,
 }) => {
-  
   //////////           ////////////           ////////////           ///////////           ///////////
   //                       STATE FOR DIFFERENT FILTERS                        //
   const [detailsFilters, setDetailsFilters] = useState({
@@ -21,35 +21,37 @@ export const DesktopFilterContainer = ({
     orderBy: "",
   });
 
-  
+  const getRelatedItems = (items) => {
+    // Assuming related items are stored in a variable or fetched from a database
+    return allItems.filter((relatedItem) =>
+      items.some(
+        (item) =>
+          item.productId === relatedItem.productId && relatedItem.stock > 0
+      )
+    );
+  };
+  // Fetch related items based on filteredItems
+  const relatedItems = getRelatedItems(filteredItems);
+
   //////////           ////////////           ////////////           ///////////           ///////////
   //      MAPING COLORS, SIZE, CATEGORIES AND QUANTITY FOR EACH FILTER        //
 
-  //----------       CATEGORY MAPING      ---------//
-  const availableCategory = Array.from(
-    new Set(items.map((item) => item.category))
-  ).filter((category) => category !== undefined);
-
-  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
-
-  const handleCategorySelect = (selectedCategory) => {
-    const isCategorySelected = selectedCategoryOrder.includes(selectedCategory);
-
-    if (!isCategorySelected) {
-      const newOrder = [selectedCategory, ...selectedCategoryOrder];
-      setSelectedCategoryOrder(newOrder);
-    } else {
-      const newOrder = selectedCategoryOrder.filter(
-        (category) => category !== selectedCategory
-      );
-      setSelectedCategoryOrder(newOrder);
-    }
-  };
-
   //----------        SIZE MAPING       ----------//
+
+  // Calculate available sizes from filteredItems and related items
   const availableSizes = Array.from(
+    new Set([...filteredItems, ...relatedItems].map((item) => item.size))
+  ).filter((size) => size !== undefined);
+
+  // Get all sizes to determine which ones should be disabled
+  const allSizes = Array.from(
     new Set(allItems.map((item) => item.size))
   ).filter((size) => size !== undefined);
+
+  // Sizes to disable
+  const disabledSizes = allSizes.filter(
+    (size) => !availableSizes.includes(size)
+  );
 
   const [selectedSizeOrder, setSelectedSizeOrder] = useState([]);
 
@@ -95,6 +97,21 @@ export const DesktopFilterContainer = ({
   //   return words[0];
   // };
 
+  // Calculate available colors from filteredItems and related items
+  const availableColors = Array.from(
+    new Set([...filteredItems, ...relatedItems].flatMap((item) => item.color))
+  ).filter((color) => color !== undefined);
+
+  // Get all colors to determine which ones should be disabled
+  const allColors = Array.from(
+    new Set(allItems.flatMap((item) => item.color))
+  ).filter((color) => color !== undefined);
+
+  // Colors to disable
+  const disabledColors = allColors.filter(
+    (color) => !availableColors.includes(color)
+  );
+
   const [selectedColorOrder, setSelectedColorOrder] = useState([]);
 
   const handleColorSelect = (selectedColor) => {
@@ -122,6 +139,51 @@ export const DesktopFilterContainer = ({
   };
 
   //////////           ////////////           ////////////           ///////////           ///////////
+  //----------       CATEGORY MAPING      ---------//
+  const availableCategory = Array.from(
+    new Set(items.map((item) => item.category))
+  ).filter((category) => category !== undefined);
+
+  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
+
+  const handleCategorySelect = (selectedCategory) => {
+    const isCategorySelected = selectedCategoryOrder.includes(selectedCategory);
+
+    if (!isCategorySelected) {
+      const newOrder = [selectedCategory, ...selectedCategoryOrder];
+      setSelectedCategoryOrder(newOrder);
+    } else {
+      const newOrder = selectedCategoryOrder.filter(
+        (category) => category !== selectedCategory
+      );
+      setSelectedCategoryOrder(newOrder);
+    }
+  };
+
+  // Helper function to determine if a size is numeric
+  const isNumericSize = (size) => !isNaN(size);
+
+  // Determine if there is any selected size and if it's numeric or string
+  const selectedSizeType =
+    selectedSizeOrder.length > 0
+      ? isNumericSize(selectedSizeOrder[0])
+        ? "numeric"
+        : "string"
+      : null;
+
+  // Function to determine if a category should be disabled
+  const isCategoryDisabled = (category) => {
+    if (!selectedSizeType) return false; // No size selected, no categories disabled
+    const categorySizes = allItems
+      .filter((item) => item.category === category)
+      .map((item) => item.size);
+
+    return selectedSizeType === "numeric"
+      ? categorySizes.some((size) => isNaN(size))
+      : categorySizes.some((size) => !isNaN(size));
+  };
+
+  //////////           ////////////           ////////////           ///////////           ///////////
   //                                FILTERING LOGIC FOR allItems                                  //
 
   const { categoryName } = useParams();
@@ -141,7 +203,7 @@ export const DesktopFilterContainer = ({
       if (detailsFilters.size.length > 0) {
         queryFilters.push(where("size", "in", detailsFilters.size));
       }
- 
+
       const filteredQuery = query(filteredCollection, ...queryFilters);
       const querySnapshot = await getDocs(filteredQuery);
 
@@ -341,12 +403,16 @@ export const DesktopFilterContainer = ({
         selectedCategoryOrder={selectedCategoryOrder}
         handleCategorySelect={handleCategorySelect}
         availableCategory={availableCategory}
+        isCategoryDisabled={isCategoryDisabled}
         selectedSizeOrder={selectedSizeOrder}
         handleSizeSelect={handleSizeSelect}
         availableSizes={availableSizes}
+        disabledSizes={disabledSizes}
         selectedColorOrder={selectedColorOrder}
         handleColorSelect={handleColorSelect}
         colorMapping={colorMapping}
+        availableColors={availableColors}
+        disabledColors={disabledColors}
         updateFilterArray={updateFilterArray}
       />
     </>
