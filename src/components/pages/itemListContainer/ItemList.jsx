@@ -9,6 +9,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
+import { useRef } from "react";
 
 export const ItemList = ({
   filteredItems,
@@ -76,11 +77,6 @@ export const ItemList = ({
   const itemsToDisplay = filteredItems.slice(startIndex, endIndex);
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
-  //scroll back to top of page when change pagination
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, [currentPage]);
-
   //set currentPage to previous page when navigating to ItemDetail
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -90,6 +86,18 @@ export const ItemList = ({
     // localStorage.removeItem("currentPage");
   }, []);
 
+  const initialMountRef = useRef(true);
+
+  useEffect(() => {
+    if (!initialMountRef.current) {
+      window.scrollTo({ top: 150, behavior: "instant" });
+    } else {
+      initialMountRef.current = false;
+    }
+  }, [currentPage]);
+
+ //////////////////////////                    ////////////////////////////
+ 
   const [productsQuantity, setProductsQuantity] = useState();
   const showProductsQuantity = () => {
     setProductsQuantity(filteredItems.length); // Update the state with the number of items
