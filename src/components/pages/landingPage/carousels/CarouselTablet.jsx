@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Ring } from "@uiball/loaders";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../firebaseConfig";
@@ -11,9 +11,13 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 export const CarouselTablet = () => {
   const [discountProducts, setDiscountedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { setVisible, setProgress } = useContext(GlobalToolsContext);
+  const [loadingDetail, setLoadingDetail] = useState(false);
+  const { setVisible, setProgress, setPageLoading } =
+    useContext(GlobalToolsContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setPageLoading(true);
     const fetchDiscountedProducts = async () => {
       try {
         const queryAllProducts = collection(db, "products");
@@ -41,8 +45,10 @@ export const CarouselTablet = () => {
             }
           }
         }
-        console.log(filteredDiscountProducts);
+
         setDiscountedProducts(filteredDiscountProducts);
+        setLoading(false);
+
       } catch (error) {
         console.error("Error fetching discounted products:", error);
       }
@@ -61,9 +67,16 @@ export const CarouselTablet = () => {
     return <div>No products available.</div>;
   }
 
+  const handleLoadDetail = (itemId) => {
+    setLoadingDetail(itemId);
+    setTimeout(() => {
+      setLoadingDetail(null);
+    }, 1500);
+  };
+
   const handleLoadTop = () => {
     setVisible(true);
-    setProgress(1); //set Top Loading bar to 5% after clicking on Item
+    setProgress(5); //set Top Loading bar to 5% after clicking on Item
   };
 
   const [index, setIndex] = useState(0);
@@ -87,13 +100,27 @@ export const CarouselTablet = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(0, 3).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -125,13 +152,27 @@ export const CarouselTablet = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(3, 6).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -163,13 +204,27 @@ export const CarouselTablet = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(6, 9).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -201,13 +256,27 @@ export const CarouselTablet = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(9, 12).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -356,6 +425,7 @@ const ItemWrapper = styled.div`
   min-width: 165px;
   padding-top: 1.5px;
   padding-bottom: 5px;
+  position: relative;
   @media (max-width: 950px) {
     max-height: 370px;
     max-width: 315px;
@@ -438,4 +508,11 @@ const ItemTitle = styled.h2`
 `;
 const ItemSubTitle = styled.h3`
   font-size: 0.75rem;
+  text-transform: capitalize;
+`;
+const Loader = styled.div`
+  position: absolute;
+  top: 88%;
+  right: 46.5%;
+  z-index: 1;
 `;

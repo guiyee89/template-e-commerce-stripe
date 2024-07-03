@@ -25,12 +25,16 @@ export const MobileFilter = ({
   selectedCategoryOrder,
   handleCategorySelect,
   availableCategory,
+  isCategoryDisabled,
   selectedSizeOrder,
   handleSizeSelect,
   availableSizes,
+  disabledSizes,
   selectedColorOrder,
   handleColorSelect,
   colorMapping,
+  availableColors,
+  disabledColors,
   updateFilterArray,
 }) => {
   const { isFilterOpen, toggleFilterMenu } = useContext(GlobalToolsContext);
@@ -241,49 +245,54 @@ export const MobileFilter = ({
               ))}
               {availableCategory
                 .filter((category) => !selectedCategoryOrder.includes(category))
-                .map((category, index) => (
-                  <FormControlLabel
-                    key={index}
-                    sx={{
-                      ...selectStyle,
-                      marginBottom: "3px",
-                      textTransform: "capitalize",
-                    }}
-                    control={
-                      <Checkbox
-                        sx={{
-                          color: "#949495",
-                          width: "2.2rem",
-                          "&.Mui-checked": {
-                            color: "black",
+                .map((category, index) => {
+                  const isDisabled = isCategoryDisabled(category);
+                  return (
+                    <FormControlLabel
+                      key={index}
+                      sx={{
+                        ...selectStyle,
+                        marginBottom: "3px",
+                        textTransform: "capitalize",
+                      }}
+                      control={
+                        <Checkbox
+                          sx={{
+                            color: "#4b4848",
                             width: "2.2rem",
-                          },
-                        }}
-                        checked={detailsFilters.category.includes(category)}
-                        onChange={(e) => {
-                          handleDetailsFilterChange(
-                            "category",
-                            updateFilterArray(
-                              detailsFilters.category,
-                              category,
-                              e.target.checked
-                            )
-                          );
-                          handleCategorySelect(category);
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography
-                        sx={{
-                          fontSize: "0.88rem",
-                        }}
-                      >
-                        {category}
-                      </Typography>
-                    }
-                  />
-                ))}
+                            "&.Mui-checked": {
+                              color: "black",
+                              width: "2.2rem",
+                            },
+                          }}
+                          checked={detailsFilters.category.includes(category)}
+                          disabled={isDisabled}
+                          onChange={(e) => {
+                            handleDetailsFilterChange(
+                              "category",
+                              updateFilterArray(
+                                detailsFilters.category,
+                                category,
+                                e.target.checked
+                              )
+                            );
+                            handleCategorySelect(category);
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography
+                          sx={{
+                            fontSize: "0.88rem",
+                            color: isDisabled ? "grey" : "black", // Change the color based on isDisabled
+                          }}
+                        >
+                          {category}
+                        </Typography>
+                      }
+                    />
+                  );
+                })}
             </AccordionDetails>
           </Accordion>
 
@@ -382,6 +391,7 @@ export const MobileFilter = ({
                           <SizeCheckboxInput
                             type="checkbox"
                             checked={detailsFilters.size.includes(size)}
+                            disabled={disabledSizes.includes(size)}
                             onChange={(e) => {
                               handleDetailsFilterChange(
                                 "size",
@@ -497,7 +507,7 @@ export const MobileFilter = ({
                 ))}
 
                 {/* Render available colors */}
-                {Object.keys(colorMapping)
+                {availableColors
                   .filter((colorKey) => !selectedColorOrder.includes(colorKey))
                   .map((colorKey, index) => {
                     const checkBoxColors = colorMapping[colorKey].split(" , ");
@@ -522,6 +532,7 @@ export const MobileFilter = ({
                                 background: checkBoxStyle,
                               }}
                               checked={detailsFilters.color.includes(colorKey)}
+                              disabled={disabledColors.includes(colorKey)}
                               onChange={(e) => {
                                 handleDetailsFilterChange(
                                   "color",
