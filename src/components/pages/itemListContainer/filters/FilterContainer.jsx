@@ -16,8 +16,8 @@ export const FilterContainer = ({
   filteredItems,
   isFilterOpen,
   toggleFilterMenu,
+  setFilterChanged,
 }) => {
-  
   const { windowWidth } = useContext(GlobalToolsContext);
 
   //////////           ////////////           ////////////           ///////////           ///////////
@@ -205,7 +205,7 @@ export const FilterContainer = ({
 
   // Fetch items from Firestore Database and filter accordingly on selection
   const fetchFilteredItems = async () => {
-    console.log("fetching DesktopFilter...");
+    setFilterChanged(true);
     try {
       const filteredCollection = collection(db, "products");
       let queryFilters = [];

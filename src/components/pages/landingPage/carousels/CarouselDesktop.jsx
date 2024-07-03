@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Ring } from "@uiball/loaders";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../firebaseConfig";
@@ -11,9 +11,13 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 export const CarouselDesktop = () => {
   const [discountProducts, setDiscountedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { setVisible, setProgress } = useContext(GlobalToolsContext);
+  const [loadingDetail, setLoadingDetail] = useState(false); 
+  const { setPageLoading, setVisible, setProgress } =
+    useContext(GlobalToolsContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setPageLoading(true);
     const fetchDiscountedProducts = async () => {
       try {
         const queryAllProducts = collection(db, "products");
@@ -41,7 +45,7 @@ export const CarouselDesktop = () => {
             }
           }
         }
-        console.log(filteredDiscountProducts);
+
         setDiscountedProducts(filteredDiscountProducts);
         setLoading(false);
       } catch (error) {
@@ -56,9 +60,16 @@ export const CarouselDesktop = () => {
     return <div>No products available.</div>;
   }
 
+  const handleLoadDetail = (itemId) => {
+    setLoadingDetail(itemId);
+    setTimeout(() => {
+      setLoadingDetail(true);
+    }, 1500);
+  };
+
   const handleLoadTop = () => {
     setVisible(true);
-    setProgress(1); //set Top Loading bar to 5% after clicking on Item
+    setProgress(5); //set Top Loading bar to 5% after clicking on Item
   };
 
   const [index, setIndex] = useState(0);
@@ -82,13 +93,27 @@ export const CarouselDesktop = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(0, 4).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -121,13 +146,27 @@ export const CarouselDesktop = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(4, 8).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -160,13 +199,27 @@ export const CarouselDesktop = () => {
           <CarouselItem>
             <CarouselInner>
               {discountProducts.slice(8, 12).map((product) => {
+                const isLoadingDetail = loadingDetail === product.id;
                 return (
                   <ItemWrapper key={product.id}>
+                    {isLoadingDetail && (
+                      <Loader>
+                        <Ring
+                          size={20}
+                          lineWeight={5}
+                          speed={1}
+                          color="black"
+                        />
+                      </Loader>
+                    )}
                     <LinkWrapper
-                      to={`/item-details/${product.id}`}
-                      onClick={() => {
-                        event.preventDefault(); // Prevent immediate navigation
+                      onClick={(event) => {
+                        event.preventDefault();
                         handleLoadTop();
+                        handleLoadDetail(product.id);
+                        setTimeout(() => {
+                          navigate(`/item-details/${product.id}`);
+                        }, 900);
                       }}
                     >
                       <ItemCard>
@@ -206,7 +259,7 @@ const Wrapper = styled.div`
   z-index: 0;
   max-height: 520px;
   width: 100%;
-  @media (max-width:1300px){
+  @media (max-width: 1300px) {
     margin: 24px auto 75px;
   }
 `;
@@ -310,6 +363,7 @@ const ItemWrapper = styled.div`
   width: 100%;
   padding-top: 1.5px;
   padding-bottom: 5px;
+  position: relative;
   @media (max-width: 1300px) {
     max-height: 400px;
   }
@@ -333,11 +387,13 @@ const ItemCard = styled.div`
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  -webkit-box-align: center;
+  align-items: flex-start;
   width: 100%;
   height: 110px;
   padding-top: 8px;
-  background-color: rgb(239 237 237);
+  padding-left: 26px;
+  background-color: rgb(239, 237, 237);
 `;
 const CarouselItemPrice = styled.h4`
   color: ${(props) => (props.hasDiscount ? "rgb(149 146 146)" : "#a83737")};
@@ -388,4 +444,12 @@ const ItemTitle = styled.h2`
 `;
 const ItemSubTitle = styled.h3`
   font-size: 0.8rem;
+  text-transform: capitalize;
+`;
+
+const Loader = styled.div`
+  position: absolute;
+  top: 88%;
+  right: 46.5%;
+  z-index: 1;
 `;

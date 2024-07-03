@@ -29,25 +29,27 @@ export const ItemListContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsNotFound, setItemsNotFound] = useState(false);
   const [itemLoader, setItemLoader] = useState(false);
+  const [filterChanged, setFilterChanged] = useState(false);
 
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
+
   const {
     isFilterOpen,
     toggleFilterMenu,
     windowWidth,
-    setProgress,
-    setVisible,
     progressComplete,
     setProgressComplete,
     pageLoading,
     setPageLoading,
+    // setProgress,
+    // setVisible,
   } = useContext(GlobalToolsContext);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
     setPageLoading(true);
-    const delay = 500;
+    const delay = 300;
 
     const fetchData = async () => {
       // setVisible(true);
@@ -110,13 +112,19 @@ export const ItemListContainer = () => {
     if (filteredItems.length > 0) {
       setFilteredItems(filteredItems);
       setDetailsFilters(detailsFilters);
-      window.scrollTo({ top: 150, behavior: "instant" });
     } else {
       setFilteredItems([]);
       setDetailsFilters([]);
       setItemsNotFound(true);
     }
   };
+
+  useEffect(() => {
+    if (filterChanged) {
+      window.scrollTo({ top: 150, behavior: "instant" });
+      setFilterChanged(false);
+    }
+  }, [filterChanged]);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //                                    RENDERING                                    //
@@ -158,6 +166,7 @@ export const ItemListContainer = () => {
                   filteredItems={filteredItems}
                   isFilterOpen={isFilterOpen}
                   toggleFilterMenu={toggleFilterMenu}
+                  setFilterChanged={setFilterChanged}
                 />
                 <ItemListWrapper>
                   {/* RENDERING ITEMS */}
