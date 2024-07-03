@@ -138,8 +138,7 @@ const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 180px;
-  margin-left: 35px;
+  height: 48px;
 `;
 const Title = styled.h1`
   font-size: 2rem;

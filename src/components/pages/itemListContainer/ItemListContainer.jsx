@@ -11,8 +11,7 @@ import useScrollRestoration from "../../hooks/useScrollRestoration";
 import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import { DesktopFilterContainer } from "./filters/desktopFilters/DesktopFilterContainer";
-import { MobileFilterContainer } from "./filters/mobileFilters/MobileFilterContainer";
+import { FilterContainer } from "./filters/FilterContainer";
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ScrollRestorationWrapper = ({ children }) => {
@@ -30,25 +29,27 @@ export const ItemListContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsNotFound, setItemsNotFound] = useState(false);
   const [itemLoader, setItemLoader] = useState(false);
+  const [filterChanged, setFilterChanged] = useState(false);
 
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
+
   const {
     isFilterOpen,
     toggleFilterMenu,
     windowWidth,
-    setProgress,
-    setVisible,
     progressComplete,
     setProgressComplete,
     pageLoading,
     setPageLoading,
+    // setProgress,
+    // setVisible,
   } = useContext(GlobalToolsContext);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
     setPageLoading(true);
-    const delay = 500;
+    const delay = 300;
 
     const fetchData = async () => {
       // setVisible(true);
@@ -111,13 +112,19 @@ export const ItemListContainer = () => {
     if (filteredItems.length > 0) {
       setFilteredItems(filteredItems);
       setDetailsFilters(detailsFilters);
-      window.scrollTo({ top: 150, behavior: "instant" });
     } else {
       setFilteredItems([]);
       setDetailsFilters([]);
       setItemsNotFound(true);
     }
   };
+
+  useEffect(() => {
+    if (filterChanged) {
+      window.scrollTo({ top: 150, behavior: "instant" });
+      setFilterChanged(false);
+    }
+  }, [filterChanged]);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //                                    RENDERING                                    //
@@ -150,33 +157,17 @@ export const ItemListContainer = () => {
             {/******  FILTER  ******/}
             {progressComplete && (
               <ItemsFiltersWrapper>
-                {windowWidth > 900 && (
-                  <DesktopFilterWrapper scrolled={scroll}>
-                    <DesktopFilterContainer
-                      items={items}
-                      allItems={allItems}
-                      onFilterChange={handleFilterChange}
-                      setCurrentPage={setCurrentPage}
-                      setItemLoader={setItemLoader}
-                      filteredItems={filteredItems}
-                    />
-                  </DesktopFilterWrapper>
-                )}
-                {windowWidth <= 900 && (
-                  <MobileFilterWrapper
-                    isFilterOpen={isFilterOpen}
-                    onClick={toggleFilterMenu}
-                  >
-                    <MobileFilterContainer
-                      items={items}
-                      allItems={allItems}
-                      onFilterChange={handleFilterChange}
-                      setCurrentPage={setCurrentPage}
-                      setItemLoader={setItemLoader}
-                    />
-                  </MobileFilterWrapper>
-                )}
-
+                <FilterContainer
+                  items={items}
+                  allItems={allItems}
+                  onFilterChange={handleFilterChange}
+                  setCurrentPage={setCurrentPage}
+                  setItemLoader={setItemLoader}
+                  filteredItems={filteredItems}
+                  isFilterOpen={isFilterOpen}
+                  toggleFilterMenu={toggleFilterMenu}
+                  setFilterChanged={setFilterChanged}
+                />
                 <ItemListWrapper>
                   {/* RENDERING ITEMS */}
 
@@ -215,43 +206,7 @@ const NoProductMessage = styled.h2`
   height: 500px;
   color: black;
 `;
-const DesktopFilterWrapper = styled.aside`
-  display: flex;
-  grid-column: 1 / 2;
-  gap: 0.5rem;
-  flex-direction: column;
-  margin: 5px 8px 0px 0px;
-  height: 750px;
-  min-width: 250px;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  position: sticky;
-  top: 110px;
-  background-color: rgb(253, 253, 253);
-  @media (max-width: 1200px) {
-    min-width: 228px;
-  }
-  @media (max-width: 1050px) {
-    min-width: 200px;
-  }
-  @media (max-width: 900px) {
-    display: none;
-  }
-`;
-const MobileFilterWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  right: ${({ isFilterOpen }) => (isFilterOpen ? "-420px" : "0")};
-  transition: right 0.3s ease-in-out;
-  z-index: 3;
-  min-width: 225px;
-  max-width: 320px;
-  height: 100%;
-  background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
+
 const ItemListWrapper = styled.div`
   grid-column: 2/13;
   margin-top: -3px;
