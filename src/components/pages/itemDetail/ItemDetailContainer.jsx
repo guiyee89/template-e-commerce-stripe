@@ -28,7 +28,7 @@ export const ItemDetailContainer = () => {
   // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "productId" PARA RENDERIZAR
   useEffect(() => {
     setPageLoading(true);
-    const delay = 400;
+    const delay = 300;
     const fetchItem = async () => {
       try {
         setVisible(true);
