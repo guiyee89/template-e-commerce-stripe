@@ -100,6 +100,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
                 label="Price"
                 variant="outlined"
                 name="unit_price"
+                size="small"
                 value={getPrice || ""}
                 onChange={handleChange}
                 // helperText={errors.unit_price}
@@ -115,6 +116,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
                 label="Discount ( % )"
                 variant="outlined"
                 name="discount"
+                size="small"
                 value={getDiscount || ""}
                 onChange={handleChange}
                 InputLabelProps={{

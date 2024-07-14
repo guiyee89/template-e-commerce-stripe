@@ -131,6 +131,7 @@ export const ProductList = ({
                 label="Buscar por ID"
                 variant="outlined"
                 name="id"
+                size="small"
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
                 sx={{

@@ -28,6 +28,10 @@ export const FilterContainer = ({
     color: "",
     orderBy: "",
   });
+  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
+  const [selectedSizeOrder, setSelectedSizeOrder] = useState([]);
+  const [selectedColorOrder, setSelectedColorOrder] = useState([]);
+  const { categoryName } = useParams();
 
   const getRelatedItems = (items) => {
     // Assuming related items are stored in a variable or fetched from a database
@@ -41,156 +45,6 @@ export const FilterContainer = ({
   // Fetch related items based on filteredItems
   const relatedItems = getRelatedItems(filteredItems);
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //      MAPING COLORS, SIZE, CATEGORIES AND QUANTITY FOR EACH FILTER        //
-
-  //----------        SIZE MAPING       ----------//
-
-  // Calculate available sizes from filteredItems and related items
-  const availableSizes = Array.from(
-    new Set([...filteredItems, ...relatedItems].map((item) => item.size))
-  ).filter((size) => size !== undefined);
-
-  // Get all sizes to determine which ones should be disabled
-  const allSizes = Array.from(
-    new Set(allItems.map((item) => item.size))
-  ).filter((size) => size !== undefined);
-
-  // Sizes to disable
-  const disabledSizes = allSizes.filter(
-    (size) => !availableSizes.includes(size)
-  );
-
-  const [selectedSizeOrder, setSelectedSizeOrder] = useState([]);
-
-  const handleSizeSelect = (selectedSize) => {
-    // Check if the size is already in the selectedSizeOrder array
-    const isSizeSelected = selectedSizeOrder.includes(selectedSize);
-
-    if (!isSizeSelected) {
-      // If the size is not selected, add it to the front of the array
-      const newOrder = [selectedSize, ...selectedSizeOrder];
-      setSelectedSizeOrder(newOrder);
-    } else {
-      // If the size is already selected, remove it from the order
-      const newOrder = selectedSizeOrder.filter(
-        (size) => size !== selectedSize
-      );
-      setSelectedSizeOrder(newOrder);
-    }
-  };
-
-  //----------       COLOR MAPING      ----------//
-
-  // Define a mapping of color names to CSS color values
-  const colorMapping = {
-    Black: "#000000",
-    White: "#ffffff",
-    Grey: "#8e8e8e",
-    "Light Blue": "#269be4",
-    Blue: "#2626e4",
-    Navy: "#04046e",
-    Purple: "#dc10ce",
-    Pink: "#ea7baf",
-    Red: "#e81a1a",
-    Orange: "#f49d2c",
-    Yellow: "#e6d21a",
-    "Light Green": "#67dd4d",
-    Green: "#24df13",
-    Brown: "#682f21",
-  };
-  //function to find first color
-  // const getFirstColorWord = (color) => {
-  //   const words = color.split(" ");
-  //   console.log(words);
-  //   return words[0];
-  // };
-
-  const isFilteringByColor =
-    detailsFilters.color && detailsFilters.color.length > 0;
-
-  // Determine available colors based on the filter criteria
-  const availableColors = Array.from(
-    new Set(
-      (isFilteringByColor ? allItems : filteredItems).flatMap(
-        (item) => item.color
-      )
-    )
-  ).filter((color) => color !== undefined);
-
-  // Determine all colors across all items
-  const allColors = Array.from(
-    new Set(allItems.flatMap((item) => item.color))
-  ).filter((color) => color !== undefined);
-
-  // Colors to disable only when not filtering by color
-  const disabledColors = isFilteringByColor
-    ? []
-    : allColors.filter((color) => !availableColors.includes(color));
-
-  const [selectedColorOrder, setSelectedColorOrder] = useState([]);
-
-  const handleColorSelect = (selectedColor) => {
-    // Check if the size is already in the selectedSizeOrder array
-    const isColorSelected = selectedColorOrder.includes(selectedColor);
-
-    if (!isColorSelected) {
-      // If the size is not selected, add it to the front of the array
-      const newOrder = [selectedColor, ...selectedColorOrder];
-      setSelectedColorOrder(newOrder);
-    } else {
-      // If the size is already selected, remove it from the order
-      const newOrder = selectedColorOrder.filter(
-        (color) => color !== selectedColor
-      );
-      setSelectedColorOrder(newOrder);
-    }
-  };
-
-  //----------       CATEGORY MAPING      ---------//
-  const availableCategory = Array.from(
-    new Set(items.map((item) => item.category))
-  ).filter((category) => category !== undefined);
-
-  const [selectedCategoryOrder, setSelectedCategoryOrder] = useState([]);
-
-  const handleCategorySelect = (selectedCategory) => {
-    const isCategorySelected = selectedCategoryOrder.includes(selectedCategory);
-
-    if (!isCategorySelected) {
-      const newOrder = [selectedCategory, ...selectedCategoryOrder];
-      setSelectedCategoryOrder(newOrder);
-    } else {
-      const newOrder = selectedCategoryOrder.filter(
-        (category) => category !== selectedCategory
-      );
-      setSelectedCategoryOrder(newOrder);
-    }
-  };
-
-  // Helper function to determine if a size is numeric
-  const isNumericSize = (size) => !isNaN(size);
-
-  // Determine if there is any selected size and if it's numeric or string
-  const selectedSizeType =
-    selectedSizeOrder.length > 0
-      ? isNumericSize(selectedSizeOrder[0])
-        ? "numeric"
-        : "string"
-      : null;
-
-  // Function to determine if a category should be disabled
-  const isCategoryDisabled = (category) => {
-    if (!selectedSizeType) return false; // No size selected, no categories disabled
-    const categorySizes = allItems
-      .filter((item) => item.category === category)
-      .map((item) => item.size);
-
-    return selectedSizeType === "numeric"
-      ? categorySizes.some((size) => isNaN(size))
-      : categorySizes.some((size) => !isNaN(size));
-  };
-
   // Clear selected sizes order and get back to available sizes
   const clearOrderedFilters = () => {
     setSelectedSizeOrder([]);
@@ -200,8 +54,6 @@ export const FilterContainer = ({
 
   //////////           ////////////           ////////////           ///////////           ///////////
   //                                FILTERING LOGIC FOR allItems                                  //
-
-  const { categoryName } = useParams();
 
   // Fetch items from Firestore Database and filter accordingly on selection
   const fetchFilteredItems = async () => {
@@ -411,26 +263,23 @@ export const FilterContainer = ({
       {windowWidth > 900 ? (
         <DesktopFilterWrapper scrolled={scroll}>
           <DesktopFilter
+            items={items}
+            allItems={allItems}
+            filteredItems={filteredItems}
+            relatedItems={relatedItems}
             loadingReset={loadingReset}
             detailsFilters={detailsFilters}
             setDetailsFilters={setDetailsFilters}
             handleResetFilters={handleResetFilters}
             clearOrderedFilters={clearOrderedFilters}
             handleDetailsFilterChange={handleDetailsFilterChange}
-            selectedCategoryOrder={selectedCategoryOrder}
-            handleCategorySelect={handleCategorySelect}
-            availableCategory={availableCategory}
-            isCategoryDisabled={isCategoryDisabled}
-            selectedSizeOrder={selectedSizeOrder}
-            handleSizeSelect={handleSizeSelect}
-            availableSizes={availableSizes}
-            disabledSizes={disabledSizes}
-            selectedColorOrder={selectedColorOrder}
-            handleColorSelect={handleColorSelect}
-            colorMapping={colorMapping}
-            availableColors={availableColors}
-            disabledColors={disabledColors}
             updateFilterArray={updateFilterArray}
+            selectedCategoryOrder={selectedCategoryOrder}
+            setSelectedCategoryOrder={setSelectedCategoryOrder}
+            selectedSizeOrder={selectedSizeOrder}
+            setSelectedSizeOrder={setSelectedSizeOrder}
+            selectedColorOrder={selectedColorOrder}
+            setSelectedColorOrder={setSelectedColorOrder}
           />
         </DesktopFilterWrapper>
       ) : (
@@ -439,26 +288,23 @@ export const FilterContainer = ({
           onClick={toggleFilterMenu}
         >
           <MobileFilter
+            items={items}
+            allItems={allItems}
+            filteredItems={filteredItems}
+            relatedItems={relatedItems}
             loadingReset={loadingReset}
             detailsFilters={detailsFilters}
             setDetailsFilters={setDetailsFilters}
             handleResetFilters={handleResetFilters}
             clearOrderedFilters={clearOrderedFilters}
             handleDetailsFilterChange={handleDetailsFilterChange}
-            selectedCategoryOrder={selectedCategoryOrder}
-            handleCategorySelect={handleCategorySelect}
-            availableCategory={availableCategory}
-            isCategoryDisabled={isCategoryDisabled}
-            selectedSizeOrder={selectedSizeOrder}
-            handleSizeSelect={handleSizeSelect}
-            availableSizes={availableSizes}
-            disabledSizes={disabledSizes}
-            selectedColorOrder={selectedColorOrder}
-            handleColorSelect={handleColorSelect}
-            colorMapping={colorMapping}
-            availableColors={availableColors}
-            disabledColors={disabledColors}
             updateFilterArray={updateFilterArray}
+            selectedCategoryOrder={selectedCategoryOrder}
+            setSelectedCategoryOrder={setSelectedCategoryOrder}
+            selectedSizeOrder={selectedSizeOrder}
+            setSelectedSizeOrder={setSelectedSizeOrder}
+            selectedColorOrder={selectedColorOrder}
+            setSelectedColorOrder={setSelectedColorOrder}
           />
         </MobileFilterWrapper>
       )}
