@@ -1,4 +1,3 @@
-/* import { BsEyeFill } from "react-icons/bs"; */
 import styled from "styled-components/macro";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
@@ -19,9 +18,6 @@ export const ItemList = ({
   itemLoader,
 }) => {
   useScrollRestoration();
-
-  //////////////////////////                    ////////////////////////////
-  //-------------------        currentPage         ---------------------//
 
   const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
   const categoryTitle = categoryName ? categoryName : "All  Categories"; // Rendering conditional title
@@ -194,23 +190,12 @@ export const ItemList = ({
                       src={product.img[0]}
                       alt={product.title}
                       role="presentation"
-                      // srcSet={`${product.img[0]} 300w`}
-                      // sizes="(max-width: 600px) 300px, (max-width: 900px) 600px, 900px"
-                      // decoding="async"
-                      // fetchpriority="high"
-                      /* loading="lazy" */
                     />
                   )}
                 </ImgWrapperLink>
                 {hasDiscount && product.discount !== null && (
                   <Discount>-{product.discount}%</Discount>
                 )}
-
-                {/* <ButtonsWrapper>
-                  <BtnSeeDetails>
-                    <SeeDetails />
-                  </BtnSeeDetails>
-                </ButtonsWrapper> */}
               </ItemCard>
               <InfoWrapper>
                 <ItemTitle>{product.title}</ItemTitle>
@@ -313,7 +298,6 @@ const ItemImg = styled.img`
   transition: transform 0.19s ease-in-out 0.08s;
   cursor: pointer;
   mix-blend-mode: darken;
-  /* mask-image: linear-gradient(rgb(6, 6, 6), 98.5%, transparent); */
 `;
 
 const ImgWrapperLink = styled.div`
@@ -350,21 +334,11 @@ const ItemWrapper = styled(Link)`
   min-width: ${(props) => props.imgskeleton && "100%"};
   max-width: 430px;
   height: 100%;
-  /* background-color: rgb(239, 237, 237); */
   &:hover {
     ${ItemImg} {
       transform: scale(1.11);
       mix-blend-mode: darken;
     }
-    /* ${ButtonsWrapper} {
-      opacity: 1;
-      transform: translateX(-20px);
-      transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
-    } */
-    /* ${InfoWrapper}, ${ImgWrapperLink} {
-      background-color: white;
-      transition: background-color ease-in-out 0.4s;
-    } */
   }
   @media (max-width: 899px) {
     min-width: ${(props) => props.imgskeleton && "100%"};
@@ -382,7 +356,6 @@ const ItemCard = styled.div`
   align-items: center;
   margin-bottom: 8px;
   justify-content: center;
-  /* box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 3px; */
 `;
 
 const Loader = styled.div`
@@ -594,42 +567,3 @@ const ItemsQuantity = styled.p`
     margin: 8px 0px 8px 0px;
   }
 `;
-// const ButtonsWrapper = styled.div`
-//   position: absolute;
-//   top: 15px;
-//   right: 0;
-//   background-color: #873c3c;
-//   width: 40px;
-//   height: 40px;
-//   opacity: 0;
-//   transform: translateX(20px);
-//   display: ${({ disabled }) => (disabled ? "none" : "block")};
-// `;
-// const SeeDetails = styled(BsEyeFill)`
-//   color: black;
-//   width: 60%;
-//   height: 50%;
-//   cursor: pointer;
-//   transition: transform 0.19s ease-in-out 0.03s;
-// `;
-// const BtnSeeDetails = styled.span`
-//   &:active {
-//     background-color: #e3e0e0;
-//     transition: background-color 0.1s ease-in-out;
-//   }
-//   background-color: white;
-//   width: 100%;
-//   height: 100%;
-//   display: block;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   cursor: pointer;
-//   &:hover {
-//     background-color: #e1e1e1;
-//     transition: background-color ease-in-out 0.3s;
-//   }
-//   &:hover ${SeeDetails} {
-//     transform: scale(1.3);
-//   }
-// `;
