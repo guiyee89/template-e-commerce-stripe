@@ -102,7 +102,7 @@ export const NavDesktop = () => {
                               fontSize: ".74rem",
                               textDecoration: "underline",
                               position: "absolute",
-                              right: "-42px",
+                              right: "-75px",
                             }}
                             to="/all-products"
                             scrolled={scroll}
@@ -298,7 +298,7 @@ const HeaderWrapper = styled.header`
   margin-bottom: -90px;
   top: 0;
   z-index: 2;
-  height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "64px")}; 
+  height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "64px")};
   box-shadow: ${(props) =>
     props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
   transition: box-shadow
@@ -332,11 +332,7 @@ const InsideNav = styled.div`
   }
 `;
 const LogoDiv = styled.div`
-  /* width: ${(props) => (props.scrolled === "scrolled" ? "90px" : "110px")}; */
   width: 90px;
-  /* transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
   margin-top: 13px;
   @media screen and (max-width: 50rem) {
     position: absolute;
@@ -356,12 +352,7 @@ const Logo = styled.img`
 const NavListWrapper = styled.ul`
   display: flex;
   list-style: none;
-  /* margin-bottom: ${(props) =>
-    props.scrolled === "scrolled" ? "-48px" : "-50px"}; */
   margin-bottom: -48px;
-  /* transition: margin-bottom
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
   padding-right: 24px;
   @media screen and (max-width: 50rem) {
     display: none;
@@ -383,7 +374,6 @@ const ProductsDropDown = styled.div`
   height: 50px;
 `;
 const DropDown = styled.div`
-  /* top: -109px; */
   visibility: hidden;
   opacity: 0;
   position: absolute;
@@ -391,8 +381,6 @@ const DropDown = styled.div`
   width: 100%;
   border-bottom: 1px solid lightgray;
   justify-content: center;
-  /* margin-top: ${(props) =>
-    props.scrolled === "scrolled" ? "-26px" : "0px"}; */
   margin-top: -26px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px;
   ${ProductsDropDown}:hover & {
@@ -401,7 +389,7 @@ const DropDown = styled.div`
     transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     opacity: 1;
     transition: opacity 0.15s ease-in-out, transform 0.1s ease-in-out;
-    top: ${(props) => (props.scrolled === "scrolled" ? "91px" : "92px")}; 
+    top: ${(props) => (props.scrolled === "scrolled" ? "91px" : "92px")};
     left: 0%;
     height: max-content;
   }
@@ -437,10 +425,6 @@ const ImagesDropDown = styled.div`
   position: relative;
   width: 190px;
   height: 210px;
-  /* margin: ${(props) =>
-    props.scrolled === "scrolled"
-      ? "0px 20px 0px -17px"
-      : "0px 10px 0px -6px;"}; */
   margin: 0px 20px 0px -17px;
   border-left: 1px solid lightgrey;
 `;
@@ -448,8 +432,9 @@ const Img = styled.img`
   height: 90%;
   width: 100%;
   object-fit: contain;
-  margin-right: -50%;
   cursor: pointer;
+  position: relative;
+  left: 35px;
 `;
 const BuyNowBtn = styled.div`
   width: 80px;
@@ -460,6 +445,8 @@ const BuyNowBtn = styled.div`
   font-size: 0.65rem;
   text-decoration: underline;
   margin: 18px 0px 0px;
+  position: relative;
+  left: -27px;
 `;
 const NavProductsDropDown = styled.p`
   color: black;
@@ -467,14 +454,7 @@ const NavProductsDropDown = styled.p`
   font-weight: 600;
   text-transform: uppercase;
   position: relative;
-  /* font-size: ${(props) =>
-    props.scrolled === "scrolled"
-      ? ".68rem"
-      : "clamp(0.62rem, 2vw + 1px, 0.72rem);"}; */
   font-size: 0.68rem;
-  /* transition: font-size
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -507,14 +487,7 @@ const NavLink = styled(Link)`
   font-weight: 600;
   text-transform: uppercase;
   position: relative;
-  /* font-size: ${(props) =>
-    props.scrolled === "scrolled"
-      ? ".68rem"
-      : "clamp(0.62rem, 2vw + 1px, 0.72rem);"}; */
   font-size: 0.68rem;
-  /* transition: font-size
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -551,14 +524,7 @@ const CategoryLink = styled(Link)`
   font-weight: 500;
   text-transform: capitalize;
   position: relative;
-  /* font-size: ${(props) =>
-    props.scrolled === "scrolled"
-      ? ".68rem"
-      : "clamp(0.6rem, 1vw + 2px, 0.7rem)"}; */
   font-size: 0.68rem;
-  /* transition: font-size
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -600,9 +566,6 @@ const DashboardBtn = styled.button`
   cursor: pointer;
   font-size: 0.6rem;
   margin-bottom: 1px;
-  /* transition: margin-bottom
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out; */
 `;
 const ProfileBtn = styled.button`
   background-color: transparent;
