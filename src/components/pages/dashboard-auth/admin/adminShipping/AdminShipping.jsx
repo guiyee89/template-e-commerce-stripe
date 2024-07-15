@@ -11,7 +11,6 @@ export const AdminShipping = () => {
   const [shippingData, setShippingData] = useState([]);
   const [shippingCost, setShippingCost] = useState(shippingData);
   const [shippingLoading, setShippingLoading] = useState(true);
-  const { windowWidth } = useContext(GlobalToolsContext);
 
   useEffect(() => {
     setShippingCost(shippingData);

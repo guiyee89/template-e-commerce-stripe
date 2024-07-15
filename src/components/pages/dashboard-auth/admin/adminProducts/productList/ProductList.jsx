@@ -15,13 +15,13 @@ import styled, { keyframes } from "styled-components/macro";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { ProductsForm } from "./ProductsForm";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../../firebaseConfig";
 import { useContext, useState } from "react";
 import { PriceDiscountForm } from "./PriceDiscountForm";
 import { GlobalToolsContext } from "../../../../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
+import { ProductsFormContainer } from "./productForm/ProductsFormContainer";
 
 export const ProductList = ({
   products,
@@ -103,7 +103,7 @@ export const ProductList = ({
       setNewlyCopiedIds((prevIds) =>
         prevIds.filter((itemId) => itemId !== newId)
       );
-    }, 10000);
+    }, 8000);
   };
 
   const deleteProduct = async (id) => {
@@ -389,7 +389,7 @@ export const ProductList = ({
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <ProductsForm
+              <ProductsFormContainer
                 handleClose={handleClose}
                 setIsChanged={setIsChanged}
                 selectedItem={selectedItem}
@@ -453,7 +453,7 @@ const highlightAnimation = keyframes`
 
 const AnimatedTableRow = styled(TableRow)`
   &.highlighted {
-    animation: ${highlightAnimation} 1s alternate 10;
+    animation: ${highlightAnimation} 1s alternate 8;
   }
 `;
 const NewLabel = styled.span`
