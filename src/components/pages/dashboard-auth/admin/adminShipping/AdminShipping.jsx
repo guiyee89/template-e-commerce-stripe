@@ -6,11 +6,9 @@ import {
   Typography,
 } from "@mui/material";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
-import { useContext, useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
-import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import "ldrs/helix";
 
 export const AdminShipping = () => {
@@ -60,8 +58,9 @@ export const AdminShipping = () => {
     fetchShipping();
   }, []);
 
+  // Create a flag to update database with correct shipping rate
   const handleRateChange = async (e, id, rateType) => {
-    // Your existing handleChange logic
+    // existing handleChange logic
     const newRateType = rateType === "flatRate" ? "flatRate" : "stateRate";
 
     // Update the database with the new rate type
@@ -78,13 +77,13 @@ export const AdminShipping = () => {
         setUseFlatRate((prevState) => ({ ...prevState, [id]: checked }));
         if (checked) {
           setUseStateRate((prevState) => ({ ...prevState, [id]: false }));
-          handleRateChange(e, id, "flatRate"); // Update the database
+          handleRateChange(e, id, "flatRate");
         }
       } else if (stateName === "stateRate") {
         setUseStateRate((prevState) => ({ ...prevState, [id]: checked }));
         if (checked) {
           setUseFlatRate((prevState) => ({ ...prevState, [id]: false }));
-          handleRateChange(e, id, "stateRate"); // Update the database
+          handleRateChange(e, id, "stateRate");
         }
       }
       return;
@@ -132,7 +131,7 @@ export const AdminShipping = () => {
       if (useFlatRate[item.id]) {
         updatedItem.flatRate = item.flatRate || 0;
       } else {
-        updatedItem.flatRate = null; // Or delete the flatRate field if you want to remove it
+        updatedItem.flatRate = null;
       }
 
       return updatedItem;
