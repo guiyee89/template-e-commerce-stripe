@@ -1,4 +1,10 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -9,8 +15,10 @@ import "ldrs/helix";
 
 export const AdminShipping = () => {
   const [shippingData, setShippingData] = useState([]);
-  const [shippingCost, setShippingCost] = useState(shippingData);
+  const [shippingCost, setShippingCost] = useState([]);
   const [shippingLoading, setShippingLoading] = useState(true);
+  const [useFlatRate, setUseFlatRate] = useState({});
+  const [useStateRate, setUseStateRate] = useState({});
 
   useEffect(() => {
     setShippingCost(shippingData);
@@ -26,7 +34,22 @@ export const AdminShipping = () => {
           ...doc.data(),
           id: doc.id,
         }));
+
+        const initialFlatRateState = {};
+        const initialStateRateState = {};
+
+        shipping.forEach((item) => {
+          initialFlatRateState[item.id] =
+            item.flatRate !== undefined && item.flatRate !== null;
+          initialStateRateState[item.id] = !(
+            item.flatRate !== undefined && item.flatRate !== null
+          );
+        });
+
         setShippingData(shipping);
+        setUseFlatRate(initialFlatRateState);
+        setUseStateRate(initialStateRateState);
+
         setTimeout(() => {
           setShippingLoading(false);
         }, 800);
@@ -35,15 +58,45 @@ export const AdminShipping = () => {
       }
     };
     fetchShipping();
-  }, [shippingData]);
+  }, []);
+
+  const handleRateChange = async (e, id, rateType) => {
+    // Your existing handleChange logic
+    const newRateType = rateType === "flatRate" ? "flatRate" : "stateRate";
+
+    // Update the database with the new rate type
+    const shipmentDoc = doc(db, "shipment", id);
+    await updateDoc(shipmentDoc, {
+      rateType: newRateType,
+    });
+  };
 
   const handleChange = (e, id, stateName) => {
-    const { value } = e.target;
+    const { value, checked, type } = e.target;
+    if (type === "checkbox") {
+      if (stateName === "flatRate") {
+        setUseFlatRate((prevState) => ({ ...prevState, [id]: checked }));
+        if (checked) {
+          setUseStateRate((prevState) => ({ ...prevState, [id]: false }));
+          handleRateChange(e, id, "flatRate"); // Update the database
+        }
+      } else if (stateName === "stateRate") {
+        setUseStateRate((prevState) => ({ ...prevState, [id]: checked }));
+        if (checked) {
+          setUseFlatRate((prevState) => ({ ...prevState, [id]: false }));
+          handleRateChange(e, id, "stateRate"); // Update the database
+        }
+      }
+      return;
+    }
+
     setShippingCost((prevState) =>
       prevState.map((item) => {
         if (item.id === id) {
           if (stateName === "overseas" || stateName === "pick_up") {
             return { ...item, [stateName]: parseFloat(value) || 0 };
+          } else if (stateName === "flatRate") {
+            return { ...item, flatRate: parseFloat(value) || 0 };
           } else {
             const updatedState = item.state.map((stateItem) => {
               if (stateItem.hasOwnProperty(stateName)) {
@@ -68,21 +121,36 @@ export const AdminShipping = () => {
         const stateName = Object.keys(stateItem)[0];
         return { [stateName]: stateItem[stateName] || 0 };
       });
-      return {
+
+      const updatedItem = {
         ...item,
         overseas: item.overseas || 0,
         pick_up: item.pick_up || 0,
         state: sanitizedState,
       };
+
+      if (useFlatRate[item.id]) {
+        updatedItem.flatRate = item.flatRate || 0;
+      } else {
+        updatedItem.flatRate = null; // Or delete the flatRate field if you want to remove it
+      }
+
+      return updatedItem;
     });
 
     for (const shipping of sanitizedShippingCost) {
       const shippingDocRef = doc(shippingCollection, shipping.id);
-      await updateDoc(shippingDocRef, {
+      const updateData = {
         overseas: shipping.overseas,
         pick_up: shipping.pick_up,
         state: shipping.state,
-      });
+      };
+
+      if (shipping.flatRate !== undefined) {
+        updateData.flatRate = shipping.flatRate;
+      }
+
+      await updateDoc(shippingDocRef, updateData);
     }
 
     console.log("Data updated successfully");
@@ -102,26 +170,25 @@ export const AdminShipping = () => {
         {shippingCost.map((shipping) => (
           <ShippingContainer key={shipping.id}>
             <OverseasContainer>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                }}
-              >
+              <div style={{ display: "flex", justifyContent: "flex-start" }}>
                 <p
                   style={{
                     fontSize: ".9rem",
                     fontWeight: "bold",
                     textTransform: "uppercase",
-                    minWidth: "246px",
                   }}
                 >
-                  Foreign Countries :
+                  Overseas:
                 </p>
                 <Input
-                  style={{ width: "283px" }}
+                  style={{
+                    width: "288px",
+                    position: "absolute",
+                    left: "23.7%",
+                    top: "24px",
+                  }}
                   type="number"
-                  label={"Other Countries"}
+                  label="Other Countries"
                   name="overseas"
                   defaultValue={shipping.overseas || 0}
                   onChange={(e) => handleChange(e, shipping.id, "overseas")}
@@ -137,26 +204,77 @@ export const AdminShipping = () => {
                   fontWeight: "bold",
                   minWidth: "135px",
                   textTransform: "uppercase",
+                  padding: "24px 0",
                 }}
               >
-                United States :
+                United States:
               </p>
-              <StateContainer>
-                {shipping.state.map((stateItem, index) => {
-                  const stateName = Object.keys(stateItem)[0];
-                  return (
-                    <Input
-                      key={index}
-                      type="number"
-                      label={stateName}
-                      name={stateName}
-                      defaultValue={stateItem[stateName] || 0}
-                      onChange={(e) => handleChange(e, shipping.id, stateName)}
-                      placeholder={stateName}
-                    />
-                  );
-                })}
-              </StateContainer>
+              <UnitedStatesWrapper>
+                <FlatRateContainer>
+                  <FormControlLabel
+                    style={{ marginRight: "12px" }}
+                    control={
+                      <Checkbox
+                        checked={useFlatRate[shipping.id] || false}
+                        onChange={(e) =>
+                          handleChange(e, shipping.id, "flatRate")
+                        }
+                      />
+                    }
+                    label={
+                      <Typography style={{ fontSize: "0.88rem" }}>
+                        Use Flat Rate
+                      </Typography>
+                    }
+                  />
+
+                  <Input
+                    type="number"
+                    label="Flat Rate"
+                    name="flatRate"
+                    defaultValue={shipping.flatRate || 0}
+                    onChange={(e) => handleChange(e, shipping.id, "flatRate")}
+                    placeholder="Flat Rate"
+                    disabled={useStateRate[shipping.id]}
+                  />
+                </FlatRateContainer>
+
+                <StateContainer>
+                  <FormControlLabel
+                    style={{ marginRight: "2px" }}
+                    control={
+                      <Checkbox
+                        checked={useStateRate[shipping.id] || false}
+                        onChange={(e) =>
+                          handleChange(e, shipping.id, "stateRate")
+                        }
+                      />
+                    }
+                    label={
+                      <Typography style={{ fontSize: "0.88rem" }}>
+                        Use State Rate
+                      </Typography>
+                    }
+                  />
+                  {shipping.state.map((stateItem, index) => {
+                    const stateName = Object.keys(stateItem)[0];
+                    return (
+                      <Input
+                        key={index}
+                        type="number"
+                        label={stateName}
+                        name={stateName}
+                        defaultValue={stateItem[stateName] || 0}
+                        onChange={(e) =>
+                          handleChange(e, shipping.id, stateName)
+                        }
+                        placeholder={stateName}
+                        disabled={useFlatRate[shipping.id]}
+                      />
+                    );
+                  })}
+                </StateContainer>
+              </UnitedStatesWrapper>
             </UnitedStatesContainer>
           </ShippingContainer>
         ))}
@@ -167,6 +285,7 @@ export const AdminShipping = () => {
     </ShippingFormWrapper>
   );
 };
+
 const BouncyLoader = styled.div`
   width: 100%;
   display: flex;
@@ -190,6 +309,7 @@ const Form = styled.form`
   align-content: center;
   align-items: flex-start;
 `;
+
 const ShippingContainer = styled.div`
   width: 100%;
   max-width: 1200px;
@@ -201,16 +321,20 @@ const ShippingContainer = styled.div`
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
+
 const OverseasContainer = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
   width: 100%;
   gap: 2rem;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 2px 4px;
   border-top-right-radius: 10px;
-  padding: 20px 45px 20px 20px;
+  padding: 0 22px;
+  height: 90px;
 `;
+
 const UnitedStatesContainer = styled.div`
   gap: 2rem;
   display: flex;
@@ -221,14 +345,15 @@ const UnitedStatesContainer = styled.div`
   max-height: 470px;
   border-bottom-right-radius: 10px;
 `;
-const StateContainer = styled.div`
+
+const UnitedStatesWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
   overflow: auto;
-  padding: 12px;
+  padding: 0 12px;
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -243,6 +368,23 @@ const StateContainer = styled.div`
     background-color: #f1f1f1;
   }
 `;
+
+const StateContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 12px;
+`;
+
+const FlatRateContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 12px;
+`;
+
 const Input = styled(TextField)`
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     padding: 12.5px 5px;
@@ -255,3 +397,252 @@ const Input = styled(TextField)`
 const SubmitBtn = styled(Button)`
   margin-top: 1rem;
 `;
+
+// export const AdminShipping = () => {
+//   const [shippingData, setShippingData] = useState([]);
+//   const [shippingCost, setShippingCost] = useState(shippingData);
+//   const [shippingLoading, setShippingLoading] = useState(true);
+
+//   useEffect(() => {
+//     setShippingCost(shippingData);
+//   }, [shippingData]);
+
+//   useEffect(() => {
+//     const fetchShipping = async () => {
+//       const shippingCollection = collection(db, "shipment");
+//       const q = query(shippingCollection);
+//       try {
+//         const snapshot = await getDocs(q);
+//         const shipping = snapshot.docs.map((doc) => ({
+//           ...doc.data(),
+//           id: doc.id,
+//         }));
+//         setShippingData(shipping);
+//         setTimeout(() => {
+//           setShippingLoading(false);
+//         }, 800);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     };
+//     fetchShipping();
+//   }, [shippingData]);
+
+//   const handleChange = (e, id, stateName) => {
+//     const { value } = e.target;
+//     setShippingCost((prevState) =>
+//       prevState.map((item) => {
+//         if (item.id === id) {
+//           if (stateName === "overseas" || stateName === "pick_up") {
+//             return { ...item, [stateName]: parseFloat(value) || 0 };
+//           } else {
+//             const updatedState = item.state.map((stateItem) => {
+//               if (stateItem.hasOwnProperty(stateName)) {
+//                 return { [stateName]: parseFloat(value) || 0 };
+//               }
+//               return stateItem;
+//             });
+//             return { ...item, state: updatedState };
+//           }
+//         }
+//         return item;
+//       })
+//     );
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const shippingCollection = collection(db, "shipment");
+
+//     const sanitizedShippingCost = shippingCost.map((item) => {
+//       const sanitizedState = item.state.map((stateItem) => {
+//         const stateName = Object.keys(stateItem)[0];
+//         return { [stateName]: stateItem[stateName] || 0 };
+//       });
+//       return {
+//         ...item,
+//         overseas: item.overseas || 0,
+//         pick_up: item.pick_up || 0,
+//         state: sanitizedState,
+//       };
+//     });
+
+//     for (const shipping of sanitizedShippingCost) {
+//       const shippingDocRef = doc(shippingCollection, shipping.id);
+//       await updateDoc(shippingDocRef, {
+//         overseas: shipping.overseas,
+//         pick_up: shipping.pick_up,
+//         state: shipping.state,
+//       });
+//     }
+
+//     console.log("Data updated successfully");
+//   };
+
+//   if (shippingLoading) {
+//     return (
+//       <BouncyLoader>
+//         <l-helix size="35" speed="1.25" color="black"></l-helix>
+//       </BouncyLoader>
+//     );
+//   }
+
+//   return (
+//     <ShippingFormWrapper>
+//       <Form onSubmit={handleSubmit}>
+//         {shippingCost.map((shipping) => (
+//           <ShippingContainer key={shipping.id}>
+//             <OverseasContainer>
+//               <div
+//                 style={{
+//                   display: "flex",
+//                   justifyContent: "flex-start",
+//                 }}
+//               >
+//                 <p
+//                   style={{
+//                     fontSize: ".9rem",
+//                     fontWeight: "bold",
+//                     textTransform: "uppercase",
+//                      minWidth: "220px",
+//                   }}
+//                 >
+//                   Foreign Countries :
+//                 </p>
+//                 <Input
+//                   style={{ width: "283px" }}
+//                   type="number"
+//                   label={"Other Countries"}
+//                   name="overseas"
+//                   defaultValue={shipping.overseas || 0}
+//                   onChange={(e) => handleChange(e, shipping.id, "overseas")}
+//                   placeholder="Overseas"
+//                 />
+//               </div>
+//             </OverseasContainer>
+
+//             <UnitedStatesContainer>
+//               <p
+//                 style={{
+//                   fontSize: ".9rem",
+//                   fontWeight: "bold",
+//                   minWidth: "135px",
+//                   textTransform: "uppercase",
+//                 }}
+//               >
+//                 United States :
+//               </p>
+//               <StateContainer>
+//                 {shipping.state.map((stateItem, index) => {
+//                   const stateName = Object.keys(stateItem)[0];
+//                   return (
+//                     <Input
+//                       key={index}
+//                       type="number"
+//                       label={stateName}
+//                       name={stateName}
+//                       defaultValue={stateItem[stateName] || 0}
+//                       onChange={(e) => handleChange(e, shipping.id, stateName)}
+//                       placeholder={stateName}
+//                     />
+//                   );
+//                 })}
+//               </StateContainer>
+//             </UnitedStatesContainer>
+//           </ShippingContainer>
+//         ))}
+//         <SubmitBtn type="submit" variant="contained">
+//           Confirm Changes
+//         </SubmitBtn>
+//       </Form>
+//     </ShippingFormWrapper>
+//   );
+// };
+// const BouncyLoader = styled.div`
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   grid-column: 2/6;
+// `;
+
+// const ShippingFormWrapper = styled.div`
+//   width: 100%;
+//   margin: 50px 10px;
+//   grid-column: 2/7;
+// `;
+
+// const Form = styled.form`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 2rem;
+//   margin: 0 auto;
+//   justify-content: center;
+//   align-content: center;
+//   align-items: flex-start;
+// `;
+// const ShippingContainer = styled.div`
+//   width: 100%;
+//   max-width: 1200px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 0.5rem;
+//   box-shadow: rgba(0, 0, 0, 0.45) 3px -1px 13px;
+//   border-top-right-radius: 10px;
+//   border-bottom-right-radius: 10px;
+// `;
+// const OverseasContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   gap: 2rem;
+//   justify-content: space-between;
+//   box-shadow: rgba(0, 0, 0, 0.45) 2px 2px 4px;
+//   border-top-right-radius: 10px;
+//   padding: 20px 45px 20px 20px;
+// `;
+// const UnitedStatesContainer = styled.div`
+//   gap: 2rem;
+//   display: flex;
+//   width: 100%;
+//   justify-content: center;
+//   box-shadow: rgba(0, 0, 0, 0.45) 2px 4px 10px;
+//   padding: 20px;
+//   max-height: 470px;
+//   border-bottom-right-radius: 10px;
+// `;
+// const StateContainer = styled.div`
+//   width: 100%;
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 2rem;
+//   justify-content: center;
+//   overflow: auto;
+//   padding: 12px;
+//   ::-webkit-scrollbar {
+//     width: 5px;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     background-color: #888;
+//     border-radius: 5px;
+//   }
+//   ::-webkit-scrollbar-thumb:hover {
+//     background-color: #555;
+//   }
+//   ::-webkit-scrollbar-track {
+//     background-color: #f1f1f1;
+//   }
+// `;
+// const Input = styled(TextField)`
+//   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+//     padding: 12.5px 5px;
+//     text-align: center;
+//   }
+//   width: 130px;
+//   margin-bottom: 1rem;
+// `;
+
+// const SubmitBtn = styled(Button)`
+//   margin-top: 1rem;
+// `;

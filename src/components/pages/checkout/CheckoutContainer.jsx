@@ -95,6 +95,7 @@ export const CheckoutContainer = () => {
         let shipmentDoc = doc(shipmentCollection, "3Mwmj1byEy8pDQyqwVMa");
         let docSnapshot = await getDoc(shipmentDoc);
         const shipmentData = docSnapshot.data();
+        const rateType = shipmentData.rateType;
 
         if (shippingMethod === "pick_up") {
           setShipmentCost(shipmentData.pick_up || 0);
@@ -105,22 +106,24 @@ export const CheckoutContainer = () => {
             setShipmentCost(shipmentData.overseas);
           } else {
             setShipmentCost(0);
-          }
 
-          if (state) {
-            // If country is United States, find the shipping cost for the selected state
-            const stateData = shipmentData.state;
-            console.log(stateData)
-            let selectedStateCost = 0;
-            stateData.forEach((item) => {
-              if (Object.keys(item)[0] === state) {
-                selectedStateCost = item[state];
+            if (state) {
+              if (rateType === "flatRate") {
+                setShipmentCost(shipmentData.flatRate);
+              } else {
+                const stateData = shipmentData.state;
+                let selectedStateCost = 0;
+                stateData.forEach((item) => {
+                  if (Object.keys(item)[0] === state) {
+                    selectedStateCost = item[state];
+                  }
+                });
+                if (selectedStateCost !== 0) {
+                  setShipmentCost(selectedStateCost);
+                } else {
+                  console.error(`Shipping cost not found for state: ${state}`);
+                }
               }
-            });
-            if (selectedStateCost !== 0) {
-              setShipmentCost(selectedStateCost);
-            } else {
-              console.error(`Shipping cost not found for state: ${state}`);
             }
           }
         }
@@ -142,7 +145,6 @@ export const CheckoutContainer = () => {
         setShipCostLoader(false);
       }, 1200);
     }
-    console.log(shipmentCost)
   }, [shippingMethod, country, state]);
 
   return (

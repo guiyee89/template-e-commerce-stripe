@@ -47,7 +47,6 @@ export const Layout = () => {
   const isDashboard = currentRoute?.id === "dashboard";
   const isCheckout = currentRoute?.id === "checkout";
 
-  
   return (
     <>
       <Wrapper
@@ -72,8 +71,7 @@ export const Layout = () => {
             <OutletWrapper isHome={isHome} isCheckout={isCheckout}>
               <Outlet />
             </OutletWrapper>
-
-            <NewsLetter />
+            {!isDashboard && <NewsLetter />}
             <Footer />
           </>
         )}
