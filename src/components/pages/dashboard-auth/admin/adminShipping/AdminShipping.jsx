@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import "ldrs/helix";
