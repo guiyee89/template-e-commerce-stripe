@@ -1,26 +1,69 @@
-import styled from "styled-components/macro";
+import styled, { createGlobalStyle } from "styled-components/macro";
 import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { updateEmailList } from "../../../firebaseConfig";
+
+const SwalAlert = createGlobalStyle`
+  .custom-swal-icon {
+    margin: 20px auto 0; /* Center the icon */
+  }
+`;
 
 export const NewsLetter = () => {
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    console.log(email);
+  }, [email]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      setTimeout(() => {
+        updateEmailList(email);
+        setEmail("");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Thanks for subscribing",
+          text: "Check your email",
+          timer: 552500,
+          scrollbarPadding: false,
+          confirmButtonColor: "#000000",
+          customClass: {
+            icon: "custom-swal-icon",
+          },
+        });
+      }, 500);
+    }
+  };
+
   return (
     <>
       <Wrapper>
         <Title>get 5% off </Title>
-        <Text>Suscribe to our newsletter to get our exclusive sales</Text>
-        <Form>
+        <Text>suscribe to our newsletter to get our exclusive sales</Text>
+        <Form onSubmit={handleSubmit}>
           <Input
             label="Add your Email"
+            type="email"
             variant="outlined"
             name="email"
-            size="small"
+            size="medium"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit" variant="contained" color="primary">
+            <SpanButton>subscribe</SpanButton>
+          </Button>
+          <SwalAlert />
         </Form>
-        {/*  <Text>Follow us in our social media</Text> */}
+        {/* <Text>Follow us in our social media</Text> */}
       </Wrapper>
     </>
   );
 };
+
 const Wrapper = styled.section`
   height: 270px;
   background-color: black;
@@ -41,6 +84,14 @@ const Title = styled.h1`
   color: white;
   letter-spacing: 2px;
 `;
+const Text = styled.p`
+  letter-spacing: 1px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  @media (max-width: 500px) {
+    text-align: center;
+  }
+`;
 const Form = styled.form`
   display: flex;
   gap: 1rem;
@@ -53,7 +104,7 @@ const Form = styled.form`
   }
 `;
 const Input = styled(TextField)`
-  border-radius: 13px;
+  border-radius: 4px;
   width: 280px;
   background-color: white;
   z-index: 0;
@@ -63,19 +114,43 @@ const Input = styled(TextField)`
   }
 `;
 const Button = styled.button`
-  width: 140px;
-  height: 41px;
-  background-color: rgb(196, 129, 3);
-  border-radius: 12px;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-  border: transparent;
+  width: 150px;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  transform: rotate(0deg);
+  transform-origin: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 #494a4b;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: #f1f5f8;
+  :active {
+    transform: translateY(5px);
+    padding: 0;
+    outline: 0;
+  }
+  @media (max-width: 350px) {
+    width: 95%;
+  }
 `;
-const Text = styled.p`
-  letter-spacing: 1px;
-  line-height: 1.5;
-  @media (max-width: 500px) {
-    text-align: center;
+const SpanButton = styled.span`
+  background-color: #cf873e;
+  color: white;
+  height: 52px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: block;
+  /* padding: 0.5rem 1rem; */
+  border-radius: 5px;
+  border: 2px solid #494a4b;
+  /* font-family: "Gochi Hand", cursive; */
+  :hover {
+    transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"};
+    box-shadow: ${({ isLoading }) =>
+      isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
   }
 `;

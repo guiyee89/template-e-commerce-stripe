@@ -142,7 +142,7 @@ export const ItemList = ({
             }}
             renderItem={(item) => <PaginationItem component="div" {...item} />}
           />
-          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={25} />}
+          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={20} />}
         </PaginationWrapperTop>
         <ItemsQuantity>{productsQuantity} Products</ItemsQuantity>
       </HeaderContainer>
@@ -236,7 +236,7 @@ export const ItemList = ({
           }}
           renderItem={(item) => <PaginationItem component="div" {...item} />}
         />
-        {isLoadingPagination && <ClipLoaderBottom color="#194f44" size={35} />}
+        {isLoadingPagination && <ClipLoaderBottom color="#194f44" size={25} />}
       </PaginationWrapperBottom>
     </>
   );

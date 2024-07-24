@@ -35,6 +35,8 @@ export const CheckoutForm = ({
   confirm,
   setConfirm,
   checkoutLoading,
+  subscribeToNewsletter,
+  setSubscribeToNewsletter,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
   const { user, handleLogout } = useContext(AuthContext);
@@ -208,7 +210,14 @@ export const CheckoutForm = ({
                       marginTop: "20px",
                       marginLeft: "2px",
                     }}
-                    control={<Checkbox />}
+                    control={
+                      <Checkbox
+                        checked={subscribeToNewsletter}
+                        onChange={(e) =>
+                          setSubscribeToNewsletter(e.target.checked)
+                        }
+                      />
+                    }
                     label={
                       <Typography
                         sx={{
@@ -230,6 +239,7 @@ export const CheckoutForm = ({
                   >
                     ( 5% discount code )
                   </p>
+
                   <DeliveryInfoTitle>Delivery</DeliveryInfoTitle>
 
                   {/* Shipping Buttons component */}
