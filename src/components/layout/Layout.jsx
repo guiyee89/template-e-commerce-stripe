@@ -3,7 +3,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import { menuRoutes } from "../routes/menuRoutes";
 import { Footer } from "./footer/Footer";
 import styled from "styled-components/macro";
-import { NewsLetter } from "./newsletter/NewsLetter";
 import useScrollRestoration from "../hooks/useScrollRestoration";
 import { SideCart } from "../pages/cart/SideCart";
 import { useContext, useEffect } from "react";
@@ -13,6 +12,7 @@ import { NavDesktop } from "./navbar/NavDesktop";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { HeroSmall } from "../pages/landingPage/hero/HeroSmall";
+import { NewsLetter } from "./newsletter/NewsLetter";
 
 ////////////////////////////////////////////////////
 

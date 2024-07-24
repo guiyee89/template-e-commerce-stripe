@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { db } from "../../../firebaseConfig";
+import { db, updateEmailList } from "../../../firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
@@ -24,6 +24,7 @@ export const CheckoutContainer = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [shipCostLoader, setShipCostLoader] = useState(false);
+  const [subscribeToNewsletter, setSubscribeToNewsletter] = useState(false);
 
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
@@ -37,7 +38,7 @@ export const CheckoutContainer = () => {
       direccion: "",
       cp: "",
     },
-    onSubmit: (data) => {
+    onSubmit: async (data) => {
       setCheckoutLoading(true);
       //Submit order data
       let order = {
@@ -56,6 +57,10 @@ export const CheckoutContainer = () => {
         setCheckoutLoading(false);
       }, 2000);
       console.log(order);
+      // Update email list if checkbox is checked
+      if (subscribeToNewsletter) {
+        await updateEmailList(data.email);
+      }
     },
 
     validateOnChange: false, //que no se valide mientras escribo, sino al hacer submit
@@ -167,6 +172,8 @@ export const CheckoutContainer = () => {
           confirm={confirm}
           setConfirm={setConfirm}
           checkoutLoading={checkoutLoading}
+          subscribeToNewsletter={subscribeToNewsletter}
+          setSubscribeToNewsletter={setSubscribeToNewsletter}
         />
         <CarouselContainer>
           <h1
