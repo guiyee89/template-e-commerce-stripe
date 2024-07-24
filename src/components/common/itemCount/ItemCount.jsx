@@ -136,6 +136,7 @@ const AddCartBtn = styled.button`
 `;
 const SpanAddCart = styled.span`
   background: #f1f5f8;
+  color: black;
   display: block;
   padding: 0.3rem 1rem;
   border-radius: 5px;

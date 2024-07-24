@@ -4,7 +4,6 @@ import { ItemDetailDesktop } from "./itemDetailDesktop/ItemDetailDesktop";
 import { ItemDetailMobile } from "./itemDetailMobile/ItemDetailMobile";
 import { db } from "../../../firebaseConfig";
 import { collection, getDoc, doc } from "firebase/firestore";
-import styled from "styled-components/macro";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";

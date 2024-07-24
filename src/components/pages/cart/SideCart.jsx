@@ -480,6 +480,7 @@ const CheckoutButton = styled.button`
 `;
 const SpanCheckout = styled.span`
   background: #f1f5f8;
+  color: black;
   display: block;
   padding: 0.5rem 1rem;
   border-radius: 5px;

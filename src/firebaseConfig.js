@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore,/*  getAnalytics  */ } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDocs, getFirestore, updateDoc,/*  getAnalytics  */ } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage"
 import { v4 } from "uuid"
@@ -155,4 +155,17 @@ export const deleteUnusedImages = async () => {
   }
 };
 
+///////////////////////////////////////////////////////////////////////////////
+// /******   EMAIL SUBSCRIBERS   ******/
+export const updateEmailList = async (newEmail) => {
+  try {
+    const refDoc = doc(db, "subscribers", "5UX9hU5jE0yPzIPWfQd4");
+    await updateDoc(refDoc, {
+      emails: arrayUnion(newEmail),
+    });
+    console.log("Email updated successfully");
+  } catch (err) {
+    console.error("Error updating email: ", err);
+  }
+};
 
