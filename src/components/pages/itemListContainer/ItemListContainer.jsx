@@ -194,7 +194,8 @@ const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 550px;
+  padding-bottom: 200px;
+  /* min-height: 550px; */
 `;
 
 const NoProductMessage = styled.h2`
