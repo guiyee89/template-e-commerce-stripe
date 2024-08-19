@@ -46,6 +46,7 @@ export const Layout = () => {
   const isHome = currentRoute?.id === "home";
   const isDashboard = currentRoute?.id === "dashboard";
   const isCheckout = currentRoute?.id === "checkout";
+  const isContactUs = currentRoute?.id === "contact";
 
   return (
     <>
@@ -64,7 +65,9 @@ export const Layout = () => {
             {windowWidth <= 900 && <NavMobile />}
 
             <SideCart />
-            {!isHome && !isDashboard && !isCheckout && <HeroSmall />}
+            {!isHome && !isDashboard && !isCheckout && !isContactUs && (
+              <HeroSmall />
+            )}
 
             <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
 
@@ -92,11 +95,12 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
-  /* min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "90vh;")}; */
+  /* min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")}; */
+  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "85vh;")};
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: rgb(253 253 253);
   margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 20px")};
   @media (max-width: 1150px) {
