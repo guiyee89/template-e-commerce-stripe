@@ -27,7 +27,7 @@ export const NewsLetter = () => {
           icon: "success",
           title: "Thanks for subscribing",
           text: "Check your email",
-          timer: 552500,
+          timer: 2000,
           scrollbarPadding: false,
           confirmButtonColor: "#000000",
           customClass: {
