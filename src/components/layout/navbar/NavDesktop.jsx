@@ -300,7 +300,7 @@ const HeaderWrapper = styled.header`
   z-index: 2;
   height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "64px")};
   box-shadow: ${(props) =>
-    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
+    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
   transition: box-shadow
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.1s")} ease-in-out;
   border-bottom: ${(props) =>
