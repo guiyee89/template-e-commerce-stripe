@@ -281,7 +281,7 @@ const HeaderWrapper = styled.header`
   z-index: 2;
   background-color: rgb(253 253 253);
   box-shadow: ${(props) =>
-    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.55) 0px 0px 3px"};
+    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
   border-bottom: ${(props) =>
     props.scrolled === "scrolled"
       ? "1px solid rgb(133 132 132 / 25%)"
