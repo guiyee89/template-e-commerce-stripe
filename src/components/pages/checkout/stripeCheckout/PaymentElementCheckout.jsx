@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
+import { bouncy } from "ldrs";
+bouncy.register();
 
 export const PaymentElementCheckout = ({ shipmentCost }) => {
   const { cart, getTotalPrice, getItemPrice } = useContext(CartContext);
@@ -116,6 +118,19 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
                   </ItemWrapper>
                 );
               })}
+              <p
+                style={{
+                  marginTop: "30px",
+                  fontSize: "0.75rem",
+                  fontWeight: "500",
+                  textAlign: "right",
+                }}
+              >
+                Shipping cost:{" "}
+                <span style={{ fontWeight: "600" }}>
+                  $ {shipmentCost.toFixed(2)}
+                </span>
+              </p>
             </ItemsContainer>
           </CartInfoContainer>
         </CheckoutContainer>
@@ -123,11 +138,23 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
           <PaymentElement />
           <Button disabled={isProcessing} id="submit">
             <span id="button-text">
-              {isProcessing
-                ? "Processing ... "
-                : windowWidth > 750
-                ? `Pay $ ${(total + shipmentCost).toFixed(2)}`
-                : `Pay $ ${(total + shipmentCost).toFixed(2)}`}
+              {isProcessing ? (
+                <BouncyLoader>
+                  <p
+                    style={{
+                      marginRight: "22px",
+                      marginLeft: " 22px ",
+                    }}
+                  >
+                    Processing
+                  </p>
+                  <l-bouncy size="20" speed="1.2" color="black"></l-bouncy>
+                </BouncyLoader>
+              ) : windowWidth > 750 ? (
+                `Pay $ ${(total + shipmentCost).toFixed(2)}`
+              ) : (
+                `Pay $ ${(total + shipmentCost).toFixed(2)}`
+              )}
             </span>
           </Button>
         </PaymentElementContainer>
@@ -242,6 +269,7 @@ const ItemImg = styled.img`
   width: 100%;
 `;
 const ItemTitle = styled.h2`
+  text-transform: capitalize;
   padding-bottom: 2px;
   font-size: clamp(0.65rem, 1.5vw, 1rem);
 `;
@@ -376,9 +404,9 @@ const LoaderOverlay = styled.div`
   padding-left: ${(props) => (props.window < 500 ? "80px" : "0")};
   z-index: 2; /* Higher z-index to cover other elements */
 `;
-const RingLoaderContainer = styled.div`
+const BouncyLoader = styled.div`
   display: flex;
+  -webkit-box-pack: center;
   justify-content: center;
   align-items: center;
-  height: 84%;
 `;
