@@ -1,7 +1,23 @@
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
 import { db } from "./firebaseConfig"
 
 
+// Email Subscribers List
+export const updateEmailList = async (newEmail) => {
+  try {
+    const refDoc = doc(db, "subscribers", "5UX9hU5jE0yPzIPWfQd4");
+    await updateDoc(refDoc, {
+      emails: arrayUnion(newEmail),
+    });
+    console.log("Email updated successfully");
+  } catch (err) {
+    console.error("Error updating email: ", err);
+  }
+};
+
+
+
+// Contact Email
 export const sendContactEmail = async (name, email, phone, message) => {
   const collectionRef = collection(db, "email");
   const emailContent = {
@@ -21,18 +37,39 @@ export const sendContactEmail = async (name, email, phone, message) => {
   return await addDoc(collectionRef, emailContent);
 };
 
-  export const sendSubscribeEmail = async (email, subject, body) => {
-    const collectionRef = collection(db, "email");
-    const emailContent = {
-      to: [email],
-      message: {
-        subject: subject,
-        text: body,
-        html: `<p>${body}</p>`
-      }
-    };
-    console.log("Listo para ser enviado");
-    return await addDoc(collectionRef, emailContent);
+// Subscription Automatic Email
+export const sendSubscribeEmail = async (email, subject, body) => {
+  const collectionRef = collection(db, "email");
+  const emailContent = {
+    to: [email],
+    message: {
+      subject: subject,
+      text: body,
+      html: `<p>${body}</p>`
+    }
   };
+  console.log("Listo para ser enviado");
+  return await addDoc(collectionRef, emailContent);
+};
 
-  
+// Purchase Automatic Email to Customer
+export const sendPurchaseOrderEmail = async (email, subject, body) => {
+  const createdAt = new Date().toISOString()
+  const collectionRef = collection(db, "email");
+  const emailContent = {
+    to: [email],
+    message: {
+      subject: subject,
+      text: body,
+      html: `<p>${body}</p>`
+    }
+  };
+  console.log("Listo para ser enviado");
+  return await addDoc(collectionRef, emailContent, createdAt);
+};
+
+
+
+// Order Automatic Email to Store Owner
+
+// Send Html Email Template

@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { db, updateEmailList } from "../../../firebaseConfig";
+import { db } from "../../../firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
@@ -11,6 +11,7 @@ import { CheckoutForm } from "./checkoutForm/CheckoutForm";
 import { CarouselDesktop } from "../landingPage/carousels/CarouselDesktop";
 import { CarouselTablet } from "../landingPage/carousels/CarouselTablet";
 import { CarouselMobile } from "../landingPage/carousels/CarouselMobile";
+import { updateEmailList } from "../../../firebaseEmailConfig";
 
 export const CheckoutContainer = () => {
   const { cart, getTotalPrice } = useContext(CartContext);
@@ -55,7 +56,7 @@ export const CheckoutContainer = () => {
       setConfirm(true);
       setTimeout(() => {
         setCheckoutLoading(false);
-      }, 2000);
+      }, 2600);
       console.log(order);
       // Update email list if checkbox is checked
       if (subscribeToNewsletter) {

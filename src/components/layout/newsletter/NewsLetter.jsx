@@ -2,7 +2,8 @@ import styled, { createGlobalStyle } from "styled-components/macro";
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { updateEmailList } from "../../../firebaseConfig";
+import { updateEmailList } from "../../../firebaseEmailConfig";
+
 
 const SwalAlert = createGlobalStyle`
   .custom-swal-icon {
