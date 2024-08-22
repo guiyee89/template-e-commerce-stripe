@@ -131,9 +131,8 @@ export const AdminOrders = () => {
                     <TableCellData
                       onClick={() => handleOpenDetails(order.id)}
                       sx={{
-                        textTransform: "capitalize",
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "space-around",
                         cursor: "pointer",
                         paddingLeft:
                           windowWidth > 1076
@@ -141,9 +140,16 @@ export const AdminOrders = () => {
                             : "7px!important",
                       }}
                     >
-                      <div style={{ display: "flex", flexDirection: "column", textTransform:"lowercase" }}>
-                        <span >{order?.buyer?.name}</span>
-                        <span >{order?.buyer?.lastName}</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          textTransform: "uppercase",
+                          fontSize: "0.7rem",
+                        }}
+                      >
+                        <span>{order?.buyer?.name}</span>
+                        <span>{order?.buyer?.lastName}</span>
                       </div>
 
                       <span

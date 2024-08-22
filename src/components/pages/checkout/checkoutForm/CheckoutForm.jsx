@@ -16,9 +16,10 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
 import { Payment } from "../stripeCheckout/Payment";
 import { AuthContext } from "../../../context/AuthContext";
-import { Ring } from "@uiball/loaders";
 import { ShippingButtons } from "../shipping/ShippingButtons";
 import { CartContainer } from "../checkoutCart/CartContainer";
+import { bouncy } from "ldrs";
+bouncy.register();
 
 export const CheckoutForm = ({
   handleSubmit,
@@ -540,15 +541,21 @@ export const CheckoutForm = ({
                   >
                     <SpanConfirmBtn isLoading={checkoutLoading}>
                       {checkoutLoading ? (
-                        <RingLoader>
-                          <p style={{ paddingRight: "10px" }}>Processing...</p>
-                          <Ring
-                            size={25}
-                            lineWeight={5}
-                            speed={1}
+                        <BouncyLoader>
+                          <p
+                            style={{
+                              marginRight: "22px",
+                              marginLeft: " 22px ",
+                            }}
+                          >
+                            Processing
+                          </p>
+                          <l-bouncy
+                            size="20"
+                            speed="1.2"
                             color="black"
-                          />
-                        </RingLoader>
+                          ></l-bouncy>
+                        </BouncyLoader>
                       ) : (
                         "pay now"
                       )}
@@ -566,14 +573,14 @@ export const CheckoutForm = ({
                       <Box
                         sx={{
                           ...style,
-                          top: windowWidth < 750 ? "50%" : "46%",
+                          top: windowWidth < 750 ? "50%" : "43%",
                           width:
                             windowWidth < 550
                               ? "100%"
                               : windowWidth < 1100
                               ? "95%"
                               : "110%",
-                          height: windowWidth < 750 ? "85%" : "620px",
+                          height: windowWidth < 750 ? "85%" : "630px",
                           padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
                           overflowX: "hidden",
                         }}
@@ -771,7 +778,7 @@ const SpanConfirmBtn = styled.span`
       isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
   }
 `;
-const RingLoader = styled.div`
+const BouncyLoader = styled.div`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
