@@ -8,9 +8,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-/* import { Ring } from "@uiball/loaders"; */
+import useScrollRestoration from "../../hooks/useScrollRestoration";
+
+
 
 export const ItemDetailContainer = () => {
+  useScrollRestoration();
   const [selectedItem, setSelectedItem] = useState({});
   const { id } = useParams();
   const [loadingColorFilter, setLoadingColorFilter] = useState(false); //Activate image loaders on color filter
@@ -72,15 +75,6 @@ export const ItemDetailContainer = () => {
         pauseOnHover
         theme="dark"
       />
-      {/*  pageLoading ? (
-        <LoaderWrapper>
-          {windowWidth > 600 ? (
-            <Ring size={40} lineWeight={7} speed={1} color="black" /> 
-          ) : (
-            <Ring size={32} lineWeight={6} speed={1} color="black" />
-          )}
-        </LoaderWrapper>
-      ) : ( */}
       {progressComplete && (
         <>
           {windowWidth > 950 ? (
@@ -94,19 +88,7 @@ export const ItemDetailContainer = () => {
           )}
         </>
       )}
-      {/* ) */}
+     
     </>
   );
 };
-/* 
-const LoaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 538px;
-  margin-left: 35px;
-  @media (max-width: 550px) {
-    margin-left: 0px;
-  }
-`;
- */

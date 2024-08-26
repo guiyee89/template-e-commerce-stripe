@@ -7,17 +7,17 @@ import { collection, getDocs } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components/macro";
-import useScrollRestoration from "../../hooks/useScrollRestoration";
+//import useScrollRestoration from "../../hooks/useScrollRestoration";
 import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
 
 //////////////     //////////////    ////////////      ////////////      /////////////
-export const ScrollRestorationWrapper = ({ children }) => {
-  useScrollRestoration(); // Apply the scroll restoration hook
-  return <>{children}</>; // Render the children content
-};
+// export const ScrollRestorationWrapper = ({ children }) => {
+//   useScrollRestoration(); // Apply the scroll restoration hook
+//   return <>{children}</>; // Render the children content
+// };
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ItemListContainer = () => {
@@ -41,19 +41,15 @@ export const ItemListContainer = () => {
     setProgressComplete,
     pageLoading,
     setPageLoading,
-    // setProgress,
-    // setVisible,
   } = useContext(GlobalToolsContext);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
     setPageLoading(true);
-    const delay = 300;
+    const delay = 0;
 
     const fetchData = async () => {
-      // setVisible(true);
-      // setProgress(8);
       try {
         const itemsCollection = collection(db, "products");
         const res = await getDocs(itemsCollection);
@@ -90,13 +86,8 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products);
 
-        // setTimeout(() => {
         setPageLoading(false);
         setProgressComplete(true);
-        // if (progressComplete === true) {
-        //   setProgress(100);
-        // }
-        // }, 150);
       } catch (err) {
         console.error(err);
       }
@@ -119,73 +110,73 @@ export const ItemListContainer = () => {
     }
   };
 
-  useEffect(() => {
-    if (filterChanged) {
-      window.scrollTo({ top: 150, behavior: "instant" });
-      setFilterChanged(false);
-    }
-  }, [filterChanged]);
+  // useEffect(() => {
+  //   if (filterChanged) {
+  //     window.scrollTo({ top: 150, behavior: "instant" });
+  //     setFilterChanged(false);
+  //   }
+  // }, [filterChanged]);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //                                    RENDERING                                    //
   return (
     <>
-      <ScrollRestorationWrapper>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+       {/* <ScrollRestorationWrapper>  */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
-        {pageLoading ? (
-          <LoaderWrapper>
-            {windowWidth > 600 ? (
-              <Ring size={30} lineWeight={6} speed={1} color="black" />
-            ) : (
-              <Ring size={27} lineWeight={6} speed={1} color="black" />
-            )}
-          </LoaderWrapper>
-        ) : (
-          <>
-            {/******  FILTER  ******/}
-            {progressComplete && (
-              <ItemsFiltersWrapper>
-                <FilterContainer
-                  items={items}
-                  allItems={allItems}
-                  onFilterChange={handleFilterChange}
-                  setCurrentPage={setCurrentPage}
-                  setItemLoader={setItemLoader}
+      {pageLoading ? (
+        <LoaderWrapper>
+          {windowWidth > 600 ? (
+            <Ring size={30} lineWeight={6} speed={1} color="black" />
+          ) : (
+            <Ring size={27} lineWeight={6} speed={1} color="black" />
+          )}
+        </LoaderWrapper>
+      ) : (
+        <>
+          {/******  FILTER  ******/}
+          {progressComplete && (
+            <ItemsFiltersWrapper>
+              <FilterContainer
+                items={items}
+                allItems={allItems}
+                onFilterChange={handleFilterChange}
+                setCurrentPage={setCurrentPage}
+                setItemLoader={setItemLoader}
+                filteredItems={filteredItems}
+                isFilterOpen={isFilterOpen}
+                toggleFilterMenu={toggleFilterMenu}
+                setFilterChanged={setFilterChanged}
+              />
+              <ItemListWrapper>
+                {/* RENDERING ITEMS */}
+
+                <ItemList
                   filteredItems={filteredItems}
-                  isFilterOpen={isFilterOpen}
-                  toggleFilterMenu={toggleFilterMenu}
-                  setFilterChanged={setFilterChanged}
+                  navigate={navigate}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  itemLoader={itemLoader}
+                  detailsFilters={detailsFilters}
                 />
-                <ItemListWrapper>
-                  {/* RENDERING ITEMS */}
-
-                  <ItemList
-                    filteredItems={filteredItems}
-                    navigate={navigate}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    itemLoader={itemLoader}
-                    detailsFilters={detailsFilters}
-                  />
-                </ItemListWrapper>
-              </ItemsFiltersWrapper>
-            )}
-          </>
-        )}
-        {/* <AgregarDocs /> */}
-      </ScrollRestorationWrapper>
+              </ItemListWrapper>
+            </ItemsFiltersWrapper>
+          )}
+        </>
+      )}
+      {/* <AgregarDocs /> */}
+      {/* </ScrollRestorationWrapper>  */}
     </>
   );
 };

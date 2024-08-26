@@ -9,7 +9,6 @@ import { LoginContainer } from "../pages/dashboard-auth/authentication/login/Log
 import { SignUpContainer } from "../pages/dashboard-auth/authentication/signup/SignUpContainer";
 import { ForgotPassword } from "../pages/dashboard-auth/authentication/forgotPass/ForgotPassword";
 
-
 export const AppRouter = () => {
   return (
     <Routes>
@@ -18,7 +17,6 @@ export const AppRouter = () => {
           <Route key={id} path={path} element={<Element />} />
         ))}
       </Route>
-  
 
       <Route element={<ProtectedAdmin />}>
         <Route path="/dashboard" element={<AdminDashboard />} />
@@ -34,7 +32,15 @@ export const AppRouter = () => {
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      <Route path="*" element={<h1>404 not found</h1>} />
+      <Route
+        path="*"
+        element={
+          <h1>
+            There was an error loading this page. Please go back to previous
+            page. Sorry for the inconvenience
+          </h1>
+        }
+      />
     </Routes>
   );
 };
