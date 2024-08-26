@@ -2,8 +2,10 @@ import styled, { createGlobalStyle } from "styled-components/macro";
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { updateEmailList } from "../../../firebaseEmailConfig";
-
+import {
+  sendSubscribeEmail,
+  updateEmailList,
+} from "../../../firebaseEmailConfig";
 
 const SwalAlert = createGlobalStyle`
   .custom-swal-icon {
@@ -21,21 +23,32 @@ export const NewsLetter = () => {
     e.preventDefault();
     if (email) {
       setTimeout(() => {
-        updateEmailList(email);
-        setEmail("");
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Thanks for subscribing",
-          text: "Check your email",
-          timer: 2000,
-          scrollbarPadding: false,
-          confirmButtonColor: "#000000",
-          customClass: {
-            icon: "custom-swal-icon",
-          },
-        });
-      }, 500);
+        updateEmailList(email)
+          .then(() => {
+            setEmail("");
+            sendSubscribeEmail(
+              email,
+              "Thanks for subscribing",
+              "Thank you for subscribing to our newsletter! We hope you enjoy our updates."
+            )
+              .then(() => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Thanks for subscribing",
+                  text: "Check your email",
+                  timer: 2000,
+                  scrollbarPadding: false,
+                  confirmButtonColor: "#000000",
+                  customClass: {
+                    icon: "custom-swal-icon",
+                  },
+                });
+              })
+              .catch((err) => console.error("Error sending email: ", err));
+          })
+          .catch((err) => console.error("Error updating email list: ", err));
+      }, 300);
     }
   };
 

@@ -14,7 +14,7 @@ import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomiz
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavDesktop = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const rolAdmin = import.meta.env.VITE_ROL_ADMIN;
   const rolAdmin2 = import.meta.env.VITE_ROL_ADMIN2;
@@ -38,7 +38,7 @@ export const NavDesktop = () => {
     localStorage.removeItem("reloadOccurred");
   };
 
-  //Find "Home" and "ItemDetail" locations
+  //Find  locations
   const location = useLocation();
   const currentRoute = menuRoutes.find(
     (route) => route.path === location.pathname
@@ -60,8 +60,13 @@ export const NavDesktop = () => {
             isCheckout={isCheckout}
             isDashboard={isDashboard}
           >
-            <LogoDiv scrolled={scroll} onClick={handleNavLinkClick}>
-              <LogoLink to="/">
+            <LogoDiv scrolled={scroll}>
+              <LogoLink
+                onClick={() => {
+                  handleNavLinkClick();
+                  window.location.assign("/");
+                }}
+              >
                 <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></Logo>
               </LogoLink>
             </LogoDiv>
@@ -71,9 +76,12 @@ export const NavDesktop = () => {
                 <NavListWrapper scrolled={scroll}>
                   <NavList>
                     <NavLink
-                      to="/"
+                      //to="/"
                       scrolled={scroll}
-                      onClick={handleNavLinkClick}
+                      onClick={() => {
+                        handleNavLinkClick();
+                        window.location.assign("/");
+                      }}
                     >
                       home
                     </NavLink>
@@ -104,9 +112,12 @@ export const NavDesktop = () => {
                               position: "absolute",
                               right: "-75px",
                             }}
-                            to="/all-products"
+                            //to="/all-products"
                             scrolled={scroll}
-                            onClick={handleNavLinkClick}
+                            onClick={() => {
+                              handleNavLinkClick();
+                              window.location.assign("/all-products");
+                            }}
                             onMouseEnter={() =>
                               setHoveredCategory("all-products")
                             }
@@ -121,9 +132,12 @@ export const NavDesktop = () => {
                           <CategoryContainer>
                             <CategoryList>
                               <CategoryLink
-                                to="/category/shoes"
+                                //to="/category/shoes"
                                 scrolled={scroll}
-                                onClick={handleNavLinkClick}
+                                onClick={() => {
+                                  handleNavLinkClick();
+                                  window.location.assign("/category/shoes");
+                                }}
                                 onMouseEnter={() => setHoveredCategory("shoes")}
                                 onMouseLeave={() => setHoveredCategory("shoes")}
                               >
@@ -132,9 +146,12 @@ export const NavDesktop = () => {
                             </CategoryList>
                             <CategoryList>
                               <CategoryLink
-                                to="/category/pants"
+                                //to="/category/pants"
                                 scrolled={scroll}
-                                onClick={handleNavLinkClick}
+                                onClick={() => {
+                                  handleNavLinkClick;
+                                  window.location.assign("/category/pants");
+                                }}
                                 onMouseEnter={() => setHoveredCategory("pants")}
                                 onMouseLeave={() => setHoveredCategory("pants")}
                               >
@@ -143,9 +160,12 @@ export const NavDesktop = () => {
                             </CategoryList>
                             <CategoryList>
                               <CategoryLink
-                                to="/category/shirts"
+                                //to="/category/shirts"
                                 scrolled={scroll}
-                                onClick={handleNavLinkClick}
+                                onClick={() => {
+                                  handleNavLinkClick;
+                                  window.location.assign("/category/shirts");
+                                }}
                                 onMouseEnter={() =>
                                   setHoveredCategory("shirts")
                                 }
@@ -158,9 +178,12 @@ export const NavDesktop = () => {
                             </CategoryList>
                             <CategoryList>
                               <CategoryLink
-                                to="/category/hoodies"
+                                //to="/category/hoodies"
                                 scrolled={scroll}
-                                onClick={handleNavLinkClick}
+                                onClick={() => {
+                                  handleNavLinkClick;
+                                  window.location.assign("/category/hoodies");
+                                }}
                                 onMouseEnter={() =>
                                   setHoveredCategory("hoodies")
                                 }
@@ -173,9 +196,12 @@ export const NavDesktop = () => {
                             </CategoryList>
                             <CategoryList>
                               <CategoryLink
-                                to="/category/bags"
+                                //to="/category/bags"
                                 scrolled={scroll}
-                                onClick={handleNavLinkClick}
+                                onClick={() => {
+                                  handleNavLinkClick;
+                                  window.location.assign("/category/bags");
+                                }}
                                 onMouseEnter={() => setHoveredCategory("bags")}
                                 onMouseLeave={() => setHoveredCategory("bags")}
                               >
@@ -210,9 +236,12 @@ export const NavDesktop = () => {
                   </ProductsDropDown>
                   <NavList>
                     <NavLink
-                      to="/contact"
+                      //to="/all-products"
                       scrolled={scroll}
-                      onClick={handleNavLinkClick}
+                      onClick={() => {
+                        handleNavLinkClick;
+                        window.location.assign("/all-products");
+                      }}
                     >
                       sale
                       <LocalFireDepartmentIcon
@@ -224,9 +253,12 @@ export const NavDesktop = () => {
                   </NavList>
                   <NavList>
                     <NavLink
-                      to="/contact"
+                      // to="/contact"
                       scrolled={scroll}
-                      onClick={handleNavLinkClick}
+                      onClick={() => {
+                        handleNavLinkClick;
+                        window.location.assign("/contact");
+                      }}
                     >
                       contact
                     </NavLink>
@@ -245,9 +277,8 @@ export const NavDesktop = () => {
                       <LoginSharpIcon
                         sx={{ fontSize: "25px" }}
                         onClick={() =>
-                          /* navigate("/login") */ window.location.assign(
-                            "/login"
-                          )
+                          /* navigate("/login") */
+                          window.location.assign("/login")
                         }
                       />
                     </LoginBtn>
@@ -261,9 +292,8 @@ export const NavDesktop = () => {
                         <DashboardCustomizeRoundedIcon
                           sx={{ fontSize: "25px" }}
                           onClick={() =>
-                            /* navigate("/dashboard")  */ window.location.assign(
-                              "/dashboard"
-                            )
+                            /* navigate("/dashboard")  */
+                            window.location.assign("/dashboard")
                           }
                         />
                       </DashboardBtn>
@@ -275,9 +305,8 @@ export const NavDesktop = () => {
                         <AccountCircleSharpIcon
                           sx={{ fontSize: "28px" }}
                           onClick={() =>
-                            /* navigate("/user-orders") */ window.location.assign(
-                              "/user-orders"
-                            )
+                            /* navigate("/user-orders") */
+                            window.location.assign("/user-orders")
                           }
                         />
                       </ProfileBtn>
@@ -377,19 +406,21 @@ const DropDown = styled.div`
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  background-color: white;
+  background-color: rgb(253, 253, 253);
   width: 100%;
+  border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
   justify-content: center;
   margin-top: -26px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px; */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 9px 15px;
   ${ProductsDropDown}:hover & {
     display: flex;
     visibility: visible;
     transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     opacity: 1;
     transition: opacity 0.15s ease-in-out, transform 0.1s ease-in-out;
-    top: ${(props) => (props.scrolled === "scrolled" ? "91px" : "92px")};
+    top: ${(props) => (props.scrolled === "scrolled" ? "90px" : "90px")};
     left: 0%;
     height: max-content;
   }
@@ -499,7 +530,7 @@ const NavLink = styled(Link)`
     background-size: 100% 100%;
   }
   &:active {
-    color: #fafafa;
+    color: rgb(92 92 92);
     transition: background-color 0.05s ease-in-out;
   }
   &:hover::after {
@@ -536,7 +567,7 @@ const CategoryLink = styled(Link)`
     background-size: 100% 100%;
   }
   &:active {
-    color: #fafafa;
+    color: rgb(92 92 92);
     transition: background-color 0.05s ease-in-out;
   }
   &:hover::after {

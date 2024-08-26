@@ -15,7 +15,20 @@ export const updateEmailList = async (newEmail) => {
   }
 };
 
-
+// Subscription Automatic Email
+export const sendSubscribeEmail = async (email, subject, body) => {
+  const collectionRef = collection(db, "email");
+  const emailContent = {
+    to: [email],
+    message: {
+      subject: subject,
+      text: body,
+      html: `<p>${body}</p>`
+    }
+  };
+  console.log("Listo para ser enviado");
+  return await addDoc(collectionRef, emailContent);
+};
 
 // Contact Email
 export const sendContactEmail = async (name, email, phone, message) => {
@@ -34,21 +47,6 @@ export const sendContactEmail = async (name, email, phone, message) => {
     },
   };
   console.log("Ready to be sent");
-  return await addDoc(collectionRef, emailContent);
-};
-
-// Subscription Automatic Email
-export const sendSubscribeEmail = async (email, subject, body) => {
-  const collectionRef = collection(db, "email");
-  const emailContent = {
-    to: [email],
-    message: {
-      subject: subject,
-      text: body,
-      html: `<p>${body}</p>`
-    }
-  };
-  console.log("Listo para ser enviado");
   return await addDoc(collectionRef, emailContent);
 };
 
