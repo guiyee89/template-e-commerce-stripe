@@ -7,17 +7,17 @@ import { collection, getDocs } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components/macro";
-//import useScrollRestoration from "../../hooks/useScrollRestoration";
+import useScrollRestoration from "../../hooks/useScrollRestoration";
 import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
 
 //////////////     //////////////    ////////////      ////////////      /////////////
-// export const ScrollRestorationWrapper = ({ children }) => {
-//   useScrollRestoration(); // Apply the scroll restoration hook
-//   return <>{children}</>; // Render the children content
-// };
+export const ScrollRestorationWrapper = ({ children }) => {
+  useScrollRestoration(); // Apply the scroll restoration hook
+  return <>{children}</>; // Render the children content
+};
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ItemListContainer = () => {
@@ -110,18 +110,18 @@ export const ItemListContainer = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (filterChanged) {
-  //     window.scrollTo({ top: 150, behavior: "instant" });
-  //     setFilterChanged(false);
-  //   }
-  // }, [filterChanged]);
+  useEffect(() => {
+    if (filterChanged) {
+      window.scrollTo({ top: 150, behavior: "instant" });
+      setFilterChanged(false);
+    }
+  }, [filterChanged]);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //                                    RENDERING                                    //
   return (
     <>
-       {/* <ScrollRestorationWrapper>  */}
+       <ScrollRestorationWrapper> 
       <ToastContainer
         position="bottom-right"
         autoClose={1000}
@@ -176,7 +176,7 @@ export const ItemListContainer = () => {
         </>
       )}
       {/* <AgregarDocs /> */}
-      {/* </ScrollRestorationWrapper>  */}
+      </ScrollRestorationWrapper> 
     </>
   );
 };
