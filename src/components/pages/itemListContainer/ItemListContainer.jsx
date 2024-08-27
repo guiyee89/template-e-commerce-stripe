@@ -122,21 +122,6 @@ export const ItemListContainer = () => {
   //                                    RENDERING                                    //
   return (
     <>
-<<<<<<< HEAD
-       <ScrollRestorationWrapper> 
-      <ToastContainer
-        position="bottom-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-=======
       <ScrollRestorationWrapper>
         <ToastContainer
           position="bottom-right"
@@ -150,7 +135,6 @@ export const ItemListContainer = () => {
           pauseOnHover
           theme="dark"
         />
->>>>>>> email-newsletter-integration
 
         {pageLoading ? (
           <LoaderWrapper>
@@ -176,15 +160,6 @@ export const ItemListContainer = () => {
                   toggleFilterMenu={toggleFilterMenu}
                   setFilterChanged={setFilterChanged}
                 />
-<<<<<<< HEAD
-              </ItemListWrapper>
-            </ItemsFiltersWrapper>
-          )}
-        </>
-      )}
-      {/* <AgregarDocs /> */}
-      </ScrollRestorationWrapper> 
-=======
                 <ItemListWrapper>
                   {/* RENDERING ITEMS */}
 
@@ -203,7 +178,6 @@ export const ItemListContainer = () => {
         )}
         {/* <AgregarDocs /> */}
       </ScrollRestorationWrapper>
->>>>>>> email-newsletter-integration
     </>
   );
 };
