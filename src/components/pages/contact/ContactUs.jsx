@@ -3,6 +3,8 @@ import { TextField } from "@mui/material";
 import { sendContactEmail } from "../../../firebaseEmailConfig";
 import Swal from "sweetalert2";
 import { useRef, useState } from "react";
+import { useContext } from "react";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
 export const ContactUs = () => {
   const nameRef = useRef();
@@ -10,6 +12,7 @@ export const ContactUs = () => {
   const emailRef = useRef();
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const { windowWidth } = useContext(GlobalToolsContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,19 +59,20 @@ export const ContactUs = () => {
     <div
       style={{
         height: "100%",
-        width: "600px",
+        width: "100%",
+        maxWidth: "600px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         gap: "2rem",
-        margin: "200px 0",
+        margin: windowWidth > 500 ? "200px 0 " : "120px 0",
       }}
     >
       <h1
         style={{
           fontSize: "2.5rem",
           fontWeight: "bold",
-          paddingBottom: "50px",
+          paddingBottom: windowWidth > 500 ? "50px" : "5px",
         }}
       >
         Contact
