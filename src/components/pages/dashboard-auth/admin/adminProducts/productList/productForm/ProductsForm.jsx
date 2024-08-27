@@ -220,7 +220,6 @@ export const ProductsForm = ({
                     </ProductPriceContainer>
 
                     <ProductsDetailsContainer>
-                      
                       {/******   CATEGORY FORM    *******/}
                       <Div style={{ width: "100%" }}>
                         <FormControl>

@@ -72,11 +72,20 @@ export const ContactUs = () => {
         style={{
           fontSize: "2.5rem",
           fontWeight: "bold",
-          paddingBottom: windowWidth > 500 ? "50px" : "5px",
+          paddingBottom: windowWidth > 500 ? "30px" : "5px",
         }}
       >
         Contact
       </h1>
+       <h2
+        style={{
+          fontSize: "1rem",
+          fontWeight: "500",
+          paddingBottom: windowWidth > 500 ? "10px" : "5px",
+        }}
+      >
+        Send us a message and we will get back to you as soon as possible.
+      </h2>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -88,7 +97,7 @@ export const ContactUs = () => {
       >
         <div style={{ display: "flex", gap: "1rem" }}>
           <Input
-            style={{ width: "50%" }}
+            style={{ width: "50%", border:" 1px solid grey", borderRadius:"6px"  }}
             type="text"
             name="name"
             label="Name"
@@ -96,7 +105,7 @@ export const ContactUs = () => {
             inputRef={nameRef}
           />
           <Input
-            style={{ width: "50%" }}
+            style={{ width: "50%", border:" 1px solid grey" , borderRadius:"6px"  }}
             type="text"
             name="phone"
             label="Phone"
@@ -105,7 +114,7 @@ export const ContactUs = () => {
           />
         </div>
         <Input
-          style={{ height: "50px" }}
+          style={{ border:" 1px solid grey", borderRadius:"6px"   }}
           type="email"
           name="email"
           label="Email"
@@ -121,7 +130,7 @@ export const ContactUs = () => {
           rows={6}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          sx={{ marginBottom: "18px" }}
+          sx={{ marginBottom: "18px", border:" 1px solid grey", borderRadius:"4px"  }}
           InputLabelProps={{
             style: { fontSize: "14px" },
           }}
