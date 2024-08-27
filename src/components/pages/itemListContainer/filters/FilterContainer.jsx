@@ -17,6 +17,7 @@ export const FilterContainer = ({
   isFilterOpen,
   toggleFilterMenu,
   setFilterChanged,
+  isDiscountOnly,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
@@ -136,6 +137,7 @@ export const FilterContainer = ({
 
   //ORDER BY - filtering logic according if filtered items or original items are being rendered
   useEffect(() => {
+    console.log(filteredItems)
     setTimeout(() => {
       if (
         detailsFilters.category.length === 0 &&
@@ -144,7 +146,7 @@ export const FilterContainer = ({
       ) {
         // If no filters are applied, order the original items by the selected ordering option
         let orderedItems = [...items];
-        if (detailsFilters.orderBy === "discount") {
+        if (detailsFilters.orderBy === "discount" || isDiscountOnly) {
           orderedItems = orderedItems.filter((item) => item.discount !== null);
         } else if (detailsFilters.orderBy === "lowPrice") {
           orderedItems.sort((a, b) => {
@@ -280,6 +282,7 @@ export const FilterContainer = ({
             setSelectedSizeOrder={setSelectedSizeOrder}
             selectedColorOrder={selectedColorOrder}
             setSelectedColorOrder={setSelectedColorOrder}
+            isDiscountOnly={isDiscountOnly}
           />
         </DesktopFilterWrapper>
       ) : (
@@ -305,6 +308,7 @@ export const FilterContainer = ({
             setSelectedSizeOrder={setSelectedSizeOrder}
             selectedColorOrder={selectedColorOrder}
             setSelectedColorOrder={setSelectedColorOrder}
+            isDiscountOnly={isDiscountOnly}
           />
         </MobileFilterWrapper>
       )}

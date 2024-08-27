@@ -6,6 +6,8 @@ import {
   sendSubscribeEmail,
   updateEmailList,
 } from "../../../firebaseEmailConfig";
+import { useContext } from "react";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
 const SwalAlert = createGlobalStyle`
   .custom-swal-icon {
@@ -14,7 +16,9 @@ const SwalAlert = createGlobalStyle`
 `;
 
 export const NewsLetter = () => {
+  const { windowWidth } = useContext(GlobalToolsContext);
   const [email, setEmail] = useState("");
+
   useEffect(() => {
     console.log(email);
   }, [email]);
@@ -56,7 +60,9 @@ export const NewsLetter = () => {
     <>
       <Wrapper>
         <Title>get 5% off </Title>
-        <Text>suscribe to our newsletter to get our exclusive sales</Text>
+        <Text style={{ fontSize: windowWidth < 500 && "0.8rem" }}>
+          suscribe to our newsletter to get our exclusive sales
+        </Text>
         <Form onSubmit={handleSubmit}>
           <Input
             label="Add your Email"

@@ -30,7 +30,6 @@ export const ItemListContainer = () => {
   const [itemsNotFound, setItemsNotFound] = useState(false);
   const [itemLoader, setItemLoader] = useState(false);
   const [filterChanged, setFilterChanged] = useState(false);
-
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
 
   const {
@@ -47,7 +46,7 @@ export const ItemListContainer = () => {
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
     setPageLoading(true);
-    const delay = 0;
+    const delay = 300;
 
     const fetchData = async () => {
       try {
@@ -86,6 +85,8 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products);
 
+        console.log(uniqueProducts)
+
         setPageLoading(false);
         setProgressComplete(true);
       } catch (err) {
@@ -121,6 +122,7 @@ export const ItemListContainer = () => {
   //                                    RENDERING                                    //
   return (
     <>
+<<<<<<< HEAD
        <ScrollRestorationWrapper> 
       <ToastContainer
         position="bottom-right"
@@ -134,42 +136,47 @@ export const ItemListContainer = () => {
         pauseOnHover
         theme="dark"
       />
+=======
+      <ScrollRestorationWrapper>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+>>>>>>> email-newsletter-integration
 
-      {pageLoading ? (
-        <LoaderWrapper>
-          {windowWidth > 600 ? (
-            <Ring size={30} lineWeight={6} speed={1} color="black" />
-          ) : (
-            <Ring size={27} lineWeight={6} speed={1} color="black" />
-          )}
-        </LoaderWrapper>
-      ) : (
-        <>
-          {/******  FILTER  ******/}
-          {progressComplete && (
-            <ItemsFiltersWrapper>
-              <FilterContainer
-                items={items}
-                allItems={allItems}
-                onFilterChange={handleFilterChange}
-                setCurrentPage={setCurrentPage}
-                setItemLoader={setItemLoader}
-                filteredItems={filteredItems}
-                isFilterOpen={isFilterOpen}
-                toggleFilterMenu={toggleFilterMenu}
-                setFilterChanged={setFilterChanged}
-              />
-              <ItemListWrapper>
-                {/* RENDERING ITEMS */}
-
-                <ItemList
-                  filteredItems={filteredItems}
-                  navigate={navigate}
-                  currentPage={currentPage}
+        {pageLoading ? (
+          <LoaderWrapper>
+            {windowWidth > 600 ? (
+              <Ring size={30} lineWeight={6} speed={1} color="black" />
+            ) : (
+              <Ring size={27} lineWeight={6} speed={1} color="black" />
+            )}
+          </LoaderWrapper>
+        ) : (
+          <>
+            {/******  FILTER  ******/}
+            {progressComplete && (
+              <ItemsFiltersWrapper>
+                <FilterContainer
+                  items={items}
+                  allItems={allItems}
+                  onFilterChange={handleFilterChange}
                   setCurrentPage={setCurrentPage}
-                  itemLoader={itemLoader}
-                  detailsFilters={detailsFilters}
+                  setItemLoader={setItemLoader}
+                  filteredItems={filteredItems}
+                  isFilterOpen={isFilterOpen}
+                  toggleFilterMenu={toggleFilterMenu}
+                  setFilterChanged={setFilterChanged}
                 />
+<<<<<<< HEAD
               </ItemListWrapper>
             </ItemsFiltersWrapper>
           )}
@@ -177,6 +184,26 @@ export const ItemListContainer = () => {
       )}
       {/* <AgregarDocs /> */}
       </ScrollRestorationWrapper> 
+=======
+                <ItemListWrapper>
+                  {/* RENDERING ITEMS */}
+
+                  <ItemList
+                    filteredItems={filteredItems}
+                    navigate={navigate}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    itemLoader={itemLoader}
+                    detailsFilters={detailsFilters}
+                  />
+                </ItemListWrapper>
+              </ItemsFiltersWrapper>
+            )}
+          </>
+        )}
+        {/* <AgregarDocs /> */}
+      </ScrollRestorationWrapper>
+>>>>>>> email-newsletter-integration
     </>
   );
 };

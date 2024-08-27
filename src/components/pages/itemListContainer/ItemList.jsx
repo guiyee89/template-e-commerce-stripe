@@ -271,7 +271,7 @@ const Wrapper = styled.div`
 `;
 const LoaderOverlay = styled.div`
   position: fixed;
-  top: ${(props) => (props.scrolled === "scrolled" ? "64px" : "90.2px")};
+  top: ${(props) => (props.scrolled === "scrolled" ? "64px" : "65.4px;")};
   transition: top
     ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
     ease-in-out;
