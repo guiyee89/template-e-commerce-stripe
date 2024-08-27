@@ -1,4 +1,4 @@
-import { Outlet, useLocation   } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { menuRoutes } from "../routes/menuRoutes";
 import { Footer } from "./footer/Footer";
 import styled from "styled-components/macro";
@@ -12,20 +12,21 @@ import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { HeroSmall } from "../pages/landingPage/hero/HeroSmall";
 import { NewsLetter } from "./newsletter/NewsLetter";
+import { useGlobalLoader } from "../hooks/useGlobalLoader";
 
 ////////////////////////////////////////////////////
 
 export const Layout = () => {
   //Restore scroll to top on navigation
-  //useScrollRestoration();
-  
+  useScrollRestoration();
+
   ////////////////////////////////////////////////////
   //SideMenu Context
   const { isOpen, isMenuOpen, isFilterOpen, windowWidth } =
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
-  //const globalLoading = useGlobalLoader(); //Flash loading effect
+  const globalLoading = useGlobalLoader(); //Flash loading effect
 
   ////////////////////////////////////////////////////
   // Prevent scrolling when the SideCart is open
@@ -59,23 +60,29 @@ export const Layout = () => {
       >
         {!isHome && <LoadingTopBar />}
         <>
-          {windowWidth > 900 && <NavDesktop />}
-          {windowWidth <= 900 && <NavMobile />}
+          {globalLoading ? (
+            <LoadingScreen />
+          ) : (
+            <>
+              {windowWidth > 900 && <NavDesktop />}
+              {windowWidth <= 900 && <NavMobile />}
 
-          <SideCart />
-          {!isHome &&
-            !isDashboard &&
-            !isCheckout &&
-            !isContactUs &&
-            !isCompletion && <HeroSmall />}
+              <SideCart />
+              {!isHome &&
+                !isDashboard &&
+                !isCheckout &&
+                !isContactUs &&
+                !isCompletion && <HeroSmall />}
 
-          <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
+              <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
 
-          <OutletWrapper isHome={isHome} isCheckout={isCheckout}>
-            <Outlet />
-          </OutletWrapper>
-          {!isDashboard && <NewsLetter />}
-          <Footer />
+              <OutletWrapper isHome={isHome} isCheckout={isCheckout}>
+                <Outlet />
+              </OutletWrapper>
+              {!isDashboard && <NewsLetter />}
+              <Footer />
+            </>
+          )}
         </>
       </Wrapper>
     </>
@@ -89,9 +96,9 @@ const Wrapper = styled.div`
     windowWidth > 830 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"};
 `;
 
-// const LoadingScreen = styled.div`
-//   max-height: 100vh;
-// `;
+const LoadingScreen = styled.div`
+  max-height: 100vh;
+`;
 
 const OutletWrapper = styled.div`
   /* min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")}; */

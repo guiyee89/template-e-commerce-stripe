@@ -12,7 +12,7 @@ import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+//import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavMobile = () => {
   const navigate = useNavigate();
@@ -80,8 +80,14 @@ export const NavMobile = () => {
             />
             <SideMenuWrapper isMenuOpen={isMenuOpen}>
               <SideMenuHeader>
-                <LogoSideMenu onClick={handleNavLinkClick}>
-                  <LogoLink to="/">
+                <LogoSideMenu>
+                  <LogoLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/";
+                    }}
+                  >
                     <LogoMenu src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></LogoMenu>
                   </LogoLink>
                 </LogoSideMenu>
@@ -95,9 +101,12 @@ export const NavMobile = () => {
               <NavListWrapper>
                 <NavList>
                   <NavLink
-                    to="/"
                     scrolled={scroll}
-                    onClick={handleNavLinkClick}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/";
+                    }}
                   >
                     home
                   </NavLink>
@@ -180,11 +189,15 @@ export const NavMobile = () => {
                     </CategoryContainer>
                   </DropDown>
                 </ProductsDropDown>
-                <NavList>
+                {/* <NavList>
                   <NavLink
-                    to="/contact"
                     scrolled={scroll}
-                    onClick={handleNavLinkClick}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      localStorage.setItem("navigationSource", "sales");
+                      window.location.href = "/all-products";
+                    }}
                   >
                     sale
                     <LocalFireDepartmentIcon
@@ -193,12 +206,15 @@ export const NavMobile = () => {
                       sx={{ padding: "0 0 3px 3px" }}
                     />
                   </NavLink>
-                </NavList>
+                </NavList> */}
                 <NavList>
                   <NavLink
-                    to="/contact"
                     scrolled={scroll}
-                    onClick={handleNavLinkClick}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/contact";
+                    }}
                   >
                     contact
                   </NavLink>
@@ -210,9 +226,11 @@ export const NavMobile = () => {
                   <h4>Login / Sign up</h4>
                   <LoginSharpIcon
                     sx={{ fontSize: "26px" }}
-                    onClick={() =>
-                      /*navigate("/login")*/ window.location.assign("/login")
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/login";
+                    }}
                   />
                 </LoginBtn>
               ) : user.rol === rolAdmin ||
@@ -224,11 +242,11 @@ export const NavMobile = () => {
                     <h4>Admin</h4>
                     <DashboardCustomizeRoundedIcon
                       sx={{ fontSize: "27px" }}
-                      onClick={() =>
-                        /*navigate("/dashboard")*/ window.location.assign(
-                          "/dashboard"
-                        )
-                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavLinkClick();
+                        window.location.href = "/dashboard";
+                      }}
                     />
                   </DashboardBtn>
                 </>
@@ -238,18 +256,24 @@ export const NavMobile = () => {
                     <h4>Profile</h4>
                     <AccountCircleSharpIcon
                       sx={{ fontSize: "30px", marginBottom: "-13px" }}
-                      onClick={() =>
-                        /*navigate("/user-orders")*/ window.location.assign(
-                          "/user-orders"
-                        )
-                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavLinkClick();
+                        window.location.href = "/user-orders";
+                      }}
                     />
                   </ProfileBtn>
                 </>
               )}
             </SideMenuWrapper>
             <LogoDiv scrolled={scroll} onClick={handleNavLinkClick}>
-              <LogoLink to="/">
+              <LogoLink
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavLinkClick();
+                  window.location.href = "/";
+                }}
+              >
                 <Logo
                   isDashboard={isDashboard}
                   scrolled={scroll}
@@ -276,8 +300,7 @@ const HeaderWrapper = styled.header`
   height: ${(props) => (props.scrolled === "scrolled" ? "55px" : "90px")};
   margin-top: -94px;
   transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.10s")}
-    ease-in-out;
+    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.10s")} ease-in-out;
   z-index: 2;
   background-color: rgb(253 253 253);
   box-shadow: ${(props) =>
@@ -342,7 +365,8 @@ const MenuIconBtn = styled(MenuIcon)`
   font-size: 1.6875rem !important;
   margin-top: ${(props) => (props.scrolled === "scrolled" ? "15px" : "21px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")} ease-in-out;
+    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")}
+    ease-in-out;
   @media (max-width: 900px) {
     padding-left: 2px;
   }
@@ -366,7 +390,8 @@ const SideMenuHeader = styled.div`
 const LogoDiv = styled.div`
   width: ${(props) => (props.scrolled === "scrolled" ? "50px" : "65px")};
   transition: width
-    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")} ease-in-out;
+    ${(props) => (props.scrolled === "scrolled" ? "0.07s" : "0.07s")}
+    ease-in-out;
   @media (max-width: 900px) {
     width: ${(props) => (props.scrolled === "scrolled" ? "40px" : "45px")};
     margin-top: ${(props) => (props.scrolled === "scrolled" ? "10px" : "8px")};

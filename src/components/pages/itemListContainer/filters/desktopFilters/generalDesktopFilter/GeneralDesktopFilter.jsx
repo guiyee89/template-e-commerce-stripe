@@ -15,7 +15,7 @@ export const GeneralDesktopFilter = ({
     detailsFilters,
     setDetailsFilters,
     handleResetFilters,
-    handleDetailsFilterChange
+    handleDetailsFilterChange,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 

@@ -66,6 +66,7 @@ export const DesktopFilter = ({
           setDetailsFilters={setDetailsFilters}
           handleResetFilters={handleResetFilters}
           handleDetailsFilterChange={handleDetailsFilterChange}
+
         />
 
         {/****************      CATEGORY FILTER       ****************/}

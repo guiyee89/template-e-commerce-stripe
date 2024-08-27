@@ -12,7 +12,7 @@ export const useGlobalLoader = () => {
     setGlobalLoading(true);
     const timer = setTimeout(() => {
       setGlobalLoading(false);
-    }, 0);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [location]);
@@ -21,27 +21,3 @@ export const useGlobalLoader = () => {
   return globalLoading;
 };
 
-// LAYOUT CON GLOBAL LOADER
- {/* 
-  {globalLoading ? (
-          <LoadingScreen />
-        ) : (
-          <>
-            {windowWidth > 900 && <NavDesktop />}
-            {windowWidth <= 900 && <NavMobile />}
-
-            <SideCart />
-            {!isHome && !isDashboard && !isCheckout && !isContactUs && !isCompletion && (
-              <HeroSmall />
-            )}
-
-            <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
-
-            <OutletWrapper isHome={isHome} isCheckout={isCheckout}>
-              <Outlet />
-            </OutletWrapper>
-            {!isDashboard && <NewsLetter />}
-            <Footer />
-          </>
-      )} 
-    */}

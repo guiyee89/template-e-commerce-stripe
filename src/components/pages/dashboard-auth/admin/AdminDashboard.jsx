@@ -84,7 +84,7 @@ export const AdminDashboard = () => {
 
 const DashboardContainer = styled.div`
   width: 100%;
-  max-width: 1110px;
+  max-width: 1400px;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
