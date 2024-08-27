@@ -77,7 +77,7 @@ export const ContactUs = () => {
       >
         Contact
       </h1>
-       <h2
+      <h2
         style={{
           fontSize: "1rem",
           fontWeight: "500",
@@ -97,7 +97,7 @@ export const ContactUs = () => {
       >
         <div style={{ display: "flex", gap: "1rem" }}>
           <Input
-            style={{ width: "50%", border:" 1px solid grey", borderRadius:"6px"  }}
+            style={{ width: "50%" }}
             type="text"
             name="name"
             label="Name"
@@ -105,7 +105,7 @@ export const ContactUs = () => {
             inputRef={nameRef}
           />
           <Input
-            style={{ width: "50%", border:" 1px solid grey" , borderRadius:"6px"  }}
+            style={{ width: "50%" }}
             type="text"
             name="phone"
             label="Phone"
@@ -114,7 +114,6 @@ export const ContactUs = () => {
           />
         </div>
         <Input
-          style={{ border:" 1px solid grey", borderRadius:"6px"   }}
           type="email"
           name="email"
           label="Email"
@@ -130,7 +129,9 @@ export const ContactUs = () => {
           rows={6}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          sx={{ marginBottom: "18px", border:" 1px solid grey", borderRadius:"4px"  }}
+          sx={{
+            marginBottom: "18px",
+          }}
           InputLabelProps={{
             style: { fontSize: "14px" },
           }}
