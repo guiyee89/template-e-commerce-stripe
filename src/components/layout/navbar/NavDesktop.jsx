@@ -384,9 +384,9 @@ const CategoryList = styled.li`
 const ProductsDropDown = styled.div`
   cursor: pointer;
   display: flex;
-  margin: 22.5px 0px 21px 10px;
-  padding: 0px 24px;
-  height: 50px;
+  margin: 23px 0px 38px 8px;
+  padding: 0px 28px 0 32px;
+  height: 40px;
 `;
 const DropDown = styled.div`
   visibility: hidden;
@@ -487,10 +487,10 @@ const NavProductsDropDown = styled.p`
   &::after {
     content: "";
     position: absolute;
-    bottom: 31px;
+    bottom: 21px;
     left: 0px;
     width: 100%;
-    height: 1.1px;
+    height: 1px;
     background-color: black;
     transform: scaleX(0);
     transform-origin: left center;
@@ -527,7 +527,7 @@ const NavLink = styled(Link)`
     bottom: -4px;
     left: 0px;
     width: 100%;
-    height: 1.1px;
+    height: 1px;
     background-color: black;
     transform: scaleX(0);
     transform-origin: left center;
