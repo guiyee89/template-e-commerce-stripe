@@ -59,7 +59,7 @@ export const NavMobile = () => {
 
   return (
     <>
-      <Headroom style={{zIndex:"2"}}>
+      <Headroom upTolerance={0} downTolerance={0} style={{zIndex:"2"}}>
         <HeaderWrapper scrolled={scroll}>
           <Nav isFilterOpen={isFilterOpen}>
             <InsideNav
