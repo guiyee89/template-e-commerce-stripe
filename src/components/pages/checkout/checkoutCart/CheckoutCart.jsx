@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import useItemLoader from "../../../hooks/useItemLoader";
 
-export const CartContainer = ({
+export const CheckoutCart = ({
   shipmentCost,
   shipCostLoader,
   shippingMethod,
@@ -276,7 +276,7 @@ const CartTotalMainContainer = styled.div`
   @media (max-width: 850px) {
     min-width: auto;
     width: 100%;
-    padding: 116px 0px 20px;
+    padding: 24px 0px 20px;
   }
   &::before {
     content: "";

@@ -11,6 +11,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
+import Headroom from "react-headroom";
+import useGlobalLocation from "../../hooks/useGlobalLocation";
 //import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavDesktop = () => {
@@ -25,6 +27,9 @@ export const NavDesktop = () => {
   const totalItems = getTotalItems();
   const { scroll, isOpen } = useContext(GlobalToolsContext);
 
+  //////////////////////////////////////////////////////////////////////
+  const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();
+
   //////////        ////////////        ////////////        ///////////
   //                 Reset localStorage on nav links               //
   const handleNavLinkClick = () => {
@@ -37,291 +42,266 @@ export const NavDesktop = () => {
     localStorage.removeItem("reloadOccurred");
   };
 
-  //Find  locations
-  const location = useLocation();
-  const currentRoute = menuRoutes.find(
-    (route) => route.path === location.pathname
-  );
-
-  const isCart = currentRoute?.id === "cart";
-  const isCheckout = currentRoute?.id === "checkout";
-  const isDashboard = currentRoute?.id === "dashboard";
-
   //Hovering Category Links for Images
   const [hoveredCategory, setHoveredCategory] = useState("all-products");
 
   return (
     <>
-      <HeaderWrapper scrolled={scroll}>
-        <Nav scrolled={scroll}>
-          <InsideNav
-            isCart={isCart}
-            isCheckout={isCheckout}
-            isDashboard={isDashboard}
-          >
-            <LogoDiv scrolled={scroll}>
-              <LogoLink
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavLinkClick();
-                  window.location.href = "/";
-                }}
-              >
-                <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></Logo>
-              </LogoLink>
-            </LogoDiv>
+      <Headroom>
+        <HeaderWrapper scrolled={scroll}>
+          <Nav>
+            <InsideNav
+              isCart={isCart}
+              isCheckout={isCheckout}
+              isDashboard={isDashboard}
+              isHome={isHome}
+            >
+              <LogoDiv>
+                <LogoLink
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick();
+                    window.location.href = "/";
+                  }}
+                >
+                  <Logo src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></Logo>
+                </LogoLink>
+              </LogoDiv>
 
-            {!isCart && !isCheckout && !isDashboard && (
-              <>
-                <NavListWrapper scrolled={scroll}>
-                  <NavList>
-                    <NavLink
-                      scrolled={scroll}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/";
-                      }}
-                    >
-                      home
-                    </NavLink>
-                  </NavList>
-                  <ProductsDropDown scrolled={scroll}>
-                    <NavProductsDropDown
-                      scrolled={scroll}
-                      onMouseEnter={() => setHoveredCategory("all-products")}
-                      onMouseLeave={() => setHoveredCategory("all-products")}
-                    >
-                      products
-                    </NavProductsDropDown>
-                    <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
-                    <DropDown scrolled={scroll}>
-                      <DropDownContainer>
-                        <CategoryList
-                          style={{
-                            marginTop: "22px",
-                            width: "114px",
-                            position: "relative",
-                          }}
-                        >
-                          <CategoryLink
-                            style={{
-                              fontWeight: "600",
-                              fontSize: ".74rem",
-                              textDecoration: "underline",
-                              position: "absolute",
-                              right: "-75px",
-                            }}
-                            to="/all-products"
-                            scrolled={scroll}
-                            onClick={handleNavLinkClick}
-                            onMouseEnter={() =>
-                              setHoveredCategory("all-products")
-                            }
-                            onMouseLeave={() =>
-                              setHoveredCategory("all-products")
-                            }
-                          >
-                            All Categories
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryDropDown>
-                          <CategoryContainer>
-                            <CategoryList>
-                              <CategoryLink
-                                to="/category/shoes"
-                                scrolled={scroll}
-                                onClick={handleNavLinkClick}
-                                onMouseEnter={() => setHoveredCategory("shoes")}
-                                onMouseLeave={() => setHoveredCategory("shoes")}
-                              >
-                                shoes
-                              </CategoryLink>
-                            </CategoryList>
-                            <CategoryList>
-                              <CategoryLink
-                                to="/category/pants"
-                                scrolled={scroll}
-                                onClick={handleNavLinkClick}
-                                onMouseEnter={() => setHoveredCategory("pants")}
-                                onMouseLeave={() => setHoveredCategory("pants")}
-                              >
-                                pants
-                              </CategoryLink>
-                            </CategoryList>
-                            <CategoryList>
-                              <CategoryLink
-                                to="/category/shirts"
-                                scrolled={scroll}
-                                onClick={handleNavLinkClick}
-                                onMouseEnter={() =>
-                                  setHoveredCategory("shirts")
-                                }
-                                onMouseLeave={() =>
-                                  setHoveredCategory("shirts")
-                                }
-                              >
-                                shirts
-                              </CategoryLink>
-                            </CategoryList>
-                            <CategoryList>
-                              <CategoryLink
-                                to="/category/hoodies"
-                                scrolled={scroll}
-                                onClick={handleNavLinkClick}
-                                onMouseEnter={() =>
-                                  setHoveredCategory("hoodies")
-                                }
-                                onMouseLeave={() =>
-                                  setHoveredCategory("hoodies")
-                                }
-                              >
-                                hoodies
-                              </CategoryLink>
-                            </CategoryList>
-                            <CategoryList>
-                              <CategoryLink
-                                to="/category/bags"
-                                scrolled={scroll}
-                                onClick={handleNavLinkClick}
-                                onMouseEnter={() => setHoveredCategory("bags")}
-                                onMouseLeave={() => setHoveredCategory("bags")}
-                              >
-                                bags
-                              </CategoryLink>
-                            </CategoryList>
-                          </CategoryContainer>
-                        </CategoryDropDown>
-                        <ImagesDropDown scrolled={scroll}>
-                          {hoveredCategory === "all-products" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703952195/web%20access/samples%20for%20e-commerce/Nav%20Images/lncaoen82w7hf8epzswd.png" />
-                          )}
-                          {hoveredCategory === "shoes" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/e_improve:outdoor/web%20access/samples%20for%20e-commerce/Nav%20Images/lmhmmbxtfibmfspboui6.jpg" />
-                          )}
-                          {hoveredCategory === "pants" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949455/web%20access/samples%20for%20e-commerce/Nav%20Images/n2rb42unjp3zv1ima2f7.png" />
-                          )}
-                          {hoveredCategory === "shirts" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949489/web%20access/samples%20for%20e-commerce/Nav%20Images/vsbqrreuudovv7rilmho.png" />
-                          )}
-                          {hoveredCategory === "hoodies" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949430/web%20access/samples%20for%20e-commerce/Nav%20Images/wvzsmcp1t6i7mog3v2gp.png" />
-                          )}
-                          {hoveredCategory === "bags" && (
-                            <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949418/web%20access/samples%20for%20e-commerce/Nav%20Images/pgurqzuws8ur1fvoxwmj.png" />
-                          )}
-                        </ImagesDropDown>
-                        <BuyNowBtn>Buy Now</BuyNowBtn>
-                      </DropDownContainer>
-                    </DropDown>
-                  </ProductsDropDown>
-                  {/* <NavList>
-                    <NavLink
-                      scrolled={scroll}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        localStorage.setItem('navigationSource', 'sales');
-                        window.location.href = "/all-products";
-                      }}
-                    >
-                      sale
-                      <LocalFireDepartmentIcon
-                        color="warning"
-                        fontSize="small"
-                        sx={{ padding: "0 0 3px 3px" }}
-                      />
-                    </NavLink>
-                  </NavList> */}
-                  <NavList>
-                    <NavLink
-                      scrolled={scroll}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/contact";
-                      }}
-                    >
-                      contact
-                    </NavLink>
-                  </NavList>
-                </NavListWrapper>
-
-                <DashCartContainer isOpen={isOpen}>
-                  <CartWidget
-                    scrolled={scroll}
-                    sx={{ padding: "10px" }}
-                    totalItems={totalItems}
-                  />
-                  {!user || !user.rol ? (
-                    <LoginBtn>
-                      <h4>Login / Sign up</h4>
-                      <LoginSharpIcon
-                        sx={{ fontSize: "25px" }}
+              {!isCart && !isCheckout && !isDashboard && (
+                <>
+                  <NavListWrapper>
+                    <NavList>
+                      <NavLink
                         onClick={(e) => {
                           e.preventDefault();
                           handleNavLinkClick();
-                          window.location.href = "/login";
+                          window.location.href = "/";
                         }}
-                      />
-                    </LoginBtn>
-                  ) : user.rol === rolAdmin ||
-                    user.rol === rolAdmin2 ||
-                    user.rol === rolAdmin3 ||
-                    user.rol === rolAdmin4 ? (
-                    <>
-                      <DashboardBtn scrolled={scroll}>
-                        <h4>Admin</h4>
-                        <DashboardCustomizeRoundedIcon
+                      >
+                        home
+                      </NavLink>
+                    </NavList>
+                    <ProductsDropDown>
+                      <NavProductsDropDown
+                        onMouseEnter={() => setHoveredCategory("all-products")}
+                        onMouseLeave={() => setHoveredCategory("all-products")}
+                      >
+                        products
+                      </NavProductsDropDown>
+                      <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
+                      <DropDown>
+                        <DropDownContainer>
+                          <CategoryList
+                            style={{
+                              marginTop: "22px",
+                              width: "114px",
+                              position: "relative",
+                            }}
+                          >
+                            <CategoryLink
+                              style={{
+                                fontWeight: "600",
+                                fontSize: ".74rem",
+                                textDecoration: "underline",
+                                position: "absolute",
+                                right: "-75px",
+                              }}
+                              to="/all-products"
+                              onClick={handleNavLinkClick}
+                              onMouseEnter={() =>
+                                setHoveredCategory("all-products")
+                              }
+                              onMouseLeave={() =>
+                                setHoveredCategory("all-products")
+                              }
+                            >
+                              All Categories
+                            </CategoryLink>
+                          </CategoryList>
+                          <CategoryDropDown>
+                            <CategoryContainer>
+                              <CategoryList>
+                                <CategoryLink
+                                  to="/category/shoes"
+                                  onClick={handleNavLinkClick}
+                                  onMouseEnter={() =>
+                                    setHoveredCategory("shoes")
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredCategory("shoes")
+                                  }
+                                >
+                                  shoes
+                                </CategoryLink>
+                              </CategoryList>
+                              <CategoryList>
+                                <CategoryLink
+                                  to="/category/pants"
+                                  onClick={handleNavLinkClick}
+                                  onMouseEnter={() =>
+                                    setHoveredCategory("pants")
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredCategory("pants")
+                                  }
+                                >
+                                  pants
+                                </CategoryLink>
+                              </CategoryList>
+                              <CategoryList>
+                                <CategoryLink
+                                  to="/category/shirts"
+                                  onClick={handleNavLinkClick}
+                                  onMouseEnter={() =>
+                                    setHoveredCategory("shirts")
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredCategory("shirts")
+                                  }
+                                >
+                                  shirts
+                                </CategoryLink>
+                              </CategoryList>
+                              <CategoryList>
+                                <CategoryLink
+                                  to="/category/hoodies"
+                                  onClick={handleNavLinkClick}
+                                  onMouseEnter={() =>
+                                    setHoveredCategory("hoodies")
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredCategory("hoodies")
+                                  }
+                                >
+                                  hoodies
+                                </CategoryLink>
+                              </CategoryList>
+                              <CategoryList>
+                                <CategoryLink
+                                  to="/category/bags"
+                                  onClick={handleNavLinkClick}
+                                  onMouseEnter={() =>
+                                    setHoveredCategory("bags")
+                                  }
+                                  onMouseLeave={() =>
+                                    setHoveredCategory("bags")
+                                  }
+                                >
+                                  bags
+                                </CategoryLink>
+                              </CategoryList>
+                            </CategoryContainer>
+                          </CategoryDropDown>
+                          <ImagesDropDown>
+                            {hoveredCategory === "all-products" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703952195/web%20access/samples%20for%20e-commerce/Nav%20Images/lncaoen82w7hf8epzswd.png" />
+                            )}
+                            {hoveredCategory === "shoes" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/e_improve:outdoor/web%20access/samples%20for%20e-commerce/Nav%20Images/lmhmmbxtfibmfspboui6.jpg" />
+                            )}
+                            {hoveredCategory === "pants" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949455/web%20access/samples%20for%20e-commerce/Nav%20Images/n2rb42unjp3zv1ima2f7.png" />
+                            )}
+                            {hoveredCategory === "shirts" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949489/web%20access/samples%20for%20e-commerce/Nav%20Images/vsbqrreuudovv7rilmho.png" />
+                            )}
+                            {hoveredCategory === "hoodies" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949430/web%20access/samples%20for%20e-commerce/Nav%20Images/wvzsmcp1t6i7mog3v2gp.png" />
+                            )}
+                            {hoveredCategory === "bags" && (
+                              <Img src="https://res.cloudinary.com/derdim3m6/image/upload/v1703949418/web%20access/samples%20for%20e-commerce/Nav%20Images/pgurqzuws8ur1fvoxwmj.png" />
+                            )}
+                          </ImagesDropDown>
+                          <BuyNowBtn>Buy Now</BuyNowBtn>
+                        </DropDownContainer>
+                      </DropDown>
+                    </ProductsDropDown>
+
+                    <NavList>
+                      <NavLink
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavLinkClick();
+                          window.location.href = "/contact";
+                        }}
+                      >
+                        contact
+                      </NavLink>
+                    </NavList>
+                  </NavListWrapper>
+
+                  <DashCartContainer isOpen={isOpen}>
+                    <CartWidget
+                      sx={{ padding: "10px" }}
+                      totalItems={totalItems}
+                    />
+                    {!user || !user.rol ? (
+                      <LoginBtn>
+                        <h4>Login / Sign up</h4>
+                        <LoginSharpIcon
                           sx={{ fontSize: "25px" }}
                           onClick={(e) => {
                             e.preventDefault();
                             handleNavLinkClick();
-                            window.location.href = "/dashboard";
+                            window.location.href = "/login";
                           }}
                         />
-                      </DashboardBtn>
-                    </>
-                  ) : (
-                    <>
-                      <ProfileBtn>
-                        <h4>Profile</h4>
-                        <AccountCircleSharpIcon
-                          sx={{ fontSize: "28px" }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleNavLinkClick();
-                            window.location.href = "/user-orders";
-                          }}
-                        />
-                      </ProfileBtn>
-                    </>
-                  )}
-                </DashCartContainer>
-              </>
-            )}
-          </InsideNav>
-        </Nav>
-      </HeaderWrapper>
+                      </LoginBtn>
+                    ) : user.rol === rolAdmin ||
+                      user.rol === rolAdmin2 ||
+                      user.rol === rolAdmin3 ||
+                      user.rol === rolAdmin4 ? (
+                      <>
+                        <DashboardBtn>
+                          <h4>Admin</h4>
+                          <DashboardCustomizeRoundedIcon
+                            sx={{ fontSize: "25px" }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleNavLinkClick();
+                              window.location.href = "/dashboard";
+                            }}
+                          />
+                        </DashboardBtn>
+                      </>
+                    ) : (
+                      <>
+                        <ProfileBtn>
+                          <h4>Profile</h4>
+                          <AccountCircleSharpIcon
+                            sx={{ fontSize: "28px" }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleNavLinkClick();
+                              window.location.href = "/user-orders";
+                            }}
+                          />
+                        </ProfileBtn>
+                      </>
+                    )}
+                  </DashCartContainer>
+                </>
+              )}
+            </InsideNav>
+          </Nav>
+        </HeaderWrapper>
+      </Headroom>
     </>
   );
 };
 
 const HeaderWrapper = styled.header`
   position: sticky;
-  margin-bottom: -90px;
   top: 0;
   z-index: 2;
-  height: ${(props) => (props.scrolled === "scrolled" ? "65px" : "64px")};
+  height: 80px;
   box-shadow: ${(props) =>
-    props.scrolled === "scrolled" ? "none" : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
+    props.scrolled === "scrolled"
+      ? "rgba(0, 0, 0, 0.35) 0px 0px 1px"
+      : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
   transition: box-shadow
     ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.1s")} ease-in-out;
-  border-bottom: ${(props) =>
-    props.scrolled === "scrolled"
-      ? "1px solid rgb(133 132 132 / 25%)"
-      : "none"};
 `;
 const Nav = styled.nav`
   width: 100%;
@@ -339,8 +319,15 @@ const InsideNav = styled.div`
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
-  justify-content: ${({ isCart, isCheckout, isDashboard }) =>
-    isCart || isCheckout || isDashboard ? "center" : "space-between"};
+  justify-content: ${({ isCart, isCheckout, isDashboard, isHome }) => {
+    if (isHome) {
+      return "space-between";
+    } else if (isCart || isCheckout || isDashboard) {
+      return "center";
+    } else {
+      return "space-around";
+    }
+  }};
   @media screen and (max-width: 50rem) {
     padding: 0;
     justify-content: flex-end;
@@ -366,17 +353,19 @@ const Logo = styled.img`
 `;
 const NavListWrapper = styled.ul`
   display: flex;
+  -webkit-box-align: center;
   list-style: none;
-  margin-bottom: -48px;
-  padding-right: 24px;
+  height: 100%;
+  width: 28%;
+  padding-top: 10px;
+  align-items: center;
+  justify-content: space-evenly;
   @media screen and (max-width: 50rem) {
     display: none;
   }
 `;
 const NavList = styled.li`
   padding: 0px 20px;
-  height: 20px;
-  margin-top: 18px;
 `;
 const CategoryList = styled.li`
   margin: 12px 0 0;
@@ -384,9 +373,11 @@ const CategoryList = styled.li`
 const ProductsDropDown = styled.div`
   cursor: pointer;
   display: flex;
-  margin: 23px 0px 38px 8px;
-  padding: 0px 28px 0 32px;
-  height: 40px;
+  height: 100%;
+  padding: 3px 15px 0px 22px;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 const DropDown = styled.div`
   visibility: hidden;
@@ -405,7 +396,7 @@ const DropDown = styled.div`
     transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     opacity: 1;
     transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
-    top: ${(props) => (props.scrolled === "scrolled" ? "90px" : "90px")};
+    top: 90px;
     left: 0%;
     height: max-content;
   }
@@ -487,9 +478,9 @@ const NavProductsDropDown = styled.p`
   &::after {
     content: "";
     position: absolute;
-    bottom: 21px;
+    bottom: -2px;
     left: 0px;
-    width: 100%;
+    width: 126%;
     height: 1px;
     background-color: black;
     transform: scaleX(0);

@@ -29,6 +29,7 @@ export const ItemList = ({
     setProgress,
     setVisible,
     scroll,
+    scrollDirection,
   } = useContext(GlobalToolsContext);
 
   //////////////////////////                    ////////////////////////////
@@ -92,8 +93,8 @@ export const ItemList = ({
     }
   }, [currentPage]);
 
- //////////////////////////                    ////////////////////////////
- 
+  //////////////////////////                    ////////////////////////////
+
   const [productsQuantity, setProductsQuantity] = useState();
   const showProductsQuantity = () => {
     setProductsQuantity(filteredItems.length); // Update the state with the number of items
@@ -117,7 +118,11 @@ export const ItemList = ({
   ///////////////////////////                  /////////////////////////////
   return (
     <>
-      <FilterContainer isMenuOpen={isMenuOpen} isFilterOpen={isFilterOpen}>
+      <FilterContainer
+        isMenuOpen={isMenuOpen}
+        isFilterOpen={isFilterOpen}
+        scrollDirection={scrollDirection}
+      >
         <FilterBtn>
           Filters: <TuneIcon onClick={toggleFilterMenu} />
         </FilterBtn>
@@ -447,7 +452,7 @@ const HeaderContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  margin-top: 44px;
+  margin-top: 32px;
   margin-bottom: 5px;
   @media (max-width: 900px) {
     width: 100%;
@@ -460,16 +465,19 @@ const FilterContainer = styled.div`
   background-color: white;
   margin-top: -45px;
   margin-bottom: 19px;
+
   @media (max-width: 900px) {
     display: flex;
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: 56px;
+    top: ${(props) => (props.scrollDirection === "down" ? "0" : "66px")};
+    transition: top
+      ${(props) =>
+        props.scrollDirection === "down" ? "0.1s ease-in" : "0.22s ease-out"};
+    z-index: 1;
     align-items: center;
     justify-content: space-between;
-    z-index: 1;
-    transition: z-index 0.3s ease-out;
 
     &::after {
       content: "";
