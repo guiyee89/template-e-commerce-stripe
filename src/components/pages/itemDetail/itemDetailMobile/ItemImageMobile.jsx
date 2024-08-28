@@ -19,7 +19,8 @@ export const ItemImageMobile = ({
   ); //Render images - Avoid null values in array
   const [filterColorLoading, setFilterColorLoading] = useState(false);
 
-  const { setProgress, setVisible, progress } = useContext(GlobalToolsContext);
+  const { setProgress, setVisible, progress, isMenuOpen } =
+    useContext(GlobalToolsContext);
 
   useEffect(() => {
     if (selectedItem) {
@@ -94,6 +95,7 @@ export const ItemImageMobile = ({
         <Wrapper imgSkeleton="false">
           <MainImgWrapper>
             <StyledCarousel
+              isMenuOpen={isMenuOpen}
               interval={null}
               activeIndex={selectedImage.index}
               onSelect={handleImageSwitch}
@@ -139,7 +141,8 @@ const StyledCarousel = styled(Carousel)`
     }
   }
   .carousel-indicators {
-    z-index: 1;
+    z-index: ${({ isMenuOpen }) => (isMenuOpen ? "1" : "0")};
+    transition: z-index 0.2s ease-in-out;
   }
   .carousel-indicators [data-bs-target] {
     box-sizing: content-box;
@@ -170,6 +173,7 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-control-prev {
     left: -10px;
+    z-index: 0;
   }
   .carousel-control-prev-icon {
     background-image: url(${PrevButtonSVG});

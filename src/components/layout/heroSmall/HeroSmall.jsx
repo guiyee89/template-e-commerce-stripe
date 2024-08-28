@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const HeroSmall = () => {
@@ -13,7 +13,7 @@ export const HeroSmall = () => {
     const interval = setInterval(() => {
       // Increment the index to move to the next banner
       setIndex((prevIndex) => (prevIndex + 1) % 2);
-    }, 5000);
+    }, 55000);
 
     return () => clearInterval(interval);
   }, []);
@@ -50,15 +50,15 @@ export const HeroSmall = () => {
   );
 };
 const Wrapper = styled.div`
-  margin: 0 auto;
+  margin: 2px auto 50px;
+  height: 95px;
   background-color: rgba(231, 230, 230, 0.35);
 `;
 const WrapperCarousel = styled.div`
-  margin: 87px auto 40px;
-  max-width: 850px;
+  margin: 0 auto;
+  max-width: 610px;
   background-color: white;
   position: relative;
-  height: 11%;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
@@ -70,7 +70,6 @@ const WrapperCarousel = styled.div`
 
   .carousel.slide {
     width: 100%;
-    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 0.9px 4.1px; */
   }
   .carousel-control-prev {
     left: -60px;
@@ -97,19 +96,25 @@ const WrapperCarousel = styled.div`
 const Banner = styled.div`
   width: 100%;
   line-height: 1.5;
-  padding: 27px 0 11px;
+  padding: 22px 0 16px;
   overflow-x: hidden;
   border-bottom: 1px solid #ededed;
+  @media (max-width: 500px) {
+    padding: 12px 0 14px;
+  }
 `;
 
 const BannerText = styled.p`
   text-transform: uppercase;
-  font-size: clamp(0.75rem, 2vw + 1px, 1.2rem);
+  font-size: clamp(0.75rem, 2vw + 1px, 0.8rem);
   font-weight: 500;
   letter-spacing: 3px;
   word-spacing: 5px;
   text-align: center;
-  padding: ${({ isOpen }) => (isOpen ? "0 32px 0 33px" : "0 32px")}
+  padding: ${({ isOpen }) => (isOpen ? "0 32px 0 33px" : "0 32px")};
+  @media (max-width: 500px) {
+    font-size: clamp(0.75rem, 2vw + 1px, 0.8rem);
+  }
 `;
 
 const Span = styled.span`

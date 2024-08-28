@@ -101,7 +101,7 @@ export const HeroLanding = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 110px auto 0;
+  margin: 4px auto 0;
   z-index: 0;
   position: relative;
   max-height: 100%;

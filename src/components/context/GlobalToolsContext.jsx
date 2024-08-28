@@ -63,17 +63,31 @@ const GlobalToolsProvider = ({ children }) => {
 
   //////////        ////////////        ////////////        ///////////
   //                       Scroll Effect                      //
+  const [scrollDirection, setScrollDirection] = useState("down");
   const [scroll, setScroll] = useState("not-scrolled");
+
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      //Scroll effect for navbar
+      // Determine scroll direction
+      if (window.scrollY > lastScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      lastScrollY = window.scrollY;
+
+      // Scroll effect for navbar
       const scrollHeight = window.innerHeight * 0.05; // 5% of screen height
+
       if (window.scrollY > scrollHeight) {
         setScroll("scrolled");
       } else {
         setScroll("not-scrolled");
       }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -103,6 +117,7 @@ const GlobalToolsProvider = ({ children }) => {
     progressComplete,
     setProgressComplete,
     scroll,
+    scrollDirection,
   };
 
   return (
