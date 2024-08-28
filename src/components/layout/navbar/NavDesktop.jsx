@@ -217,24 +217,7 @@ export const NavDesktop = () => {
                         </DropDownContainer>
                       </DropDown>
                     </ProductsDropDown>
-                    {/* <NavList>
-                    <NavLink
-                    
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavLinkClick();
-                      localStorage.setItem('navigationSource', 'sales');
-                      window.location.href = "/all-products";
-                      }}
-                      >
-                      sale
-                      <LocalFireDepartmentIcon
-                      color="warning"
-                      fontSize="small"
-                      sx={{ padding: "0 0 3px 3px" }}
-                      />
-                      </NavLink>
-                      </NavList> */}
+
                     <NavList>
                       <NavLink
                         onClick={(e) => {

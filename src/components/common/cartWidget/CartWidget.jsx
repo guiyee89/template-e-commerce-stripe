@@ -35,6 +35,8 @@ export const CartWidget = ({ totalItems }) => {
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
   margin-bottom: ${(props) => (props.windowWidth > 900 ? "-13px" : "-0")};
+  padding: ${(props) =>
+    props.isOpen && props.windowWidth > 900 ? "0" : "0 0 0 0"};
 `;
 
 const Contador = styled(Badge)`
