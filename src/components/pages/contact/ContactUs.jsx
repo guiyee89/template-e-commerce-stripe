@@ -65,7 +65,7 @@ export const ContactUs = () => {
         flexDirection: "column",
         justifyContent: "center",
         gap: "2rem",
-        margin: windowWidth > 500 ? "200px 0 " : "120px 0",
+        margin: windowWidth > 500 ? "100px 0 150px " : "120px 0",
       }}
     >
       <h1
@@ -79,9 +79,10 @@ export const ContactUs = () => {
       </h1>
       <h2
         style={{
-          fontSize: "1rem",
+          fontSize: windowWidth > 500 ? "1rem" : ".8rem",
           fontWeight: "500",
           paddingBottom: windowWidth > 500 ? "10px" : "5px",
+          margin: windowWidth < 500 && "0 4px" 
         }}
       >
         Send us a message and we will get back to you as soon as possible.

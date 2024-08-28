@@ -95,7 +95,15 @@ export const ItemDetailDesktop = ({
                 handleColorLoading={handleColorLoading}
               />
             </FilterWrapper>
-
+            <ReferenceWrapper>
+              <SizeReference>
+                <img
+                  style={{ width: "35px" }}
+                  src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png"
+                />
+                Reference Size Model
+              </SizeReference>
+            </ReferenceWrapper>
             <StockPriceWrapper>
               {hasDiscount && selectedItem.discount !== null ? (
                 <ItemPriceWrapper>
@@ -156,10 +164,6 @@ export const ItemDetailDesktop = ({
                 ? filteredItem.description
                 : selectedItem.description}
             </Description>
-
-            <ReferenceWrapper>
-              <SizeReference>Reference Size Model</SizeReference>
-            </ReferenceWrapper>
           </InsideWrapper>
         </>
       ) : (
@@ -296,7 +300,12 @@ const Description = styled.p`
 const ReferenceWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 const SizeReference = styled.p`
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
 `;

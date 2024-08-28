@@ -1,5 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { menuRoutes } from "../routes/menuRoutes";
+import { Outlet } from "react-router-dom";
 import { Footer } from "./footer/Footer";
 import styled from "styled-components/macro";
 import useScrollRestoration from "../hooks/useScrollRestoration";
@@ -10,9 +9,10 @@ import { NavMobile } from "./navbar/NavMobile";
 import { NavDesktop } from "./navbar/NavDesktop";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
-import { HeroSmall } from "../pages/landingPage/hero/HeroSmall";
 import { NewsLetter } from "./newsletter/NewsLetter";
 import { useGlobalLoader } from "../hooks/useGlobalLoader";
+import { HeroSmall } from "./heroSmall/HeroSmall";
+import useGlobalLocation from "../hooks/useGlobalLocation";
 
 ////////////////////////////////////////////////////
 
@@ -29,6 +29,10 @@ export const Layout = () => {
   const globalLoading = useGlobalLoader(); //Flash loading effect
 
   ////////////////////////////////////////////////////
+  const { isHome, isDashboard, isCheckout, isContactUs, isCompletion } =
+    useGlobalLocation();
+
+  ////////////////////////////////////////////////////
   // Prevent scrolling when the SideCart is open
   useEffect(() => {
     if (isOpen && isMenuOpen && isFilterOpen) {
@@ -39,16 +43,6 @@ export const Layout = () => {
   }, [isOpen, isMenuOpen, isFilterOpen]);
 
   ////////////////////////////////////////////////////
-  const location = useLocation();
-  //Find "Home" and "ItemDetail" locations
-  const currentRoute = menuRoutes.find(
-    (route) => route.path === location.pathname
-  );
-  const isHome = currentRoute?.id === "home";
-  const isDashboard = currentRoute?.id === "dashboard";
-  const isCheckout = currentRoute?.id === "checkout";
-  const isContactUs = currentRoute?.id === "contact";
-  const isCompletion = currentRoute?.id === "completion";
 
   return (
     <>

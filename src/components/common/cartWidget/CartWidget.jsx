@@ -5,14 +5,13 @@ import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const CartWidget = ({ totalItems }) => {
-  const { toggleSideCart, scroll, isOpen, windowWidth } =
+  const { toggleSideCart, isOpen, windowWidth } =
     useContext(GlobalToolsContext);
 
   return (
     <>
       <CartWidgetWrapper
         onClick={toggleSideCart}
-        scrolled={scroll}
         isOpen={isOpen}
         windowWidth={windowWidth}
       >
@@ -25,7 +24,7 @@ export const CartWidget = ({ totalItems }) => {
             horizontal: "left",
           }}
         >
-          <CartWrapper scrolled={scroll} windowWidth={windowWidth}>
+          <CartWrapper windowWidth={windowWidth}>
             <ShoppingBagOutlinedIcon fontSize="medium" />
           </CartWrapper>
         </Contador>
@@ -35,21 +34,7 @@ export const CartWidget = ({ totalItems }) => {
 };
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
-  margin-bottom: ${(props) =>
-    props.windowWidth > 900
-      ? props.scrolled === "scrolled"
-        ? "-13px"
-        : "-13px"
-      : props.windowWidth < 900
-      ? props.scrolled === "scrolled"
-        ? "-10px"
-        : "-10px"
-      : "0"};
-  /* transition: margin-bottom
-    ${(props) => (props.scrolled === "scrolled" ? "0.25s" : "0.25s")}
-    ease-in-out; */
-  padding: ${(props) =>
-    props.isOpen && props.windowWidth > 900 ? "0" : "0 0 0 0"};
+  margin-bottom: ${(props) => (props.windowWidth > 900 ? "-13px" : "-0")};
 `;
 
 const Contador = styled(Badge)`
@@ -67,13 +52,5 @@ const Contador = styled(Badge)`
   }
 `;
 const CartWrapper = styled.div`
-  width: ${(props) => (props.scrolled === "scrolled" ? "none" : "none")};
-  /* transition: width ${(props) => (props.scrolled ? "0.25s" : "0.06s")}
-    ease-in-out; */
-  margin-top: ${(props) =>
-    props.windowWidth < 900
-      ? props.scrolled === "scrolled"
-        ? "3px"
-        : "3px"
-      : "3px"};
+  margin-top: ${(props) => (props.windowWidth > 900 ? "3px" : "0")};
 `;
