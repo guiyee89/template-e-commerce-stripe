@@ -17,7 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Payment } from "../stripeCheckout/Payment";
 import { AuthContext } from "../../../context/AuthContext";
 import { ShippingButtons } from "../shipping/ShippingButtons";
-import { CartContainer } from "../checkoutCart/CartContainer";
+import { CheckoutCart } from "../checkoutCart/CheckoutCart";
 import { bouncy } from "ldrs";
 bouncy.register();
 
@@ -595,7 +595,7 @@ export const CheckoutForm = ({
             )}
 
             {/* CartContainer component */}
-            <CartContainer
+            <CheckoutCart
               shipmentCost={shipmentCost}
               shipCostLoader={shipCostLoader}
               shippingMethod={shippingMethod}

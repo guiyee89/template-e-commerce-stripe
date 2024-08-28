@@ -59,7 +59,7 @@ export const NavMobile = () => {
 
   return (
     <>
-      <Headroom>
+      <Headroom style={{zIndex:"2"}}>
         <HeaderWrapper scrolled={scroll}>
           <Nav isFilterOpen={isFilterOpen}>
             <InsideNav
@@ -264,7 +264,7 @@ const HeaderWrapper = styled.header`
   background-color: rgb(253 253 253);
   box-shadow: ${(props) =>
     props.scrolled === "scrolled"
-      ? "rgba(0, 0, 0, 0.35) 0px 0px 1px"
+      ? "rgba(0, 0, 0, 0.35) 0px 0px 2px"
       : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
 `;
 const Nav = styled.nav`
@@ -293,7 +293,7 @@ const TransparentDiv = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: ${({ isMenuOpen }) => (isMenuOpen ? "0" : "100%")};
+  height: ${({ isMenuOpen }) => (isMenuOpen ? "0" : "100vh")};
   background-color: ${({ isMenuOpen }) =>
     isMenuOpen ? "none" : "rgba(0, 0, 0, 0.2)"};
   z-index: ${({ isMenuOpen }) => (isMenuOpen ? "-1" : "1")};
@@ -304,15 +304,16 @@ const SideMenuWrapper = styled.div`
   left: ${({ isMenuOpen }) => (isMenuOpen ? "-420px" : "0")};
   width: ${({ isMenuOpen }) => (isMenuOpen ? "0" : "70%")};
   transition: ${({ isMenuOpen }) =>
-    isMenuOpen ? "0.3s ease-in-out" : "0.3s ease-in-out"};
+    isMenuOpen ? "0.2s ease-in-out" : "0.2s ease-in-out"};
   z-index: 2;
-  height: 100%;
+  height: 100vh;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   @media screen and (min-width: 500px) {
     width: ${({ isMenuOpen }) => (isMenuOpen ? "0" : "60%")};
   }
 `;
+
 const MenuIconBtn = styled(MenuIcon)`
   cursor: pointer;
   font-size: 1.6875rem !important;
