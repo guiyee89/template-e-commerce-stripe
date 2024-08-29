@@ -579,7 +579,7 @@ export const CheckoutForm = ({
                               ? "100%"
                               : windowWidth < 1100
                               ? "95%"
-                              : "66%" /* 92% */,
+                              : "70%" /* 92% */,
                           height:
                             windowWidth < 750 ? "85%" : "780px" /* "630px" */,
                           padding:
