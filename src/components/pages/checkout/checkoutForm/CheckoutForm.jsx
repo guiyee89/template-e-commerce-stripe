@@ -573,15 +573,19 @@ export const CheckoutForm = ({
                       <Box
                         sx={{
                           ...style,
-                          top: windowWidth < 750 ? "50%" : "43%",
+                          top: windowWidth < 750 ? "50%" : "50%" /* "43%" */,
                           width:
                             windowWidth < 550
                               ? "100%"
                               : windowWidth < 1100
                               ? "95%"
-                              : "110%",
-                          height: windowWidth < 750 ? "85%" : "630px",
-                          padding: windowWidth < 551 ? "20px" : "62px 25px 0px",
+                              : "70%" /* 92% */,
+                          height:
+                            windowWidth < 750 ? "85%" : "780px" /* "630px" */,
+                          padding:
+                            windowWidth < 551
+                              ? "20px"
+                              : "62px 76px 10px" /* "62px 25px 0px" */,
                           overflowX: "hidden",
                         }}
                       >
@@ -788,8 +792,8 @@ const BouncyLoader = styled.div`
 const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
   font-size: 28px;
-  top: 3%;
-  left: ${(props) => (props.windowwidth < 750 ? "85%" : "96%")};
+  top: 6% /* 3% */;
+  left: ${(props) => (props.windowwidth < 750 ? "85%" : "90%" /* "96%" */)};
   position: absolute;
   z-index: 2;
   @media (max-width: 750px) {
@@ -809,4 +813,17 @@ const style = {
   boxShadow:
     "0px 11px 15px -7px rgba(0,0,0,0.6), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,-0.48)!important",
   overflow: "auto",
+  "&::-webkit-scrollbar": {
+    width: "10px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#888",
+    borderRadius: "5px",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#555",
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "#f1f1f1",
+  },
 };
