@@ -120,7 +120,6 @@ export const ProductList = ({
     }, 1000);
   };
 
- 
   return (
     <>
       <ProductListWrapper>
@@ -227,6 +226,7 @@ export const ProductList = ({
                 sx={{
                   boxShadow: "rgba(0, 0, 0, 0.45) 0px 0px 3px;",
                   padding: "12px 10px",
+                  height: "512px",
                 }}
               >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -281,7 +281,12 @@ export const ProductList = ({
                           >
                             <Img src={product.img[0]} />
                           </ImgCell>
-                          <TableCell align="center" component="th" scope="row" sx={{textTransform:"capitalize"}}>
+                          <TableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                            sx={{ textTransform: "capitalize" }}
+                          >
                             {product.title}
                           </TableCell>
                           <TableCell align="center" component="th" scope="row">
@@ -323,15 +328,15 @@ export const ProductList = ({
                               whiteSpace: "normal",
                               lineHeight: "1.2",
                               padding: "0",
-                              minWidth: "100px",                 
+                              minWidth: "100px",
                             }}
                           >
                             {product.color.map((color, index) => (
                               <span
                                 key={color}
                                 style={{
-                                  fontSize:index === 0 ? ".85rem" : ".65rem",
-                                  fontWeight: index === 0 ? "500" : "normal", 
+                                  fontSize: index === 0 ? ".85rem" : ".65rem",
+                                  fontWeight: index === 0 ? "500" : "normal",
                                 }}
                               >
                                 {index > 0 && <br />}
@@ -343,7 +348,10 @@ export const ProductList = ({
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ textTransform: "capitalize", fontWeight:"500" }}
+                            sx={{
+                              textTransform: "capitalize",
+                              fontWeight: "500",
+                            }}
                           >
                             {product.category}
                           </TableCell>
@@ -355,7 +363,7 @@ export const ProductList = ({
                               padding: "4px",
                               minWidth: "130px",
                               position: "relative",
-                              fontWeight:"500"
+                              fontWeight: "500",
                             }}
                           >
                             {newlyCopiedIds.includes(product.id) && (
@@ -405,8 +413,6 @@ export const ProductList = ({
 
 const ProductListWrapper = styled.div`
   width: 100%;
-  min-height: 565px;
-  margin: 50px 0px 100px 8px;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
   box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
@@ -433,7 +439,7 @@ const TextFieldInput = styled(TextField)`
 const AddButton = styled(Button)``;
 
 const ProductListContainer = styled.div`
-  margin: 30px 16px 12px 16px;
+  margin: 16px 16px 12px 16px;
 `;
 const ImgCell = styled(TableCell)`
   width: 9%;

@@ -22,7 +22,7 @@ export const Layout = () => {
 
   ////////////////////////////////////////////////////
   //SideMenu Context
-  const { isOpen, isMenuOpen, isFilterOpen, windowWidth } =
+  const { isCartOpen, isMenuOpen, isFilterOpen, windowWidth } =
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
@@ -35,19 +35,19 @@ export const Layout = () => {
   ////////////////////////////////////////////////////
   // Prevent scrolling when the SideCart is open
   useEffect(() => {
-    if (isOpen && isMenuOpen && isFilterOpen) {
+    if (isCartOpen && isMenuOpen && isFilterOpen) {
       document.body.style.overflow = "visible";
     } else {
       document.body.style.overflow = "hidden";
     }
-  }, [isOpen, isMenuOpen, isFilterOpen]);
+  }, [isCartOpen, isMenuOpen, isFilterOpen]);
 
   ////////////////////////////////////////////////////
 
   return (
     <>
       <Wrapper
-        isOpen={isOpen}
+        isCartOpen={isCartOpen}
         isMenuOpen={isMenuOpen}
         isFilterOpen={isFilterOpen}
         windowWidth={windowWidth}
@@ -86,8 +86,8 @@ export const Layout = () => {
 const Wrapper = styled.div`
   /* min-height: 100%;  */
   overflow-x: clip;
-  padding: ${({ isOpen, windowWidth }) =>
-    windowWidth > 830 ? (isOpen ? "0" : "0 16.8px 0 0") : "0"};
+  padding: ${({ isCartOpen, windowWidth }) =>
+    windowWidth > 830 ? (isCartOpen ? "0" : "0 16.8px 0 0") : "0"};
 `;
 
 const LoadingScreen = styled.div`

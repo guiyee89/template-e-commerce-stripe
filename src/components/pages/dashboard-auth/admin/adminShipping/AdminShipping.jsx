@@ -277,9 +277,11 @@ export const AdminShipping = () => {
             </UnitedStatesContainer>
           </ShippingContainer>
         ))}
-        <SubmitBtn type="submit" variant="contained">
-          Confirm Changes
-        </SubmitBtn>
+        <SubmitBtnContainer>
+          <SubmitBtn type="submit" variant="contained">
+            Confirm Changes
+          </SubmitBtn>
+        </SubmitBtnContainer>
       </Form>
     </ShippingFormWrapper>
   );
@@ -295,16 +297,16 @@ const BouncyLoader = styled.div`
 
 const ShippingFormWrapper = styled.div`
   width: 100%;
-  margin: 50px 10px;
+  margin: 0px 10px;
   grid-column: 2/7;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  height: 100%;
   margin: 0 auto;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
   align-items: flex-start;
 `;
@@ -316,9 +318,8 @@ const ShippingContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.45) 3px -1px 13px;
+  box-shadow: rgba(0, 0, 0, 0.35) 1px 0px 3px;
   border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
 `;
 
 const OverseasContainer = styled.div`
@@ -328,7 +329,7 @@ const OverseasContainer = styled.div`
   width: 100%;
   gap: 2rem;
   justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.45) 2px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 2px 1px 3px;
   border-top-right-radius: 10px;
   padding: 0 22px;
   height: 90px;
@@ -339,10 +340,9 @@ const UnitedStatesContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.45) 2px 4px 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 1px 1px 2px;
   padding: 20px;
-  max-height: 470px;
-  border-bottom-right-radius: 10px;
+  max-height: 512px;
 `;
 
 const UnitedStatesWrapper = styled.div`
@@ -392,256 +392,15 @@ const Input = styled(TextField)`
   width: 130px;
   margin-bottom: 1rem;
 `;
-
+const SubmitBtnContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 60px;
+  box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+  align-items: center;
+  justify-content: center;
+  border-bottom-right-radius: 10px;
+`;
 const SubmitBtn = styled(Button)`
   margin-top: 1rem;
 `;
-
-// export const AdminShipping = () => {
-//   const [shippingData, setShippingData] = useState([]);
-//   const [shippingCost, setShippingCost] = useState(shippingData);
-//   const [shippingLoading, setShippingLoading] = useState(true);
-
-//   useEffect(() => {
-//     setShippingCost(shippingData);
-//   }, [shippingData]);
-
-//   useEffect(() => {
-//     const fetchShipping = async () => {
-//       const shippingCollection = collection(db, "shipment");
-//       const q = query(shippingCollection);
-//       try {
-//         const snapshot = await getDocs(q);
-//         const shipping = snapshot.docs.map((doc) => ({
-//           ...doc.data(),
-//           id: doc.id,
-//         }));
-//         setShippingData(shipping);
-//         setTimeout(() => {
-//           setShippingLoading(false);
-//         }, 800);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     fetchShipping();
-//   }, [shippingData]);
-
-//   const handleChange = (e, id, stateName) => {
-//     const { value } = e.target;
-//     setShippingCost((prevState) =>
-//       prevState.map((item) => {
-//         if (item.id === id) {
-//           if (stateName === "overseas" || stateName === "pick_up") {
-//             return { ...item, [stateName]: parseFloat(value) || 0 };
-//           } else {
-//             const updatedState = item.state.map((stateItem) => {
-//               if (stateItem.hasOwnProperty(stateName)) {
-//                 return { [stateName]: parseFloat(value) || 0 };
-//               }
-//               return stateItem;
-//             });
-//             return { ...item, state: updatedState };
-//           }
-//         }
-//         return item;
-//       })
-//     );
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const shippingCollection = collection(db, "shipment");
-
-//     const sanitizedShippingCost = shippingCost.map((item) => {
-//       const sanitizedState = item.state.map((stateItem) => {
-//         const stateName = Object.keys(stateItem)[0];
-//         return { [stateName]: stateItem[stateName] || 0 };
-//       });
-//       return {
-//         ...item,
-//         overseas: item.overseas || 0,
-//         pick_up: item.pick_up || 0,
-//         state: sanitizedState,
-//       };
-//     });
-
-//     for (const shipping of sanitizedShippingCost) {
-//       const shippingDocRef = doc(shippingCollection, shipping.id);
-//       await updateDoc(shippingDocRef, {
-//         overseas: shipping.overseas,
-//         pick_up: shipping.pick_up,
-//         state: shipping.state,
-//       });
-//     }
-
-//     console.log("Data updated successfully");
-//   };
-
-//   if (shippingLoading) {
-//     return (
-//       <BouncyLoader>
-//         <l-helix size="35" speed="1.25" color="black"></l-helix>
-//       </BouncyLoader>
-//     );
-//   }
-
-//   return (
-//     <ShippingFormWrapper>
-//       <Form onSubmit={handleSubmit}>
-//         {shippingCost.map((shipping) => (
-//           <ShippingContainer key={shipping.id}>
-//             <OverseasContainer>
-//               <div
-//                 style={{
-//                   display: "flex",
-//                   justifyContent: "flex-start",
-//                 }}
-//               >
-//                 <p
-//                   style={{
-//                     fontSize: ".9rem",
-//                     fontWeight: "bold",
-//                     textTransform: "uppercase",
-//                      minWidth: "220px",
-//                   }}
-//                 >
-//                   Foreign Countries :
-//                 </p>
-//                 <Input
-//                   style={{ width: "283px" }}
-//                   type="number"
-//                   label={"Other Countries"}
-//                   name="overseas"
-//                   defaultValue={shipping.overseas || 0}
-//                   onChange={(e) => handleChange(e, shipping.id, "overseas")}
-//                   placeholder="Overseas"
-//                 />
-//               </div>
-//             </OverseasContainer>
-
-//             <UnitedStatesContainer>
-//               <p
-//                 style={{
-//                   fontSize: ".9rem",
-//                   fontWeight: "bold",
-//                   minWidth: "135px",
-//                   textTransform: "uppercase",
-//                 }}
-//               >
-//                 United States :
-//               </p>
-//               <StateContainer>
-//                 {shipping.state.map((stateItem, index) => {
-//                   const stateName = Object.keys(stateItem)[0];
-//                   return (
-//                     <Input
-//                       key={index}
-//                       type="number"
-//                       label={stateName}
-//                       name={stateName}
-//                       defaultValue={stateItem[stateName] || 0}
-//                       onChange={(e) => handleChange(e, shipping.id, stateName)}
-//                       placeholder={stateName}
-//                     />
-//                   );
-//                 })}
-//               </StateContainer>
-//             </UnitedStatesContainer>
-//           </ShippingContainer>
-//         ))}
-//         <SubmitBtn type="submit" variant="contained">
-//           Confirm Changes
-//         </SubmitBtn>
-//       </Form>
-//     </ShippingFormWrapper>
-//   );
-// };
-// const BouncyLoader = styled.div`
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   grid-column: 2/6;
-// `;
-
-// const ShippingFormWrapper = styled.div`
-//   width: 100%;
-//   margin: 50px 10px;
-//   grid-column: 2/7;
-// `;
-
-// const Form = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 2rem;
-//   margin: 0 auto;
-//   justify-content: center;
-//   align-content: center;
-//   align-items: flex-start;
-// `;
-// const ShippingContainer = styled.div`
-//   width: 100%;
-//   max-width: 1200px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   gap: 0.5rem;
-//   box-shadow: rgba(0, 0, 0, 0.45) 3px -1px 13px;
-//   border-top-right-radius: 10px;
-//   border-bottom-right-radius: 10px;
-// `;
-// const OverseasContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   width: 100%;
-//   gap: 2rem;
-//   justify-content: space-between;
-//   box-shadow: rgba(0, 0, 0, 0.45) 2px 2px 4px;
-//   border-top-right-radius: 10px;
-//   padding: 20px 45px 20px 20px;
-// `;
-// const UnitedStatesContainer = styled.div`
-//   gap: 2rem;
-//   display: flex;
-//   width: 100%;
-//   justify-content: center;
-//   box-shadow: rgba(0, 0, 0, 0.45) 2px 4px 10px;
-//   padding: 20px;
-//   max-height: 470px;
-//   border-bottom-right-radius: 10px;
-// `;
-// const StateContainer = styled.div`
-//   width: 100%;
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: 2rem;
-//   justify-content: center;
-//   overflow: auto;
-//   padding: 12px;
-//   ::-webkit-scrollbar {
-//     width: 5px;
-//   }
-//   ::-webkit-scrollbar-thumb {
-//     background-color: #888;
-//     border-radius: 5px;
-//   }
-//   ::-webkit-scrollbar-thumb:hover {
-//     background-color: #555;
-//   }
-//   ::-webkit-scrollbar-track {
-//     background-color: #f1f1f1;
-//   }
-// `;
-// const Input = styled(TextField)`
-//   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-//     padding: 12.5px 5px;
-//     text-align: center;
-//   }
-//   width: 130px;
-//   margin-bottom: 1rem;
-// `;
-
-// const SubmitBtn = styled(Button)`
-//   margin-top: 1rem;
-// `;

@@ -30,6 +30,7 @@ export const NavMobile = () => {
   //                       SideMenuContext                      //
   const {
     scroll,
+    scrollDirection,
     isMenuOpen,
     toggleSideMenu,
     isFilterOpen,
@@ -59,198 +60,203 @@ export const NavMobile = () => {
 
   return (
     <>
-      <Headroom upTolerance={0} downTolerance={0} style={{ zIndex: "2" }}>
-        <HeaderWrapper scrolled={scroll}>
-          <Nav isFilterOpen={isFilterOpen}>
-            <InsideNav
-              isCart={isCart}
-              isCheckout={isCheckout}
-              isDashboard={isDashboard}
+      <HeaderWrapper
+        scrolled={scroll}
+        scrollDirection={scrollDirection}
+        isDashboard={isDashboard}
+      >
+        <Nav isFilterOpen={isFilterOpen}>
+          <InsideNav
+            isCart={isCart}
+            isCheckout={isCheckout}
+            isDashboard={isDashboard}
+          >
+            {!isCart && !isCheckout && !isDashboard && (
+              <MenuIconBtn onClick={toggleSideMenu} />
+            )}
+            <TransparentDiv
+              isMenuOpen={isMenuOpen}
+              onClick={isMenuOpen ? null : toggleSideMenu}
+            />
+            <SideMenuWrapper
+              isMenuOpen={isMenuOpen}
+              scrollDirection={scrollDirection}
             >
-              {!isCart && !isCheckout && !isDashboard && (
-                <MenuIconBtn onClick={toggleSideMenu} />
-              )}
-              <TransparentDiv
-                isMenuOpen={isMenuOpen}
-                onClick={isMenuOpen ? null : toggleSideMenu}
-              />
-              <SideMenuWrapper isMenuOpen={isMenuOpen}>
-                <SideMenuHeader>
-                  <LogoSideMenu>
-                    <LogoLink
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/";
-                      }}
-                    >
-                      <LogoMenu src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></LogoMenu>
-                    </LogoLink>
-                  </LogoSideMenu>
-                  <CloseIconBtn
-                    onClick={() => {
-                      toggleSideMenu();
-                      setIsDropDownOpen(true);
+              <SideMenuHeader>
+                <LogoSideMenu>
+                  <LogoLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/";
+                    }}
+                  >
+                    <LogoMenu src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"></LogoMenu>
+                  </LogoLink>
+                </LogoSideMenu>
+                <CloseIconBtn
+                  onClick={() => {
+                    toggleSideMenu();
+                    setIsDropDownOpen(true);
+                  }}
+                />
+              </SideMenuHeader>
+              <NavListWrapper>
+                <NavList>
+                  <NavLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/";
+                    }}
+                  >
+                    home
+                  </NavLink>
+                </NavList>
+                <ProductsDropDown>
+                  <OnClickDropDown
+                    isDrowpDownOpen={isDrowpDownOpen}
+                    onClick={() => toggleDropDown(!isDrowpDownOpen)}
+                  >
+                    products
+                    <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
+                  </OnClickDropDown>
+                  <DropDown isDrowpDownOpen={!isDrowpDownOpen}>
+                    <CategoryContainer>
+                      <CategoryList>
+                        <CategoryLink
+                          style={{
+                            fontWeight: "600",
+                            fontSize: "clamp(0.69rem, 1.7vw, 0.89rem)",
+                          }}
+                          to="/all-products"
+                          onClick={handleNavLinkClick}
+                        >
+                          All Categories
+                        </CategoryLink>
+                      </CategoryList>
+                      <CategoryList>
+                        <CategoryLink
+                          to="/category/shoes"
+                          onClick={handleNavLinkClick}
+                        >
+                          shoes
+                        </CategoryLink>
+                      </CategoryList>
+                      <CategoryList>
+                        <CategoryLink
+                          to="/category/pants"
+                          onClick={handleNavLinkClick}
+                        >
+                          pants
+                        </CategoryLink>
+                      </CategoryList>
+                      <CategoryList>
+                        <CategoryLink
+                          to="/category/shirts"
+                          onClick={handleNavLinkClick}
+                        >
+                          shirts
+                        </CategoryLink>
+                      </CategoryList>
+                      <CategoryList>
+                        <CategoryLink
+                          to="/category/hoodies"
+                          onClick={handleNavLinkClick}
+                        >
+                          hoodies
+                        </CategoryLink>
+                      </CategoryList>
+                      <CategoryList>
+                        <CategoryLink
+                          to="/category/bags"
+                          onClick={handleNavLinkClick}
+                        >
+                          bags
+                        </CategoryLink>
+                      </CategoryList>
+                    </CategoryContainer>
+                  </DropDown>
+                </ProductsDropDown>
+
+                <NavList>
+                  <NavLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/contact";
+                    }}
+                  >
+                    contact
+                  </NavLink>
+                </NavList>
+              </NavListWrapper>
+
+              {!user || !user.rol ? (
+                <LoginBtn>
+                  <h4>Login / Sign up</h4>
+                  <LoginSharpIcon
+                    sx={{ fontSize: "26px" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/login";
                     }}
                   />
-                </SideMenuHeader>
-                <NavListWrapper>
-                  <NavList>
-                    <NavLink
+                </LoginBtn>
+              ) : user.rol === rolAdmin ||
+                user.rol === rolAdmin2 ||
+                user.rol === rolAdmin3 ||
+                user.rol === rolAdmin4 ? (
+                <>
+                  <DashboardBtn>
+                    <h4>Admin</h4>
+                    <DashboardCustomizeRoundedIcon
+                      sx={{ fontSize: "27px" }}
                       onClick={(e) => {
                         e.preventDefault();
                         handleNavLinkClick();
-                        window.location.href = "/";
-                      }}
-                    >
-                      home
-                    </NavLink>
-                  </NavList>
-                  <ProductsDropDown>
-                    <OnClickDropDown
-                      isDrowpDownOpen={isDrowpDownOpen}
-                      onClick={() => toggleDropDown(!isDrowpDownOpen)}
-                    >
-                      products
-                      <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
-                    </OnClickDropDown>
-                    <DropDown isDrowpDownOpen={!isDrowpDownOpen}>
-                      <CategoryContainer>
-                        <CategoryList>
-                          <CategoryLink
-                            style={{
-                              fontWeight: "600",
-                              fontSize: "clamp(0.69rem, 1.7vw, 0.89rem)",
-                            }}
-                            to="/all-products"
-                            onClick={handleNavLinkClick}
-                          >
-                            All Categories
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryList>
-                          <CategoryLink
-                            to="/category/shoes"
-                            onClick={handleNavLinkClick}
-                          >
-                            shoes
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryList>
-                          <CategoryLink
-                            to="/category/pants"
-                            onClick={handleNavLinkClick}
-                          >
-                            pants
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryList>
-                          <CategoryLink
-                            to="/category/shirts"
-                            onClick={handleNavLinkClick}
-                          >
-                            shirts
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryList>
-                          <CategoryLink
-                            to="/category/hoodies"
-                            onClick={handleNavLinkClick}
-                          >
-                            hoodies
-                          </CategoryLink>
-                        </CategoryList>
-                        <CategoryList>
-                          <CategoryLink
-                            to="/category/bags"
-                            onClick={handleNavLinkClick}
-                          >
-                            bags
-                          </CategoryLink>
-                        </CategoryList>
-                      </CategoryContainer>
-                    </DropDown>
-                  </ProductsDropDown>
-
-                  <NavList>
-                    <NavLink
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/contact";
-                      }}
-                    >
-                      contact
-                    </NavLink>
-                  </NavList>
-                </NavListWrapper>
-
-                {!user || !user.rol ? (
-                  <LoginBtn>
-                    <h4>Login / Sign up</h4>
-                    <LoginSharpIcon
-                      sx={{ fontSize: "26px" }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/login";
+                        window.location.href = "/dashboard";
                       }}
                     />
-                  </LoginBtn>
-                ) : user.rol === rolAdmin ||
-                  user.rol === rolAdmin2 ||
-                  user.rol === rolAdmin3 ||
-                  user.rol === rolAdmin4 ? (
-                  <>
-                    <DashboardBtn>
-                      <h4>Admin</h4>
-                      <DashboardCustomizeRoundedIcon
-                        sx={{ fontSize: "27px" }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleNavLinkClick();
-                          window.location.href = "/dashboard";
-                        }}
-                      />
-                    </DashboardBtn>
-                  </>
-                ) : (
-                  <>
-                    <ProfileBtn>
-                      <h4>Profile</h4>
-                      <AccountCircleSharpIcon
-                        sx={{ fontSize: "30px", marginBottom: "-13px" }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleNavLinkClick();
-                          window.location.href = "/user-orders";
-                        }}
-                      />
-                    </ProfileBtn>
-                  </>
-                )}
-              </SideMenuWrapper>
-              <LogoDiv onClick={handleNavLinkClick}>
-                <LogoLink
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavLinkClick();
-                    window.location.href = "/";
-                  }}
-                >
-                  <Logo
-                    isDashboard={isDashboard}
-                    src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"
-                  ></Logo>
-                </LogoLink>
-              </LogoDiv>
-              {!isCart && !isCheckout && !isDashboard && (
-                <CartWidget sx={{ padding: "10px" }} totalItems={totalItems} />
+                  </DashboardBtn>
+                </>
+              ) : (
+                <>
+                  <ProfileBtn>
+                    <h4>Profile</h4>
+                    <AccountCircleSharpIcon
+                      sx={{ fontSize: "30px", marginBottom: "-13px" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavLinkClick();
+                        window.location.href = "/user-orders";
+                      }}
+                    />
+                  </ProfileBtn>
+                </>
               )}
-            </InsideNav>
-          </Nav>
-        </HeaderWrapper>
-      </Headroom>
+            </SideMenuWrapper>
+            <LogoDiv onClick={handleNavLinkClick}>
+              <LogoLink
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavLinkClick();
+                  window.location.href = "/";
+                }}
+              >
+                <Logo
+                  isDashboard={isDashboard}
+                  src="https://res.cloudinary.com/derdim3m6/image/upload/v1689771276/web%20access/samples%20for%20e-commerce/Logos/2023-07-14_09h48_23-removebg-preview_yq3phy.png"
+                ></Logo>
+              </LogoLink>
+            </LogoDiv>
+            {!isCart && !isCheckout && !isDashboard && (
+              <CartWidget sx={{ padding: "10px" }} totalItems={totalItems} />
+            )}
+          </InsideNav>
+        </Nav>
+      </HeaderWrapper>
     </>
   );
 };
@@ -258,14 +264,20 @@ const HeaderWrapper = styled.header`
   position: sticky;
   top: 0px;
   height: 65px;
-  transition: height
-    ${(props) => (props.scrolled === "scrolled" ? "0.1s" : "0.10s")} ease-in-out;
   z-index: 2;
   background-color: rgb(253 253 253);
   box-shadow: ${(props) =>
     props.scrolled === "scrolled"
       ? "rgba(0, 0, 0, 0.35) 0px 0px 2px"
       : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
+  transform: translateY(
+    ${({ scrollDirection, isDashboard }) =>
+      isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}
+  );
+
+  transition: transform
+    ${(props) =>
+      props.scrollDirection === "down" ? "0.1s ease-in" : "0.21s ease-out"};
 `;
 const Nav = styled.nav`
   margin: 0 auto;

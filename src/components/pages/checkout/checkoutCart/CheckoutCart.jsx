@@ -269,7 +269,7 @@ const CartTotalMainContainer = styled.div`
   width: 46%;
   min-width: 450px;
   background-color: rgb(236, 234, 234);
-  padding: 150px 0px 150px;
+  padding: 75px 0px 150px;
   @media (max-width: 970px) {
     min-width: 400px;
   }
