@@ -137,7 +137,7 @@ export const FilterContainer = ({
 
   //ORDER BY - filtering logic according if filtered items or original items are being rendered
   useEffect(() => {
-    console.log(filteredItems)
+    console.log(filteredItems);
     setTimeout(() => {
       if (
         detailsFilters.category.length === 0 &&

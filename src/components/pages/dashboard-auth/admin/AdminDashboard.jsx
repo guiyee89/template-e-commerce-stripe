@@ -24,7 +24,14 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "680px",
+
+        margin: "20px 0 140px",
+      }}
+    >
       <DashboardContainer>
         <DashboardNavigation>
           <DashboardListContainer>
@@ -89,13 +96,12 @@ const DashboardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   justify-content: center;
-  margin: 90px auto;
+  margin: 0 auto;
 `;
 
 const DashboardNavigation = styled.nav`
   width: 206px;
-  height: 565px;
-  margin-top: 50px;
+  height: 100%;
   box-shadow: rgba(0, 0, 0, 0.65) -3px 0px 9px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;

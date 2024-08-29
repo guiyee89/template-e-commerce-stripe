@@ -6,9 +6,9 @@ export const GlobalToolsContext = createContext();
 const GlobalToolsProvider = ({ children }) => {
   ///////////         TOGGLE ON CLICK           ///////////
   //Manage side cart
-  const [isOpen, setIsOpen] = useState(true);
+  const [isCartOpen, setIsCartOpen] = useState(true);
   const toggleSideCart = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
+    setIsCartOpen((prevIsOpen) => !prevIsOpen);
   };
   //Manage side menu for Mobile
   const [isMenuOpen, setIsMenuOpen] = useState(true);
@@ -63,14 +63,13 @@ const GlobalToolsProvider = ({ children }) => {
 
   //////////        ////////////        ////////////        ///////////
   //                       Scroll Effect                      //
-  const [scrollDirection, setScrollDirection] = useState("down");
   const [scroll, setScroll] = useState("not-scrolled");
+  const [scrollDirection, setScrollDirection] = useState("up");
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
-      // Determine scroll direction
       if (window.scrollY > lastScrollY) {
         setScrollDirection("down");
       } else {
@@ -89,13 +88,19 @@ const GlobalToolsProvider = ({ children }) => {
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  useEffect(() => {
+    // Reset scroll direction on route change
+    setScrollDirection("up");
+  }, [location.pathname]);
+
   const value = {
-    isOpen,
+    isCartOpen,
     toggleSideCart,
     isMenuOpen,
     toggleSideMenu,

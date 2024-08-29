@@ -155,9 +155,9 @@ export const ItemList = ({
 
       {itemLoader && ( //Loader for filters
         <LoaderOverlay
+          scrollDirection={scrollDirection}
           isFilterOpen={isFilterOpen}
           window={windowWidth}
-          scrolled={scroll}
           style={{ top: windowWidth < 900 && "0px" }}
         >
           <Ring size={35} lineWeight={7} speed={1} color="black" />
@@ -277,14 +277,14 @@ const Wrapper = styled.div`
 `;
 const LoaderOverlay = styled.div`
   position: fixed;
-  top: ${(props) => (props.scrolled === "scrolled" ? "64px" : "65.4px;")};
+  top: ${(props) => (props.scrollDirection === "down" ? "0" : "81.4px")};
   transition: top
-    ${(props) => (props.scrolled === "scrolled" ? "0.16s" : "0.16s")}
-    ease-in-out;
+    ${(props) =>
+      props.scrollDirection === "down" ? "0.1s ease-in" : "0.22s ease-out"};
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: ${(props) =>
     props.windowWidth > 500
@@ -475,7 +475,7 @@ const FilterContainer = styled.div`
     top: ${(props) => (props.scrollDirection === "down" ? "0" : "66px")};
     transition: top
       ${(props) =>
-        props.scrollDirection === "down" ? "0.1s ease-in" : "0.22s ease-out"};
+        props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"};
     z-index: 1;
     align-items: center;
     justify-content: space-between;

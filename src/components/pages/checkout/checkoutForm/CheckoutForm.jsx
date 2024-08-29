@@ -635,7 +635,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 75px 40px 0;
+  padding: 80px 40px 0;
   align-items: flex-end;
   @media (max-width: 1050px) {
     padding: 150px 18px 0;
