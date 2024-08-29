@@ -24,7 +24,7 @@ export const SideCart = () => {
     getTotalDiscount,
     getSubTotal,
   } = useContext(CartContext);
-  const { isOpen, toggleSideCart } = useContext(GlobalToolsContext);
+  const { isCartOpen, toggleSideCart } = useContext(GlobalToolsContext);
   const totalPrice = getTotalPrice();
   const subTotal = getSubTotal();
   const totalDiscount = getTotalDiscount();
@@ -135,10 +135,10 @@ export const SideCart = () => {
   return (
     <>
       <TransparentDiv
-        isOpen={isOpen}
-        onClick={isOpen ? null : toggleSideCart}
+        isCartOpen={isCartOpen}
+        onClick={isCartOpen ? null : toggleSideCart}
       />
-      <SideCartWrapper isOpen={isOpen}>
+      <SideCartWrapper isCartOpen={isCartOpen}>
         <CloseIcon
           onClick={() => {
             toggleSideCart();
@@ -315,13 +315,14 @@ const TransparentDiv = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ isOpen }) => (isOpen ? "none" : "rgba(0, 0, 0, 0.2)")};
-  z-index: ${({ isOpen }) => (isOpen ? "-1" : "2")};
+  background-color: ${({ isCartOpen }) =>
+    isCartOpen ? "none" : "rgba(0, 0, 0, 0.2)"};
+  z-index: ${({ isCartOpen }) => (isCartOpen ? "-1" : "2")};
 `;
 const SideCartWrapper = styled.div`
   position: fixed;
   top: 0;
-  right: ${({ isOpen }) => (isOpen ? "-420px" : "0")};
+  right: ${({ isCartOpen }) => (isCartOpen ? "-420px" : "0")};
   transition: right 0.3s ease-in-out;
   z-index: 3;
   min-width: 412px;

@@ -210,7 +210,7 @@ const BouncyLoader = styled.div`
 
 const OrdersWrapper = styled.div`
   grid-column: 2/7;
-  margin: 50px 10px;
+  margin: 0 10px;
   overflow-x: auto;
   width: 100%;
   height: 100%;

@@ -146,11 +146,11 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
 const FormWrapper = styled.div`
   width: 100%;
   overflow-y: auto;
-  padding: 20px 6px;
+  padding: 20px 6px 10px;
   margin-bottom: 10px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px -1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px -1px 4px;
 `;
 const Form = styled.form`
   display: flex;
