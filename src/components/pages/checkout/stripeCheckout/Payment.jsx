@@ -23,7 +23,6 @@ export const Payment = ({ shipmentCost }) => {
         const response = await axios.get(
           "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/config"
           //"http://localhost:3000/config"
-        
         );
         const { publishableKey } = response.data;
         setPublishableKey(publishableKey);
