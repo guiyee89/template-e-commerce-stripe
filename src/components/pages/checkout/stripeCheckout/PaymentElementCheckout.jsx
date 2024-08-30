@@ -1,12 +1,13 @@
 import styled from "styled-components/macro";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
 import { bouncy } from "ldrs";
+
 bouncy.register();
 
 export const PaymentElementCheckout = ({ shipmentCost }) => {
@@ -135,7 +136,9 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
           </CartInfoContainer>
         </CheckoutContainer>
         <PaymentElementContainer windowWidth={windowWidth} data-aos="fade-left">
-          <PaymentElement />
+          <div style={{ minHeight: "300px" }}>
+            <PaymentElement />
+          </div>
           <Button disabled={isProcessing} id="submit">
             <span id="button-text">
               {isProcessing ? (
