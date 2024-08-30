@@ -4,9 +4,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect } from "react";
 import { db } from "../../../../../firebaseConfig";
 import { ProductList } from "./productList/ProductList";
-import "ldrs/helix";
+import { Ring } from "@uiball/loaders";
 //import { DeleteImages } from "./productList/deleteImages/DeleteImages";
-
 
 export const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -49,9 +48,9 @@ export const AdminProducts = () => {
 
   if (productLoading) {
     return (
-      <BouncyLoader>
-        <l-helix size="35" speed="1.25" color="black"></l-helix>
-      </BouncyLoader>
+      <Loader>
+        <Ring size={40} lineWeight={6} speed={1} color="black" />
+      </Loader>
     );
   }
 
@@ -62,7 +61,7 @@ export const AdminProducts = () => {
           display: "flex",
           flexDirection: "column",
           position: "relative",
-          gridColumn:"2/7"
+          gridColumn: "2/7",
         }}
       >
         {/* <DeleteImages />  */}
@@ -79,9 +78,12 @@ export const AdminProducts = () => {
   );
 };
 
-const BouncyLoader = styled.div`
+const Loader = styled.div`
   width: 100%;
-  grid-column: 2/6;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
+  grid-column: 2/7;
   display: flex;
   align-items: center;
   justify-content: center;
