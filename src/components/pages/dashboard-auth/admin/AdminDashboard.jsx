@@ -102,7 +102,7 @@ const DashboardContainer = styled.div`
 const DashboardNavigation = styled.nav`
   width: 206px;
   height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.65) -3px 0px 9px;
+  box-shadow: rgba(0, 0, 0, 0.35) -3px 0px 9px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   background-color: rgb(186 199 225 / 40%);
@@ -128,7 +128,7 @@ const DashboardListContainer = styled.ul`
   -webkit-box-pack: start;
   justify-content: flex-start;
   background-color: rgb(245, 245, 245);
-  box-shadow: rgba(0, 0, 0, 0.45) -1px 0px 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) -1px 0px 4px;
   align-items: flex-start;
 `;
 const SpanBtn = styled.span`

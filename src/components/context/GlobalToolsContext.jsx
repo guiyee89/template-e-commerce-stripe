@@ -101,6 +101,7 @@ const GlobalToolsProvider = ({ children }) => {
 
   const value = {
     isCartOpen,
+    setIsCartOpen,
     toggleSideCart,
     isMenuOpen,
     toggleSideMenu,
@@ -123,6 +124,7 @@ const GlobalToolsProvider = ({ children }) => {
     setProgressComplete,
     scroll,
     scrollDirection,
+    setScrollDirection
   };
 
   return (
