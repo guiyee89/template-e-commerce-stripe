@@ -11,7 +11,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import Headroom from "react-headroom";
 import useGlobalLocation from "../../hooks/useGlobalLocation";
 //import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 

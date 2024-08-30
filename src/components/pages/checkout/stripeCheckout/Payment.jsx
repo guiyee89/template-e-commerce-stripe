@@ -4,7 +4,6 @@ import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useContext } from "react";
-import { Ring } from "@uiball/loaders";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { PaymentElementCheckout } from "./PaymentElementCheckout";
@@ -79,17 +78,6 @@ export const Payment = ({ shipmentCost }) => {
           <PaymentElementCheckout shipmentCost={shipmentCost} />
         </Elements>
       )}
-      {/* {isFormLoading && (
-        <RingLoaderContainer>
-          <Ring size={35} lineWeight={7} speed={1} color="black" />
-        </RingLoaderContainer>
-      )} */}
     </div>
   );
 };
-const RingLoaderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 84%;
-`;
