@@ -4,7 +4,9 @@ export const AdminNewsletters = () => {
   return (
     <>
       <NewslettersWrapper>
-        <p style={{ textAlign: "center" }}>En construccion...</p>
+        <p style={{ textAlign: "center", margin: " 125px 245px 0 0" }}>
+          En construccion...
+        </p>
       </NewslettersWrapper>
     </>
   );

@@ -18,7 +18,7 @@ import TopicOutlinedIcon from "@mui/icons-material/TopicOutlined";
 import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
-import "ldrs/helix";
+import { Ring } from "@uiball/loaders";
 
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
@@ -80,9 +80,9 @@ export const AdminOrders = () => {
 
   if (orderLoading) {
     return (
-      <BouncyLoader>
-        <l-helix size="35" speed="1.25" color="black"></l-helix>
-      </BouncyLoader>
+      <Loader>
+        <Ring size={40} lineWeight={6} speed={1} color="black" />
+      </Loader>
     );
   }
 
@@ -200,9 +200,12 @@ export const AdminOrders = () => {
   );
 };
 
-const BouncyLoader = styled.div`
+const Loader = styled.div`
   width: 100%;
-  grid-column: 2/6;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
+  grid-column: 2/7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,7 +217,7 @@ const OrdersWrapper = styled.div`
   overflow-x: auto;
   width: 100%;
   height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   @media (max-width: 1000px) {

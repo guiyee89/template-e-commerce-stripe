@@ -415,7 +415,7 @@ const ProductListWrapper = styled.div`
   width: 100%;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
-  box-shadow: rgba(0, 0, 0, 0.65) 2px 0px 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   @media (max-width: 950px) {
     width: 100%;
   }
