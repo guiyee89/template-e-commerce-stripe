@@ -12,7 +12,8 @@ export const ItemDetailMobile = ({ selectedItem }) => {
   const [filteredItem, setFilteredItem] = useState({}); //Filtered Item from FilterColorSize component
   const { addToCart } = useContext(CartContext); //Function addToCart from Context
   const hasDiscount = "discount" in selectedItem; //Get discounted item
-  const { setProgress, setVisible } = useContext(GlobalToolsContext);
+  const { setProgress, setVisible, setScrollDirection } =
+    useContext(GlobalToolsContext);
   const [imgSkeletonLoader, setImgSkeletonLoader] = useState(false);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false);
 
@@ -30,7 +31,7 @@ export const ItemDetailMobile = ({ selectedItem }) => {
       };
     }
     addToCart(data);
-    /* setFilteredItem({}); */ // Reset the filteredItem state after adding to cart
+    setScrollDirection("up");
   };
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +99,13 @@ export const ItemDetailMobile = ({ selectedItem }) => {
                 handleColorLoading={handleColorLoading}
               />
             </FilterWrapper>
-
+            <ReferenceWrapper>
+              <img
+                style={{ width: "35px" }}
+                src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png"
+              />
+              <SizeReference>Reference Size Model</SizeReference>
+            </ReferenceWrapper>
             <StockPriceWrapper>
               {hasDiscount && selectedItem.discount !== null ? (
                 <ItemPriceWrapper>
@@ -151,11 +158,6 @@ export const ItemDetailMobile = ({ selectedItem }) => {
                 />
               )}
             </ItemCountWrapper>
-
-            <ReferenceWrapper>
-              <SizeReference>Reference Size Model</SizeReference>
-            </ReferenceWrapper>
-
             <Description>
               {Object.keys(filteredItem).length > 0
                 ? filteredItem.description
@@ -316,9 +318,18 @@ const Description = styled.p`
 `;
 const ReferenceWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  margin: 15px 0px;
+  border-radius: 20px;
+  padding: 0px 8px;
+  &:hover {
+    background-color: rgb(228 225 225);
+    transition: background-color 0.2s ease-in-out;
+  }
 `;
 const SizeReference = styled.p`
   text-transform: uppercase;
   text-align: center;
+  font-size: 0.8rem;
 `;
