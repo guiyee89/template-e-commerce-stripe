@@ -9,7 +9,7 @@ import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
-import "ldrs/helix";
+import { Ring } from "@uiball/loaders";
 
 export const AdminShipping = () => {
   const [shippingData, setShippingData] = useState([]);
@@ -157,9 +157,9 @@ export const AdminShipping = () => {
 
   if (shippingLoading) {
     return (
-      <BouncyLoader>
-        <l-helix size="35" speed="1.25" color="black"></l-helix>
-      </BouncyLoader>
+      <Loader>
+        <Ring size={40} lineWeight={6} speed={1} color="black" />
+      </Loader>
     );
   }
 
@@ -287,18 +287,24 @@ export const AdminShipping = () => {
   );
 };
 
-const BouncyLoader = styled.div`
+const Loader = styled.div`
   width: 100%;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
+  grid-column: 2/7;
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-column: 2/6;
 `;
 
 const ShippingFormWrapper = styled.div`
   width: 100%;
   margin: 0px 10px;
-  grid-column: 2/7;
+  grid-column: 2 / 7;
+  box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 7px;
 `;
 
 const Form = styled.form`
