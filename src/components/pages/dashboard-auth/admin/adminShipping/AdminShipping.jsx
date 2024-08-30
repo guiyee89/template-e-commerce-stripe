@@ -335,7 +335,7 @@ const OverseasContainer = styled.div`
   width: 100%;
   gap: 2rem;
   justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.35) 2px 1px 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 3px;
   border-top-right-radius: 10px;
   padding: 0 22px;
   height: 90px;
@@ -346,7 +346,7 @@ const UnitedStatesContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.45) 1px 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 1px;
   padding: 20px;
   max-height: 512px;
 `;
@@ -402,7 +402,7 @@ const SubmitBtnContainer = styled.div`
   display: flex;
   width: 100%;
   height: 60px;
-  box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 3px;
   align-items: center;
   justify-content: center;
   border-bottom-right-radius: 10px;
