@@ -222,13 +222,7 @@ export const ProductList = ({
                   products={products}
                 />
               </DiscountFormContainer>
-              <TableContainer
-                sx={{
-                  boxShadow: "rgba(0, 0, 0, 0.45) 0px 0px 3px;",
-                  padding: "12px 10px",
-                  height: "512px",
-                }}
-              >
+              <TableListContainer>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead
                     sx={{
@@ -385,7 +379,7 @@ export const ProductList = ({
                       ))}
                   </TableBody>
                 </Table>
-              </TableContainer>
+              </TableListContainer>
             </>
           )}
 
@@ -437,7 +431,24 @@ const TextFieldInput = styled(TextField)`
   }
 `;
 const AddButton = styled(Button)``;
-
+const TableListContainer = styled(TableContainer)`
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 3px;
+  padding: 12px 10px;
+  height: 512px;
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+`;
 const ProductListContainer = styled.div`
   margin: 16px 16px 12px 16px;
 `;
