@@ -6,6 +6,8 @@ import { CartContext } from "../../../context/CartContext";
 import { ItemImageDesktop } from "./ItemImageDesktop";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
+import { SizeGuide } from "../sizeGuide/sizeGuide";
+import { Box, Modal } from "@mui/material";
 
 export const ItemDetailDesktop = ({
   selectedItem,
@@ -15,9 +17,11 @@ export const ItemDetailDesktop = ({
   const [filteredItem, setFilteredItem] = useState({}); //Filtered Item from FilterDetail component
   const { addToCart } = useContext(CartContext);
   const hasDiscount = "discount" in selectedItem;
-  const { setProgress, setVisible } = useContext(GlobalToolsContext);
+  const { setProgress, setVisible, setScrollDirection } =
+    useContext(GlobalToolsContext);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false); //Activate size loader
   const [counterLoading, setCounterLoading] = useState(false);
+  const [sizeGuide, setSizeGuide] = useState(false);
 
   //On add to cart if selectedItem or filteredItem
   const onAddToCart = (quantity) => {
@@ -32,7 +36,7 @@ export const ItemDetailDesktop = ({
       };
     }
     addToCart(data);
-    /* setFilteredItem({}); */ //Reset the filteredItem state after adding to cart
+    setScrollDirection("up");
   };
 
   //Handle filtering size & color
@@ -58,6 +62,14 @@ export const ItemDetailDesktop = ({
     setLoadingColorFilter(true);
     setVisible(true);
     setProgress(0);
+  };
+
+  const handleOpen = (e) => {
+    setSizeGuide(true);
+  };
+
+  const handleClose = () => {
+    setSizeGuide(false);
   };
 
   //Render item details based on the existence of selectedItem or filteredItem
@@ -96,14 +108,29 @@ export const ItemDetailDesktop = ({
               />
             </FilterWrapper>
             <ReferenceWrapper>
-              <SizeReference>
-                <img
-                  style={{ width: "35px" }}
-                  src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png"
-                />
+              <SizeImg src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png" />
+              <SizeReference onClick={handleOpen}>
                 Reference Size Model
               </SizeReference>
             </ReferenceWrapper>
+
+            {/* Modal for SizeGuide */}
+            <Modal open={sizeGuide} onClose={handleClose}>
+              <Box
+                sx={{
+                  maxWidth: 800,
+                  padding: 2,
+                  margin: "0 auto",
+                  padding: "20px",
+                  position: "relative",
+                  top: "50px",
+                  backgroundColor: "white",
+                  overflow: "auto",
+                }}
+              >
+                <SizeGuide onClose={handleClose} />
+              </Box>
+            </Modal>
             <StockPriceWrapper>
               {hasDiscount && selectedItem.discount !== null ? (
                 <ItemPriceWrapper>
@@ -299,8 +326,20 @@ const Description = styled.p`
 `;
 const ReferenceWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0px 8px 0 0;
   cursor: pointer;
+  &:hover {
+    background-color: rgb(228 225 225 / 66%);
+    transition: background-color 0.1s ease-in-out;
+    font-weight: 500;
+  }
+`;
+const SizeImg = styled.img`
+  width: 32px;
 `;
 const SizeReference = styled.p`
   text-transform: uppercase;
