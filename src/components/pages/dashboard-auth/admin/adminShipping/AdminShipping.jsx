@@ -300,7 +300,7 @@ const Loader = styled.div`
 
 const ShippingFormWrapper = styled.div`
   width: 100%;
-  margin: 0px 10px;
+  margin: 0px 10px 0 0;
   grid-column: 2 / 7;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   border-bottom-right-radius: 5px;

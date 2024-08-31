@@ -213,7 +213,7 @@ const Loader = styled.div`
 
 const OrdersWrapper = styled.div`
   grid-column: 2/7;
-  margin: 0 10px;
+  margin: 0 10px 0 0;
   overflow-x: auto;
   width: 100%;
   height: 100%;
