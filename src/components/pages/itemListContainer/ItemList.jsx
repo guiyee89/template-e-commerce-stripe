@@ -28,7 +28,6 @@ export const ItemList = ({
     windowWidth,
     setProgress,
     setVisible,
-    scroll,
     scrollDirection,
   } = useContext(GlobalToolsContext);
 
@@ -44,7 +43,6 @@ export const ItemList = ({
     setLoadingDetail(itemId);
     setTimeout(() => {
       setLoadingDetail(true);
-      // navigate(`/item-details/${itemId}`);
     }, 1500);
   };
 
@@ -118,7 +116,6 @@ export const ItemList = ({
   ///////////////////////////                  /////////////////////////////
   return (
     <>
-    
       <FilterContainer
         isMenuOpen={isMenuOpen}
         isFilterOpen={isFilterOpen}
@@ -170,8 +167,11 @@ export const ItemList = ({
           const hasDiscount = "discount" in product;
 
           return (
-            <ItemWrapper
+            <ItemWrapperLink
               key={product.id}
+              target="_blank"
+              rel="noopener noreferrer"
+              to={`/item-details/${product.id}`}
               onClick={(event) => {
                 event.preventDefault();
                 handleLoadTop();
@@ -188,7 +188,7 @@ export const ItemList = ({
                 )}
               </Loader>
               <ItemCard>
-                <ImgWrapperLink>
+                <ImgWrapper>
                   {imgskeleton === true ? (
                     <ClipLoader color="#8f501a" size={30} />
                   ) : (
@@ -198,7 +198,7 @@ export const ItemList = ({
                       role="presentation"
                     />
                   )}
-                </ImgWrapperLink>
+                </ImgWrapper>
                 {hasDiscount && product.discount !== null && (
                   <Discount>-{product.discount}%</Discount>
                 )}
@@ -224,7 +224,7 @@ export const ItemList = ({
                   <Price>$ {product.unit_price.toFixed(2)}</Price>
                 )}
               </InfoWrapper>
-            </ItemWrapper>
+            </ItemWrapperLink>
           );
         })}
       </Wrapper>
@@ -306,7 +306,7 @@ const ItemImg = styled.img`
   mix-blend-mode: darken;
 `;
 
-const ImgWrapperLink = styled.div`
+const ImgWrapper = styled.div`
   position: relative;
   background-color: rgb(239, 237, 237);
   height: 100%;
@@ -331,7 +331,7 @@ const InfoWrapper = styled.div`
     padding: 0px 0px 0px 18px;
   }
 `;
-const ItemWrapper = styled(Link)`
+const ItemWrapperLink = styled(Link)`
   text-decoration: none;
   margin-bottom: 10px;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 1px;
