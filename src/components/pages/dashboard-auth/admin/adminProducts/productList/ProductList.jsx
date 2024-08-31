@@ -432,7 +432,7 @@ const TextFieldInput = styled(TextField)`
 `;
 const AddButton = styled(Button)``;
 const TableListContainer = styled(TableContainer)`
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 3px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2px
   padding: 12px 10px;
   height: 512px;
   ::-webkit-scrollbar {
