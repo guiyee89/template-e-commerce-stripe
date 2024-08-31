@@ -5,16 +5,11 @@ import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
 export const CartWidget = ({ totalItems }) => {
-  const { toggleSideCart, isCartOpen, windowWidth } =
-    useContext(GlobalToolsContext);
+  const { toggleSideCart, windowWidth } = useContext(GlobalToolsContext);
 
   return (
     <>
-      <CartWidgetWrapper
-        onClick={toggleSideCart}
-        isCartOpen={isCartOpen}
-        windowWidth={windowWidth}
-      >
+      <CartWidgetWrapper onClick={toggleSideCart} windowWidth={windowWidth}>
         <Contador
           badgeContent={totalItems}
           aria-label={totalItems}
@@ -35,8 +30,7 @@ export const CartWidget = ({ totalItems }) => {
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
   margin-bottom: ${(props) => (props.windowWidth > 900 ? "-13px" : "-0")};
-  padding: ${(props) =>
-    props.isCartOpen && props.windowWidth > 900 ? "0" : "0 0 0 0"};
+  padding: ${(props) => (props.windowWidth > 900 ? "0 0 0 0" : "8px 0 0 0")};
 `;
 
 const Contador = styled(Badge)`

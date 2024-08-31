@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { CartWidget } from "../../common/cartWidget/CartWidget";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -12,10 +12,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
 import useGlobalLocation from "../../hooks/useGlobalLocation";
-//import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 export const NavMobile = () => {
-  const navigate = useNavigate();
+  //////////        ////////////        ////////////        ///////////
+  //                       Auth & Admin                      //
   const { user } = useContext(AuthContext);
   const rolAdmin = import.meta.env.VITE_ROL_ADMIN;
   const rolAdmin2 = import.meta.env.VITE_ROL_ADMIN2;
@@ -26,7 +26,7 @@ export const NavMobile = () => {
   const { getTotalItems } = useContext(CartContext);
   const totalItems = getTotalItems();
   //////////        ////////////        ////////////        ///////////
-  //                       SideMenuContext                      //
+  //                       Context                      //
   const {
     scroll,
     scrollDirection,
@@ -39,6 +39,7 @@ export const NavMobile = () => {
   } = useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////////////////////
+  //                       Hooks                      //
   const { isCart, isDashboard, isCheckout } = useGlobalLocation();
 
   //////////        ////////////        ////////////        ///////////
@@ -84,6 +85,9 @@ export const NavMobile = () => {
               <SideMenuHeader>
                 <LogoSideMenu>
                   <LogoLink
+                    to="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavLinkClick();
@@ -103,6 +107,9 @@ export const NavMobile = () => {
               <NavListWrapper>
                 <NavList>
                   <NavLink
+                    to="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavLinkClick();
@@ -129,6 +136,8 @@ export const NavMobile = () => {
                             fontSize: "clamp(0.69rem, 1.7vw, 0.89rem)",
                           }}
                           to="/all-products"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           All Categories
@@ -137,6 +146,8 @@ export const NavMobile = () => {
                       <CategoryList>
                         <CategoryLink
                           to="/category/shoes"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           shoes
@@ -145,6 +156,8 @@ export const NavMobile = () => {
                       <CategoryList>
                         <CategoryLink
                           to="/category/pants"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           pants
@@ -153,6 +166,8 @@ export const NavMobile = () => {
                       <CategoryList>
                         <CategoryLink
                           to="/category/shirts"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           shirts
@@ -161,6 +176,8 @@ export const NavMobile = () => {
                       <CategoryList>
                         <CategoryLink
                           to="/category/hoodies"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           hoodies
@@ -169,6 +186,8 @@ export const NavMobile = () => {
                       <CategoryList>
                         <CategoryLink
                           to="/category/bags"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={handleNavLinkClick}
                         >
                           bags
@@ -180,6 +199,9 @@ export const NavMobile = () => {
 
                 <NavList>
                   <NavLink
+                    to="/contact"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavLinkClick();
@@ -192,52 +214,63 @@ export const NavMobile = () => {
               </NavListWrapper>
 
               {!user || !user.rol ? (
-                <LoginBtn>
+                <LoginLink
+                  onClick={(e) => {
+                    to = "/login";
+                    target = "_blank";
+                    rel = "noopener noreferrer";
+                    e.preventDefault();
+                    handleNavLinkClick();
+                    window.location.href = "/login";
+                  }}
+                >
                   <h4>Login / Sign up</h4>
-                  <LoginSharpIcon
-                    sx={{ fontSize: "26px" }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavLinkClick();
-                      window.location.href = "/login";
-                    }}
-                  />
-                </LoginBtn>
+                  <LoginSharpIcon sx={{ fontSize: "26px" }} />
+                </LoginLink>
               ) : user.rol === rolAdmin ||
                 user.rol === rolAdmin2 ||
                 user.rol === rolAdmin3 ||
                 user.rol === rolAdmin4 ? (
                 <>
-                  <DashboardBtn>
+                  <DashboardLink
+                    to="/dashboard"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/dashboard";
+                    }}
+                  >
                     <h4>Admin</h4>
-                    <DashboardCustomizeRoundedIcon
-                      sx={{ fontSize: "27px" }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/dashboard";
-                      }}
-                    />
-                  </DashboardBtn>
+                    <DashboardCustomizeRoundedIcon sx={{ fontSize: "27px" }} />
+                  </DashboardLink>
                 </>
               ) : (
                 <>
-                  <ProfileBtn>
+                  <ProfileLink
+                    to="/user-orders"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick();
+                      window.location.href = "/user-orders";
+                    }}
+                  >
                     <h4>Profile</h4>
                     <AccountCircleSharpIcon
                       sx={{ fontSize: "30px", marginBottom: "-13px" }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/user-orders";
-                      }}
                     />
-                  </ProfileBtn>
+                  </ProfileLink>
                 </>
               )}
             </SideMenuWrapper>
             <LogoDiv onClick={handleNavLinkClick}>
               <LogoLink
+                to="/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   handleNavLinkClick();
@@ -518,9 +551,10 @@ const CategoryLink = styled(Link)`
     transition: transform 0.21s ease-in-out;
   }
 `;
-const DashboardBtn = styled.button`
-  background-color: transparent;
-  border: none;
+const DashboardLink = styled.button`
+  text-align: center;
+  text-decoration: none;
+  color: black;
   cursor: pointer;
   font-size: 0.6rem;
   position: absolute;
@@ -528,9 +562,10 @@ const DashboardBtn = styled.button`
   margin: 200px auto 0;
   width: 100%;
 `;
-const ProfileBtn = styled.button`
-  background-color: transparent;
-  border: none;
+const ProfileLink = styled.button`
+  text-align: center;
+  text-decoration: none;
+  color: black;
   cursor: pointer;
   font-size: 0.6rem;
   position: absolute;
@@ -538,11 +573,12 @@ const ProfileBtn = styled.button`
   margin: 200px auto 0;
   width: 100%;
 `;
-const LoginBtn = styled.button`
-  background-color: transparent;
+const LoginLink = styled.button`
+  text-align: center;
+  text-decoration: none;
+  color: black;
   position: absolute;
   bottom: 4%;
-  border: none;
   font-size: 0.6rem;
   cursor: pointer;
   margin: 200px auto 0;
