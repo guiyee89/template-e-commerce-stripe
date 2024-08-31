@@ -245,7 +245,7 @@ export const NavDesktop = () => {
 
                 <DashCartContainer>
                   <CartWidget
-                    sx={{ padding: "10px", gap: "0.7rem" }}
+                    sx={{ padding: "10px" }}
                     totalItems={totalItems}
                   />
                   {!user || !user.rol ? (
@@ -590,6 +590,7 @@ const DashCartContainer = styled.div`
   display: flex;
   align-items: center;
   padding-right: 10px;
+  gap: 0.7rem;
 `;
 const DashboardLink = styled(Link)`
   cursor: pointer;
