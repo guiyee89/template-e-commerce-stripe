@@ -229,7 +229,6 @@ export const NavDesktop = () => {
                 <NavDesktopButtons handleNavLinkClick={handleNavLinkClick} />
 
                 {/************                                      ************/}
-                
               </>
             )}
           </InsideNav>
