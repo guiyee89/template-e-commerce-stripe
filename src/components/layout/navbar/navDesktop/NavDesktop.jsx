@@ -9,9 +9,11 @@ import { AuthContext } from "../../../context/AuthContext";
 import { NavDesktopButtons } from "./NavDesktopButtons";
 
 export const NavDesktop = () => {
+
   //////////        ////////////        ////////////        ///////////
   //                       States                      //
   const [hoveredCategory, setHoveredCategory] = useState("all-products");
+
   //////////        ////////////        ////////////        ///////////
   //                       Context                     //
   const { user } = useContext(AuthContext);
@@ -21,6 +23,7 @@ export const NavDesktop = () => {
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
   const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();
+  
   //////////        ////////////        ////////////        ///////////
   //                 Reset localStorage on nav links               //
   const handleNavLinkClick = () => {
