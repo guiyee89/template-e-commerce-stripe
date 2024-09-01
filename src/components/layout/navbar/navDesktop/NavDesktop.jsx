@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
-import useGlobalLocation from "../../../hooks/useGlobalLocation"; 
+import useGlobalLocation from "../../../hooks/useGlobalLocation";
 import { AuthContext } from "../../../context/AuthContext";
 import { NavDesktopButtons } from "./NavDesktopButtons";
 
@@ -223,8 +223,13 @@ export const NavDesktop = () => {
                     </NavLink>
                   </NavList>
                 </NavListWrapper>
-                {/* Desktop Profile Buttons */}
+
+                {/************       Desktop Profile Buttons        ************/}
+
                 <NavDesktopButtons handleNavLinkClick={handleNavLinkClick} />
+
+                {/************                                      ************/}
+                
               </>
             )}
           </InsideNav>
