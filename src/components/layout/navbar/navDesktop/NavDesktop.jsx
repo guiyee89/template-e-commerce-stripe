@@ -512,35 +512,3 @@ const CategoryLink = styled(Link)`
     transition: transform 0.21s ease-in-out;
   }
 `;
-<<<<<<< HEAD:src/components/layout/navbar/NavDesktop.jsx
-const DashCartContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
-  gap: 0.7rem;
-`;
-const DashboardLink = styled(Link)`
-  cursor: pointer;
-  font-size: 0.6rem;
-  margin-bottom: 1px;
-  text-align: center;
-  text-decoration: none;
-  color: black;
-`;
-const ProfileLink = styled(Link)`
-  cursor: pointer;
-  font-size: 0.6rem;
-  text-align: center;
-  text-decoration: none;
-  color: black;
-`;
-const LoginLink = styled(Link)`
-  font-size: 0.6rem;
-  cursor: pointer;
-  margin-bottom: -3px;
-  text-align: center;
-  text-decoration: none;
-  color: black;
-`;
-=======
->>>>>>> html-email-templates:src/components/layout/navbar/navDesktop/NavDesktop.jsx
