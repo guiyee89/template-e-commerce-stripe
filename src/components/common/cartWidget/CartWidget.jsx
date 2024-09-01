@@ -4,12 +4,16 @@ import styled from "styled-components/macro";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
 
-export const CartWidget = ({ totalItems }) => {
+export const CartWidget = ({ totalItems, isDashboard }) => {
   const { toggleSideCart, windowWidth } = useContext(GlobalToolsContext);
 
   return (
     <>
-      <CartWidgetWrapper onClick={toggleSideCart} windowWidth={windowWidth}>
+      <CartWidgetWrapper
+        onClick={toggleSideCart}
+        windowWidth={windowWidth}
+        isDashboard={isDashboard}
+      >
         <Contador
           badgeContent={totalItems}
           aria-label={totalItems}
@@ -29,8 +33,10 @@ export const CartWidget = ({ totalItems }) => {
 };
 const CartWidgetWrapper = styled.div`
   cursor: pointer;
-  margin-bottom: ${(props) => (props.windowWidth > 900 ? "-13px" : "-0")};
+  margin-bottom: ${(props) => (props.windowWidth > 900 ? "-0" : "0")};
   padding: ${(props) => (props.windowWidth > 900 ? "0 0 0 0" : "8px 0 0 0")};
+  display: ${(props) =>
+    props.isDashboard ? "none" : "block"}; 
 `;
 
 const Contador = styled(Badge)`
@@ -48,5 +54,5 @@ const Contador = styled(Badge)`
   }
 `;
 const CartWrapper = styled.div`
-  margin-top: ${(props) => (props.windowWidth > 900 ? "3px" : "0")};
+  margin-top: ${(props) => (props.windowWidth > 900 ? "2px" : "0")};
 `;

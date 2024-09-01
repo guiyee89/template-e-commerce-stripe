@@ -1,22 +1,15 @@
-import { useContext, useState } from "react";
 import styled, { css } from "styled-components/macro";
-import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
-import { AuthContext } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { AdminOrders } from "./adminOrders/AdminOrders";
 import { AdminNewsletters } from "./adminNewsletters/AdminNewsletters";
 import { AdminProducts } from "./adminProducts/AdminProducts";
 import { AdminShipping } from "./adminShipping/AdminShipping";
-import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import { useState } from "react";
 
 export const AdminDashboard = () => {
-  const { handleLogout } = useContext(AuthContext);
-  const { scroll } = useContext(GlobalToolsContext);
-  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("clientOrders");
 
   const handleOptionClick = (option) => {
@@ -72,13 +65,6 @@ export const AdminDashboard = () => {
               </DashboardBtn>
             </DashboardList>
           </DashboardListContainer>
-          <LogoutBtn scrolled={scroll}>
-            <h4>Logout</h4>
-            <LogoutSharpIcon
-              sx={{ fontSize: "25px" }}
-              onClick={() => handleLogout(navigate("/"))}
-            />
-          </LogoutBtn>
         </DashboardNavigation>
         {selectedOption === "clientOrders" && <AdminOrders />}
         {selectedOption === "manageProducts" && <AdminProducts />}
@@ -189,21 +175,18 @@ const DashboardBtn = styled.button`
     transition: background-color 0.1s ease-in-out;
   }
 `;
-
-const LogoutBtn = styled.button`
-  background-color: transparent;
-  border: none;
-  font-size: 0.65rem;
-  cursor: pointer;
-  position: fixed;
-  margin-right: 10px;
-  top: ${(props) => (props.scrolled === "scrolled" ? "16px" : "16px")};
-  right: 4%;
-  transition: top
-    ${(props) => (props.scrolled === "scrolled" ? "0.18s" : "0.18s")}
-    ease-in-out;
-  z-index: 2;
-  @media (max-width: 950px) {
-    right: 0;
-  }
+const HoveredText = styled.p`
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease-in-out;
+  font-size: 0.72rem;
+  position: absolute;
+  bottom: -38px;
+  right: 10px;
+  background-color: rgb(68 68 68);
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 4px;
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: white;
+  text-align: center;
 `;

@@ -169,7 +169,6 @@ export const ItemList = ({
           return (
             <ItemWrapperLink
               key={product.id}
-              target="_blank"
               rel="noopener noreferrer"
               to={`/item-details/${product.id}`}
               onClick={(event) => {
