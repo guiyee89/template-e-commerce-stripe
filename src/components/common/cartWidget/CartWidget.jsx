@@ -3,9 +3,15 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import styled from "styled-components/macro";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { useContext } from "react";
+import useGlobalLocation from "../../hooks/useGlobalLocation";
 
-export const CartWidget = ({ totalItems, isDashboard }) => {
+export const CartWidget = ({ totalItems }) => {
+  //////////////////////////////////////////////////////////////////////
+  //                       Context                        //
   const { toggleSideCart, windowWidth } = useContext(GlobalToolsContext);
+  //////////////////////////////////////////////////////////////////////
+  //                       useHooks                        //
+  const { isDashboard } = useGlobalLocation();
 
   return (
     <>
@@ -35,8 +41,7 @@ const CartWidgetWrapper = styled.div`
   cursor: pointer;
   margin-bottom: ${(props) => (props.windowWidth > 900 ? "-0" : "0")};
   padding: ${(props) => (props.windowWidth > 900 ? "0 0 0 0" : "8px 0 0 0")};
-  display: ${(props) =>
-    props.isDashboard ? "none" : "block"}; 
+  display: ${(props) => (props.isDashboard ? "none" : "block")};
 `;
 
 const Contador = styled(Badge)`
