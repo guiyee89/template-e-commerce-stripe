@@ -72,6 +72,7 @@ export const ItemDetailDesktop = ({
     setSizeGuide(false);
   };
 
+  
   //Render item details based on the existence of selectedItem or filteredItem
   return (
     <Wrapper>
