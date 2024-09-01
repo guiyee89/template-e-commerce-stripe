@@ -114,6 +114,7 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
 };
 const DashboardCartContainer = styled.div`
   display: flex;
+  align-items: flex-end;
   margin-top: 6px;
   gap: 0.9rem;
 `;

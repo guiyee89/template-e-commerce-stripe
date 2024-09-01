@@ -59,5 +59,5 @@ const Contador = styled(Badge)`
   }
 `;
 const CartWrapper = styled.div`
-  margin-top: ${(props) => (props.windowWidth > 900 ? "2px" : "0")};
+  margin-top: ${(props) => (props.windowWidth > 900 ? "-2px" : "0")};
 `;
