@@ -10,12 +10,11 @@ import { NavDesktopButtons } from "./NavDesktopButtons";
 
 export const NavDesktop = () => {
   //////////        ////////////        ////////////        ///////////
-  //                       Auth & Admin                      //
-  const { user } = useContext(AuthContext);
-  //////////        ////////////        ////////////        ///////////
   //                       States                      //
   const [hoveredCategory, setHoveredCategory] = useState("all-products");
-
+  //////////        ////////////        ////////////        ///////////
+  //                       Context                     //
+  const { user } = useContext(AuthContext);
   const { scroll, isCartOpen, scrollDirection } =
     useContext(GlobalToolsContext);
 
@@ -229,7 +228,6 @@ export const NavDesktop = () => {
                 <NavDesktopButtons handleNavLinkClick={handleNavLinkClick} />
 
                 {/************                                      ************/}
-                
               </>
             )}
           </InsideNav>
