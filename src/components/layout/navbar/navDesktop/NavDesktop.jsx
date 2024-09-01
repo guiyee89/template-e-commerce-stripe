@@ -223,8 +223,13 @@ export const NavDesktop = () => {
                     </NavLink>
                   </NavList>
                 </NavListWrapper>
-                {/* Desktop Profile Buttons */}
+
+                {/************       Desktop Profile Buttons        ************/}
+
                 <NavDesktopButtons handleNavLinkClick={handleNavLinkClick} />
+
+                {/************                                      ************/}
+                
               </>
             )}
           </InsideNav>

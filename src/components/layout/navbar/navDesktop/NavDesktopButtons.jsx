@@ -31,11 +31,7 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
   return (
     <>
       <DashboardCartContainer>
-        <CartWidget
-          sx={{ padding: "10px" }}
-          totalItems={totalItems}
-          isDashboard={isDashboard}
-        />
+        <CartWidget sx={{ padding: "10px" }} totalItems={totalItems} />
         {!user || !user.rol ? (
           <LoginLink
             to="/login"
@@ -55,7 +51,7 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
           user.rol === rolAdmin4 ? (
           <>
             <DashboardLink
-              isDashboard={isDashboard}
+              isdashboard={isDashboard.toString()}
               to="/dashboard"
               rel="noopener noreferrer"
               onClick={(e) => {
@@ -148,7 +144,7 @@ const DashboardLink = styled(Link)`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  display: ${(props) => (props.isDashboard ? "none" : "block")};
+  display: ${({ isdashboard }) => (isdashboard === "true" ? "none" : "block")};
   &:hover ${HoveredText} {
     visibility: visible;
     opacity: 1;
