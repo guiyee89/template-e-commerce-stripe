@@ -196,7 +196,7 @@ export const NavMobile = () => {
               </NavListWrapper>
 
               {/************        NAV MOBILE BUTTONS         ************/}
-
+              
               <MobileBtnWrapper>
                 <NavMobileButtons handleNavLinkClick={handleNavLinkClick} />
               </MobileBtnWrapper>

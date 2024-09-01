@@ -200,7 +200,7 @@ const LogoutBtn = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  display: ${(isDashboard) => isDashboard && "block"};
+
   &:hover ${HoveredText} {
     visibility: visible;
     opacity: 1;
