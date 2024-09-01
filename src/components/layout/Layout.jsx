@@ -5,14 +5,14 @@ import useScrollRestoration from "../hooks/useScrollRestoration";
 import { SideCart } from "../pages/cart/SideCart";
 import { useContext, useEffect } from "react";
 import { GlobalToolsContext } from "../context/GlobalToolsContext";
-import { NavMobile } from "./navbar/NavMobile";
-import { NavDesktop } from "./navbar/NavDesktop";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { NewsLetter } from "./newsletter/NewsLetter";
 import { useGlobalLoader } from "../hooks/useGlobalLoader";
 import { HeroSmall } from "./heroSmall/HeroSmall";
 import useGlobalLocation from "../hooks/useGlobalLocation";
+import { NavDesktop } from "./navbar/navDesktop/NavDesktop";
+import { NavMobile } from "./navbar/navMobile/NavMobile";
 
 ////////////////////////////////////////////////////
 
