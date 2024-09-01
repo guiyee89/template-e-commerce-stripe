@@ -5,7 +5,9 @@ import { AuthContext } from "../../../context/AuthContext";
 import styled from "styled-components/macro";
 
 export const UserOrders = () => {
+
   const [myOrders, setMyOrders] = useState([]);
+  
   //////////        ////////////        ////////////        ///////////
   //                       Auth & Admin                      //
   const { user } = useContext(AuthContext);
