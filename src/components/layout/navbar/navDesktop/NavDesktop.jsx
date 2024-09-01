@@ -1,36 +1,26 @@
 import styled from "styled-components/macro";
-import { CartWidget } from "../../common/cartWidget/CartWidget";
 import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
-import LoginSharpIcon from "@mui/icons-material/LoginSharp";
-import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import useGlobalLocation from "../../hooks/useGlobalLocation";
+import useGlobalLocation from "../../../hooks/useGlobalLocation"; 
+import { AuthContext } from "../../../context/AuthContext";
+import { NavDesktopButtons } from "./NavDesktopButtons";
 
 export const NavDesktop = () => {
   //////////        ////////////        ////////////        ///////////
-  //                       States                      //
-  const [hoveredCategory, setHoveredCategory] = useState("all-products");
-  //////////        ////////////        ////////////        ///////////
   //                       Auth & Admin                      //
   const { user } = useContext(AuthContext);
-  const rolAdmin = import.meta.env.VITE_ROL_ADMIN;
-  const rolAdmin2 = import.meta.env.VITE_ROL_ADMIN2;
-  const rolAdmin3 = import.meta.env.VITE_ROL_ADMIN3;
-  const rolAdmin4 = import.meta.env.VITE_ROL_ADMIN4;
   //////////        ////////////        ////////////        ///////////
-  //                       Context                      //
-  const { getTotalItems } = useContext(CartContext);
-  const totalItems = getTotalItems();
+  //                       States                      //
+  const [hoveredCategory, setHoveredCategory] = useState("all-products");
+
   const { scroll, isCartOpen, scrollDirection } =
     useContext(GlobalToolsContext);
 
   //////////////////////////////////////////////////////////////////////
+  //                 useHooks                        //
   const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();
   //////////        ////////////        ////////////        ///////////
   //                 Reset localStorage on nav links               //
@@ -62,7 +52,6 @@ export const NavDesktop = () => {
             <LogoDiv>
               <LogoLink
                 to="/"
-                target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
@@ -74,13 +63,12 @@ export const NavDesktop = () => {
               </LogoLink>
             </LogoDiv>
 
-            {!isCart && !isCheckout && !isDashboard && (
+            {!isCart && !isCheckout && (
               <>
-                <NavListWrapper>
+                <NavListWrapper isDashboard={isDashboard}>
                   <NavList>
                     <NavLink
                       to="/"
-                      target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => {
                         e.preventDefault();
@@ -100,7 +88,7 @@ export const NavDesktop = () => {
                     </NavProductsDropDown>
                     <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
                     <DropDown>
-                      <DropDownContainer>
+                      <DropDownContainer user={user}>
                         <CategoryList
                           style={{
                             marginTop: "22px",
@@ -117,7 +105,6 @@ export const NavDesktop = () => {
                               right: "-75px",
                             }}
                             to="/all-products"
-                            target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleNavLinkClick}
                             onMouseEnter={() =>
@@ -135,7 +122,6 @@ export const NavDesktop = () => {
                             <CategoryList>
                               <CategoryLink
                                 to="/category/shoes"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleNavLinkClick}
                                 onMouseEnter={() => setHoveredCategory("shoes")}
@@ -147,7 +133,6 @@ export const NavDesktop = () => {
                             <CategoryList>
                               <CategoryLink
                                 to="/category/pants"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleNavLinkClick}
                                 onMouseEnter={() => setHoveredCategory("pants")}
@@ -159,7 +144,6 @@ export const NavDesktop = () => {
                             <CategoryList>
                               <CategoryLink
                                 to="/category/shirts"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleNavLinkClick}
                                 onMouseEnter={() =>
@@ -175,7 +159,6 @@ export const NavDesktop = () => {
                             <CategoryList>
                               <CategoryLink
                                 to="/category/hoodies"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleNavLinkClick}
                                 onMouseEnter={() =>
@@ -191,7 +174,6 @@ export const NavDesktop = () => {
                             <CategoryList>
                               <CategoryLink
                                 to="/category/bags"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleNavLinkClick}
                                 onMouseEnter={() => setHoveredCategory("bags")}
@@ -230,7 +212,6 @@ export const NavDesktop = () => {
                   <NavList>
                     <NavLink
                       to="/contact"
-                      target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => {
                         e.preventDefault();
@@ -242,65 +223,8 @@ export const NavDesktop = () => {
                     </NavLink>
                   </NavList>
                 </NavListWrapper>
-
-                <DashCartContainer>
-                  <CartWidget
-                    sx={{ padding: "10px" }}
-                    totalItems={totalItems}
-                  />
-                  {!user || !user.rol ? (
-                    <LoginLink
-                      onClick={(e) => {
-                        to = "/login";
-                        target = "_blank";
-                        rel = "noopener noreferrer";
-                        e.preventDefault();
-                        handleNavLinkClick();
-                        window.location.href = "/login";
-                      }}
-                    >
-                      <h4>Login / Sign up</h4>
-                      <LoginSharpIcon sx={{ fontSize: "25px" }} />
-                    </LoginLink>
-                  ) : user.rol === rolAdmin ||
-                    user.rol === rolAdmin2 ||
-                    user.rol === rolAdmin3 ||
-                    user.rol === rolAdmin4 ? (
-                    <>
-                      <DashboardLink
-                        to="/dashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleNavLinkClick();
-                          window.location.href = "/dashboard";
-                        }}
-                      >
-                        <h4>Admin</h4>
-                        <DashboardCustomizeRoundedIcon
-                          sx={{ fontSize: "25px" }}
-                        />
-                      </DashboardLink>
-                    </>
-                  ) : (
-                    <>
-                      <ProfileLink
-                        to="/user-orders"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleNavLinkClick();
-                          window.location.href = "/user-orders";
-                        }}
-                      >
-                        <h4>Profile</h4>
-                        <AccountCircleSharpIcon sx={{ fontSize: "28px" }} />
-                      </ProfileLink>
-                    </>
-                  )}
-                </DashCartContainer>
+                {/* Desktop Profile Buttons */}
+                <NavDesktopButtons handleNavLinkClick={handleNavLinkClick} />
               </>
             )}
           </InsideNav>
@@ -332,26 +256,19 @@ const Nav = styled.nav`
   height: 100%;
   margin: 0 auto;
   display: flex;
+  justify-content: ${(props) => (props.isDashboard ? "normal" : "flex-end")};
   background-color: rgb(253 253 253);
 `;
 const InsideNav = styled.div`
   width: 100vw;
-  max-width: 1548px;
+  max-width: ${(props) => (props.isDashboard ? " 660px" : " 1548px")};
   display: flex;
-  margin: 0px auto;
-  padding: 0px 20px 0 20px;
+  margin: ${(props) => (props.isDashboard ? " 0 60px 0 0" : "0 auto ")};
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
-  justify-content: ${({ isCart, isCheckout, isDashboard, isHome }) => {
-    if (isHome) {
-      return "space-between";
-    } else if (isCart || isCheckout || isDashboard) {
-      return "center";
-    } else {
-      return "space-around";
-    }
-  }};
+  justify-content: ${(props) =>
+    props.isDashboard ? "space-between" : "space-around"};
   @media screen and (max-width: 50rem) {
     padding: 0;
     justify-content: flex-end;
@@ -384,6 +301,7 @@ const NavListWrapper = styled.ul`
   padding-top: 10px;
   align-items: center;
   justify-content: space-evenly;
+  display: ${(props) => props.isDashboard && "none"};
   @media screen and (max-width: 50rem) {
     display: none;
   }
@@ -431,6 +349,7 @@ const DropDownContainer = styled.div`
   gap: 5rem;
   margin-bottom: 1%;
   margin-top: 0.6%;
+  margin-left: ${(props) => (props.user.rol ? "-22px" : "14px")};
 `;
 const CategoryContainer = styled.div`
   display: flex;
@@ -525,6 +444,7 @@ const NavLink = styled(Link)`
   background-position: left bottom;
   transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
     color 0.2s ease-in-out;
+  cursor: pointer;
   &:hover {
     color: #68719d;
     background-size: 100% 100%;
@@ -562,6 +482,7 @@ const CategoryLink = styled(Link)`
   background-position: left bottom;
   transition: background-size 0.1s ease-in-out, font-size 0.1s ease-in-out,
     color 0.2s ease-in-out;
+  cursor: pointer;
   &:hover {
     color: #68719d;
     background-size: 100% 100%;
@@ -585,33 +506,4 @@ const CategoryLink = styled(Link)`
     transform-origin: left center;
     transition: transform 0.21s ease-in-out;
   }
-`;
-const DashCartContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
-  gap: 0.7rem;
-`;
-const DashboardLink = styled(Link)`
-  cursor: pointer;
-  font-size: 0.6rem;
-  margin-bottom: 1px;
-  text-align: center;
-  text-decoration: none;
-  color: black;
-`;
-const ProfileLink = styled(Link)`
-  cursor: pointer;
-  font-size: 0.6rem;
-  text-align: center;
-  text-decoration: none;
-  color: black;
-`;
-const LoginLink = styled(Link)`
-  font-size: 0.6rem;
-  cursor: pointer;
-  margin-bottom: -3px;
-  text-align: center;
-  text-decoration: none;
-  color: black;
 `;
