@@ -87,7 +87,7 @@ const Wrapper = styled.div`
   /* min-height: 100%;  */
   overflow-x: clip;
   padding: ${({ isCartOpen, windowWidth }) =>
-    windowWidth > 830 ? (isCartOpen ? "0" : "0 16.8px 0 0") : "0"};
+    windowWidth > 830 ? (isCartOpen ? "0" : "0 17px 0 0") : "0"};
 `;
 
 const LoadingScreen = styled.div`
