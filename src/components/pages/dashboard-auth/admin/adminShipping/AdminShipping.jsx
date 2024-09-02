@@ -291,6 +291,7 @@ const Loader = styled.div`
   width: 100%;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
+  padding-right: 209px;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   grid-column: 2/7;
   display: flex;
@@ -299,12 +300,20 @@ const Loader = styled.div`
 `;
 
 const ShippingFormWrapper = styled.div`
+ grid-column: 2/7;
+  margin: 0 10px 0 0;
+  overflow-x: auto;
   width: 100%;
-  margin: 0px 10px 0 0;
-  grid-column: 2 / 7;
+  height: 100%;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 7px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  @media (max-width: 1000px) {
+    width: 95%;
+  }
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Form = styled.form`

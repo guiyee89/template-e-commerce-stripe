@@ -9,7 +9,6 @@ import { AuthContext } from "../../../context/AuthContext";
 import { NavDesktopButtons } from "./NavDesktopButtons";
 
 export const NavDesktop = () => {
-
   //////////        ////////////        ////////////        ///////////
   //                       States                      //
   const [hoveredCategory, setHoveredCategory] = useState("all-products");
@@ -23,7 +22,7 @@ export const NavDesktop = () => {
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
   const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();
-  
+
   //////////        ////////////        ////////////        ///////////
   //                 Reset localStorage on nav links               //
   const handleNavLinkClick = () => {
@@ -51,7 +50,7 @@ export const NavDesktop = () => {
             isDashboard={isDashboard}
             isHome={isHome}
           >
-            <LogoDiv>
+            <LogoDiv isDashboard={isDashboard}>
               <LogoLink
                 to="/"
                 rel="noopener noreferrer"
@@ -262,19 +261,18 @@ const Nav = styled.nav`
   height: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: ${(props) => (props.isDashboard ? "normal" : "flex-end")};
   background-color: rgb(253 253 253);
 `;
 const InsideNav = styled.div`
   width: 100vw;
-  max-width: ${(props) => (props.isDashboard ? " 660px" : " 1548px")};
+  max-width: 1548px;
   display: flex;
-  margin: ${(props) => (props.isDashboard ? " 0 60px 0 0" : "0 auto ")};
+  margin: ${(props) => (props.isDashboard ? " 0 100px 0 0" : "0 auto ")};
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: ${(props) =>
-    props.isDashboard ? "space-between" : "space-around"};
+    props.isDashboard ? "flex-end" : "space-around"};
   @media screen and (max-width: 50rem) {
     padding: 0;
     justify-content: flex-end;
@@ -283,11 +281,15 @@ const InsideNav = styled.div`
 const LogoDiv = styled.div`
   width: 90px;
   margin-top: 13px;
+  position: ${(props) => (props.isDashboard ? "absolute" : "relative")};
+  right: ${(props) => (props.isDashboard ? "46.4%" : "auto")};
+
   @media screen and (max-width: 50rem) {
     position: absolute;
     left: 42%;
   }
 `;
+
 const LogoLink = styled(Link)`
   text-decoration: none;
 `;

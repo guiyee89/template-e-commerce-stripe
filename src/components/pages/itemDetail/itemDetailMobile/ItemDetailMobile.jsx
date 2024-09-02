@@ -38,10 +38,8 @@ export const ItemDetailMobile = ({ selectedItem }) => {
   //  handle filtering size & color  //
   const handleFilterItemChange = (item) => {
     if (item === undefined) {
-      //Check in case "item" doesn't exist, then return the original selected item
       setFilteredItem(selectedItem);
     } else {
-      //else return the filtered item
       setFilteredItem(item);
     }
   };

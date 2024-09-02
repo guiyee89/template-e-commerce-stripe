@@ -202,7 +202,6 @@ export const NavMobile = () => {
               </MobileBtnWrapper>
 
               {/************                                   ************/}
-              
             </SideMenuWrapper>
             <LogoDiv onClick={handleNavLinkClick}>
               <LogoLink
