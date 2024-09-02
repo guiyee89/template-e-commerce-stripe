@@ -263,9 +263,9 @@ const LogoMenu = styled.img`
 const MobileBtnWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 13%;
+  height: 22%;
   position: absolute;
-  padding: 0px 20px 26px;
+  padding: 0px 20px 60px;
   background-color: lightgrey;
   bottom: 0px;
   justify-content: space-between;
