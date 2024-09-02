@@ -58,8 +58,17 @@ export const Layout = () => {
             <LoadingScreen />
           ) : (
             <>
-              {windowWidth > 900 && <NavDesktop />}
-              {windowWidth <= 900 && <NavMobile />}
+              {isDashboard ? (
+                windowWidth > 1100 ? (
+                  <NavDesktop />
+                ) : (
+                  <NavMobile />
+                )
+              ) : windowWidth > 900 ? (
+                <NavDesktop />
+              ) : (
+                <NavMobile />
+              )}
 
               <SideCart />
               {!isHome &&

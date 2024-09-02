@@ -10,8 +10,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import { Ring } from "@uiball/loaders";
+import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
+import { useContext } from "react";
 
 export const AdminShipping = () => {
+  const { windowWidth } = useContext(GlobalToolsContext);
   const [shippingData, setShippingData] = useState([]);
   const [shippingCost, setShippingCost] = useState([]);
   const [shippingLoading, setShippingLoading] = useState(true);
@@ -181,9 +184,9 @@ export const AdminShipping = () => {
                 </p>
                 <Input
                   style={{
-                    width: "288px",
+                    width: windowWidth < 600 ? "146px" : "288px",
                     position: "absolute",
-                    left: "23.7%",
+                    left: windowWidth < 600 ? "51.7%" : "23.7%",
                     top: "24px",
                   }}
                   type="number"
@@ -240,7 +243,10 @@ export const AdminShipping = () => {
 
                 <StateContainer>
                   <FormControlLabel
-                    style={{ marginRight: "2px" }}
+                    style={{
+                      marginRight: "2px",
+                      marginLeft: windowWidth < 600 && "-37px",
+                    }}
                     control={
                       <Checkbox
                         checked={useStateRate[shipping.id] || false}
@@ -297,10 +303,16 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 1100px) {
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    padding: 150px 0;
+  }
 `;
 
 const ShippingFormWrapper = styled.div`
- grid-column: 2/7;
+  grid-column: 2/7;
   margin: 0 10px 0 0;
   overflow-x: auto;
   width: 100%;
@@ -308,8 +320,11 @@ const ShippingFormWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  @media (max-width: 1000px) {
-    width: 95%;
+  @media (max-width: 1100px) {
+    width: 98%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
   @media (max-width: 800px) {
     width: 100%;
@@ -335,6 +350,11 @@ const ShippingContainer = styled.div`
   gap: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.35) 1px 0px 3px;
   border-top-right-radius: 10px;
+  @media (max-width: 1100px) {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 `;
 
 const OverseasContainer = styled.div`
@@ -348,6 +368,8 @@ const OverseasContainer = styled.div`
   border-top-right-radius: 10px;
   padding: 0 22px;
   height: 90px;
+  @media (max-width: 600) {
+  }
 `;
 
 const UnitedStatesContainer = styled.div`
@@ -358,6 +380,9 @@ const UnitedStatesContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 1px;
   padding: 20px;
   max-height: 512px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const UnitedStatesWrapper = styled.div`
@@ -389,6 +414,10 @@ const StateContainer = styled.div`
   flex-wrap: wrap;
   gap: 2rem;
   padding: 12px;
+  @media (max-width: 600px) {
+    padding: 12.5px 0;
+    justify-content: center;
+  }
 `;
 
 const FlatRateContainer = styled.div`
@@ -397,6 +426,9 @@ const FlatRateContainer = styled.div`
   flex-wrap: wrap;
   gap: 2rem;
   padding: 12px;
+  @media (max-width: 600px) {
+    padding: 12.5px 0;
+  }
 `;
 
 const Input = styled(TextField)`
@@ -406,6 +438,13 @@ const Input = styled(TextField)`
   }
   width: 130px;
   margin-bottom: 1rem;
+  @media (max-width: 600px) {
+    width: 105px;
+    padding: 12.5px 0;
+  }
+  @media (max-width: 350px) {
+    width: 90px;
+  }
 `;
 const SubmitBtnContainer = styled.div`
   display: flex;
@@ -415,6 +454,12 @@ const SubmitBtnContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom-right-radius: 10px;
+  @media (max-width: 1100px) {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 44px 0 50px;
+  }
 `;
 const SubmitBtn = styled(Button)`
   margin-top: 1rem;
