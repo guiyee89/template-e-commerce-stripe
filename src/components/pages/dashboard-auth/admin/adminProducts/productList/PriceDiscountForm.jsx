@@ -131,7 +131,7 @@ export const PriceDiscountForm = ({ setIsChanged, products }) => {
               variant="contained"
               sx={{
                 minWidth: "100px",
-                fontSize: "0.65rem",
+                fontSize: windowWidth < 700 ? ".52rem" : "0.67rem",
                 backgroundColor: "#1e4a75",
               }}
             >

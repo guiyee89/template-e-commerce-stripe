@@ -172,16 +172,22 @@ export const ProductList = ({
                     <Ring size={15} lineWeight={4} speed={1} color="white" />
                   </div>
                 ) : (
-                  "Search"
+                  <p
+                    style={{
+                      fontSize: windowWidth < 700 ? ".52rem" : "0.67rem",
+                    }}
+                  >
+                    Search
+                  </p>
                 )}
               </Button>
             </div>
             <div style={{ margin: "1px 0 0 7px" }}>
-              <AddButton
+              <Button
                 variant="contained"
                 sx={{
                   marginTop: "17px",
-                  fontSize: "0.67rem",
+                  fontSize: windowWidth < 700 ? ".52rem" : "0.67rem",
                   backgroundColor: "black",
                   "&:hover": {
                     backgroundColor: "#4b4d4e",
@@ -198,7 +204,7 @@ export const ProductList = ({
                 >
                   <span
                     style={{
-                      fontSize: "1.2rem",
+                      fontSize: windowWidth < 700 ? ".8rem" : "1.2rem",
                       fontWeight: "bold",
                       paddingRight: "0.5rem",
                     }}
@@ -207,7 +213,7 @@ export const ProductList = ({
                   </span>
                   add product
                 </p>
-              </AddButton>
+              </Button>
             </div>
           </ProductsButtonsContainer>
         </form>
@@ -231,16 +237,96 @@ export const ProductList = ({
                     }}
                   >
                     <TableRow>
-                      <TableCell align="center">ID</TableCell>
-                      <TableCell align="center">Imagen</TableCell>
-                      <TableCell align="center">Titulo</TableCell>
-                      <TableCell align="center">Precio</TableCell>
-                      <TableCell align="center">Descuento</TableCell>
-                      <TableCell align="center">Stock</TableCell>
-                      <TableCell align="center">Size</TableCell>
-                      <TableCell align="center">Color</TableCell>
-                      <TableCell align="center">Categoria</TableCell>
-                      <TableCell align="center">Actions</TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        ID
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Image
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Titulo
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Precio
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Descuento
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Stock
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Size
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Color
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Categoria
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          padding: windowWidth < 600 && "10px",
+                          fontSize: windowWidth < 600 && "0.7rem",
+                        }}
+                      >
+                        Actions
+                      </TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -279,22 +365,37 @@ export const ProductList = ({
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ textTransform: "capitalize" }}
+                            sx={{
+                              textTransform: "capitalize",
+                              padding: windowWidth < 600 && "10px",
+                              fontSize: windowWidth < 600 && "0.72rem",
+                            }}
                           >
                             {product.title}
                           </TableCell>
-                          <TableCell align="center" component="th" scope="row">
+                          <TableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                            sx={{
+                              padding: windowWidth < 600 && "10px",
+                              fontSize: windowWidth < 600 && "0.72rem",
+                            }}
+                          >
                             $ {product.unit_price}
                           </TableCell>
                           <TableCell
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ padding: "0px" }}
+                            sx={{
+                              padding: "0px",
+                              fontSize: windowWidth < 600 && "0.72rem",
+                            }}
                           >
                             {product.discount ? (
                               <>
-                                {product.discount}% {/* <br /> */} ( $
+                                {product.discount}% <br /> ( $
                                 {product.discountPrice} )
                               </>
                             ) : (
@@ -302,14 +403,24 @@ export const ProductList = ({
                             )}
                           </TableCell>
 
-                          <TableCell align="center" component="th" scope="row">
+                          <TableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                            sx={{
+                              fontSize: windowWidth < 600 && "0.72rem",
+                            }}
+                          >
                             {product.stock}
                           </TableCell>
                           <TableCell
                             align="center"
                             component="th"
                             scope="row"
-                            sx={{ textTransform: "uppercase" }}
+                            sx={{
+                              textTransform: "uppercase",
+                              fontSize: windowWidth < 600 && "0.72rem",
+                            }}
                           >
                             {product.size}
                           </TableCell>
@@ -322,14 +433,18 @@ export const ProductList = ({
                               whiteSpace: "normal",
                               lineHeight: "1.2",
                               padding: "0",
-                              minWidth: "100px",
+                              minWidth: "80px",
+                              fontSize: windowWidth < 600 && "0.72rem",
                             }}
                           >
                             {product.color.map((color, index) => (
                               <span
                                 key={color}
                                 style={{
-                                  fontSize: index === 0 ? ".85rem" : ".65rem",
+                                  fontSize:
+                                    index === 0 && windowWidth > 600
+                                      ? ".85rem"
+                                      : ".72rem",
                                   fontWeight: index === 0 ? "500" : "normal",
                                 }}
                               >
@@ -345,6 +460,7 @@ export const ProductList = ({
                             sx={{
                               textTransform: "capitalize",
                               fontWeight: "500",
+                              fontSize: windowWidth < 600 && "0.72rem",
                             }}
                           >
                             {product.category}
@@ -364,15 +480,15 @@ export const ProductList = ({
                               <NewLabel>New</NewLabel>
                             )}
                             <IconButton onClick={() => handleOpen(product)}>
-                              <EditIcon />
+                              <EditIcon sx={{fontSize: windowWidth < 600 && "1.2rem"}}/>
                             </IconButton>
                             <IconButton onClick={() => copyProduct(product.id)}>
-                              <ContentCopyIcon />
+                              <ContentCopyIcon sx={{fontSize: windowWidth < 600 && "1.2rem"}} />
                             </IconButton>
                             <IconButton
                               onClick={() => deleteProduct(product.id)}
                             >
-                              <DeleteIcon />
+                              <DeleteIcon  sx={{fontSize: windowWidth < 600 && "1.2rem"}}/>
                             </IconButton>
                           </TableCell>
                         </AnimatedTableRow>
@@ -414,17 +530,23 @@ const ProductListWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  @media (max-width: 1000px) {
-    width: 95%;
+  @media (max-width: 1100px) {
+    width: 100%;
+    height: 980px;
+    box-shadow: rgba(0, 0, 0, 0) 0 0px 0;
   }
   @media (max-width: 800px) {
     width: 100%;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    height: auto;
   }
 `;
 const ProductsButtonsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${(props) => (props.windowWidth < 600 ? "1rem" : "1rem")};
+  gap: ${(props) => (props.windowWidth < 600 ? "0" : "1rem")};
   justify-content: ${(props) =>
     props.windowWidth < 750 ? "space-between" : "space-around"};
   margin: ${(props) =>
@@ -437,11 +559,15 @@ const TextFieldInput = styled(TextField)`
     text-align: center;
   }
 `;
-const AddButton = styled(Button)``;
+
 const TableListContainer = styled(TableContainer)`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2px;
   padding: 12px 10px;
   height: 512px;
+  @media (max-width: 1100px) {
+    height: 800px;
+    padding: 0;
+  }
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -458,6 +584,9 @@ const TableListContainer = styled(TableContainer)`
 `;
 const ProductListContainer = styled.div`
   margin: 16px 16px 12px 16px;
+  @media (max-width: 600px) {
+    margin: 20px 0;
+  }
 `;
 const ImgCell = styled(TableCell)`
   width: 9%;

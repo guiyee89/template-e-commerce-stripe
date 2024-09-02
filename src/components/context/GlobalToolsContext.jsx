@@ -21,7 +21,7 @@ const GlobalToolsProvider = ({ children }) => {
     setIsFilterOpen((prevIsOpen) => !prevIsOpen);
   };
   //Manage products dropdown on Mobile Navbar
-  const [isDrowpDownOpen, setIsDropDownOpen] = useState(true);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(true);
   const toggleDropDown = () => {
     setIsDropDownOpen((prevIsOpen) => !prevIsOpen);
   };
@@ -108,7 +108,7 @@ const GlobalToolsProvider = ({ children }) => {
     isFilterOpen,
     toggleFilterMenu,
     toggleDropDown,
-    isDrowpDownOpen,
+    isDropDownOpen,
     setIsDropDownOpen,
     windowWidth,
     windowHeight,
@@ -124,7 +124,7 @@ const GlobalToolsProvider = ({ children }) => {
     setProgressComplete,
     scroll,
     scrollDirection,
-    setScrollDirection
+    setScrollDirection,
   };
 
   return (

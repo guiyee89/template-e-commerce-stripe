@@ -6,10 +6,9 @@ import { useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
 import useGlobalLocation from "../../../hooks/useGlobalLocation";
 import { NavMobileButtons } from "./NavMobileButtons";
+import { NavMobileLinks } from "./NavMobileLinks";
 
 export const NavMobile = () => {
   //////////        ////////////        ////////////        ///////////
@@ -24,9 +23,9 @@ export const NavMobile = () => {
     isMenuOpen,
     toggleSideMenu,
     isFilterOpen,
-    toggleDropDown,
-    isDrowpDownOpen,
     setIsDropDownOpen,
+    isDropDownOpen,
+    toggleDropDown,
   } = useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////////////////////
@@ -62,9 +61,7 @@ export const NavMobile = () => {
             isCheckout={isCheckout}
             isDashboard={isDashboard}
           >
-            {!isCart && !isCheckout && !isDashboard && (
-              <MenuIconBtn onClick={toggleSideMenu} />
-            )}
+            {!isCart && !isCheckout && <MenuIconBtn onClick={toggleSideMenu} />}
             <TransparentDiv
               isMenuOpen={isMenuOpen}
               onClick={isMenuOpen ? null : toggleSideMenu}
@@ -94,107 +91,16 @@ export const NavMobile = () => {
                   }}
                 />
               </SideMenuHeader>
-              <NavListWrapper>
-                <NavList>
-                  <NavLink
-                    to="/"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavLinkClick();
-                      window.location.href = "/";
-                    }}
-                  >
-                    home
-                  </NavLink>
-                </NavList>
-                <ProductsDropDown>
-                  <OnClickDropDown
-                    isDrowpDownOpen={isDrowpDownOpen}
-                    onClick={() => toggleDropDown(!isDrowpDownOpen)}
-                  >
-                    products
-                    <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
-                  </OnClickDropDown>
-                  <DropDown isDrowpDownOpen={!isDrowpDownOpen}>
-                    <CategoryContainer>
-                      <CategoryList>
-                        <CategoryLink
-                          style={{
-                            fontWeight: "600",
-                            fontSize: "clamp(0.69rem, 1.7vw, 0.89rem)",
-                          }}
-                          to="/all-products"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          All Categories
-                        </CategoryLink>
-                      </CategoryList>
-                      <CategoryList>
-                        <CategoryLink
-                          to="/category/shoes"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          shoes
-                        </CategoryLink>
-                      </CategoryList>
-                      <CategoryList>
-                        <CategoryLink
-                          to="/category/pants"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          pants
-                        </CategoryLink>
-                      </CategoryList>
-                      <CategoryList>
-                        <CategoryLink
-                          to="/category/shirts"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          shirts
-                        </CategoryLink>
-                      </CategoryList>
-                      <CategoryList>
-                        <CategoryLink
-                          to="/category/hoodies"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          hoodies
-                        </CategoryLink>
-                      </CategoryList>
-                      <CategoryList>
-                        <CategoryLink
-                          to="/category/bags"
-                          rel="noopener noreferrer"
-                          onClick={handleNavLinkClick}
-                        >
-                          bags
-                        </CategoryLink>
-                      </CategoryList>
-                    </CategoryContainer>
-                  </DropDown>
-                </ProductsDropDown>
 
-                <NavList>
-                  <NavLink
-                    to="/contact"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavLinkClick();
-                      window.location.href = "/contact";
-                    }}
-                  >
-                    contact
-                  </NavLink>
-                </NavList>
-              </NavListWrapper>
-
+              {/************        NAV MOBILE LINKS         ************/}
+              {!isDashboard && (
+                <NavMobileLinks
+                  toggleDropDown={toggleDropDown}
+                  isDropDownOpen={isDropDownOpen}
+                  handleNavLinkClick={handleNavLinkClick}
+                />
+              )}
+              {/************                                   ************/}
               {/************        NAV MOBILE BUTTONS         ************/}
 
               <MobileBtnWrapper>
@@ -263,7 +169,17 @@ const InsideNav = styled.div`
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: ${({ isCart, isCheckout, isDashboard }) =>
-    isCart || isCheckout || isDashboard ? "center" : "space-between"};
+    isDashboard
+      ? "flex-start"
+      : isCart && isCheckout
+      ? "center"
+      : "space-between"};
+
+  ${({ isDashboard }) =>
+    isDashboard &&
+    `
+    gap: 7.5rem;
+  `}
   @media screen and (max-width: 500px) {
     padding: 0 20px;
   }
@@ -318,8 +234,13 @@ const SideMenuHeader = styled.div`
 const LogoDiv = styled.div`
   width: 45px;
   margin-top: 8px;
+  position: ${(props) => (props.isDashboard ? "relative" : "absolute")};
+  right: ${(props) => (props.isDashboard ? "auto" : "47.4%;")};
   @media (min-width: 900px) {
     width: 50px;
+  }
+  @media (max-width: 600px) {
+    right: ${(props) => (props.isDashboard ? "auto" : "43.4%;")};
   }
 `;
 const LogoLink = styled(Link)`
@@ -338,155 +259,7 @@ const LogoMenu = styled.img`
   width: 50px;
   margin: 5px auto;
 `;
-const NavListWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  gap: 1.7rem;
-  margin-top: 40px;
-`;
-const ProductsDropDown = styled.div`
-  padding: 0px 20px 0px;
-`;
-const DropDown = styled.div`
-  margin: ${(props) => (props.isDrowpDownOpen ? "18px 0px 8px 8px;" : "0")};
-  opacity: ${(props) => (props.isDrowpDownOpen ? 1 : 0)};
-  height: ${(props) => (props.isDrowpDownOpen ? "240px" : "0")};
-  overflow-y: ${(props) => props.isDrowpDownOpen && "auto"};
-  overflow-x: hidden;
-  transition: opacity 0.3s ease-in-out, height 0.05s ease-in-out;
-`;
 
-const CategoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0.85rem;
-`;
-
-const NavList = styled.li`
-  padding: 0 20px;
-`;
-const CategoryList = styled.li`
-  padding: 0 20px;
-`;
-const OnClickDropDown = styled.div`
-  cursor: pointer;
-  color: black;
-  text-decoration: none;
-  font-weight: 700;
-  text-transform: uppercase;
-  position: relative;
-  font-size: clamp(0.72rem, 1.7vw, 1rem);
-  background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
-  background-repeat: no-repeat;
-  background-size: ${(props) => (props.isDrowpDownOpen ? "0%" : "0% 100%")};
-  background-position: left bottom;
-  transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  &:hover {
-    color: ${(props) => (props.isDrowpDownOpen ? "0" : "#68719d")};
-    background-size: ${(props) => (props.isDrowpDownOpen ? "0" : "100%")};
-    transition: background-color 0.05s ease-in-out;
-  }
-  &:active {
-    color: ${(props) => (props.isDrowpDownOpen ? "0" : "#fafafa")};
-    background-size: ${(props) => (props.isDrowpDownOpen ? "0" : "100%")};
-    transition: background-color 0.001s ease-in;
-  }
-
-  &::after {
-    transform: scaleX(${(props) => (props.isDrowpDownOpen ? "1" : "0")});
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: black;
-    transform: scaleX(${(props) => (props.isDrowpDownOpen ? "0" : "1")});
-    transform-origin: left center;
-    transition: transform 0.15s ease-in-out;
-  }
-`;
-
-const NavLink = styled(Link)`
-  color: black;
-  text-decoration: none;
-  font-weight: 700;
-  text-transform: uppercase;
-  position: relative;
-  font-size: clamp(0.72rem, 1.7vw, 1rem);
-  background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  background-position: left bottom;
-  transition: background-size 0.2s ease-in-out, font-size 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  &:hover {
-    color: #68719d;
-    background-size: 100% 100%;
-  }
-  &:active {
-    color: #fafafa;
-    transition: background-color 0.05s ease-in-out;
-  }
-  &:hover::after {
-    transform: scaleX(1);
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: black;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.21s ease-in-out;
-  }
-`;
-const CategoryLink = styled(Link)`
-  color: black;
-  text-decoration: none;
-  font-weight: 500;
-  text-transform: capitalize;
-  position: relative;
-  font-size: clamp(0.67rem, 1.7vw, 0.87rem);
-  background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  background-position: left bottom;
-  transition: background-size 0.1s ease-in-out, font-size 0.1s ease-in-out,
-    color 0.2s ease-in-out;
-  &:hover {
-    color: #68719d;
-    background-size: 100% 100%;
-  }
-  &:active {
-    color: #fafafa;
-    transition: background-color 0.05s ease-in-out;
-  }
-  &:hover::after {
-    transform: scaleX(1);
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0px;
-    width: 100%;
-    height: 1.1px;
-    background-color: black;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.21s ease-in-out;
-  }
-`;
 const MobileBtnWrapper = styled.div`
   display: flex;
   width: 100%;
