@@ -79,9 +79,10 @@ export const AdminProducts = () => {
 };
 
 const Loader = styled.div`
-  width: 100%;
+   width: 100%;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
+  padding-right: 209px;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   grid-column: 2/7;
   display: flex;

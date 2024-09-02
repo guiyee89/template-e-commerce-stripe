@@ -406,11 +406,18 @@ export const ProductList = ({
 };
 
 const ProductListWrapper = styled.div`
+  grid-column: 2/7;
+  margin: 0 10px 0 0;
+  overflow-x: auto;
   width: 100%;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 7px;
+  height: 100%;
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
-  @media (max-width: 950px) {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  @media (max-width: 1000px) {
+    width: 95%;
+  }
+  @media (max-width: 800px) {
     width: 100%;
   }
 `;
