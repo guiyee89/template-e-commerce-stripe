@@ -84,7 +84,7 @@ export const Layout = () => {
 };
 
 const Wrapper = styled.div`
-  /* min-height: 100%;  */
+  // min-height: 100%;
   overflow-x: clip;
   padding: ${({ isCartOpen, windowWidth }) =>
     windowWidth > 830 ? (isCartOpen ? "0" : "0 17px 0 0") : "0"};
@@ -95,12 +95,12 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  /* min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")}; */
+  //min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
   min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "85vh;")};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  //justify-content: center;
   background-color: rgb(253 253 253);
   margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 20px")};
   @media (max-width: 1150px) {

@@ -8,8 +8,10 @@ import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import { useNavigate } from "react-router-dom";
 
 export const NavMobileButtons = ({ handleNavLinkClick }) => {
+
   //////////        ////////////        ////////////        ///////////
   //                       Auth & Admin                      //
+  
   const { user, handleLogout } = useContext(AuthContext);
   const rolAdmin = import.meta.env.VITE_ROL_ADMIN;
   const rolAdmin2 = import.meta.env.VITE_ROL_ADMIN2;
