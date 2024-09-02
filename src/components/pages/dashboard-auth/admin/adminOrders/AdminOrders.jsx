@@ -92,14 +92,45 @@ export const AdminOrders = () => {
         <TableOrderContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead sx={{ backgroundColor: "#bac7e194" }}>
-              <TableRow sx={{ textTransform: "uppercase", fontSize: ".9rem" }}>
-                <TableCellTitle sx={{ width: "160px" }}>
+              <TableRow sx={{ textTransform: "uppercase" }}>
+                <TableCellTitle
+                  sx={{
+                    width: "160px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
                   Order ID
                 </TableCellTitle>
-                <TableCellTitle sx={{ width: "115px" }}>Date</TableCellTitle>
-                <TableCellTitle sx={{ width: "80px" }}>Total</TableCellTitle>
-                <TableCellTitle sx={{ width: "80px" }}>Products</TableCellTitle>
-                <TableCellTitle sx={{ width: "160px" }}>
+                <TableCellTitle
+                  sx={{
+                    width: "115px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
+                  Date
+                </TableCellTitle>
+                <TableCellTitle
+                  sx={{
+                    width: "80px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
+                  Total
+                </TableCellTitle>
+                <TableCellTitle
+                  sx={{
+                    width: "80px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
+                  Products
+                </TableCellTitle>
+                <TableCellTitle
+                  sx={{
+                    width: "130px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
                   Buyer Details
                 </TableCellTitle>
               </TableRow>
@@ -110,14 +141,34 @@ export const AdminOrders = () => {
                 .sort((a, b) => b.date.seconds - a.date.seconds) // Sort by date in descending order
                 .map((order) => (
                   <TableRow key={order.id}>
-                    <TableCellData>{order.id}</TableCellData>
-                    <TableCellData sx={{ minWidth: "70px" }}>
+                    <TableCellData
+                      sx={{ fontSize: windowWidth < 500 && ".68rem" }}
+                    >
+                      {order.id}
+                    </TableCellData>
+                    <TableCellData
+                      sx={{
+                        minWidth: "70px",
+                        fontSize: windowWidth < 500 && ".68rem",
+                      }}
+                    >
                       {formatDate(order.date.seconds)}
                     </TableCellData>
-                    <TableCellData sx={{ minWidth: "70px" }}>
+                    <TableCellData
+                      sx={{
+                        minWidth: "70px",
+                        fontSize: windowWidth < 500 && ".68rem",
+                      }}
+                    >
                       $ {order.total.toFixed(2)}
                     </TableCellData>
-                    <TableCellData onClick={() => handleOpenProducts(order.id)}>
+                    <TableCellData
+                      onClick={() => handleOpenProducts(order.id)}
+                      sx={{
+                        minWidth: "70px",
+                        fontSize: windowWidth < 500 && ".68rem",
+                      }}
+                    >
                       <span
                         style={{
                           textDecoration: "underline",
@@ -132,12 +183,10 @@ export const AdminOrders = () => {
                       onClick={() => handleOpenDetails(order.id)}
                       sx={{
                         display: "flex",
-                        justifyContent: "space-around",
+                        flexDirection: windowWidth < 560 && "column",
+                        justifyContent: "center",
+                        alignItems: "center",
                         cursor: "pointer",
-                        paddingLeft:
-                          windowWidth > 1076
-                            ? "40px!important"
-                            : "7px!important",
                       }}
                     >
                       <div
@@ -145,7 +194,8 @@ export const AdminOrders = () => {
                           display: "flex",
                           flexDirection: "column",
                           textTransform: "uppercase",
-                          fontSize: "0.7rem",
+                          fontSize: windowWidth < 500 ? ".48rem" : ".69rem",
+                          paddingRight: windowWidth > 600 && "6px",
                         }}
                       >
                         <span>{order?.buyer?.name}</span>
@@ -154,8 +204,8 @@ export const AdminOrders = () => {
 
                       <span
                         style={{
-                          width: "35%",
-                          paddingRight: "15px",
+                          width: windowWidth < 500 ? "25%" : "35px",
+                          paddingRight: windowWidth < 500 ? "0" : "6px",
                           cursor: "pointer",
                         }}
                       >
@@ -210,6 +260,12 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 1100px) {
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    padding: 150px 0;
+  }
 `;
 
 const OrdersWrapper = styled.div`
@@ -221,11 +277,17 @@ const OrdersWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.45) 2px 0px 6px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  @media (max-width: 1000px) {
-    width: 95%;
-  }
-  @media (max-width: 800px) {
+
+  @media (max-width: 1100px) {
     width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0;
+    height: 950px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 550px) {
+    height: 660px;
   }
   /* Customize scrollbar */
   &::-webkit-scrollbar {

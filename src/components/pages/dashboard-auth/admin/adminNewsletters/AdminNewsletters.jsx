@@ -56,4 +56,10 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 1100px) {
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    padding: 150px 0;
+  }
 `;
