@@ -27,8 +27,15 @@ export const HeroLanding = () => {
           <picture>
             <source
               media="(max-width: 800px)"
-              srcSet="https://res.cloudinary.com/derdim3m6/image/upload/v1693260737/web%20access/samples%20for%20e-commerce/Hero/2023-08-28_19h09_00_u5lsyj.png"
+              srcSet="https://res.cloudinary.com/derdim3m6/image/upload/v1693658488/web%20access/samples%20for%20e-commerce/Hero/2023-09-02_09h40_54_oldgfe.png"
             />
+            {windowWidth < 801 && (
+              <BannerTextContainer>
+                <BannerTitle>conscious</BannerTitle>
+                <BannerSub>Sustainable Collection</BannerSub>
+                <FakeButton>Buy</FakeButton>
+              </BannerTextContainer>
+            )}
             <CarouselImg
               className="d-block w-100"
               src="https://res.cloudinary.com/derdim3m6/image/upload/v1690152844/web%20access/samples%20for%20e-commerce/Hero/2023-07-23_19h52_40_qfvfmd.png"
@@ -53,26 +60,6 @@ export const HeroLanding = () => {
           <picture>
             <source
               media="(max-width: 800px)"
-              srcSet="https://res.cloudinary.com/derdim3m6/image/upload/v1693658488/web%20access/samples%20for%20e-commerce/Hero/2023-09-02_09h40_54_oldgfe.png"
-            />
-            {windowWidth < 801 && (
-              <BannerTextContainer>
-                <BannerTitle>conscious</BannerTitle>
-                <BannerSub>Sustainable Collection</BannerSub>
-                <FakeButton>Buy</FakeButton>
-              </BannerTextContainer>
-            )}
-            <CarouselImg
-              className="d-block w-100"
-              src="https://res.cloudinary.com/derdim3m6/image/upload/v1689955895/web%20access/samples%20for%20e-commerce/Hero/2023-07-21_12h32_14_uran3s.png"
-              alt="First slide"
-            />
-          </picture>
-        </CarouselItem>
-        <CarouselItem>
-          <picture>
-            <source
-              media="(max-width: 800px)"
               srcSet=" https://res.cloudinary.com/derdim3m6/image/upload/v1705670243/web%20access/samples%20for%20e-commerce/Hero/defflu7gn7vxkj8g0zpw.png"
             />
             {windowWidth < 801 && (
@@ -84,7 +71,7 @@ export const HeroLanding = () => {
             )}
             <CarouselImg
               className="d-block w-100"
-              src="https://res.cloudinary.com/derdim3m6/image/upload/v1706455563/web%20access/samples%20for%20e-commerce/Hero/vgbvvqxoqdabcpkt9mpy.png"
+              src="https://res.cloudinary.com/derdim3m6/image/upload/v1689955895/web%20access/samples%20for%20e-commerce/Hero/2023-07-21_12h32_14_uran3s.png"
               alt="First slide"
             />
           </picture>
