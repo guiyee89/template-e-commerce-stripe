@@ -196,6 +196,8 @@ export const AdminOrders = () => {
                           textTransform: "uppercase",
                           fontSize: windowWidth < 500 ? ".48rem" : ".69rem",
                           paddingRight: windowWidth > 600 && "6px",
+                          maxWidth: windowWidth < 700 && "95px",
+                          minWidth: windowWidth > 700 && "110px",
                         }}
                       >
                         <span>{order?.buyer?.name}</span>
@@ -209,7 +211,11 @@ export const AdminOrders = () => {
                           cursor: "pointer",
                         }}
                       >
-                        <TopicOutlinedIcon />
+                        <TopicOutlinedIcon
+                          sx={{
+                            fontSize: windowWidth < 700 ? "1.1rem" : "1.5rem",
+                          }}
+                        />
                       </span>
                     </TableCellData>
                   </TableRow>
@@ -224,7 +230,7 @@ export const AdminOrders = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={{ ...style, width: windowWidth > 600 ? "80%" : "100%" }}>
             <ProductsDetails
               handleClose={handleClose}
               clientProducts={clientProducts}
@@ -238,7 +244,7 @@ export const AdminOrders = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={{ ...style, width: windowWidth > 600 ? "70%" : "95%" }}>
             <BuyerDetails
               handleClose={handleClose}
               clientDetails={clientDetails}
@@ -319,7 +325,7 @@ const TableCellTitle = styled(TableCell)`
   font-weight: 600 !important;
 `;
 const TableCellData = styled(TableCell)`
-  padding: 19px 0px !important;
+  padding: 19px 4px !important;
   text-align: center !important;
   border-left: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
@@ -330,7 +336,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "75%",
   bgcolor: "background.paper",
   boxShadow: 24,
   border: "none!important",

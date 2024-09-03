@@ -1,7 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import { GlobalToolsContext } from "../../../../../../../context/GlobalToolsContext";
+import { useContext } from "react";
+import styled from "styled-components/macro";
 import CloseIcon from "@mui/icons-material/Close";
-import { bouncy } from "ldrs";
-bouncy.register();
 
 export const ColorForm = ({
   colorPickerOpen,
@@ -10,8 +11,10 @@ export const ColorForm = ({
   handleColorSelect,
   selectedColors,
   handleColorRemove,
+  handleClose,
 }) => {
-    
+  const { windowWidth } = useContext(GlobalToolsContext);
+
   return (
     <>
       <Button
@@ -19,7 +22,7 @@ export const ColorForm = ({
         onClick={() => setColorPickerOpen(true)}
         sx={{
           width: "40%",
-          fontSize: ".7rem",
+          fontSize: windowWidth < 900 ? ".5rem" : ".7rem",
           marginRight: "10px",
           padding: "8px 0",
           height: "30px",
@@ -30,56 +33,65 @@ export const ColorForm = ({
         + add color
       </Button>
       {colorPickerOpen && (
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            p: 1,
-            bgcolor: "background.paper",
-            boxShadow: 3,
-            border: "1px solid grey",
-            position: "absolute",
-            top: "44px",
-            zIndex: 2,
-            width: "300px",
-          }}
+        <Modal
+          open={colorPickerOpen}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          {Object.keys(colorMapping).map((color) => (
-            <Box
-              key={color}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: "5px",
-                width: "80px",
-                border: "1px solid darkgrey",
-                borderRadius: "4px",
-              }}
-            >
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              border: "1px solid grey",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 2,
+              width: "300px",
+            }}
+          >
+            <CloseIconBtn onClick={handleClose} />
+            {Object.keys(colorMapping).map((color) => (
               <Box
+                key={color} // Added key here
                 sx={{
-                  width: "100%",
-                  height: "34px",
-                  bgcolor: colorMapping[color],
-                  cursor: "pointer",
-                  borderRadius: "4px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  margin: "5px",
+                  width: "80px",
                   border: "1px solid darkgrey",
+                  borderRadius: "4px",
                 }}
-                onClick={() => handleColorSelect(color)}
-              />
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                }}
-                onClick={() => handleColorSelect(color)}
               >
-                {color}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "34px",
+                    bgcolor: colorMapping[color],
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    border: "1px solid darkgrey",
+                  }}
+                  onClick={() => handleColorSelect(color)}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleColorSelect(color)}
+                >
+                  {color}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Modal>
       )}
 
       {selectedColors.length > 0 && (
@@ -91,7 +103,7 @@ export const ColorForm = ({
         >
           {selectedColors.map((color) => (
             <div
-              key={color}
+              key={color} // Added key here
               style={{
                 width: "40px",
                 height: "34px",
@@ -123,3 +135,15 @@ export const ColorForm = ({
     </>
   );
 };
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  top: -5px;
+  right: -6px;
+  position: absolute;
+  z-index: 2;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.85) 0px 0px 10px;
+  @media (max-width: 750px) {
+    font-size: 1.3rem !important;
+  }
+`;

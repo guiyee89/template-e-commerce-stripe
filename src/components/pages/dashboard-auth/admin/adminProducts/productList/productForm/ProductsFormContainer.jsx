@@ -274,6 +274,7 @@ export const ProductsFormContainer = ({
         existingImages={existingImages}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handleClose={handleClose}
       />
     </>
   );
