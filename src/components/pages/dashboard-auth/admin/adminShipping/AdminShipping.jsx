@@ -241,26 +241,22 @@ export const AdminShipping = () => {
                   />
                 </FlatRateContainer>
 
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={useStateRate[shipping.id] || false}
+                      onChange={(e) =>
+                        handleChange(e, shipping.id, "stateRate")
+                      }
+                    />
+                  }
+                  label={
+                    <Typography style={{ fontSize: "0.88rem" }}>
+                      Use State Rate
+                    </Typography>
+                  }
+                />
                 <StateContainer>
-                  <FormControlLabel
-                    style={{
-                      marginRight: "2px",
-                      marginLeft: windowWidth < 600 && "-37px",
-                    }}
-                    control={
-                      <Checkbox
-                        checked={useStateRate[shipping.id] || false}
-                        onChange={(e) =>
-                          handleChange(e, shipping.id, "stateRate")
-                        }
-                      />
-                    }
-                    label={
-                      <Typography style={{ fontSize: "0.88rem" }}>
-                        Use State Rate
-                      </Typography>
-                    }
-                  />
                   {shipping.state.map((stateItem, index) => {
                     const stateName = Object.keys(stateItem)[0];
                     return (
@@ -390,7 +386,7 @@ const UnitedStatesWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: auto;
   padding: 0 12px;
   ::-webkit-scrollbar {
@@ -425,7 +421,7 @@ const FlatRateContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  padding: 12px;
+  padding: 12px 0;
   @media (max-width: 600px) {
     padding: 12.5px 0;
   }
