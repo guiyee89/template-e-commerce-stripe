@@ -480,15 +480,21 @@ export const ProductList = ({
                               <NewLabel>New</NewLabel>
                             )}
                             <IconButton onClick={() => handleOpen(product)}>
-                              <EditIcon sx={{fontSize: windowWidth < 600 && "1.2rem"}}/>
+                              <EditIcon
+                                sx={{ fontSize: windowWidth < 600 && "1.2rem" }}
+                              />
                             </IconButton>
                             <IconButton onClick={() => copyProduct(product.id)}>
-                              <ContentCopyIcon sx={{fontSize: windowWidth < 600 && "1.2rem"}} />
+                              <ContentCopyIcon
+                                sx={{ fontSize: windowWidth < 600 && "1.2rem" }}
+                              />
                             </IconButton>
                             <IconButton
                               onClick={() => deleteProduct(product.id)}
                             >
-                              <DeleteIcon  sx={{fontSize: windowWidth < 600 && "1.2rem"}}/>
+                              <DeleteIcon
+                                sx={{ fontSize: windowWidth < 600 && "1.2rem" }}
+                              />
                             </IconButton>
                           </TableCell>
                         </AnimatedTableRow>
@@ -506,7 +512,7 @@ export const ProductList = ({
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
+            <Box sx={{ ...style, width: windowWidth < 700 ? "100%" : "82%" }}>
               <ProductsFormContainer
                 handleClose={handleClose}
                 setIsChanged={setIsChanged}
@@ -626,7 +632,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "82%",
   height: "90%",
   borderRadius: "12px",
   bgcolor: "background.paper",

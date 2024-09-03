@@ -9,6 +9,9 @@ import {
 import styled from "styled-components/macro";
 import { ImageFormContainer } from "./productsImageForm/ImageFormContainer";
 import { ColorFormContainer } from "./productColorForm/ColorFormContainer";
+import CloseIcon from "@mui/icons-material/Close";
+import { GlobalToolsContext } from "../../../../../../context/GlobalToolsContext";
+import { useContext } from "react";
 
 export const ProductsForm = ({
   newProduct,
@@ -18,18 +21,22 @@ export const ProductsForm = ({
   setSelectedItem,
   handleChange,
   handleSubmit,
+  handleClose,
   selectedColors,
   setSelectedColors,
   sizeValue,
   categoryValue,
   existingImages,
 }) => {
+  const { windowWidth } = useContext(GlobalToolsContext);
+
   return (
     <>
       {addProduct ? (
         <SuccessMessage>Product added successfully!</SuccessMessage>
       ) : (
         <FormWrapper>
+          <CloseIconBtn onClick={handleClose} />
           <Form onSubmit={handleSubmit}>
             <InfoImageContainer>
               <ProductInfo>
@@ -37,7 +44,7 @@ export const ProductsForm = ({
                   style={{
                     display: "flex",
                     justifyContent: "space-around",
-                    width: "80%",
+                    width: windowWidth < 500 ? "93%" : "80%",
                     gap: "1rem",
                     margin: "0 auto",
                     flexDirection: "column",
@@ -120,7 +127,7 @@ export const ProductsForm = ({
                 </div>
                 <div
                   style={{
-                    width: "80%",
+                    width: windowWidth < 500 ? "93%" : "80%",
                     margin: "0px auto",
                     paddingBottom: "50px",
                     borderTop: "1px solid darkgrey",
@@ -256,6 +263,8 @@ export const ProductsForm = ({
                           position: "relative",
                           display: "flex",
                           flexDirection: "row",
+                          flexWrap: windowWidth < 500 && "wrap",
+                          gap: windowWidth < 500 && ".5rem",
                           justifyContent: "space-between",
                           alignItems: "center",
                           border: "1px solid darkgrey",
@@ -269,6 +278,7 @@ export const ProductsForm = ({
                           setNewProduct={setNewProduct}
                           selectedColors={selectedColors}
                           setSelectedColors={setSelectedColors}
+                        
                         />
                       </Div>
 
@@ -311,7 +321,12 @@ export const ProductsForm = ({
                 </div>
 
                 {/*********   DESCRIPTION FORM    ********/}
-                <Div style={{ width: "80%", margin: " 0 auto" }}>
+                <Div
+                  style={{
+                    width: windowWidth < 500 ? "93%" : "80%",
+                    margin: " 0 auto",
+                  }}
+                >
                   <Input
                     id="standard-textarea"
                     label="Product Description"
@@ -367,6 +382,9 @@ const FormWrapper = styled.div`
   overflow-y: auto;
   padding: 32px 12px;
   background-color: #bac7e194;
+  @media (max-width: 700px) {
+    padding: 10px 0px;
+  }
   ::-webkit-scrollbar {
     width: 12px;
   }
@@ -381,6 +399,21 @@ const FormWrapper = styled.div`
     background-color: #f1f1f1;
   }
 `;
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  top: 34px;
+  right: 27px;
+  position: absolute;
+  z-index: 2;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
+  font-size: 1.9rem !important;
+  @media (max-width: 750px) {
+    font-size: 1.5rem !important;
+    top: 4px;
+    right: 4px;
+  }
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -390,6 +423,9 @@ const Form = styled.form`
   box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 27px -4px;
   border-radius: 10px;
   padding-bottom: 60px;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 `;
 const InputSelect = styled(Select)`
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
@@ -421,6 +457,9 @@ const ProductInfo = styled.div`
   padding: 70px 0px 20px;
   margin: 0px auto 18px;
   box-shadow: rgba(0, 0, 0, 0.45) 0px -13px 11px -15px;
+  @media (max-width: 700px) {
+    padding: 30px 0px 0px;
+  }
 `;
 const InfoImageContainer = styled.div`
   display: flex;

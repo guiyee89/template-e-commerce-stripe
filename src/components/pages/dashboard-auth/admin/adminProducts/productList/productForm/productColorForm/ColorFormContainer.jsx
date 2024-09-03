@@ -8,7 +8,7 @@ export const ColorFormContainer = ({
   selectedColors,
   setSelectedColors,
 }) => {
-  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+  
   const colorMapping = {
     Black: "#000000",
     White: "#ffffff",
@@ -24,6 +24,11 @@ export const ColorFormContainer = ({
     "Light Green": "#67dd4d",
     Green: "#24df13",
     Brown: "#682f21",
+  };
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+
+  const handleClose = () => {
+    setColorPickerOpen(false);
   };
 
   const handleColorSelect = (color) => {
@@ -77,6 +82,7 @@ export const ColorFormContainer = ({
         handleColorSelect={handleColorSelect}
         selectedColors={selectedColors}
         handleColorRemove={handleColorRemove}
+        handleClose={handleClose}
       />
     </>
   );

@@ -18,7 +18,10 @@ export const BuyerDetails = ({ clientDetails, handleClose }) => {
         <BuyerInfo>
           <BuyerData>
             <Data style={{ gap: "2.97rem" }}>
-              Name: <Span>{buyer?.name} {buyer?.lastName}</Span>
+              Name:{" "}
+              <Span>
+                {buyer?.name} {buyer?.lastName}
+              </Span>
             </Data>
             <Data style={{ gap: "2.9rem" }}>
               Email:{" "}
@@ -141,13 +144,16 @@ const OrderCost = styled.div`
 `;
 const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
-  font-size: 28px;
-  top: 4%;
-  left: ${(props) => (props.windowWidth < 750 ? "85%" : "90%")};
+  font-size: 1.6rem !important;
+  top: 4px;
+  right: 4px;
   position: absolute;
   z-index: 2;
+  box-shadow: rgba(0, 0, 0, 0.85) 0px 0px 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 0 10px;
   @media (max-width: 750px) {
-    top: 3%;
-    left: 88%;
+    font-size: 1.1rem !important;
+    top: 4px;
+    right: 4px;
   }
 `;

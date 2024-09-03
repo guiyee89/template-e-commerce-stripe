@@ -7,6 +7,8 @@ import { Ring } from "@uiball/loaders";
 import { bouncy } from "ldrs";
 bouncy.register();
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { GlobalToolsContext } from "../../../../../../../context/GlobalToolsContext";
+import { useContext } from "react";
 
 export const ImageForm = ({
   selectedItem,
@@ -20,6 +22,8 @@ export const ImageForm = ({
   handleCancelFile,
   isLoading,
 }) => {
+  const { windowWidth } = useContext(GlobalToolsContext);
+
   return (
     <>
       <ImagesInputsContainer>
@@ -37,8 +41,8 @@ export const ImageForm = ({
                   <p>{index + 1}</p>{" "}
                   <div
                     style={{
-                      width: "85px",
-                      height: "100px",
+                      width: windowWidth < 850 ? "60px" : "85px",
+                      height: windowWidth < 850 ? "70px" : "100px",
                     }}
                   >
                     {isLoadingImage[index + 1] ? (
@@ -47,8 +51,8 @@ export const ImageForm = ({
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          width: "85px",
-                          height: "100px",
+                          width: windowWidth < 850 ? "60px" : "85px",
+                          height: windowWidth < 850 ? "70px" : "100px",
                           border: "1px solid gray",
                         }}
                       >
@@ -73,7 +77,7 @@ export const ImageForm = ({
                     ) : (
                       <label
                         style={{
-                          height: "100px",
+                          height: windowWidth < 850 ? "70px" : "100px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -122,8 +126,8 @@ export const ImageForm = ({
                 </p>{" "}
                 <div
                   style={{
-                    width: "85px",
-                    height: "100px",
+                    width: windowWidth < 850 ? "60px" : "85px",
+                    height: windowWidth < 850 ? "70px" : "100px",
                     border: "1px solid gray",
                   }}
                 >
@@ -151,7 +155,7 @@ export const ImageForm = ({
                     // Render this if not confirmed
                     <label
                       style={{
-                        height: "100px",
+                        height: windowWidth < 850 ? "70px" : "100px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -278,6 +282,12 @@ const ConfirmImgLoadBtn = styled(Button)`
 `;
 const LoadImgBtn = styled(Button)`
   width: 100px;
+  @media (max-width: 850px){
+    width: 70px;
+  }
+  @media (max-width: 550px){
+    width: 60px;
+  }
 `;
 
 const LoadBtnContainer = styled.div`
@@ -300,6 +310,7 @@ const ImagesInputsContainer = styled.div`
   width: 90%;
   padding-top: 24px;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 14px 10px -14px;
+  overflow-x: auto;
   @media (max-width: 500px) {
     margin-left: 0px;
     width: 98%;
