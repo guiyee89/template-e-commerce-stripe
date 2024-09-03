@@ -266,7 +266,7 @@ const MobileBtnWrapper = styled.div`
   height: 22%;
   position: absolute;
   padding: 0px 20px 60px;
-  background-color: lightgrey;
+  background-color: rgb(243 243 243);
   bottom: 0px;
   justify-content: space-between;
   border: 1px solid grey;
