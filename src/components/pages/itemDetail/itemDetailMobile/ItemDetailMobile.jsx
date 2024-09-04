@@ -164,8 +164,21 @@ export const ItemDetailMobile = ({ selectedItem }) => {
           </InsideWrapper>
         </>
       ) : (
-        // Render a loading state or a message while the data is being loaded
-        <div>Loading...</div>
+        <div
+          style={{ height: "20vh", display: "flex", alignItems: "flex-end" }}
+        >
+          <p style={{ fontSize: ".9rem" }}>
+            Loading{" "}
+            <l-bouncy
+              size="25"
+              speed="1.75"
+              color="black"
+              style={{ marginLeft: "10px" }}
+            >
+              {" "}
+            </l-bouncy>
+          </p>
+        </div>
       )}
     </Wrapper>
   );

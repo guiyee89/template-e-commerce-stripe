@@ -85,7 +85,7 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products);
 
-        console.log(uniqueProducts)
+        console.log(uniqueProducts);
 
         setPageLoading(false);
         setProgressComplete(true);
@@ -186,8 +186,8 @@ const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 200px;
-  /* min-height: 550px; */
+  height: 60vh;
+  align-items: center;
 `;
 
 const NoProductMessage = styled.h2`
