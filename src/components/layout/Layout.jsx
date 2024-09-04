@@ -29,7 +29,7 @@ export const Layout = () => {
   const globalLoading = useGlobalLoader(); //Flash loading effect
 
   ////////////////////////////////////////////////////
-  const { isHome, isDashboard, isCheckout, isContactUs, isCompletion } =
+  const { isHome, isDashboard, isCheckout, isContactUs, isCompletion, isUserOrder } =
     useGlobalLocation();
 
   ////////////////////////////////////////////////////
@@ -75,7 +75,8 @@ export const Layout = () => {
                 !isDashboard &&
                 !isCheckout &&
                 !isContactUs &&
-                !isCompletion && <HeroSmall />}
+                !isCompletion &&
+                !isUserOrder && <HeroSmall />}
 
               <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
 

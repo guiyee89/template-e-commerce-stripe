@@ -92,7 +92,7 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
               <HoveredText>Account</HoveredText>
               <PersonIcon sx={{ fontSize: "28px" }} />
             </ProfileLink>
-            <LogoutBtn>
+            <LogoutBtn isDashboard={isDashboard}>
               <HoveredText>Logout</HoveredText>
               <LogoutSharpIcon
                 sx={{ fontSize: "25px" }}
@@ -197,6 +197,7 @@ const LogoutBtn = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  margin-top: ${({ isDashboard }) => (isDashboard ? "0" : "10px")};
 
   &:hover ${HoveredText} {
     visibility: visible;

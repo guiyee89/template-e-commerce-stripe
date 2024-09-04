@@ -46,7 +46,7 @@ export const menuRoutes = [
         Element: Completion
     },
     {
-        id: "userOrders",
+        id: "user-orders",
         path: "/user-orders",
         Element: UserOrders
     },
