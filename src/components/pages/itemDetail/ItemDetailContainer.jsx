@@ -9,8 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import useScrollRestoration from "../../hooks/useScrollRestoration";
-
-
+import { bouncy } from "ldrs";
+bouncy.register();
 
 export const ItemDetailContainer = () => {
   useScrollRestoration();
@@ -30,7 +30,7 @@ export const ItemDetailContainer = () => {
   // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "productId" PARA RENDERIZAR
   useEffect(() => {
     setPageLoading(true);
-    const delay = 300;
+    const delay = 400;
     const fetchItem = async () => {
       try {
         setVisible(true);
@@ -88,7 +88,6 @@ export const ItemDetailContainer = () => {
           )}
         </>
       )}
-     
     </>
   );
 };

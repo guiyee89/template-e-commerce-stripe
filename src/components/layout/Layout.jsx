@@ -109,8 +109,6 @@ const OutletWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  //justify-content: center;
-  background-color: rgb(253 253 253);
   margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 20px")};
   @media (max-width: 1150px) {
     margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 5px 0 5px")};
