@@ -13,6 +13,7 @@ const useGlobalLocation = () => {
   const isCheckout = currentRoute?.id === "checkout";
   const isContactUs = currentRoute?.id === "contact";
   const isCompletion = currentRoute?.id === "completion";
+  const isUserOrder = currentRoute?.id === "user-orders";
 
   return {
     isHome,
@@ -21,6 +22,7 @@ const useGlobalLocation = () => {
     isCheckout,
     isContactUs,
     isCompletion,
+    isUserOrder,
   };
 };
 export default useGlobalLocation;

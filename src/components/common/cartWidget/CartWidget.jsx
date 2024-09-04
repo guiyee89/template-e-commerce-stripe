@@ -30,7 +30,7 @@ export const CartWidget = ({ totalItems }) => {
           }}
         >
           <CartWrapper windowWidth={windowWidth}>
-            <ShoppingBagOutlinedIcon fontSize="medium" />
+            <ShoppingBagOutlinedIcon sx={{ fontSize: "1.6rem" }} />
           </CartWrapper>
         </Contador>
       </CartWidgetWrapper>
