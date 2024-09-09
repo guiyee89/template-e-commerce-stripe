@@ -283,20 +283,20 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.1rem;
+    height: 2.1rem;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.85);
   }
   .carousel-control-next {
     width: 4.5%;
-    left: 96.2%;
+    left: 96.3%;
     bottom: 20%;
     height: 92%;
   }
   .carousel-control-prev {
     width: 4.5%;
-    left: -0.7%;
+    left: -0.8%;
     bottom: 20%;
     height: 92%;
   }

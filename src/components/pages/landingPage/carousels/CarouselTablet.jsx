@@ -342,8 +342,8 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.1rem;
+    height: 2.1rem;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.85);
   }
