@@ -116,6 +116,9 @@ const StyledCarousel = styled(Carousel)`
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
     background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 50%;
+    width: 2.1rem;
+    height: 2.1rem;
     @media (max-width: 550px) {
       height: 2.6rem;
       background-color: transparent;
@@ -134,7 +137,7 @@ const StyledCarousel = styled(Carousel)`
     }
   }
   .carousel-control-prev {
-    left: /* 1.9%; */ -5.1%;
+    left: /* 1.9%; */ -6.3%;
     @media (max-width: 800px) {
       left: -13.2%;
     }
@@ -147,7 +150,7 @@ const StyledCarousel = styled(Carousel)`
   }
 
   .carousel-control-next {
-    right: /* 1.9%; */ -5.1%;
+    right: /* 1.9%; */ -6.3%;
     @media (max-width: 800px) {
       right: -13.2%;
     }
