@@ -1,4 +1,3 @@
-import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardSharpIcon from "@mui/icons-material/DashboardSharp";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
@@ -9,6 +8,7 @@ import { CartContext } from "../../../context/CartContext";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import useGlobalLocation from "../../../hooks/useGlobalLocation";
+import { BsPerson } from "react-icons/bs";
 
 export const NavDesktopButtons = ({ handleNavLinkClick }) => {
   //////////        ////////////        ////////////        ///////////
@@ -43,7 +43,7 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
             }}
           >
             <HoveredText>Login / Sign up</HoveredText>
-            <LoginSharpIcon sx={{ fontSize: "25px" }} />
+            <BsPerson style={{ fontSize: "1.7rem", position: "absolute", top: "29px" }}/>
           </LoginLink>
         ) : user.rol === rolAdmin ||
           user.rol === rolAdmin2 ||

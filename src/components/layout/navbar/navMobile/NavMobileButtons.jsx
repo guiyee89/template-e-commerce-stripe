@@ -1,17 +1,16 @@
 import styled from "styled-components/macro";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import DashboardSharpIcon from "@mui/icons-material/DashboardSharp";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import { useNavigate } from "react-router-dom";
+import { BsPerson } from "react-icons/bs";
 
 export const NavMobileButtons = ({ handleNavLinkClick }) => {
-
   //////////        ////////////        ////////////        ///////////
   //                       Auth & Admin                      //
-  
+
   const { user, handleLogout } = useContext(AuthContext);
   const rolAdmin = import.meta.env.VITE_ROL_ADMIN;
   const rolAdmin2 = import.meta.env.VITE_ROL_ADMIN2;
@@ -33,7 +32,7 @@ export const NavMobileButtons = ({ handleNavLinkClick }) => {
           }}
         >
           <h4>Login / Sign up</h4>
-          <LoginSharpIcon sx={{ fontSize: "26px" }} />
+          <BsPerson style={{ fontSize: "1.7rem", margin: "0 auto" }} />
         </LoginLink>
       ) : user.rol === rolAdmin ||
         user.rol === rolAdmin2 ||
