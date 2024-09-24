@@ -2,7 +2,10 @@ import styled from "styled-components/macro";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  PaymentMethodMessagingElement,
+} from "@stripe/react-stripe-js";
 import { useContext } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,6 +18,7 @@ export const Payment = ({ shipmentCost }) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const [isFormLoading, setIsFormLoading] = useState(true);
+  const total = getTotalPrice();
 
   useEffect(() => {
     const fetchConfig = async () => {
@@ -39,7 +43,7 @@ export const Payment = ({ shipmentCost }) => {
 
   useEffect(() => {
     const fetchPaymentIntent = async () => {
-      const total = getTotalPrice();
+    
       try {
         const response = await axios.post(
           "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent",
@@ -68,7 +72,7 @@ export const Payment = ({ shipmentCost }) => {
   }, []);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div >
       {stripePromise && clientSecret && (
         <Elements
           stripe={stripePromise}

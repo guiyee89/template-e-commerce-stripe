@@ -12,16 +12,16 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { Payment } from "../stripeCheckout/Payment";
-import { AuthContext } from "../../../context/AuthContext";
-import { ShippingButtons } from "../shipping/ShippingButtons";
-import { CheckoutCart } from "../checkoutCart/CheckoutCart";
 import { bouncy } from "ldrs";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
+import { AuthContext } from "../../context/AuthContext";
+import { Payment } from "./stripeCheckout/Payment";
+import { CheckoutCart } from "./checkoutCart/CheckoutCart";
+import { ShippingButtons } from "./shipping/ShippingButtons";
 bouncy.register();
 
-export const CheckoutForm = ({
+export const Checkout = ({
   handleSubmit,
   handleChange,
   handleCountryChange,
@@ -582,10 +582,7 @@ export const CheckoutForm = ({
                               : "70%" /* 92% */,
                           height:
                             windowWidth < 750 ? "85%" : "830px" /* "630px" */,
-                          padding:
-                            windowWidth < 551
-                              ? "20px"
-                              : "62px 76px 10px" /* "62px 25px 0px" */,
+
                           overflowX: "hidden",
                         }}
                       >
@@ -791,14 +788,18 @@ const BouncyLoader = styled.div`
 
 const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
-  font-size: 28px;
-  top: 6% /* 3% */;
-  left: ${(props) => (props.windowwidth < 750 ? "85%" : "90%" /* "96%" */)};
-  position: absolute;
+  width: 1.3em !important;
+  height: 1.3em !important;
+  top: 4%;
+  left: 93%;
+  position: sticky;
   z-index: 2;
+  border: 1px solid grey;
+  box-shadow: rgba(0, 0, 0, 2) 0px 0px 3px;
+  background-color: white;
   @media (max-width: 750px) {
-    top: 3%;
-    left: 88%;
+    width: 1.1em !important;
+    height: 1.1em !important;
   }
 `;
 
