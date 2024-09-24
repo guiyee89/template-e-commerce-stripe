@@ -7,11 +7,11 @@ import { CartContext } from "../../context/CartContext";
 import styled from "styled-components/macro";
 import { AuthContext } from "../../context/AuthContext";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import { CheckoutForm } from "./checkoutForm/CheckoutForm";
 import { CarouselDesktop } from "../landingPage/carousels/CarouselDesktop";
 import { CarouselTablet } from "../landingPage/carousels/CarouselTablet";
 import { CarouselMobile } from "../landingPage/carousels/CarouselMobile";
 import { updateEmailList } from "../../../firebaseEmailConfig";
+import { Checkout } from "./Checkout";
 
 export const CheckoutContainer = () => {
   const { cart, getTotalPrice } = useContext(CartContext);
@@ -156,7 +156,7 @@ export const CheckoutContainer = () => {
   return (
     <>
       <Wrapper windowWidth={windowWidth}>
-        <CheckoutForm
+        <Checkout
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           handleCountryChange={handleCountryChange}
