@@ -24,8 +24,8 @@ export const Payment = ({ shipmentCost }) => {
     const fetchConfig = async () => {
       try {
         const response = await axios.get(
-          "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/config"
-          //"http://localhost:3000/config"
+          //"https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/config"
+          "http://localhost:3000/config"
         );
         const { publishableKey } = response.data;
         setPublishableKey(publishableKey);
@@ -43,11 +43,10 @@ export const Payment = ({ shipmentCost }) => {
 
   useEffect(() => {
     const fetchPaymentIntent = async () => {
-    
       try {
         const response = await axios.post(
-          "https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent",
-          //"http://localhost:3000/create-payment-intent",
+          //"https://template-ecommerce-stripe-hosted-page-1-backend.vercel.app/create-payment-intent",
+          "http://localhost:3000/create-payment-intent",
           {
             items: cart,
             amount: (total + shipmentCost) * 100,
@@ -58,7 +57,7 @@ export const Payment = ({ shipmentCost }) => {
         setTimeout(() => {
           setClientSecret(clientSecret);
           setIsFormLoading(false);
-        }, 2000);
+        }, 0);
       } catch (error) {
         console.error("Error fetching payment intent:", error);
       }
@@ -72,7 +71,7 @@ export const Payment = ({ shipmentCost }) => {
   }, []);
 
   return (
-    <div >
+    <div>
       {stripePromise && clientSecret && (
         <Elements
           stripe={stripePromise}
