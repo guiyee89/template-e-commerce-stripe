@@ -28,7 +28,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsCheckoutLoading(false);
-    }, 1500);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
