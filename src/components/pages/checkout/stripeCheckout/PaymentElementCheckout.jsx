@@ -1,13 +1,18 @@
 import styled from "styled-components/macro";
-import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { useEffect, useState } from "react";
+import {
+  useStripe,
+  useElements,
+  PaymentMethodMessagingElement,
+} from "@stripe/react-stripe-js";
+import { useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useContext } from "react";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { CartContext } from "../../../context/CartContext";
 import { bouncy } from "ldrs";
-
+import { PaymentSkeletonLoader } from "./PaymentSkeletonLoader";
+import { useEffect } from "react";
 bouncy.register();
 
 export const PaymentElementCheckout = ({ shipmentCost }) => {
@@ -15,9 +20,17 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
   const { windowWidth, scroll } = useContext(GlobalToolsContext);
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(true);
   const stripe = useStripe();
   const elements = useElements();
   const total = getTotalPrice();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsCheckoutLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +60,9 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
     setMessage(null);
   };
 
+  if (isCheckoutLoading) {
+    return <PaymentSkeletonLoader />;
+  }
   return (
     <>
       {isProcessing && (
@@ -58,7 +74,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
         id="payment-form"
         onSubmit={handleSubmit}
         windowWidth={windowWidth}
-        data-aos="zoom-out-up"
+        // data-aos="zoom-out-up"
       >
         <CheckoutContainer windowWidth={windowWidth}>
           <CartInfoContainer windowWidth={windowWidth}>
@@ -122,7 +138,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
             </ItemsContainer>
             <p
               style={{
-                marginTop: "30px",
+                margin: "0 0 20px 0",
                 fontSize: "0.75rem",
                 fontWeight: "500",
                 textAlign: "right",
@@ -133,9 +149,19 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
                 $ {shipmentCost.toFixed(2)}
               </span>
             </p>
+            <PaymentMethodMessagingElement
+              options={{
+                amount: (total + shipmentCost) * 100,
+                currency: "USD",
+                paymentMethodTypes: ["klarna", "afterpay_clearpay", "affirm"],
+                countryCode: "US",
+              }}
+            />
           </CartInfoContainer>
         </CheckoutContainer>
-        <PaymentElementContainer windowWidth={windowWidth} data-aos="fade-left">
+        <PaymentElementContainer
+          windowWidth={windowWidth} /* data-aos="fade-left" */
+        >
           <div style={{ minHeight: "300px" }}>
             <PaymentElement />
           </div>
@@ -169,12 +195,13 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
 };
 const Form = styled.form`
   display: flex;
-  /* flex-direction: ${(props) =>
-    props.windowWidth > 750 ? "row" : "column"}; */
   flex-direction: ${(props) => (props.windowWidth > 750 ? "column" : "column")};
   justify-content: space-between;
-  margin-bottom: 30px;
-  padding-bottom: 40px;
+  margin-bottom: 40px;
+  padding: 40px 70px 30px;
+  @media (max-width: 551px) {
+    padding: 20px;
+  }
 `;
 const CheckoutContainer = styled.div`
   display: flex;
@@ -182,13 +209,9 @@ const CheckoutContainer = styled.div`
   -webkit-box-pack: justify;
   justify-content: space-between;
   height: auto;
-  /* width: ${(props) => (props.windowWidth > 750 ? "50%" : "100%")};
-  padding-right: ${(props) => (props.windowWidth > 750 ? "20px" : "0")}; */
   width: ${(props) => (props.windowWidth > 750 ? "100%" : "100%")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
-  margin: 0 0 30px;
-  /* position: sticky;
-  top: 0; */
+  margin: 0 0 10px;
   @media (max-width: 750px) {
     height: auto;
   }
@@ -197,8 +220,6 @@ const CheckoutContainer = styled.div`
 const CartInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* margin-top: ${(props) => (props.windowWidth > 750 ? "-25px" : "0")};
-  padding-left: ${(props) => (props.windowWidth > 750 ? "15px" : "0")}; */
   margin-top: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
   padding-left: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
   gap: 0.9rem;
@@ -212,7 +233,6 @@ const CartInfoContainer = styled.div`
     top: 52px;
     bottom: 0px;
     left: -7px;
-    /* width: ${(props) => (props.windowWidth > 850 ? "2px" : "0")}; */
     width: ${(props) => (props.windowWidth > 850 ? "0" : "0")};
     background: linear-gradient(
       to bottom,
@@ -241,8 +261,6 @@ const Total = styled.h2`
 `;
 const ItemsContainer = styled.div`
   overflow-y: auto;
-  /* height: ${(props) => (props.windowWidth > 750 ? "398px" : "auto")};
-  padding-right: ${(props) => (props.windowWidth < 1100 ? "0" : "10px")}; */
   height: ${(props) => (props.windowWidth > 750 ? "auto" : "auto")};
   max-height: 260px;
   padding-right: ${(props) => (props.windowWidth < 1100 ? "10px" : "10px")};
@@ -267,7 +285,6 @@ const ItemsContainer = styled.div`
 const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  /* height: ${(props) => (props.windowWidth < 750 ? "none" : "80px")}; */
   height: ${(props) => (props.windowWidth < 750 ? "80px" : "80px")};
 `;
 const ItemInfoWrapper = styled.div`
@@ -275,14 +292,14 @@ const ItemInfoWrapper = styled.div`
 `;
 const ImgWrapper = styled.div`
   margin: 0 20px 0 0;
-  /* width: ${(props) => (props.windowWidth < 750 ? "52px" : "60px")}; */
-  width: ${(props) => (props.windowWidth < 750 ? "60px" : "60px")};
-  height: 65px;
+  width: 70px;
+  height: 70px;
 `;
 const ItemImg = styled.img`
-  object-fit: contain;
+  object-fit: cover;
   border: 1px solid lightgrey;
   width: 100%;
+  height: 100%;
 `;
 const ItemTitle = styled.h2`
   text-transform: capitalize;
@@ -304,7 +321,6 @@ const InsideContentWrapper = styled.div`
 `;
 const PriceWrapper = styled.div`
   height: 50%;
-  /* min-width: ${(props) => (props.windowWidth < 750 ? "85px" : "100px")}; */
   min-width: ${(props) => (props.windowWidth < 750 ? "100px" : "100px")};
 `;
 const BothPriceWrapper = styled.h4`
@@ -354,9 +370,6 @@ const PaymentElementContainer = styled.div`
   gap: 6rem;
   margin-top: 25px;
   position: relative;
-  /* width: ${(props) => (props.windowWidth > 750 ? "62%" : "100%")};
-  padding-left: ${(props) => (props.windowWidth > 750 ? "24px" : "0")};
-  padding-right: ${(props) => (props.windowWidth > 750 ? "24px" : "0")}; */
   width: ${(props) => (props.windowWidth > 750 ? "100%" : "100%")};
   padding-left: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
   padding-right: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
@@ -370,7 +383,6 @@ const PaymentElementContainer = styled.div`
     height: 110%;
     width: 2px;
     background: linear-gradient(rgba(0, 0, 0, 0.15) 64%, rgba(0, 0, 0, 0) 100%);
-    /* width: ${(props) => (props.windowWidth > 750 ? "2px" : "0")}; */
     width: ${(props) => (props.windowWidth > 750 ? "0" : "0")};
   }
   &::after {
@@ -379,7 +391,6 @@ const PaymentElementContainer = styled.div`
     top: 0px;
     bottom: 0px;
     right: 0px;
-    /* width: ${(props) => (props.windowWidth > 850 ? "2px" : "0")}; */
     width: ${(props) => (props.windowWidth > 850 ? "0" : "0")};
     background: linear-gradient(
       to bottom,
@@ -389,12 +400,6 @@ const PaymentElementContainer = styled.div`
   }
 `;
 const StripeImg = styled.img`
-  /* width: ${(props) =>
-    props.windowWidth < 500
-      ? "35%"
-      : props.windowWidth > 750
-      ? "30%"
-      : "22%"}; */
   width: ${(props) =>
     props.windowWidth < 500 ? "35%" : props.windowWidth > 750 ? "22%" : "22%"};
   margin: -22px 0 0 -32px;
@@ -408,7 +413,7 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   height: 46px;
-  margin: -66px auto 15px; /* -50px auto 15px ;*/
+  margin: -66px auto 15px;
   border: none;
   border-radius: 4px;
   width: 99%;
@@ -427,14 +432,11 @@ const LoaderOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
   display: flex;
-  /* justify-content: ${(props) =>
-    props.window < 500 ? "flex-start" : "center"};
-  padding-left: ${(props) => (props.window < 500 ? "80px" : "0")}; */
   justify-content: ${(props) =>
     props.windowWidth < 500 ? "center" : "center"};
   padding-left: ${(props) => (props.windowWidth < 500 ? "0" : "0")};
   align-items: center;
-  z-index: 2; /* Higher z-index to cover other elements */
+  z-index: 2;
 `;
 const BouncyLoader = styled.div`
   display: flex;

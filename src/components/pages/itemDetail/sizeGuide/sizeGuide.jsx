@@ -31,95 +31,101 @@ export const SizeGuide = () => {
         aria-label="size guide tabs"
       >
         <Tab label="Pulgadas" />
-        <Tab label="cm" />
+        <Tab label="CM" />
       </Tabs>
 
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Etiqueta del producto</TableCell>
-              <TableCell>XS</TableCell>
-              <TableCell>S</TableCell>
-              <TableCell>M</TableCell>
-              <TableCell>L</TableCell>
-              <TableCell>XL</TableCell>
-              <TableCell>2XL</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>Pecho</TableCell>
-              <TableCell>32 1/2 - 34"</TableCell>
-              <TableCell>34 1/2 - 36"</TableCell>
-              <TableCell>36 1/2 - 39"</TableCell>
-              <TableCell>39 1/2 - 42"</TableCell>
-              <TableCell>43 - 46 1/2"</TableCell>
-              <TableCell>47 - 51"</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Cintura</TableCell>
-              <TableCell>27 1/2 - 29"</TableCell>
-              <TableCell>29 1/2 - 31 1/2"</TableCell>
-              <TableCell>32 - 34 1/2"</TableCell>
-              <TableCell>35 - 38"</TableCell>
-              <TableCell>38 1/2 - 42"</TableCell>
-              <TableCell>42 1/2 - 47"</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Cadera</TableCell>
-              <TableCell>32 - 33 1/2"</TableCell>
-              <TableCell>34 - 36"</TableCell>
-              <TableCell>36 1/2 - 39"</TableCell>
-              <TableCell>39 1/2 - 42 1/2"</TableCell>
-              <TableCell>42 1/2 - 45 1/2"</TableCell>
-              <TableCell>46 - 49"</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {tabValue === 0 && (
+        // Table for inches (Pulgadas)
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Etiqueta del producto</TableCell>
+                <TableCell>XS</TableCell>
+                <TableCell>S</TableCell>
+                <TableCell>M</TableCell>
+                <TableCell>L</TableCell>
+                <TableCell>XL</TableCell>
+                <TableCell>2XL</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Pecho</TableCell>
+                <TableCell>32 1/2 - 34"</TableCell>
+                <TableCell>34 1/2 - 36"</TableCell>
+                <TableCell>36 1/2 - 39"</TableCell>
+                <TableCell>39 1/2 - 42"</TableCell>
+                <TableCell>43 - 46 1/2"</TableCell>
+                <TableCell>47 - 51"</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Cintura</TableCell>
+                <TableCell>27 1/2 - 29"</TableCell>
+                <TableCell>29 1/2 - 31 1/2"</TableCell>
+                <TableCell>32 - 34 1/2"</TableCell>
+                <TableCell>35 - 38"</TableCell>
+                <TableCell>38 1/2 - 42"</TableCell>
+                <TableCell>42 1/2 - 47"</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Cadera</TableCell>
+                <TableCell>32 - 33 1/2"</TableCell>
+                <TableCell>34 - 36"</TableCell>
+                <TableCell>36 1/2 - 39"</TableCell>
+                <TableCell>39 1/2 - 42 1/2"</TableCell>
+                <TableCell>42 1/2 - 45 1/2"</TableCell>
+                <TableCell>46 - 49"</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
-      {/* Content for cm */}
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Etiqueta del producto</TableCell>
-              <TableCell>S Largo</TableCell>
-              <TableCell>M Largo</TableCell>
-              <TableCell>L Largo</TableCell>
-              <TableCell>XL Largo</TableCell>
-              <TableCell>2XL Largo</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>Pecho</TableCell>
-              <TableCell>87 - 92cm</TableCell>
-              <TableCell>93 - 100cm</TableCell>
-              <TableCell>101 - 108cm</TableCell>
-              <TableCell>109 - 118cm</TableCell>
-              <TableCell>119 - 130cm</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Cintura</TableCell>
-              <TableCell>75 - 80cm</TableCell>
-              <TableCell>81 - 88cm</TableCell>
-              <TableCell>89 - 96cm</TableCell>
-              <TableCell>97 - 106cm</TableCell>
-              <TableCell>107 - 120cm</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Cadera</TableCell>
-              <TableCell>89 - 96cm</TableCell>
-              <TableCell>97 - 104cm</TableCell>
-              <TableCell>105 - 112cm</TableCell>
-              <TableCell>113 - 121cm</TableCell>
-              <TableCell>122 - 130cm</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {tabValue === 1 && (
+        // Table for centimeters (CM)
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Etiqueta del producto</TableCell>
+                <TableCell>XS</TableCell>
+                <TableCell>S</TableCell>
+                <TableCell>M</TableCell>
+                <TableCell>L</TableCell>
+                <TableCell>XL</TableCell>
+                <TableCell>2XL</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Pecho</TableCell>
+                <TableCell>87 - 92cm</TableCell>
+                <TableCell>93 - 100cm</TableCell>
+                <TableCell>101 - 108cm</TableCell>
+                <TableCell>109 - 118cm</TableCell>
+                <TableCell>119 - 130cm</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Cintura</TableCell>
+                <TableCell>75 - 80cm</TableCell>
+                <TableCell>81 - 88cm</TableCell>
+                <TableCell>89 - 96cm</TableCell>
+                <TableCell>97 - 106cm</TableCell>
+                <TableCell>107 - 120cm</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Cadera</TableCell>
+                <TableCell>89 - 96cm</TableCell>
+                <TableCell>97 - 104cm</TableCell>
+                <TableCell>105 - 112cm</TableCell>
+                <TableCell>113 - 121cm</TableCell>
+                <TableCell>122 - 130cm</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
       <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
         Talle Largo
