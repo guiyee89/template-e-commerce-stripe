@@ -20,13 +20,13 @@ export const PaymentSkeletonLoader = (props) => {
         speed={2}
         width={"100%"}
         height={600 + cart.length * 100} // Dynamically adjust height based on cart items
-        viewBox={`0 0 600 ${700 + cart.length * 100}`}
-        backgroundColor="#f3f3f3"
-        foregroundColor="#ecebeb"
+        viewBox={`0 0 600 ${690 + cart.length * 100}`}
+        backgroundColor="#dcdada"
+        foregroundColor="#ededed"
         {...props}
       >
         {/* Top "Powered by Stripe" */}
-        <rect x="0" y="30" rx="4" ry="4" width="130" height="20" />
+        <rect x="0" y="35" rx="4" ry="4" width="120" height="20" />
 
         {/* Loop through cart items to render product skeletons */}
 
@@ -35,19 +35,19 @@ export const PaymentSkeletonLoader = (props) => {
           return (
             <React.Fragment key={index}>
               {/* Product images */}
-              <rect x="0" y={yOffset} rx="8" ry="8" width="80" height="80" />
+              <rect x="0" y={yOffset + 15} rx="8" ry="8" width="85" height="85" />
               {/* Product details */}
-              <rect x="100" y={yOffset} rx="4" ry="4" width="200" height="20" />
+              <rect x="100" y={yOffset + 20} rx="4" ry="4" width="150" height="20" />
               <rect
                 x="100"
-                y={yOffset + 40}
+                y={yOffset + 60}
                 rx="4"
                 ry="4"
                 width="100"
                 height="15"
               />
               {/* Product price */}
-              <rect x="470" y={yOffset} rx="4" ry="4" width="100" height="25" />
+              <rect x="470" y={yOffset + 20} rx="4" ry="4" width="100" height="30" />
             </React.Fragment>
           );
         })}
@@ -55,17 +55,17 @@ export const PaymentSkeletonLoader = (props) => {
         {/* Shipping cost */}
         <rect
           x="420"
-          y={80 + cart.length * 100}
+          y={90 + cart.length * 100}
           rx="4"
           ry="4"
           width="150"
-          height="20"
+          height="15"
         />
 
         {/* Payment method tabs */}
         <rect
           x="0"
-          y={220 + cart.length * 100}
+          y={210 + cart.length * 100}
           rx="8"
           ry="8"
           width="270"
@@ -73,7 +73,7 @@ export const PaymentSkeletonLoader = (props) => {
         />
         <rect
           x="300"
-          y={220 + cart.length * 100}
+          y={210 + cart.length * 100}
           rx="8"
           ry="8"
           width="270"
@@ -117,7 +117,7 @@ export const PaymentSkeletonLoader = (props) => {
         {/* Pay button */}
         <rect
           x="0"
-          y={580 + cart.length * 100}
+          y={580 + cart.length * 110}
           rx="8"
           ry="8"
           width="570"
