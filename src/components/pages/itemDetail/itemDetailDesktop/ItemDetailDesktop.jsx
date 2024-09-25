@@ -333,7 +333,7 @@ const ReferenceWrapper = styled.div`
   padding: 0px 8px 0 0;
   cursor: pointer;
   &:hover {
-    background-color: rgb(228 225 225 / 66%);
+    background-color: rgb(126 124 124 / 26%);
     transition: background-color 0.1s ease-in-out;
     font-weight: 500;
   }
