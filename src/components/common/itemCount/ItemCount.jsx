@@ -97,7 +97,7 @@ const Wrapper = styled.div`
 const CountButton = styled.button`
   width: 35px;
   height: 35px;
-  border-radius: 50%;
+  border-radius: 50% 50% 50% 50%;
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
@@ -105,9 +105,13 @@ const CountButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background-color: #f1f5f8;
+  -webkit-appearance: none; /* Reset button appearance for Safari */
+  appearance: none;
   &:hover {
     background-color: gray;
     transition: ease-in-out 0.2s;
+    -webkit-transition: ease-in-out 0.2s; /* Safari */
   }
 `;
 
@@ -118,6 +122,7 @@ const AddCartBtn = styled.button`
   border: none;
   transform: rotate(0deg);
   transform-origin: center;
+  -webkit-transform: rotate(0deg); /* Safari */
   height: 42px;
   font-weight: 500;
   text-decoration: none;
@@ -125,26 +130,34 @@ const AddCartBtn = styled.button`
   cursor: pointer;
   padding-bottom: 2px;
   border-radius: 5px;
+  background-color: #cf873e; /* Background color explicitly set */
+  background-clip: padding-box; /* Ensure background inside padding */
+  -webkit-background-clip: padding-box; /* Safari-specific */
   box-shadow: 0 2px 0 #494a4b;
+  -webkit-box-shadow: 0 2px 0 #494a4b; /* Safari-specific */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  background-color: #cf873e;
+  -webkit-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Safari */
   :active {
     transform: translateY(5px);
     padding-bottom: 0px;
     outline: 0;
+    -webkit-transform: translateY(5px); /* Safari */
   }
 `;
+
 const SpanAddCart = styled.span`
   background: #f1f5f8;
   color: black;
   display: block;
   padding: 0.3rem 1rem;
-  border-radius: 5px;
+  border-radius: 5px 5px 5px 5px;
   border: 2px solid #494a4b;
   font-family: "Gochi Hand", cursive;
   :hover {
     transform: ${({ isLoading }) =>
       isLoading ? "none" : "translateY(-1.2px)"};
+    -webkit-transform: ${({ isLoading }) =>
+      isLoading ? "none" : "translateY(-1.2px)"}; //Safari
     box-shadow: ${({ isLoading }) =>
       isLoading ? "none" : "rgba(0, 0, 0, 0.2) 0px 15px 15px"};
   }
@@ -165,7 +178,7 @@ const AddLoader = styled.div`
   align-items: center;
   background-color: rgb(241, 245, 248);
   border: 2px solid #494a4b;
-  border-radius: 5px;
+  border-radius: 5px 5px 5px 5px;
   padding: 0.35rem 1rem;
   cursor: not-allowed;
 `;
