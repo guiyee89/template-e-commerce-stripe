@@ -21,7 +21,7 @@ export const PaymentSkeletonLoader = (props) => {
         width={"100%"}
         height={600 + cart.length * 100} // Dynamically adjust height based on cart items
         viewBox={`0 0 600 ${690 + cart.length * 100}`}
-        backgroundColor="#dcdada"
+        backgroundColor="#e9e5e5"
         foregroundColor="#ededed"
         {...props}
       >

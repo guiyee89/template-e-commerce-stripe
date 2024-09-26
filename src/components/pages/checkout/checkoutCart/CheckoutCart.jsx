@@ -168,7 +168,7 @@ export const CheckoutCart = ({
                       {isLoading ? (
                         <RingLoaderContainer>
                           <Ring
-                            size={20}
+                            size={12}
                             lineWeight={6}
                             speed={1}
                             color="black"
@@ -256,7 +256,18 @@ export const CheckoutCart = ({
             </ShippingWrapper>
             <TotalWrapper>
               <TotalText>Total</TotalText>
-              <TotalPrice>$ {currentTotal.toFixed(2)}</TotalPrice>
+              <TotalPrice>
+                <span
+                  style={{
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                    color: "#5b5a5a",
+                  }}
+                >
+                  USD
+                </span>{" "}
+                $ {currentTotal.toFixed(2)}
+              </TotalPrice>
             </TotalWrapper>
           </TotalPriceInfoDesktopContainer>
         </CartTotalPriceContainer>
@@ -461,6 +472,7 @@ const ItemsDetails = styled.div`
   }
 `;
 const ImgContainer = styled.div`
+  display: block;
   min-width: 68px;
   height: 68px;
   @media (max-width: 550px) {
@@ -473,6 +485,8 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  -webkit-object-fit: cover;
+  aspect-ratio: 1 / 1;
 `;
 const ItemData = styled.div`
   padding: 0 0 2px 8px;
@@ -542,9 +556,31 @@ const ItemQuantity = styled.h4`
 `;
 
 const BtnQuantity = styled.button`
-  border-radius: 5%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #fff;
   border: none;
-  font-size: 1rem;
+  width: 28px;
+  height: 27px;
+
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none; /* Safari */
+  &:hover {
+    background-color: #c0bebe;
+  }
+  &:disabled {
+    background-color: transparent;
+  }
+  @media (max-width: 500px) {
+    height: 100%;
+    font-size: 16px;
+  }
 `;
 const ItemPriceWrapper = styled.h4`
   display: flex;

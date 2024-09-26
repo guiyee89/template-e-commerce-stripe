@@ -16,6 +16,8 @@ export const ItemDetailMobile = ({ selectedItem }) => {
     useContext(GlobalToolsContext);
   const [imgSkeletonLoader, setImgSkeletonLoader] = useState(false);
   const [loadingSizeFilter, setLoadingSizeFilter] = useState(false);
+  const [counterLoading, setCounterLoading] = useState(false);
+  const [sizeGuide, setSizeGuide] = useState(false);
 
   ///////////////////////////////////////////////////////////////////////////////////
   //On add to cart if selectedItem or filteredItem
@@ -153,6 +155,8 @@ export const ItemDetailMobile = ({ selectedItem }) => {
                   initial={1}
                   onAddToCart={onAddToCart}
                   disabled={loadingSizeFilter}
+                  counterLoading={counterLoading}
+                  setCounterLoading={setCounterLoading}
                 />
               )}
             </ItemCountWrapper>

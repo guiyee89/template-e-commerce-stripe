@@ -250,7 +250,18 @@ export const SideCart = () => {
                   </DiscountWrapper>
                   <TotalWrapper>
                     <TotalText colSpan="1">Total:</TotalText>
-                    <TotalPrice>${currentTotal.toFixed(2)}</TotalPrice>
+                    <TotalPrice>
+                      <span
+                        style={{
+                          fontSize: "0.85rem",
+                          fontWeight: "600",
+                          color: "#5b5a5a",
+                        }}
+                      >
+                        USD
+                      </span>{" "}
+                      ${currentTotal.toFixed(2)}
+                    </TotalPrice>
                   </TotalWrapper>
                 </TotalPriceInfo>
                 <div
@@ -393,25 +404,6 @@ const ImgWrapper = styled.div`
     height: 64px;
   }
 `;
-const QuantityWrapper = styled.div`
-  display: flex;
-  margin: 4px 0px 10px 0px;
-  border: 1px solid rgb(194, 191, 191);
-  border-radius: 5%;
-  width: 100px;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  @media (max-width: 600px) {
-    width: 85px;
-    margin: 8px 0px 10px 0px;
-  }
-  @media (max-width: 350px) {
-    width: 70px;
-    margin: 4px 0px 6px 0px;
-  }
-`;
 const ItemImg = styled.img`
   width: 100%;
   height: 100%;
@@ -428,12 +420,53 @@ const ItemTitle = styled.h2`
   font-size: clamp(0.65rem, 5px + 0.8vw, 0.85rem);
   text-transform: capitalize;
 `;
-const BtnQuantity = styled.button`
-  width: 32px;
+const QuantityWrapper = styled.div`
+  display: flex;
+  margin: 4px 0px 10px 0px;
+  /* border: 1px solid rgb(194, 191, 191); */
   border-radius: 5%;
-  border: none;
+  width: 100px;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  @media (max-width: 600px) {
+    width: 85px;
+    margin: 8px 0px 10px 0px;
+  }
   @media (max-width: 350px) {
+    width: 70px;
+    margin: 4px 0px 6px 0px;
+  }
+`;
+
+const BtnQuantity = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 28px;
+  height: 27px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none; /* Safari */
+  &:hover {
+    background-color: #c0bebe;
+  }
+
+  &:disabled {
+    background-color: transparent;
+  }
+  @media (max-width: 500px) {
     width: 20px;
+    height: 19px;
+    font-size: 16px;
   }
 `;
 

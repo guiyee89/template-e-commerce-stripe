@@ -21,8 +21,8 @@ export const SizeGuide = () => {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Talles de Prendas Superiores para Hombre
+      <Typography variant="h4" gutterBottom sx={{fontSize:"2rem"}}>
+        Upper Clothing Sizes
       </Typography>
 
       <Tabs
@@ -40,7 +40,7 @@ export const SizeGuide = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Etiqueta del producto</TableCell>
+                <TableCell></TableCell>
                 <TableCell>XS</TableCell>
                 <TableCell>S</TableCell>
                 <TableCell>M</TableCell>
@@ -51,7 +51,7 @@ export const SizeGuide = () => {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>Pecho</TableCell>
+                <TableCell>Chest</TableCell>
                 <TableCell>32 1/2 - 34"</TableCell>
                 <TableCell>34 1/2 - 36"</TableCell>
                 <TableCell>36 1/2 - 39"</TableCell>
@@ -60,7 +60,7 @@ export const SizeGuide = () => {
                 <TableCell>47 - 51"</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Cintura</TableCell>
+                <TableCell>Waist</TableCell>
                 <TableCell>27 1/2 - 29"</TableCell>
                 <TableCell>29 1/2 - 31 1/2"</TableCell>
                 <TableCell>32 - 34 1/2"</TableCell>
@@ -69,7 +69,7 @@ export const SizeGuide = () => {
                 <TableCell>42 1/2 - 47"</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Cadera</TableCell>
+                <TableCell>Hips</TableCell>
                 <TableCell>32 - 33 1/2"</TableCell>
                 <TableCell>34 - 36"</TableCell>
                 <TableCell>36 1/2 - 39"</TableCell>
@@ -88,7 +88,7 @@ export const SizeGuide = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Etiqueta del producto</TableCell>
+                <TableCell></TableCell>
                 <TableCell>XS</TableCell>
                 <TableCell>S</TableCell>
                 <TableCell>M</TableCell>
@@ -99,7 +99,7 @@ export const SizeGuide = () => {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>Pecho</TableCell>
+                <TableCell>Chest</TableCell>
                 <TableCell>87 - 92cm</TableCell>
                 <TableCell>93 - 100cm</TableCell>
                 <TableCell>101 - 108cm</TableCell>
@@ -107,7 +107,7 @@ export const SizeGuide = () => {
                 <TableCell>119 - 130cm</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Cintura</TableCell>
+                <TableCell>Waist</TableCell>
                 <TableCell>75 - 80cm</TableCell>
                 <TableCell>81 - 88cm</TableCell>
                 <TableCell>89 - 96cm</TableCell>
@@ -115,7 +115,7 @@ export const SizeGuide = () => {
                 <TableCell>107 - 120cm</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Cadera</TableCell>
+                <TableCell>Hips</TableCell>
                 <TableCell>89 - 96cm</TableCell>
                 <TableCell>97 - 104cm</TableCell>
                 <TableCell>105 - 112cm</TableCell>

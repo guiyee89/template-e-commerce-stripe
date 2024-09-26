@@ -119,7 +119,6 @@ export const ItemDetailDesktop = ({
               <Box
                 sx={{
                   maxWidth: 800,
-                  padding: 2,
                   margin: "0 auto",
                   padding: "20px",
                   position: "relative",
