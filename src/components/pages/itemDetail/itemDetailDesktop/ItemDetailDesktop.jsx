@@ -8,6 +8,7 @@ import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { SizeGuide } from "../sizeGuide/sizeGuide";
 import { Box, Modal } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const ItemDetailDesktop = ({
   selectedItem,
@@ -64,10 +65,10 @@ export const ItemDetailDesktop = ({
     setProgress(0);
   };
 
+  //Size Modal Handlers
   const handleOpen = (e) => {
     setSizeGuide(true);
   };
-
   const handleClose = () => {
     setSizeGuide(false);
   };
@@ -128,6 +129,7 @@ export const ItemDetailDesktop = ({
                 }}
               >
                 <SizeGuide onClose={handleClose} />
+                <CloseIconBtn onClick={handleClose} />
               </Box>
             </Modal>
             <StockPriceWrapper>
@@ -346,4 +348,20 @@ const SizeReference = styled.p`
   align-items: center;
   gap: 0.5rem;
   font-size: 0.7rem;
+`;
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  width: 1.3em !important;
+  height: 1.3em !important;
+  top: 7px ;
+  left: 95%;
+  position: absolute;
+  z-index: 2;
+  border: 1px solid grey;
+  box-shadow: rgba(0, 0, 0, 2) 0px 0px 3px;
+  background-color: white;
+  @media (max-width: 750px) {
+    width: 1.1em !important;
+    height: 1.1em !important;
+  }
 `;

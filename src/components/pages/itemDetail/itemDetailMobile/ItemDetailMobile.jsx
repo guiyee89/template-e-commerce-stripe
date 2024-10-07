@@ -6,6 +6,9 @@ import { CartContext } from "../../../context/CartContext";
 import { ItemImageMobile } from "./ItemImageMobile";
 import { Ring } from "@uiball/loaders";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
+import { Box, Modal } from "@mui/material";
+import { SizeGuide } from "../sizeGuide/sizeGuide";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const ItemDetailMobile = ({ selectedItem }) => {
   ///////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +64,14 @@ export const ItemDetailMobile = ({ selectedItem }) => {
     setProgress(0);
   };
 
+  //Size Modal Handlers
+  const handleOpen = (e) => {
+    setSizeGuide(true);
+  };
+  const handleClose = () => {
+    setSizeGuide(false);
+  };
+
   ///////////////////////////////////////////////////////////////////////////////////
   /* Render item details based on the existence of selectedItem or filteredItem */
   return (
@@ -100,12 +111,30 @@ export const ItemDetailMobile = ({ selectedItem }) => {
               />
             </FilterWrapper>
             <ReferenceWrapper>
-              <img
-                style={{ width: "35px" }}
-                src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png"
-              />
-              <SizeReference>Reference Size Model</SizeReference>
+              <SizeImg src="https://res.cloudinary.com/derdim3m6/image/upload/v1724792275/web%20access/samples%20for%20e-commerce/Icons/2024-08-27_11h12_55-removebg-preview_s27dco.png" />
+              <SizeReference onClick={handleOpen}>
+                Reference Size Model
+              </SizeReference>
             </ReferenceWrapper>
+
+            {/* Modal for SizeGuide */}
+            {/* Modal for SizeGuide */}
+            <Modal open={sizeGuide} onClose={handleClose}>
+              <Box
+                sx={{
+                  maxWidth: 800,
+                  margin: "0 auto",
+                  padding: "20px",
+                  position: "relative",
+                  top: "50px",
+                  backgroundColor: "white",
+                  overflow: "auto",
+                }}
+              >
+                <SizeGuide onClose={handleClose} />
+                <CloseIconBtn onClick={handleClose} />
+              </Box>
+            </Modal>
             <StockPriceWrapper>
               {hasDiscount && selectedItem.discount !== null ? (
                 <ItemPriceWrapper>
@@ -347,4 +376,26 @@ const SizeReference = styled.p`
   text-transform: uppercase;
   text-align: center;
   font-size: 0.8rem;
+`;
+const SizeImg = styled.img`
+  width: 32px;
+`;
+const CloseIconBtn = styled(CloseIcon)`
+  cursor: pointer;
+  width: 1.3em !important;
+  height: 1.3em !important;
+  top: 7px;
+  left: 95%;
+  position: absolute;
+  z-index: 2;
+  border: 1px solid grey;
+  box-shadow: rgba(0, 0, 0, 2) 0px 0px 3px;
+  background-color: white;
+  @media (max-width: 750px) {
+    width: 1.1em !important;
+    height: 1.1em !important;
+  }
+  @media (max-width: 700px) {
+    left: 90%;
+  }
 `;
