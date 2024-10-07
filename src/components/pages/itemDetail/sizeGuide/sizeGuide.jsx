@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,8 +10,10 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
 export const SizeGuide = () => {
+  const { windowWidth } = useContext(GlobalToolsContext);
   const [isCM, setIsCM] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
@@ -26,8 +28,8 @@ export const SizeGuide = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          padding: "17px",
+          justifyContent: "flex-start",
+          padding: "17px 0",
           alignItems: "center",
         }}
       >
@@ -35,7 +37,7 @@ export const SizeGuide = () => {
         <Typography
           variant="h4"
           gutterBottom
-          sx={{ fontSize: "1.2rem", margin: "0" }}
+          sx={{ fontSize: "1.2rem", marginRight: "50px", minWidth: "150px" }}
         >
           Upper Clothing Sizes
         </Typography>
@@ -217,7 +219,7 @@ export const SizeGuide = () => {
       <Typography
         variant="h4"
         gutterBottom
-        sx={{ fontSize: "1.2rem", marginTop: "30px", padding: "17px" }}
+        sx={{ fontSize: "1.2rem", marginTop: "30px", padding: "17px 0" }}
       >
         Bottom Clothing Sizes
       </Typography>
