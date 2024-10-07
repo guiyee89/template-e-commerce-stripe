@@ -52,7 +52,8 @@ export const HeroSmall = () => {
 const Wrapper = styled.div`
   margin: 2px auto 50px;
   height: 93px;
-  background-color: rgba(231, 230, 230, 0.35);
+  /* background-color: rgba(231, 230, 230, 0.35); */
+  background-color: rgba(231, 230, 230, 0.05);
 `;
 const WrapperCarousel = styled.div`
   margin: 0 auto;
@@ -72,22 +73,22 @@ const WrapperCarousel = styled.div`
     width: 100%;
   }
   .carousel-control-prev {
-    left: -60px;
-    opacity: 1;
+    left: -30px;
+    opacity: 0.5;
     width: 25px;
     .carousel-control-prev-icon {
-      width: 14px;
-      height: 17px;
+      width: 13px;
+      height: 15px;
       background-image: url(https://res.cloudinary.com/derdim3m6/image/upload/v1691421029/web%20access/samples%20for%20e-commerce/2023-08-07_12h08_34_tzeavn.png);
     }
   }
   .carousel-control-next {
-    right: -60px;
-    opacity: 1;
+    right: -30px;
+    opacity: 0.5;
     width: 25px;
     .carousel-control-next-icon {
-      width: 15px;
-      height: 17px;
+      width: 13px;
+      height: 15px;
       background-image: url(https://res.cloudinary.com/derdim3m6/image/upload/v1691421027/web%20access/samples%20for%20e-commerce/2023-08-07_12h08_16_jmaxho.png);
     }
   }
@@ -106,7 +107,7 @@ const Banner = styled.div`
 
 const BannerText = styled.p`
   text-transform: uppercase;
-  font-size: clamp(0.75rem, 2vw + 1px, 0.8rem);
+  font-size: clamp(0.75rem, 1px + 0.78vw, 0.8rem);
   font-weight: 500;
   letter-spacing: 3px;
   word-spacing: 5px;
@@ -119,6 +120,6 @@ const BannerText = styled.p`
 
 const Span = styled.span`
   color: red;
-  font-size: clamp(1.2rem, 2vw + 1px, 1.4rem);
+  font-size: clamp(1.2rem, 2vw + 1px, 1.2rem);
   font-weight: bold;
 `;

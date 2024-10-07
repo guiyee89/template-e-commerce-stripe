@@ -423,8 +423,10 @@ const ItemTitle = styled.h2`
 const QuantityWrapper = styled.div`
   display: flex;
   margin: 4px 0px 10px 0px;
-  /* border: 1px solid rgb(194, 191, 191); */
   border-radius: 5%;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
   width: 100px;
   -webkit-box-align: center;
   align-items: center;
@@ -447,10 +449,11 @@ const BtnQuantity = styled.button`
   font-size: 18px;
   font-weight: 500;
   background-color: #fff;
-  border: 1px solid #ccc;
-  width: 28px;
+  border: none;
+  border-right: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  width: 30px;
   height: 27px;
-  margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   -webkit-transition: background-color 0.3s ease-in-out;

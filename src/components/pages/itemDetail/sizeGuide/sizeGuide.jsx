@@ -1,138 +1,401 @@
-import {
-  Box,
-  Tab,
-  Tabs,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
+import { styled } from "@mui/material/styles";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
 export const SizeGuide = () => {
+  const [isCM, setIsCM] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
+  // Toggle between CM and Pulgadas
+  const handleToggle = () => {
+    setIsCM((prevIsCM) => !prevIsCM);
+    setTabValue((prevIsCM) => (!prevIsCM ? 1 : 0));
   };
 
   return (
-    <>
-      <Typography variant="h4" gutterBottom sx={{fontSize:"2rem"}}>
-        Upper Clothing Sizes
-      </Typography>
-
-      <Tabs
-        value={tabValue}
-        onChange={handleTabChange}
-        aria-label="size guide tabs"
+    <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "17px",
+          alignItems: "center",
+        }}
       >
-        <Tab label="Pulgadas" />
-        <Tab label="CM" />
-      </Tabs>
+        {/* Title */}
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ fontSize: "1.2rem", margin: "0" }}
+        >
+          Upper Clothing Sizes
+        </Typography>
+
+        {/* Switch for Units */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
+          {/* Toggle to 'in' (Inches) */}
+          <Typography
+            style={{
+              fontWeight: "bold",
+              color: isCM ? "gray" : "black",
+              marginRight: "8px",
+              position: "absolute",
+              left: "16px",
+              top: "14px",
+              zIndex: "1",
+              transition: "all 0.3s ease",
+              pointerEvents: "none",
+            }}
+            onClick={handleToggle}
+          >
+            in
+          </Typography>
+
+          {/* Switch Component */}
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <MaterialUISwitch
+                  checked={isCM}
+                  onChange={handleToggle}
+                  sx={{ margin: 0 }}
+                />
+              }
+              label=""
+            />
+          </FormGroup>
+
+          {/* Toggle to 'cm' (Centimeters) */}
+          <Typography
+            style={{
+              fontWeight: "bold",
+              color: isCM ? "black" : "gray",
+              marginLeft: "8px",
+              position: "absolute",
+              right: "38px",
+              top: "14px",
+              zIndex: "1",
+              transition: "all 0.3s ease",
+
+              pointerEvents: "none",
+            }}
+            onClick={handleToggle}
+          >
+            cm
+          </Typography>
+        </div>
+      </div>
 
       {tabValue === 0 && (
-        // Table for inches (Pulgadas)
         <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
               <TableRow>
-                <TableCell></TableCell>
-                <TableCell>XS</TableCell>
-                <TableCell>S</TableCell>
-                <TableCell>M</TableCell>
-                <TableCell>L</TableCell>
-                <TableCell>XL</TableCell>
-                <TableCell>2XL</TableCell>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>XS</TableCellTitle>
+                <TableCellTitle>S</TableCellTitle>
+                <TableCellTitle>M</TableCellTitle>
+                <TableCellTitle>L</TableCellTitle>
+                <TableCellTitle>XL</TableCellTitle>
+                <TableCellTitle>2XL</TableCellTitle>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>Chest</TableCell>
-                <TableCell>32 1/2 - 34"</TableCell>
-                <TableCell>34 1/2 - 36"</TableCell>
-                <TableCell>36 1/2 - 39"</TableCell>
-                <TableCell>39 1/2 - 42"</TableCell>
-                <TableCell>43 - 46 1/2"</TableCell>
-                <TableCell>47 - 51"</TableCell>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", width: "120px" }}
+                >
+                  Chest (in)
+                </TableCellTitle>
+                <StyledTableCell>31.5 - 35</StyledTableCell>
+                <StyledTableCell>35 - 37.5</StyledTableCell>
+                <StyledTableCell>37.5 - 41</StyledTableCell>
+                <StyledTableCell>41 - 44</StyledTableCell>
+                <StyledTableCell>44 - 48.5</StyledTableCell>
+                <StyledTableCell>48.5 - 53.5</StyledTableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Waist</TableCell>
-                <TableCell>27 1/2 - 29"</TableCell>
-                <TableCell>29 1/2 - 31 1/2"</TableCell>
-                <TableCell>32 - 34 1/2"</TableCell>
-                <TableCell>35 - 38"</TableCell>
-                <TableCell>38 1/2 - 42"</TableCell>
-                <TableCell>42 1/2 - 47"</TableCell>
+                <TableCellTitle sx={{ backgroundColor: "#f1eeee" }}>
+                  Waist (in)
+                </TableCellTitle>
+                <StyledTableCell>25.5 - 29</StyledTableCell>
+                <StyledTableCell>29 - 32</StyledTableCell>
+                <StyledTableCell>32 - 35</StyledTableCell>
+                <StyledTableCell>35 - 38</StyledTableCell>
+                <StyledTableCell>38 - 43</StyledTableCell>
+                <StyledTableCell>43 - 47.5</StyledTableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Hips</TableCell>
-                <TableCell>32 - 33 1/2"</TableCell>
-                <TableCell>34 - 36"</TableCell>
-                <TableCell>36 1/2 - 39"</TableCell>
-                <TableCell>39 1/2 - 42 1/2"</TableCell>
-                <TableCell>42 1/2 - 45 1/2"</TableCell>
-                <TableCell>46 - 49"</TableCell>
+                <TableCellTitle sx={{ backgroundColor: "#f1eeee" }}>
+                  Hips (in)
+                </TableCellTitle>
+                <StyledTableCell>31.5 - 35</StyledTableCell>
+                <StyledTableCell>35 - 37.5</StyledTableCell>
+                <StyledTableCell>37.5 - 41</StyledTableCell>
+                <StyledTableCell>41 - 44</StyledTableCell>
+                <StyledTableCell>44 - 47</StyledTableCell>
+                <StyledTableCell>47 - 50.5"</StyledTableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       )}
-
       {tabValue === 1 && (
         // Table for centimeters (CM)
         <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
               <TableRow>
-                <TableCell></TableCell>
-                <TableCell>XS</TableCell>
-                <TableCell>S</TableCell>
-                <TableCell>M</TableCell>
-                <TableCell>L</TableCell>
-                <TableCell>XL</TableCell>
-                <TableCell>2XL</TableCell>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>XS</TableCellTitle>
+                <TableCellTitle>S</TableCellTitle>
+                <TableCellTitle>M</TableCellTitle>
+                <TableCellTitle>L</TableCellTitle>
+                <TableCellTitle>XL</TableCellTitle>
+                <TableCellTitle>2XL</TableCellTitle>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>Chest</TableCell>
-                <TableCell>87 - 92cm</TableCell>
-                <TableCell>93 - 100cm</TableCell>
-                <TableCell>101 - 108cm</TableCell>
-                <TableCell>109 - 118cm</TableCell>
-                <TableCell>119 - 130cm</TableCell>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", width: "120px" }}
+                >
+                  Chest (cm)
+                </TableCellTitle>
+                <StyledTableCell>87 - 92</StyledTableCell>
+                <StyledTableCell>93 - 100</StyledTableCell>
+                <StyledTableCell>101 - 108</StyledTableCell>
+                <StyledTableCell>109 - 118</StyledTableCell>
+                <StyledTableCell>119 - 130</StyledTableCell>
+                <StyledTableCell>119 - 130</StyledTableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Waist</TableCell>
-                <TableCell>75 - 80cm</TableCell>
-                <TableCell>81 - 88cm</TableCell>
-                <TableCell>89 - 96cm</TableCell>
-                <TableCell>97 - 106cm</TableCell>
-                <TableCell>107 - 120cm</TableCell>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Waist (cm)
+                </TableCellTitle>
+                <StyledTableCell>75 - 80</StyledTableCell>
+                <StyledTableCell>81 - 88</StyledTableCell>
+                <StyledTableCell>89 - 96</StyledTableCell>
+                <StyledTableCell>97 - 106</StyledTableCell>
+                <StyledTableCell>107 - 120</StyledTableCell>
+                <StyledTableCell>107 - 120</StyledTableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Hips</TableCell>
-                <TableCell>89 - 96cm</TableCell>
-                <TableCell>97 - 104cm</TableCell>
-                <TableCell>105 - 112cm</TableCell>
-                <TableCell>113 - 121cm</TableCell>
-                <TableCell>122 - 130cm</TableCell>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Hips (cm)
+                </TableCellTitle>
+                <StyledTableCell>89 - 96</StyledTableCell>
+                <StyledTableCell>97 - 104</StyledTableCell>
+                <StyledTableCell>105 - 112</StyledTableCell>
+                <StyledTableCell>113 - 121</StyledTableCell>
+                <StyledTableCell>122 - 130</StyledTableCell>
+                <StyledTableCell>122 - 130</StyledTableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       )}
-
-      <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-        Talle Largo
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ fontSize: "1.2rem", marginTop: "30px", padding: "17px" }}
+      >
+        Bottom Clothing Sizes
       </Typography>
-      <Typography>
-        Los talles largos están diseñados para hombres de más de 189 cm (6'2").
-      </Typography>
-    </>
+      {tabValue === 0 && (
+        // Table for inches (Pulgadas)
+        <TableContainer>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
+              <TableRow>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>XS</TableCellTitle>
+                <TableCellTitle>S</TableCellTitle>
+                <TableCellTitle>M</TableCellTitle>
+                <TableCellTitle>L</TableCellTitle>
+                <TableCellTitle>XL</TableCellTitle>
+                <TableCellTitle>2XL</TableCellTitle>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCellTitle
+                  sx={{
+                    backgroundColor: "#f1eeee",
+                    fontWeight: "600",
+                    width: "120px",
+                  }}
+                >
+                  Chest (in)
+                </TableCellTitle>
+                <StyledTableCell>25.5 - 29</StyledTableCell>
+                <StyledTableCell>29 - 32</StyledTableCell>
+                <StyledTableCell>32 - 35</StyledTableCell>
+                <StyledTableCell>35 - 38</StyledTableCell>
+                <StyledTableCell>38 - 43</StyledTableCell>
+                <StyledTableCell>43 - 47.5</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Waist (in)
+                </TableCellTitle>
+                <StyledTableCell>31.5 - 35</StyledTableCell>
+                <StyledTableCell>35 - 37.5</StyledTableCell>
+                <StyledTableCell>37.5 - 41</StyledTableCell>
+                <StyledTableCell>41 - 44</StyledTableCell>
+                <StyledTableCell>44 - 47</StyledTableCell>
+                <StyledTableCell>47 - 50.5</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Hips (in)
+                </TableCellTitle>
+                <StyledTableCell>31.5 - 35</StyledTableCell>
+                <StyledTableCell>35 - 37.5</StyledTableCell>
+                <StyledTableCell>37.5 - 41</StyledTableCell>
+                <StyledTableCell>41 - 44</StyledTableCell>
+                <StyledTableCell>44 - 47</StyledTableCell>
+                <StyledTableCell>47 - 50.5</StyledTableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      {tabValue === 1 && (
+        // Table for centimeters (CM)
+        <TableContainer>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
+              <TableRow>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>XS</TableCellTitle>
+                <TableCellTitle>S</TableCellTitle>
+                <TableCellTitle>M</TableCellTitle>
+                <TableCellTitle>L</TableCellTitle>
+                <TableCellTitle>XL</TableCellTitle>
+                <TableCellTitle>2XL</TableCellTitle>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", width: "120px" }}
+                >
+                  Chest (cm)
+                </TableCellTitle>
+                <StyledTableCell>87 - 92</StyledTableCell>
+                <StyledTableCell>93 - 100</StyledTableCell>
+                <StyledTableCell>101 - 108</StyledTableCell>
+                <StyledTableCell>109 - 118</StyledTableCell>
+                <StyledTableCell>119 - 130</StyledTableCell>
+                <StyledTableCell>119 - 130</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Waist (cm)
+                </TableCellTitle>
+                <StyledTableCell>75 - 80</StyledTableCell>
+                <StyledTableCell>81 - 88</StyledTableCell>
+                <StyledTableCell>89 - 96</StyledTableCell>
+                <StyledTableCell>97 - 106</StyledTableCell>
+                <StyledTableCell>107 - 120</StyledTableCell>
+                <StyledTableCell>107 - 120</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600" }}
+                >
+                  Hips (cm)
+                </TableCellTitle>
+                <StyledTableCell>89 - 96</StyledTableCell>
+                <StyledTableCell>97 - 104</StyledTableCell>
+                <StyledTableCell>105 - 112</StyledTableCell>
+                <StyledTableCell>113 - 121</StyledTableCell>
+                <StyledTableCell>122 - 130</StyledTableCell>
+                <StyledTableCell>122 - 130</StyledTableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </div>
   );
 };
+const TableCellTitle = styled(TableCell)`
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+`;
+const StyledTableCell = styled(TableCell)`
+  font-size: 0.71rem;
+  text-align: center;
+`;
+
+// Customized Material UI Switch
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 118,
+  height: 52,
+  padding: 8,
+
+  "&:hover .MuiSwitch-thumb": {
+    boxShadow: "-1px 1px 8px rgba(0, 0, 0, 0.5)",
+  },
+
+  "& .MuiSwitch-switchBase": {
+    transform: "translateX(-1px)",
+
+    "&.Mui-checked": {
+      color: "#fff",
+      transform: "translateX(48px)",
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: "#f1f1f1",
+      },
+    },
+    "&.MuiSwitch-switchBase:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    backgroundColor: "#ffffff",
+    width: 53,
+    height: 36,
+    borderRadius: "45%",
+    position: "absolute",
+    left: 8,
+    top: 8,
+    boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+    border: "1px solid darkgrey",
+    transition: "box-shadow 0.2s ease-in-out",
+  },
+  "& .MuiSwitch-track": {
+    opacity: 1,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 30,
+  },
+}));
