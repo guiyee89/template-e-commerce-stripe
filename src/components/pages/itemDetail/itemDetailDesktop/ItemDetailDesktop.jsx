@@ -122,8 +122,8 @@ export const ItemDetailDesktop = ({
                   maxWidth: 800,
                   margin: "0 auto",
                   padding: "20px",
+                  height:"100%",
                   position: "relative",
-                  top: "50px",
                   backgroundColor: "white",
                   overflow: "auto",
                 }}

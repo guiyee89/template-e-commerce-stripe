@@ -41,110 +41,9 @@ export const ProductsFormContainer = ({
       setSizeValue(selectedItem.size || "");
       setSelectedColors(selectedItem.color || []);
     }
-    console.log(selectedColors);
   }, [selectedItem]);
 
   ////////////          SUBMIT          //////////////
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-
-  //     const itemsCollection = collection(db, "products");
-
-  //     if (selectedItem) {
-  //       const price = parseFloat(selectedItem.unit_price);
-  //       const discount = parseFloat(selectedItem.discount);
-  //       const discountAmount = (price * discount) / 100;
-  //       let totalPrice = price;
-  //       totalPrice -= discountAmount;
-
-  //       let updatedItem = {
-  //         ...selectedItem,
-  //         productId: parseInt(selectedItem.productId),
-  //         unit_price: parseFloat(selectedItem.unit_price),
-  //         discountPrice: totalPrice || null,
-  //         stock: parseInt(selectedItem.stock),
-  //         color: selectedItem.color /* .toLowerCase() */,
-  //         size:
-  //           typeof selectedItem.size === "number"
-  //             ? parseFloat(selectedItem.size)
-  //             : selectedItem.size.toLowerCase(),
-  //         discount: discount || null,
-  //         category: selectedItem.category.toLowerCase(),
-  //       };
-
-  //       await updateDoc(doc(itemsCollection, selectedItem.id), updatedItem).then(
-  //         () => {
-  //           setIsChanged();
-  //           handleClose();
-  //         }
-  //       );
-  //     } else {
-  //       const price = parseFloat(newProduct.unit_price);
-  //       const discount = parseFloat(newProduct.discount);
-  //       let totalPrice = price;
-  //       let newItem;
-
-  //       //Agregamos propiedad "discount" (si lo hay) al objecto newItem
-  //       if (discount) {
-  //         const discountAmount = (price * discount) / 100;
-  //         totalPrice -= discountAmount;
-  //       }
-
-  //       const length = 5;
-  //       const nullArray = Array.from({ length }).map(() => null);
-  //       newProduct.img.forEach((img, index) => {
-  //         nullArray[index] = img;
-  //       });
-
-  //       if (discount) {
-  //         newItem = {
-  //           ...newProduct,
-  //           productId: newProduct.productId ? parseInt(newProduct.productId) : 0,
-  //           createdAt: new Date().toISOString(),
-  //           unit_price: newProduct.unit_price
-  //             ? parseFloat(newProduct.unit_price)
-  //             : 0,
-  //           discountPrice: totalPrice,
-  //           stock: newProduct.stock ? parseInt(newProduct.stock) : 0,
-  //           color: newProduct.color /* .toLowerCase() */ || "",
-  //           size:
-  //             typeof newProduct.size === "number"
-  //               ? parseFloat(newProduct.size)
-  //               : newProduct.size.toLowerCase() || "",
-  //           title: newProduct.title || "",
-  //           subtitle: newProduct.subtitle || "",
-  //           description: newProduct.description || "",
-  //           category: newProduct.category.toLowerCase() || "",
-  //           img: nullArray,
-  //           secondUnit: newProduct.secondUnit || "",
-  //         };
-  //       } else {
-  //         newItem = {
-  //           ...newProduct,
-  //           productId: newProduct.productId ? parseInt(newProduct.productId) : 0,
-  //           createdAt: new Date().toISOString(),
-  //           unit_price: totalPrice,
-  //           stock: newProduct.stock ? parseInt(newProduct.stock) : 0,
-  //           color: newProduct.color /* .toLowerCase() */ || "",
-  //           size:
-  //             typeof newProduct.size === "number"
-  //               ? parseFloat(newProduct.size)
-  //               : newProduct.size.toLowerCase() || "",
-  //           title: newProduct.title || "",
-  //           subtitle: newProduct.subtitle || "",
-  //           description: newProduct.description || "",
-  //           category: newProduct.category.toLowerCase() || "",
-  //           img: nullArray,
-  //           secondUnit: newProduct.secondUnit || "",
-  //         };
-  //       }
-
-  //       // create the newItem object and add it to Firestore
-  //       await addDoc(itemsCollection, newItem);
-  //       setAddProduct(true);
-  //     }
-  //     setIsChanged();
-  //   };
   const calculateDiscountPrice = (price, discount) => {
     const discountAmount = (price * discount) / 100;
     return price - discountAmount;
@@ -238,26 +137,49 @@ export const ProductsFormContainer = ({
   /*************                   HANDLE CHANGE                    ************/
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === "category") {
       setCategoryValue(value);
     }
     if (name === "size") {
-      setSizeValue(value);
+      setSizeValue(value); // keep the selected size intact
     }
-
+  
     if (selectedItem) {
       setSelectedItem((prevSelectedItem) => ({
         ...prevSelectedItem,
-        [name]: isNaN(value) ? value : parseInt(value, 10),
+        [name]: name === "size" ? parseFloat(value) : value, // use parseFloat for size
       }));
     } else {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
-        [name]: isNaN(value) ? value : parseInt(value, 10),
+        [name]: name === "size" ? parseFloat(value) : value, // use parseFloat for size
       }));
     }
   };
+  
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   if (name === "category") {
+  //     setCategoryValue(value);
+  //   }
+  //   if (name === "size") {
+  //     setSizeValue(value);
+  //   }
+  //   console.log(sizeValue);
+  //   if (selectedItem) {
+  //     setSelectedItem((prevSelectedItem) => ({
+  //       ...prevSelectedItem,
+  //       [name]: isNaN(value) ? value : parseInt(value, 10),
+  //     }));
+  //   } else {
+  //     setNewProduct((prevProduct) => ({
+  //       ...prevProduct,
+  //       [name]: isNaN(value) ? value : parseInt(value, 10),
+  //     }));
+  //   }
+  // };
 
   return (
     <>

@@ -25,11 +25,21 @@ export const SizeGuide = () => {
 
   return (
     <div>
+      <p
+        style={{
+          padding: "35px 50px 10px 12px",
+          fontWeight: "500",
+          fontSize: "clamp(0.5rem, .85rem + 0.1vw, 1.5rem)",
+        }}
+      >
+        The measurements in the size chart are body measurements. Use the chart
+        below to find the correct size. Scroll horizontally to see more sizes.
+      </p>
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-start",
-          padding: "17px 0",
+          justifyContent: "space-between",
+          padding: "17px 50px 17px 17px",
           alignItems: "center",
         }}
       >
@@ -39,7 +49,7 @@ export const SizeGuide = () => {
           gutterBottom
           sx={{ fontSize: "1.2rem", marginRight: "50px", minWidth: "150px" }}
         >
-          Upper Clothing Sizes
+          Tops Sizes
         </Typography>
 
         {/* Switch for Units */}
@@ -219,9 +229,13 @@ export const SizeGuide = () => {
       <Typography
         variant="h4"
         gutterBottom
-        sx={{ fontSize: "1.2rem", marginTop: "30px", padding: "17px 0" }}
+        sx={{
+          fontSize: "1.2rem",
+          marginTop: "30px",
+          padding: "17px 50px 17px 17px",
+        }}
       >
-        Bottom Clothing Sizes
+        Bottoms Sizes
       </Typography>
       {tabValue === 0 && (
         // Table for inches (Pulgadas)
@@ -340,6 +354,95 @@ export const SizeGuide = () => {
                 <StyledTableCell>113 - 121</StyledTableCell>
                 <StyledTableCell>122 - 130</StyledTableCell>
                 <StyledTableCell>122 - 130</StyledTableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontSize: "1.2rem",
+          marginTop: "30px",
+          padding: "17px 50px 17px 17px",
+        }}
+      >
+        Shoes Sizes
+      </Typography>
+      {tabValue === 0 && (
+        // Table for inches (Pulgadas)
+        <TableContainer>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
+              <TableRow>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>3.5</TableCellTitle>
+                <TableCellTitle>4</TableCellTitle>
+                <TableCellTitle>4.5</TableCellTitle>
+                <TableCellTitle>5</TableCellTitle>
+                <TableCellTitle>5.5</TableCellTitle>
+                <TableCellTitle>6</TableCellTitle>
+                <TableCellTitle>6.5</TableCellTitle>
+                <TableCellTitle>7</TableCellTitle>
+                <TableCellTitle>7.5</TableCellTitle>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600", width: "120px" }}
+                >
+                  Foot Length (in)
+                </TableCellTitle>
+                <StyledTableCell>8 1/2</StyledTableCell>
+                <StyledTableCell>8 11/16</StyledTableCell>
+                <StyledTableCell>8 13/16</StyledTableCell>
+                <StyledTableCell>9</StyledTableCell>
+                <StyledTableCell>9 3/16</StyledTableCell>
+                <StyledTableCell>9 5/16</StyledTableCell>
+                <StyledTableCell>9 1/2</StyledTableCell>
+                <StyledTableCell>9 11/16</StyledTableCell>
+                <StyledTableCell>9 13/16</StyledTableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      {tabValue === 1 && (
+        // Table for centimeters (CM)
+        <TableContainer>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#f1eeee" }}>
+              <TableRow>
+                <TableCellTitle>Size</TableCellTitle>
+                <TableCellTitle>3.5</TableCellTitle>
+                <TableCellTitle>4</TableCellTitle>
+                <TableCellTitle>4.5</TableCellTitle>
+                <TableCellTitle>5</TableCellTitle>
+                <TableCellTitle>5.5</TableCellTitle>
+                <TableCellTitle>6</TableCellTitle>
+                <TableCellTitle>6.5</TableCellTitle>
+                <TableCellTitle>7</TableCellTitle>
+                <TableCellTitle>7.5</TableCellTitle>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCellTitle
+                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600", width: "120px" }}
+                >
+                  Foot Length (cm)
+                </TableCellTitle>
+                <StyledTableCell>21.6</StyledTableCell>
+                <StyledTableCell>22</StyledTableCell>
+                <StyledTableCell>22.4</StyledTableCell>
+                <StyledTableCell>22.9</StyledTableCell>
+                <StyledTableCell>23.3</StyledTableCell>
+                <StyledTableCell>23.7</StyledTableCell>
+                <StyledTableCell>24.1</StyledTableCell>
+                <StyledTableCell>24.5</StyledTableCell>
+                <StyledTableCell>25</StyledTableCell>
               </TableRow>
             </TableBody>
           </Table>
