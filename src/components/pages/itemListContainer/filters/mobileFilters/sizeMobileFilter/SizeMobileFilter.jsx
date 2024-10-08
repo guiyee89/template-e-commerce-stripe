@@ -131,14 +131,14 @@ export const SizeMobileFilter = ({
               .sort((a, b) => {
                 const sizeOrder = {
                   xs: 1,
-                  s: 2,
-                  m: 3,
-                  l: 4,
-                  xl: 5,
-                  xxl: 6,
+                  s: 1.1,
+                  m: 1.2,
+                  l: 1.3,
+                  xl: 1.4,
+                  xxl: 1.5,
                 };
-                const aOrder = sizeOrder[a] || parseInt(a, 16) || 9999;
-                const bOrder = sizeOrder[b] || parseInt(b, 16) || 9999;
+                const aOrder = sizeOrder[a] || parseFloat(a, 16) || 9999;
+                const bOrder = sizeOrder[b] || parseFloat(b, 16) || 9999;
                 return aOrder - bOrder;
               })
               .filter((size) => !selectedSizeOrder.includes(size)) // Filter out selected sizes

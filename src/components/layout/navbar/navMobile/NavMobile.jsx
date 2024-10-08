@@ -239,8 +239,20 @@ const LogoDiv = styled.div`
   @media (min-width: 900px) {
     width: 50px;
   }
+  @media (max-width: 800px) {
+    right: ${(props) => (props.isDashboard ? "auto" : "47%")};
+  }
+  @media (max-width: 700px) {
+    right: ${(props) => (props.isDashboard ? "auto" : "46.2%")};
+  }
   @media (max-width: 600px) {
-    right: ${(props) => (props.isDashboard ? "auto" : "43.4%;")};
+    right: ${(props) => (props.isDashboard ? "auto" : "45.7%;")};
+  }
+  @media (max-width: 500px) {
+    right: ${(props) => (props.isDashboard ? "auto" : "45%;")};
+  }
+  @media (max-width: 450px) {
+    right: ${(props) => (props.isDashboard ? "auto" : "44.3%;")};
   }
 `;
 const LogoLink = styled(Link)`

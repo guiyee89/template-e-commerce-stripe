@@ -94,7 +94,7 @@ export const FilterDetail = ({
 
   const renderSizes = () => {
     const customStringSizes = ["xs", "s", "m", "l", "xl", "xxl"];
-    const customNumberSizes = [39, 40, 41, 42, 43, 44, 45];
+    const customNumberSizes = [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5 , 8, 8.5];
 
     if (typeof selectedItem.size === "string") {
       return customStringSizes;
@@ -352,7 +352,7 @@ const SizeCheckboxLabel = styled.label`
   font-weight: bold;
   transition: color 0.1s;
   color: black;
-  color: ${(props) => !props.isSizeAvailable && "lightgray"};
+  color: ${(props) => !props.isSizeAvailable && "darkgrey"};
   font-size: ${(props) => props.isSizeAvailable && "0.87rem"};
   ${SizeCheckbox}:checked + & {
     color: white;
