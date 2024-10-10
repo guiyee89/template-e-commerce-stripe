@@ -29,8 +29,14 @@ export const Layout = () => {
   const globalLoading = useGlobalLoader(); //Flash loading effect
 
   ////////////////////////////////////////////////////
-  const { isHome, isDashboard, isCheckout, isContactUs, isCompletion, isUserOrder } =
-    useGlobalLocation();
+  const {
+    isHome,
+    isDashboard,
+    isCheckout,
+    isContactUs,
+    isCompletion,
+    isUserOrder,
+  } = useGlobalLocation();
 
   ////////////////////////////////////////////////////
   // Prevent scrolling when the SideCart is open

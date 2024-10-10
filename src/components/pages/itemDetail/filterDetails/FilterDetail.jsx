@@ -349,13 +349,14 @@ const SizeCheckboxLabel = styled.label`
   font-size: 0.8rem;
   transform: translate(-50%, -50%);
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 500;
   transition: color 0.1s;
   color: black;
   color: ${(props) => !props.isSizeAvailable && "darkgrey"};
-  font-size: ${(props) => props.isSizeAvailable && "0.87rem"};
+  font-size: ${(props) => props.isSizeAvailable && "0.85rem"};
   ${SizeCheckbox}:checked + & {
     color: white;
     font-size: 0.87rem;
+    font-weight: bold;
   }
 `;
