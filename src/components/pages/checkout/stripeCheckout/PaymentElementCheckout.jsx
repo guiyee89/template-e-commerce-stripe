@@ -34,30 +34,30 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsProcessing(true);
 
     if (!stripe || !elements) {
       return;
     }
 
-    setIsProcessing(true);
+    setTimeout(async () => {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/completion`,
+        },
+      });
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/completion`,
-      },
-    });
-
-    if (error) {
-      setMessage(error.message);
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      setMessage("Payment status:" + paymentIntent.status + ":D");
-    } else {
-      setMessage("Unexpected state");
-    }
-
-    setIsProcessing(false);
-    setMessage(null);
+      if (error) {
+        setMessage(error.message);
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        setMessage("Payment status:" + paymentIntent.status + ":D");
+      } else {
+        setMessage("Unexpected state");
+      }
+      setIsProcessing(false);
+      setMessage(null);
+    }, 1500);
   };
 
   if (isCheckoutLoading) {
@@ -429,7 +429,7 @@ const LoaderOverlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 141%;
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
   display: flex;
   justify-content: ${(props) =>

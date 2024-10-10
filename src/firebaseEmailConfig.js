@@ -34,7 +34,7 @@ export const sendSubscribeEmail = async (email, subject, body) => {
 export const sendContactEmail = async (name, email, phone, message) => {
   const collectionRef = collection(db, "email");
   const emailContent = {
-    to: "guillermodinanno@gmail.com",
+    to: "service.webaccess@gmail.com",
     message: {
       subject: "Customer Message",
       text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`,
@@ -66,8 +66,19 @@ export const sendPurchaseOrderEmail = async (email, subject, body) => {
   return await addDoc(collectionRef, emailContent, createdAt);
 };
 
-
-
 // Order Automatic Email to Store Owner
-
+export const sendOwnerOrderEmail = async (email, subject, body) => {
+  const createdAt = new Date().toISOString()
+  const collectionRef = collection(db, "email");
+  const emailContent = {
+    to: "service.webaccess@gmail.com",
+    message: {
+      subject: subject,
+      text: body,
+      html: `<p>${body}</p>`
+    }
+  };
+  console.log("Listo para ser enviado");
+  return await addDoc(collectionRef, emailContent, createdAt);
+};
 // Send Html Email Template

@@ -115,6 +115,7 @@ const OutletWrapper = styled.div`
   min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "85vh;")};
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin: ${({ isCheckout }) => (isCheckout ? "0" : "0 20px")};
   @media (max-width: 1150px) {
