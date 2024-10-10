@@ -8,11 +8,11 @@ const useScrollRestoration = () => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
 
-  useEffect(() => {
-    return () => {
-      localStorage.setItem("scrollPosition", window.scrollY.toString());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     localStorage.setItem("scrollPosition", window.scrollY.toString());
+  //   };
+  // }, []);
 };
 
 export default useScrollRestoration;
