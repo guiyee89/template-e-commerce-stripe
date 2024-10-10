@@ -103,8 +103,8 @@ export const uploadFile = async (file, retries = 3) => {
 // export const deleteFile = async (file) => {
 //   const storageRef = ref(storage, v4())
 //   await deleteFile(storageRef, file)
-//   // let url = await getDownloadURL(storageRef)
-//   // return url
+//   let url = await getDownloadURL(storageRef)
+//   return url
 // };
 
 const getAllImageUrlsFromFirestore = async () => {

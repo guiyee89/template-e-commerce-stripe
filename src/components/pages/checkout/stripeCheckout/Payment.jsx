@@ -1,11 +1,7 @@
-import styled from "styled-components/macro";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  PaymentMethodMessagingElement,
-} from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { useContext } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,8 +24,10 @@ export const Payment = ({ shipmentCost }) => {
           //"http://localhost:3000/config"
         );
         const { publishableKey } = response.data;
-        setPublishableKey(publishableKey);
-        setStripePromise(loadStripe(publishableKey));
+        setTimeout(() => {
+          setPublishableKey(publishableKey);
+          setStripePromise(loadStripe(publishableKey));
+        }, 400);
       } catch (error) {
         console.error("Error fetching config:", error);
       }
@@ -57,7 +55,7 @@ export const Payment = ({ shipmentCost }) => {
         setTimeout(() => {
           setClientSecret(clientSecret);
           setIsFormLoading(false);
-        }, 0);
+        }, 400);
       } catch (error) {
         console.error("Error fetching payment intent:", error);
       }

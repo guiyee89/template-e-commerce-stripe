@@ -5,7 +5,6 @@ import GlobalToolsProvider from "./components/context/GlobalToolsContext";
 import AuthContextProvider from "./components/context/AuthContext";
 import { AppRouter } from "./components/routes/AppRouter";
 
-
 function App() {
   return (
     <>
