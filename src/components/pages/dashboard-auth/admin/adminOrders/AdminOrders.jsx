@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import styled from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import {
   Box,
   Modal,
   Paper,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -28,17 +29,26 @@ export const AdminOrders = () => {
   const [clientDetails, setClientDetails] = useState(null);
   const [myOrders, setMyOrders] = useState([]);
   const [orderLoading, setOrderLoading] = useState(true);
+  const [isActive, setIsActive] = useState({});
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const ordersCollection = collection(db, "orders");
         const querySnapshot = await getDocs(ordersCollection);
-        const newArray = querySnapshot.docs.map((doc) => ({
+        const ordersArray = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        setMyOrders(newArray);
+
+        // Initialize isActive state based on the shipped status of each order
+        const initialActiveState = {};
+        ordersArray.forEach((order) => {
+          initialActiveState[order.id] = order.shipped || false;
+        });
+
+        setMyOrders(ordersArray);
+        setIsActive(initialActiveState); // Set initial isActive state
         setTimeout(() => {
           setOrderLoading(false); // Set loading to false once data is fetched
         }, 700);
@@ -49,9 +59,10 @@ export const AdminOrders = () => {
         }, 700);
       }
     };
+
     fetchOrders();
   }, []);
-
+ 
   const formatDate = (seconds) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(seconds * 1000).toLocaleDateString("en-US", options);
@@ -78,6 +89,27 @@ export const AdminOrders = () => {
     setOpenDetails(false);
   };
 
+  const handleToggle = async (orderId) => {
+    try {
+      setIsActive((prevState) => ({
+        ...prevState,
+        [orderId]: !prevState[orderId],
+      }));
+      console.log(
+        `Order ${orderId} is now ${!isActive[orderId] ? "active" : "inactive"}`
+      );
+      const orderDocRef = doc(db, "orders", orderId);
+      await updateDoc(orderDocRef, {
+        shipped: true,
+      });
+      console.log(
+        `Order ${orderId} shipped status updated to: ${orderId}`
+      );
+    } catch (error) {
+      console.error("Error updating order shipped status:", error);
+    }
+  };
+
   if (orderLoading) {
     return (
       <Loader>
@@ -95,7 +127,7 @@ export const AdminOrders = () => {
               <TableRow sx={{ textTransform: "uppercase" }}>
                 <TableCellTitle
                   sx={{
-                    width: "160px",
+                    width: "150px",
                     fontSize: windowWidth < 500 && ".58rem",
                   }}
                 >
@@ -127,11 +159,19 @@ export const AdminOrders = () => {
                 </TableCellTitle>
                 <TableCellTitle
                   sx={{
-                    width: "130px",
+                    width: "110px",
                     fontSize: windowWidth < 500 && ".58rem",
                   }}
                 >
                   Buyer Details
+                </TableCellTitle>
+                <TableCellTitle
+                  sx={{
+                    width: "110px",
+                    fontSize: windowWidth < 500 && ".58rem",
+                  }}
+                >
+                  Shipping
                 </TableCellTitle>
               </TableRow>
             </TableHead>
@@ -140,7 +180,14 @@ export const AdminOrders = () => {
                 .filter((order) => order.items && order.items.length > 0) // Filter out orders with empty items
                 .sort((a, b) => b.date.seconds - a.date.seconds) // Sort by date in descending order
                 .map((order) => (
-                  <TableRow key={order.id}>
+                  <TableRow
+                    key={order.id}
+                    sx={{
+                      backgroundColor: isActive[order.id]
+                        ? "#bac7e14a"
+                        : "transparent",
+                    }}
+                  >
                     <TableCellData
                       sx={{ fontSize: windowWidth < 500 && ".68rem" }}
                     >
@@ -179,44 +226,52 @@ export const AdminOrders = () => {
                         <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
                       </span>
                     </TableCellData>
-                    <TableCellData
-                      onClick={() => handleOpenDetails(order.id)}
-                      sx={{
-                        display: "flex",
-                        flexDirection: windowWidth < 560 && "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
-                      }}
-                    >
+                    <TableCellData onClick={() => handleOpenDetails(order.id)}>
                       <div
                         style={{
                           display: "flex",
-                          flexDirection: "column",
-                          textTransform: "uppercase",
-                          fontSize: windowWidth < 500 ? ".48rem" : ".69rem",
-                          paddingRight: windowWidth > 600 && "6px",
-                          maxWidth: windowWidth < 700 && "95px",
-                          minWidth: windowWidth > 700 && "110px",
-                        }}
-                      >
-                        <span>{order?.buyer?.name}</span>
-                        <span>{order?.buyer?.lastName}</span>
-                      </div>
-
-                      <span
-                        style={{
-                          width: windowWidth < 500 ? "25%" : "35px",
-                          paddingRight: windowWidth < 500 ? "0" : "6px",
+                          flexDirection: windowWidth < 560 && "column",
+                          justifyContent: "center",
+                          alignItems: "center",
                           cursor: "pointer",
                         }}
                       >
-                        <TopicOutlinedIcon
-                          sx={{
-                            fontSize: windowWidth < 700 ? "1.1rem" : "1.5rem",
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            textTransform: "uppercase",
+                            fontSize: windowWidth < 500 ? ".48rem" : ".69rem",
+                            paddingRight: windowWidth > 600 && "6px",
+                            maxWidth: windowWidth < 700 && "95px",
+                            minWidth: windowWidth > 700 && "110px",
                           }}
-                        />
-                      </span>
+                        >
+                          <span>{order?.buyer?.name}</span>
+                          <span>{order?.buyer?.lastName}</span>
+                        </div>
+
+                        <span
+                          style={{
+                            width: windowWidth < 500 ? "25%" : "35px",
+                            paddingRight: windowWidth < 500 ? "0" : "6px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <TopicOutlinedIcon
+                            sx={{
+                              fontSize: windowWidth < 700 ? "1.1rem" : "1.5rem",
+                            }}
+                          />
+                        </span>
+                      </div>
+                    </TableCellData>
+                    <TableCellData>
+                      <MaterialUISwitch
+                        checked={isActive[order.id] || false}
+                        disabled={isActive[order.id]}
+                        onChange={() => handleToggle(order.id)}
+                      />
                     </TableCellData>
                   </TableRow>
                 ))}
@@ -319,16 +374,17 @@ const TableCellTitle = styled(TableCell)`
   padding: 16px 8px !important;
   text-align: center !important;
   border-bottom: 2px solid lightgrey !important;
-  border-left: 2px solid lightgrey;
+  border-left: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
   font-size: 0.975rem;
   font-weight: 600 !important;
 `;
 const TableCellData = styled(TableCell)`
-  padding: 19px 4px !important;
+  padding: 18px 4px !important;
   text-align: center !important;
-  border-left: 1px solid lightgrey;
-  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid #b7b4b4 !important;
+  border-left: 1px solid lightgrey !important;
+  border-right: 1px solid lightgrey !important;
 `;
 
 const style = {
@@ -341,3 +397,69 @@ const style = {
   border: "none!important",
   outline: "0",
 };
+
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: "90px!important",
+  overflow: "initial!important",
+  height: "40px!important",
+  position: "relative",
+
+  "&:hover .MuiSwitch-thumb": {
+    boxShadow: "-1px 1px 8px rgba(0, 0, 0, 0.5)",
+  },
+
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+
+    "& .MuiSwitch-input": {
+      width: "100%",
+      height: "100%",
+      top: 0,
+      left: 0,
+      opacity: 0,
+      position: "absolute",
+    },
+
+    "&.Mui-checked": {
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: "rgb(201 199 199 / 40%)",
+      },
+    },
+    "&.MuiSwitch-switchBase:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+
+  "& .MuiSwitch-thumb": {
+    backgroundColor: "#ffffff",
+    width: 34,
+    height: 32,
+    borderRadius: "50%",
+    position: "absolute",
+    left: 12,
+    top: 4,
+    boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+    border: "1px solid darkgrey",
+    transition: "box-shadow 0.2s ease-in-out, transform 0.3s ease",
+  },
+
+  "& .Mui-checked .MuiSwitch-thumb": {
+    transform: "translateX(16px)",
+    boxShadow: "none",
+    border: "1px solid darkgrey",
+    transition: "box-shadow 0.2s ease-in-out, transform 0.3s ease",
+  },
+
+  "& .MuiSwitch-track": {
+    opacity: 1,
+    backgroundColor: "rgb(201 199 199)",
+    borderRadius: 30,
+  },
+}));
