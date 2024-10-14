@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,17 +10,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 
 export const SizeGuide = () => {
-  const { windowWidth } = useContext(GlobalToolsContext);
-  const [isCM, setIsCM] = useState(false);
+  const [isToogle, setIsToggle] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
   // Toggle between CM and Pulgadas
   const handleToggle = () => {
-    setIsCM((prevIsCM) => !prevIsCM);
-    setTabValue((prevIsCM) => (!prevIsCM ? 1 : 0));
+    setIsToggle((prevIsToggle) => !prevIsToggle);
+    setTabValue((prevIsToggle) => (!prevIsToggle ? 1 : 0));
   };
 
   return (
@@ -64,7 +62,7 @@ export const SizeGuide = () => {
           <Typography
             style={{
               fontWeight: "bold",
-              color: isCM ? "gray" : "black",
+              color: isToogle ? "gray" : "black",
               marginRight: "8px",
               position: "absolute",
               left: "16px",
@@ -83,7 +81,7 @@ export const SizeGuide = () => {
             <FormControlLabel
               control={
                 <MaterialUISwitch
-                  checked={isCM}
+                  checked={isToogle}
                   onChange={handleToggle}
                   sx={{ margin: 0 }}
                 />
@@ -96,7 +94,7 @@ export const SizeGuide = () => {
           <Typography
             style={{
               fontWeight: "bold",
-              color: isCM ? "black" : "gray",
+              color: isToogle ? "black" : "gray",
               marginLeft: "8px",
               position: "absolute",
               right: "38px",
@@ -391,7 +389,11 @@ export const SizeGuide = () => {
             <TableBody>
               <TableRow>
                 <TableCellTitle
-                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600", width: "120px" }}
+                  sx={{
+                    backgroundColor: "#f1eeee",
+                    fontWeight: "600",
+                    width: "120px",
+                  }}
                 >
                   Foot Length (in)
                 </TableCellTitle>
@@ -430,7 +432,11 @@ export const SizeGuide = () => {
             <TableBody>
               <TableRow>
                 <TableCellTitle
-                  sx={{ backgroundColor: "#f1eeee", fontWeight: "600", width: "120px" }}
+                  sx={{
+                    backgroundColor: "#f1eeee",
+                    fontWeight: "600",
+                    width: "120px",
+                  }}
                 >
                   Foot Length (cm)
                 </TableCellTitle>
