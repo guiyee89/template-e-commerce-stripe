@@ -61,36 +61,7 @@ export const Completion = () => {
       setIsLoadingOrder(false);
     }, 2000);
   }, [paramValue]);
-  // useEffect(() => {
-  //   setIsLoadingOrder(true);
-  //   let order = JSON.parse(localStorage.getItem("order"));
 
-  //   if (paramValue === "succeeded" && order && order.items) {
-  //     let ordersCollection = collection(db, "orders");
-  //     addDoc(ordersCollection, {
-  //       ...order,
-  //       date: serverTimestamp(),
-  //       shipped: false,
-  //     }).then(async (res) => {
-  //       setOrderId(res.id);
-  //       await useCustomerOrderEmail(order, res.id);
-  //       await useOwnerOrderEmail(order, res.id);
-  //     });
-
-  //     order.items.forEach((product) => {
-  //       updateDoc(doc(db, "products", product.id), {
-  //         stock: product.stock - product.quantity,
-  //       });
-  //     });
-
-  //     localStorage.removeItem("order", order.id);
-  //     clearCart();
-  //     console.log("Order added successfully:", order);
-  //   }
-  //   setTimeout(() => {
-  //     setIsLoadingOrder(false);
-  //   }, 2000);
-  // }, [paramValue]);
 
   if (isLoadingOrder) {
     return (

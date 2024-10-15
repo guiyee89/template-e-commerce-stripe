@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import styled from "styled-components/macro";
+import styled, { createGlobalStyle } from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import {
   Box,
@@ -20,6 +20,14 @@ import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
+import Swal from "sweetalert2";
+//Swal alert custom style
+const SwalAlert = createGlobalStyle`
+  .swal2-title-custom {
+  font-size: 24px;  
+  font-weight: bold; 
+}
+`;
 
 export const AdminOrders = () => {
   const { windowWidth } = useContext(GlobalToolsContext);
@@ -62,7 +70,7 @@ export const AdminOrders = () => {
 
     fetchOrders();
   }, []);
- 
+
   const formatDate = (seconds) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(seconds * 1000).toLocaleDateString("en-US", options);
@@ -90,24 +98,64 @@ export const AdminOrders = () => {
   };
 
   const handleToggle = async (orderId) => {
-    try {
-      setIsActive((prevState) => ({
-        ...prevState,
-        [orderId]: !prevState[orderId],
-      }));
-      console.log(
-        `Order ${orderId} is now ${!isActive[orderId] ? "active" : "inactive"}`
-      );
-      const orderDocRef = doc(db, "orders", orderId);
-      await updateDoc(orderDocRef, {
-        shipped: true,
-      });
-      console.log(
-        `Order ${orderId} shipped status updated to: ${orderId}`
-      );
-    } catch (error) {
-      console.error("Error updating order shipped status:", error);
-    }
+    const currentActiveState = isActive[orderId];
+
+    Swal.fire({
+      title: "Shipping order confirmation",
+      text: "You won't be able to revert this!",
+      padding: 18,
+      showCancelButton: true,
+      confirmButtonColor: "#41688d",
+      cancelButtonColor: "#d25e5e",
+      confirmButtonText: "Yes, ship products!",
+      customClass: {
+        title: "swal2-title-custom",
+      },
+      scrollbarPadding: false,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          setIsActive((prevState) => ({
+            ...prevState,
+            [orderId]: true,
+          }));
+          const orderDocRef = doc(db, "orders", orderId);
+          await updateDoc(orderDocRef, {
+            shipped: true,
+          });
+
+          Swal.mixin({
+            toast: true,
+            position: "top-start",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          }).fire({
+            icon: "success",
+            title: "Shipping confirmed!",
+            text: "Order shipped to customer.",
+          });
+        } catch (error) {
+          console.error("Error updating order shipped status:", error);
+          Swal.mixin({
+            toast: true,
+            position: "top-start",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          }).fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to update shipping status.",
+          });
+        }
+      } else {
+        setIsActive((prevState) => ({
+          ...prevState,
+          [orderId]: currentActiveState,
+        }));
+      }
+    });
   };
 
   if (orderLoading) {
@@ -273,6 +321,7 @@ export const AdminOrders = () => {
                         onChange={() => handleToggle(order.id)}
                       />
                     </TableCellData>
+                    <SwalAlert />
                   </TableRow>
                 ))}
             </TableBody>
@@ -455,6 +504,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     boxShadow: "none",
     border: "1px solid darkgrey",
     transition: "box-shadow 0.2s ease-in-out, transform 0.3s ease",
+    backgroundColor: "#abababfa",
   },
 
   "& .MuiSwitch-track": {
