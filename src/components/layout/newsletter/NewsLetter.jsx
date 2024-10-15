@@ -1,18 +1,22 @@
 import styled, { createGlobalStyle } from "styled-components/macro";
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import {
   sendSubscribeEmail,
   updateEmailList,
 } from "../../../firebaseEmailConfig";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-
+import Swal from "sweetalert2";
+//Swal alert custom style
 const SwalAlert = createGlobalStyle`
   .custom-swal-icon {
-    margin: 20px auto 0; /* Center the icon */
+    margin: 20px auto 0; 
   }
+  .swal2-title-custom {
+  font-size: 24px;  
+  font-weight: bold; 
+}
 `;
 
 export const NewsLetter = () => {
@@ -46,7 +50,9 @@ export const NewsLetter = () => {
                   confirmButtonColor: "#000000",
                   customClass: {
                     icon: "custom-swal-icon",
+                    title:"swal2-title-custom"
                   },
+                  scrollbarPadding: false,
                 });
               })
               .catch((err) => console.error("Error sending email: ", err));
