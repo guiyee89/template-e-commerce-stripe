@@ -81,4 +81,21 @@ export const sendOwnerOrderEmail = async (email, subject, body) => {
   console.log("Listo para ser enviado");
   return await addDoc(collectionRef, emailContent, createdAt);
 };
+
+// Shipping Order Automatic Email
+export const sendShippingOrderEmail = async (email, subject, body) => {
+  const createdAt = new Date().toISOString()
+  const collectionRef = collection(db, "email");
+  const emailContent = {
+    to: [email],
+    message: {
+      subject: subject,
+      text: body,
+      html: `<p>${body}</p>`
+    }
+  };
+  console.log("Listo para ser enviado");
+  return await addDoc(collectionRef, emailContent, createdAt);
+};
+
 // Send Html Email Template
