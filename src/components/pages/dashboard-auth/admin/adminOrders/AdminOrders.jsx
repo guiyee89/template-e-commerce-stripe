@@ -1,5 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import styled, { createGlobalStyle } from "styled-components/macro";
 import { db } from "../../../../../firebaseConfig";
 import {
@@ -20,6 +26,7 @@ import { ProductsDetails } from "./ProductsDetails";
 import { BuyerDetails } from "./BuyerDetails";
 import { GlobalToolsContext } from "../../../../context/GlobalToolsContext";
 import { Ring } from "@uiball/loaders";
+import { useShippingOrdersEmail } from "../../../../emails/shippingOrders/useShippingOrdersEmail";
 import Swal from "sweetalert2";
 //Swal alert custom style
 const SwalAlert = createGlobalStyle`
@@ -115,26 +122,42 @@ export const AdminOrders = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          // Update the toggle state
           setIsActive((prevState) => ({
             ...prevState,
             [orderId]: true,
           }));
-          const orderDocRef = doc(db, "orders", orderId);
-          await updateDoc(orderDocRef, {
-            shipped: true,
-          });
 
-          Swal.mixin({
-            toast: true,
-            position: "top-start",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-          }).fire({
-            icon: "success",
-            title: "Shipping confirmed!",
-            text: "Order shipped to customer.",
-          });
+          // Fetch the full order data from Firebase using orderId
+          const orderDocRef = doc(db, "orders", orderId);
+          const orderDoc = await getDoc(orderDocRef);
+
+          if (orderDoc.exists()) {
+            const order = orderDoc.data(); // Get the order data
+
+            // Update the shipped status in Firebase
+            await updateDoc(orderDocRef, {
+              shipped: true,
+            });
+
+            // Call useShippingOrdersEmail with the full order object
+            await useShippingOrdersEmail(order, orderId);
+
+            // Show success toast
+            Swal.mixin({
+              toast: true,
+              position: "top-start",
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            }).fire({
+              icon: "success",
+              title: "Shipping confirmed!",
+              text: "Order shipped to customer.",
+            });
+          } else {
+            console.error("Order not found!");
+          }
         } catch (error) {
           console.error("Error updating order shipped status:", error);
           Swal.mixin({
@@ -150,6 +173,7 @@ export const AdminOrders = () => {
           });
         }
       } else {
+        // Restore the previous toggle state if canceled
         setIsActive((prevState) => ({
           ...prevState,
           [orderId]: currentActiveState,
@@ -211,7 +235,7 @@ export const AdminOrders = () => {
                     fontSize: windowWidth < 500 && ".58rem",
                   }}
                 >
-                  Buyer Details
+                  Customer
                 </TableCellTitle>
                 <TableCellTitle
                   sx={{
