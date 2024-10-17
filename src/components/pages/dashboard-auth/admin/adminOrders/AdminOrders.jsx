@@ -31,7 +31,8 @@ import Swal from "sweetalert2";
 //Swal alert custom style
 const SwalAlert = createGlobalStyle`
   .swal2-title-custom {
-  font-size: 24px;  
+  font-size: 20px;  
+  padding: 30px 0;
   font-weight: bold; 
 }
 `;
@@ -107,79 +108,101 @@ export const AdminOrders = () => {
   const handleToggle = async (orderId) => {
     const currentActiveState = isActive[orderId];
 
-    Swal.fire({
-      title: "Shipping order confirmation",
-      text: "You won't be able to revert this!",
-      padding: 18,
+    // Display Swal to prompt for a shipping date
+    const { value: date } = await Swal.fire({
+      title: "Select Shipping Date Arrival",
+      input: "date",
+      didOpen: () => {
+        const today = new Date().toISOString();
+        const inputElement = document.getElementById("swal2-input");
+        inputElement.min = today.split("T")[0];
+
+        // Apply custom styles to the input using the id
+        inputElement.style.border = "1px solid rgb(34, 48, 61)";
+        inputElement.style.borderRadius = "8px";
+        inputElement.style.fontSize = "16px";
+        inputElement.style.margin = "15px 70px";
+        inputElement.style.textTransform = "uppercase";
+        inputElement.style.letterSpacing = "3px";
+        inputElement.style.display = "flex";
+        inputElement.style.justifyContent = "center";
+      },
       showCancelButton: true,
       confirmButtonColor: "#41688d",
       cancelButtonColor: "#d25e5e",
-      confirmButtonText: "Yes, ship products!",
+      confirmButtonText: "Confirm date",
+      cancelButtonText: "Cancel",
       customClass: {
         title: "swal2-title-custom",
       },
       scrollbarPadding: false,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          // Update the toggle state
-          setIsActive((prevState) => ({
-            ...prevState,
-            [orderId]: true,
-          }));
-
-          // Fetch the full order data from Firebase using orderId
-          const orderDocRef = doc(db, "orders", orderId);
-          const orderDoc = await getDoc(orderDocRef);
-
-          if (orderDoc.exists()) {
-            const order = orderDoc.data(); // Get the order data
-
-            // Update the shipped status in Firebase
-            await updateDoc(orderDocRef, {
-              shipped: true,
-            });
-
-            // Call useShippingOrdersEmail with the full order object
-            await useShippingOrdersEmail(order, orderId);
-
-            // Show success toast
-            Swal.mixin({
-              toast: true,
-              position: "top-start",
-              showConfirmButton: false,
-              timer: 1500,
-              timerProgressBar: true,
-            }).fire({
-              icon: "success",
-              title: "Shipping confirmed!",
-              text: "Order shipped to customer.",
-            });
-          } else {
-            console.error("Order not found!");
-          }
-        } catch (error) {
-          console.error("Error updating order shipped status:", error);
-          Swal.mixin({
-            toast: true,
-            position: "top-start",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-          }).fire({
-            icon: "error",
-            title: "Error",
-            text: "Failed to update shipping status.",
-          });
-        }
-      } else {
-        // Restore the previous toggle state if canceled
-        setIsActive((prevState) => ({
-          ...prevState,
-          [orderId]: currentActiveState,
-        }));
-      }
+      width: "450px",
     });
+
+    if (date) {
+      // Format the selected date using formatDate function
+      const selectedDate = new Date(date);
+      const utcDate = new Date(
+        selectedDate.getTime() + selectedDate.getTimezoneOffset() * 60000
+      );
+      const formattedDate = formatDate(utcDate.getTime() / 1000);
+
+      // Show a success toast
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2500,
+        width: "400px",
+        timerProgressBar: true,
+      }).fire({
+        icon: "success",
+        title: "Shipping confirmed!",
+        html: `Order will be shipped on <br><span style="font-weight:bold">${formattedDate}</span>`,
+      });
+
+      // Update the toggle state in the UI
+      setIsActive((prevState) => ({
+        ...prevState,
+        [orderId]: true,
+      }));
+
+      try {
+        // Update Firestore with both shipped status and shipping date
+        const orderDocRef = doc(db, "orders", orderId);
+        await updateDoc(orderDocRef, {
+          shipped: true,
+          shippingDate: formattedDate,
+        });
+
+        // Fetch order data to send an email confirmation
+        const orderDoc = await getDoc(orderDocRef);
+        if (orderDoc.exists()) {
+          const order = orderDoc.data();
+          // Email confirmation
+          await useShippingOrdersEmail(order, orderId);
+        }
+      } catch (error) {
+        console.error("Error updating order shipped status:", error);
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        }).fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to update shipping status.",
+        });
+      }
+    } else {
+      // Restore the toggle state if the user cancels the date selection
+      setIsActive((prevState) => ({
+        ...prevState,
+        [orderId]: currentActiveState,
+      }));
+    }
   };
 
   if (orderLoading) {
@@ -256,12 +279,15 @@ export const AdminOrders = () => {
                     key={order.id}
                     sx={{
                       backgroundColor: isActive[order.id]
-                        ? "#bac7e14a"
+                        ? "#dedede"
                         : "transparent",
                     }}
                   >
                     <TableCellData
-                      sx={{ fontSize: windowWidth < 500 && ".68rem" }}
+                      sx={{
+                        fontSize: windowWidth < 500 && ".68rem",
+                        fontWeight: "600",
+                      }}
                     >
                       {order.id}
                     </TableCellData>
@@ -279,7 +305,10 @@ export const AdminOrders = () => {
                         fontSize: windowWidth < 500 && ".68rem",
                       }}
                     >
-                      $ {order.total.toFixed(2)}
+                      ${" "}
+                      <span style={{ fontWeight: "600" }}>
+                        {order.total.toFixed(2)}
+                      </span>
                     </TableCellData>
                     <TableCellData
                       onClick={() => handleOpenProducts(order.id)}
@@ -288,7 +317,7 @@ export const AdminOrders = () => {
                         fontSize: windowWidth < 500 && ".68rem",
                       }}
                     >
-                      <span
+                      <ProductsSpan
                         style={{
                           textDecoration: "underline",
                           cursor: "pointer",
@@ -296,18 +325,10 @@ export const AdminOrders = () => {
                       >
                         Open
                         <ArrowDropDownIcon sx={{ marginTop: "-2px" }} />
-                      </span>
+                      </ProductsSpan>
                     </TableCellData>
                     <TableCellData onClick={() => handleOpenDetails(order.id)}>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: windowWidth < 560 && "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          cursor: "pointer",
-                        }}
-                      >
+                      <DetailsDiv windowWidth={windowWidth}>
                         <div
                           style={{
                             display: "flex",
@@ -336,7 +357,7 @@ export const AdminOrders = () => {
                             }}
                           />
                         </span>
-                      </div>
+                      </DetailsDiv>
                     </TableCellData>
                     <TableCellData>
                       <MaterialUISwitch
@@ -459,7 +480,31 @@ const TableCellData = styled(TableCell)`
   border-left: 1px solid lightgrey !important;
   border-right: 1px solid lightgrey !important;
 `;
-
+const DetailsDiv = styled.div`
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    background-color rgba(0, 0, 0, 0.12) 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.12);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+`;
+const ProductsSpan = styled.span`
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    background-color rgba(0, 0, 0, 0.12) 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.18);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+`;
 const style = {
   position: "absolute",
   top: "50%",
