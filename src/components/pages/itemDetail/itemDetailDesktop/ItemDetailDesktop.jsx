@@ -122,7 +122,7 @@ export const ItemDetailDesktop = ({
                   maxWidth: 800,
                   margin: "0 auto",
                   padding: "20px",
-                  height:"100%",
+                  height: "100%",
                   position: "relative",
                   backgroundColor: "white",
                   overflow: "auto",
@@ -326,17 +326,18 @@ const Description = styled.p`
   padding-right: 30px;
 `;
 const ReferenceWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  -webkit-box-align: center;
-  align-items: center;
-  border-radius: 8px;
   padding: 0px 8px 0 0;
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: box-shadow 0.2s ease-in, 
+    background-color 0.2s ease-in, font-weight 0.2s ease-in;
   &:hover {
-    background-color: rgb(126 124 124 / 26%);
-    transition: background-color 0.1s ease-in-out;
-    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 20px;
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 600;
   }
 `;
 const SizeImg = styled.img`
@@ -353,7 +354,7 @@ const CloseIconBtn = styled(CloseIcon)`
   cursor: pointer;
   width: 1.3em !important;
   height: 1.3em !important;
-  top: 7px ;
+  top: 7px;
   left: 95%;
   position: absolute;
   z-index: 2;
