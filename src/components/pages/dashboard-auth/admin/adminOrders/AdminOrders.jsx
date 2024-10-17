@@ -486,11 +486,12 @@ const DetailsDiv = styled.div`
   cursor: pointer;
   border-radius: 8px;
   font-weight: 500;
-  transition: box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out,
-    background-color rgba(0, 0, 0, 0.12) 0.3s ease-in-out;
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in;
+  
   &:hover {
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.12);
-    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 40px;
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 600;
   }
 `;
 const ProductsSpan = styled.span`
@@ -498,11 +499,12 @@ const ProductsSpan = styled.span`
   align-items: center;
   cursor: pointer;
   border-radius: 8px;
-  transition: box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out,
-    background-color rgba(0, 0, 0, 0.12) 0.3s ease-in-out;
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in;
+   
   &:hover {
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.18);
-    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 40px;
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 500;
   }
 `;
 const style = {
