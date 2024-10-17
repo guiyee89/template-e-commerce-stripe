@@ -17,14 +17,16 @@ export const useShippingOrdersEmail = async (order, orderId) => {
                 </tr>
                 <tr>
                   <td>
-                    <h1>Your order is being delivered, <span style="text-transform:capitalize">${
+                    <h1 style="margin-bottom:50px">Your order is being delivered, <span style="text-transform:capitalize">${
                       order.buyer.name
                     }</span>!</h1>
                     <p>Order ID: <strong style="font-size:0.9rem">${orderId}</strong></p>
                                  
-                    <p>It will be arriving on <strong style="font-size:0.9rem">(fecha)</strong></p>
+                    <p style="font-size:1rem">It will be arriving <strong style="font-size:1rem">${
+                      order.shippingDate
+                    }</strong></p>
 
-                    <table role="presentation" style="width: 100%; margin: 50px 0; border-spacing: 0 10px; border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey; padding: 40px 0px;">
+                    <table role="presentation" style="width: 100%; margin: 50px 0; border-spacing: 0 10px; border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey; padding: 0px 0px 40px;">
                       <thead>
                         <tr style="padding-bottom: 10px;">
                           <th style="width:70px; text-align: center"></th>
@@ -64,23 +66,23 @@ export const useShippingOrdersEmail = async (order, orderId) => {
                           .join("")}
                       </tbody>
                     </table>
-                    <div style="background-color: #e2dfdfba; color: #090909; padding: 20px 18px;">
+                    <div style="background-color: #e2dfdfba; color: #090909; padding: 0 18px;">
                       <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse: collapse;">
                         <tr>
-                          <td style="font-size: 1rem; padding-bottom: 20px; border-bottom: 1px solid darkgray;">Shipping:</td>
-                          <td align="right" style="font-size: 1rem; padding-bottom: 20px; border-bottom: 1px solid darkgray;">$ ${order.shipment_cost.toFixed(
+                          <td style="font-size: 1rem; padding: 8px; border-bottom: 1px solid darkgray;">Shipping:</td>
+                          <td align="right" style="font-size: 1rem; padding: 8px; border-bottom: 1px solid darkgray;">$ ${order.shipment_cost.toFixed(
                             2
                           )}</td>
                         </tr>
                         <tr>
-                          <td style="font-size: 1.1rem; font-weight: 600; padding-top: 20px;">Total:</td>
-                          <td align="right" style="font-size: 1.1rem; font-weight: 600; padding-top: 20px;">$ ${order.total.toFixed(
+                          <td style="font-size: 1.1rem; font-weight: 600; padding: 8px;">Total:</td>
+                          <td align="right" style="font-size: 1.1rem; font-weight: 600; padding: 8px;">$ ${order.total.toFixed(
                             2
                           )}</td>
                         </tr>
                       </table>
-                    </div>
-                    <p style="margin-top:40px; font-weight:600; font-size:0.9rem">We hope to see you again soon!</p>
+                      </div>
+                     <p style="margin-top:40px; font-weight:600; font-size:0.9rem">We hope to see you again soon!</p>
                   </td>
                 </tr>
               </table>
