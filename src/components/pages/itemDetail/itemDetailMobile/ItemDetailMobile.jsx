@@ -361,15 +361,17 @@ const Description = styled.p`
   padding: 31px 12px 12px 0px;
 `;
 const ReferenceWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
   align-items: center;
   margin: 15px 0px;
-  border-radius: 20px;
+  border-radius: 8px;
   padding: 0px 8px;
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in,
+    font-weight 0.2s ease-in;
   &:hover {
-    background-color: rgb(228 225 225);
-    transition: background-color 0.2s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 20px;
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 600;
   }
 `;
 const SizeReference = styled.p`
