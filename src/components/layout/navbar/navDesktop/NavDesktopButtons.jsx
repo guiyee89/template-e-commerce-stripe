@@ -43,7 +43,9 @@ export const NavDesktopButtons = ({ handleNavLinkClick }) => {
             }}
           >
             <HoveredText>Login / Sign up</HoveredText>
-            <BsPerson style={{ fontSize: "1.7rem", position: "absolute", top: "29px" }}/>
+            <BsPerson
+              style={{ fontSize: "1.7rem", position: "absolute", top: "29px" }}
+            />
           </LoginLink>
         ) : user.rol === rolAdmin ||
           user.rol === rolAdmin2 ||

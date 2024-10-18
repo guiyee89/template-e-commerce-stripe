@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { arrayUnion, collection, doc, getDocs, getFirestore, updateDoc, /*  getAnalytics  */ } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { collection, getDocs, getFirestore, /*  getAnalytics, arrayUnion  */ } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signOut, sendPasswordResetEmail, signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage"
-import { v4 } from "uuid"
+//import { v4 } from "uuid"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,14 +50,15 @@ export const onRegister = async ({ email, password }) => {
     return error
   }
 }
+
 //Google Authenticator
 const googleAuth = new GoogleAuthProvider()
 
 export const loginWithGoogle = async () => {
   const res = await signInWithPopup(auth, googleAuth)
-  console.log(res)
   return res
 }
+
 //Log out session
 export const logout = () => {
   signOut(auth)
@@ -70,6 +71,7 @@ export const forgotPassword = async (email) => {
     return error
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // /******   STORAGE   ******/
@@ -88,7 +90,6 @@ export const uploadFile = async (file, retries = 3) => {
           resolve(url);
         } catch (error) {
           if (attempt < retries) {
-            console.log(`Retrying upload (${attempt + 1}/${retries})...`);
             resolve(uploadAttempt(attempt + 1));
           } else {
             reject(error);
@@ -145,7 +146,7 @@ export const deleteUnusedImages = async () => {
       if (!usedImageUrls.has(fileUrl) && !usedResizedUrls.has(fileUrl)) {
         // If the image URL is not used in Firestore, delete it from Storage
         await deleteObject(fileRef);
-        console.log(`Deleted unused image: ${fileUrl}`);
+
       }
     });
 
