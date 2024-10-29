@@ -64,7 +64,7 @@ export const AdminProducts = () => {
           gridColumn: "2/7",
         }}
       >
-        {/* <DeleteImages />  */}
+        {/* <DeleteImages /> */}
         <ProductList
           products={products}
           setIsChanged={handleIsChanged}
@@ -79,7 +79,7 @@ export const AdminProducts = () => {
 };
 
 const Loader = styled.div`
-   width: 100%;
+  width: 100%;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 7px;
   padding-right: 209px;

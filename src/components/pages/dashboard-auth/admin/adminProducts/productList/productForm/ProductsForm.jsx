@@ -29,7 +29,6 @@ export const ProductsForm = ({
   existingImages,
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
-  console.log(sizeValue)
 
   return (
     <>
@@ -279,7 +278,6 @@ export const ProductsForm = ({
                           setNewProduct={setNewProduct}
                           selectedColors={selectedColors}
                           setSelectedColors={setSelectedColors}
-                        
                         />
                       </Div>
 
@@ -302,7 +300,9 @@ export const ProductsForm = ({
                           >
                             {categoryValue === "shoes" ||
                             categoryValue === "bags"
-                              ? [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5 , 8 , 8.5].map((size) => (
+                              ? [
+                                  3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5,
+                                ].map((size) => (
                                   <MenuItem key={size} value={size}>
                                     {size}
                                   </MenuItem>

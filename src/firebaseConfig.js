@@ -123,9 +123,10 @@ const getAllImageUrlsFromFirestore = async () => {
 };
 
 const getResizedImageUrl = (url) => {
-  return url.replace(/(\.[^.]*)?$/, "_1200x1600$1");
+  return url.replace(/(\.[^.]*)?$/, "_982x1243$1");
 };
 
+//Delete images from Firestore
 export const deleteUnusedImages = async () => {
   try {
     // Get all image URLs currently used in Firestore
@@ -144,13 +145,14 @@ export const deleteUnusedImages = async () => {
       const fileUrl = (await getDownloadURL(fileRef)).split("?alt=media")[0]; // Strip access token
 
       if (!usedImageUrls.has(fileUrl) && !usedResizedUrls.has(fileUrl)) {
+        console.log("Deleting unused image name:", fileRef.name); // Log deleted image name
         // If the image URL is not used in Firestore, delete it from Storage
         await deleteObject(fileRef);
-
       }
     });
 
     await Promise.all(deletePromises);
+
   } catch (error) {
     console.error("Error deleting unused images:", error);
   }

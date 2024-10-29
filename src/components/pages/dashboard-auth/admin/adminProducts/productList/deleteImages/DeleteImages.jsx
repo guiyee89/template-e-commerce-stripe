@@ -10,6 +10,7 @@ export const DeleteImages = () => {
     setIsDeleting(false);
   };
 
+  
   return (
     <div style={{ position: "absolute", right: "0", top: "20px" }}>
       <button onClick={handleDeleteUnusedImages} disabled={isDeleting}>
