@@ -113,7 +113,7 @@ export const ItemListContainer = () => {
 
   useEffect(() => {
     if (filterChanged) {
-      window.scrollTo({ top: 150, behavior: "instant" });
+      window.scrollTo({ top: 100, behavior: "instant" });
       setFilterChanged(false);
     }
   }, [filterChanged]);
@@ -217,7 +217,7 @@ const ItemsFiltersWrapper = styled.div`
   height: 100%;
   width: 100%;
   max-width: 1618px;
-  margin-top: 90px;
+  margin-top: 70px;
   margin-right: 20px;
   margin-bottom: 85px;
   @media (max-width: 1150px) {

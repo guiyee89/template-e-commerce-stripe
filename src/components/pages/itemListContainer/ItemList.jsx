@@ -26,6 +26,7 @@ export const ItemList = ({
     isFilterOpen,
     toggleFilterMenu,
     windowWidth,
+    windowHeight,
     setProgress,
     setVisible,
     scrollDirection,
@@ -38,7 +39,7 @@ export const ItemList = ({
   const [isLoadingPagination, setIsLoadingPagination] = useState(false);
 
   // Circle Loader
-  const handleLoadDetail = (itemId) => {
+  const handleLoadItemDetail = (itemId) => {
     localStorage.setItem("currentPage", currentPage); //save currentPage in localStorage
     setLoadingDetail(itemId);
     setTimeout(() => {
@@ -85,7 +86,7 @@ export const ItemList = ({
 
   useEffect(() => {
     if (!initialMountRef.current) {
-      window.scrollTo({ top: 150, behavior: "instant" });
+      window.scrollTo({ top: 100, behavior: "instant" });
     } else {
       initialMountRef.current = false;
     }
@@ -150,14 +151,15 @@ export const ItemList = ({
       </HeaderContainer>
 
       {itemLoader && ( //Loader for filters
-        <LoaderOverlay
+        <FilterLoaderOverlay
           scrollDirection={scrollDirection}
           isFilterOpen={isFilterOpen}
-          window={windowWidth}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
           style={{ top: windowWidth < 900 && "0px" }}
         >
           <Ring size={35} lineWeight={7} speed={1} color="black" />
-        </LoaderOverlay>
+        </FilterLoaderOverlay>
       )}
       <Wrapper key="cart-wrapper">
         {/* Map products list */}
@@ -173,7 +175,7 @@ export const ItemList = ({
               onClick={(event) => {
                 event.preventDefault();
                 handleLoadTop();
-                handleLoadDetail(product.id);
+                handleLoadItemDetail(product.id);
                 setTimeout(() => {
                   navigate(`/item-details/${product.id}`);
                 }, 900);
@@ -273,12 +275,23 @@ const Wrapper = styled.div`
     margin: 0 0 32px;
   }
 `;
-const LoaderOverlay = styled.div`
+const FilterLoaderOverlay = styled.div`
   position: fixed;
-  top: ${(props) => (props.scrollDirection === "down" ? "0" : "81.4px")};
+  /* top: ${(props) =>
+    props.scrollDirection === "down" ? "0px" : "81.4px"}; */
+  top: ${(props) =>
+    props.scrollDirection === "down"
+      ? "0px"
+      : props.windowHeight === 0
+      ? "111px"
+      : "81.4px"};
   transition: top
     ${(props) =>
-      props.scrollDirection === "down" ? "0.1s ease-in" : "0.22s ease-out"};
+      props.scrollDirection === "down"
+        ? "0.1s ease-in"
+        : props.windowHeight === 0
+        ? "0"
+        : "0.22s ease-out"};
   left: 0px;
   width: 100%;
   height: 100%;

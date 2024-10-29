@@ -98,8 +98,8 @@ const HeaderWrapper = styled.header`
   height: 80px;
   box-shadow: ${({ scrolled }) =>
     scrolled === "scrolled"
-      ? "rgba(0, 0, 0, 0.35) 0px 0px 1px"
-      : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
+      ? "rgba(0, 0, 0, 0.25) 0px 0px 1px"
+      : "rgba(0, 0, 0, 0.30) 0px 0px 2px"};
   transform: translateY(
     ${({ scrollDirection, isDashboard }) =>
       isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}

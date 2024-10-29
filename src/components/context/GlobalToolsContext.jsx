@@ -41,14 +41,11 @@ const GlobalToolsProvider = ({ children }) => {
 
   //State for managing different screen Height
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
   useEffect(() => {
-    const handleResize = () => {
-      setWindowHeight(window.innerHeight);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    const handleScroll = () => setWindowHeight(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   ///////////         LOADERS           ///////////
