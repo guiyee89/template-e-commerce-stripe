@@ -205,10 +205,8 @@ const NoProductMessage = styled.h2`
 const ItemListWrapper = styled.div`
   display: inline-block;
   width: 100%;
-  transform: ${(props) =>
-    props.isDesktopFilterOpen ? "translateX(0)" : "translateX(10px)"};
-  padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "10px")};
-  transition: transform 0.4s ease-in-out, padding-left 0.4s ease-in-out;
+  padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "4px")};
+  transition: padding-left 0.4s ease-in-out;
   position: relative;
   @media (max-width: 1200px) {
     margin-right: ${(props) => (props.isDesktopFilterOpen ? "0" : "20px")};
@@ -224,11 +222,9 @@ const ItemsFiltersWrapper = styled.div`
   width: 100%;
   max-width: 1618px;
   margin-top: 70px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   margin-bottom: 85px;
-  @media (max-width: 1150px) {
-    margin-right: 10px;
-  }
+
   @media (max-width: 900px) {
     margin: 0 auto;
   }

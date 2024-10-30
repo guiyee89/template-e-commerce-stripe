@@ -18,7 +18,6 @@ export const ItemImageDesktop = ({
     useContext(GlobalToolsContext);
   const [loadedImages, setLoadedImages] = useState(0);
 
-
   useEffect(() => {
     if (selectedItem) {
       setImagesToRender(selectedItem.img.slice(0, 5));
@@ -129,10 +128,8 @@ export const ItemImageDesktop = ({
 
 const Wrapper = styled.div`
   display: flex;
-  /* width: 85%;
-  height: 100%; */
-   width: 70%;
-  height: 100%; 
+  width: 90%;
+  height: 100%;
   margin-left: -35px;
   margin-right: 20px;
 `;
