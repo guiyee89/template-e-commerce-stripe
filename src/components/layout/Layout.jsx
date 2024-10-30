@@ -64,8 +64,7 @@ export const Layout = () => {
             <LoadingScreen />
           ) : (
             <>
-              {!isHome &&
-                !isDashboard &&
+              {!isDashboard &&
                 !isCheckout &&
                 !isContactUs &&
                 !isCompletion &&

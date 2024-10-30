@@ -113,7 +113,7 @@ export const ItemListContainer = () => {
 
   useEffect(() => {
     if (filterChanged) {
-      window.scrollTo({ top: 100, behavior: "instant" });
+      window.scrollTo({ top: 0, behavior: "instant" });
       setFilterChanged(false);
     }
   }, [filterChanged]);
