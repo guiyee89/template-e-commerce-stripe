@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { GlobalToolsContext } from "../../../../../../context/GlobalToolsContext";
+import { useEffect, useState } from "react";
 import { ProductsForm } from "./ProductsForm";
 import { db } from "../../../../../../../firebaseConfig";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
@@ -10,7 +9,6 @@ export const ProductsFormContainer = ({
   handleClose,
   setIsChanged,
 }) => {
-  const { windowWidth } = useContext(GlobalToolsContext);
   const [addProduct, setAddProduct] = useState(false);
   const [existingImages, setExistingImages] = useState([]);
   const [categoryValue, setCategoryValue] = useState("");
@@ -135,51 +133,29 @@ export const ProductsFormContainer = ({
 
   ///////////////////////////////////////////////////////////////////////////////
   /*************                   HANDLE CHANGE                    ************/
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name === "category") {
       setCategoryValue(value);
     }
     if (name === "size") {
-      setSizeValue(value); // keep the selected size intact
+      setSizeValue(value);
     }
-  
+    console.log(sizeValue);
     if (selectedItem) {
       setSelectedItem((prevSelectedItem) => ({
         ...prevSelectedItem,
-        [name]: name === "size" ? parseFloat(value) : value, // use parseFloat for size
+        [name]: isNaN(value) ? value : parseFloat(value, 10),
       }));
     } else {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
-        [name]: name === "size" ? parseFloat(value) : value, // use parseFloat for size
+        [name]: isNaN(value) ? value : parseFloat(value, 10),
       }));
     }
   };
-  
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   if (name === "category") {
-  //     setCategoryValue(value);
-  //   }
-  //   if (name === "size") {
-  //     setSizeValue(value);
-  //   }
-  //   console.log(sizeValue);
-  //   if (selectedItem) {
-  //     setSelectedItem((prevSelectedItem) => ({
-  //       ...prevSelectedItem,
-  //       [name]: isNaN(value) ? value : parseInt(value, 10),
-  //     }));
-  //   } else {
-  //     setNewProduct((prevProduct) => ({
-  //       ...prevProduct,
-  //       [name]: isNaN(value) ? value : parseInt(value, 10),
-  //     }));
-  //   }
-  // };
 
   return (
     <>

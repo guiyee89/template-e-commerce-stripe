@@ -211,8 +211,8 @@ const Wrapper = styled.div`
   height: 900px;
   width: 100%;
   max-width: 1300px;
-  margin: 0 auto;
-  padding: 50px 0 0 65px;
+  margin: 100px auto;
+  padding: 0 0 0 65px;
 `;
 const Discount = styled.h4`
   position: absolute;

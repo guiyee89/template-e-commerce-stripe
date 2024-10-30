@@ -64,7 +64,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
     return <PaymentSkeletonLoader />;
   }
   return (
-    <>
+    <div style={{ position: "relative", top: "-31px" }}>
       {isProcessing && (
         <LoaderOverlay window={windowWidth} scrolled={scroll}>
           <Ring size={35} lineWeight={7} speed={1} color="black" />
@@ -177,7 +177,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
                   >
                     Processing
                   </p>
-                  <l-bouncy size="20" speed="1.2" color="black"></l-bouncy>
+                  <l-bouncy size="20" speed="1.2" color="white"></l-bouncy>
                 </BouncyLoader>
               ) : windowWidth > 750 ? (
                 `Pay $ ${(total + shipmentCost).toFixed(2)}`
@@ -190,7 +190,7 @@ export const PaymentElementCheckout = ({ shipmentCost }) => {
 
         {message && <div id="payment-message">{message}</div>}
       </Form>
-    </>
+    </div>
   );
 };
 const Form = styled.form`
@@ -425,11 +425,11 @@ const Button = styled.button`
   }
 `;
 const LoaderOverlay = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 141%;
+  height: 106.5%;
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
   display: flex;
   justify-content: ${(props) =>

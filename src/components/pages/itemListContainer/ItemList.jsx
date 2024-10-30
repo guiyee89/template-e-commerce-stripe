@@ -26,6 +26,7 @@ export const ItemList = ({
     isFilterOpen,
     toggleFilterMenu,
     windowWidth,
+    windowHeight,
     setProgress,
     setVisible,
     scrollDirection,
@@ -38,7 +39,7 @@ export const ItemList = ({
   const [isLoadingPagination, setIsLoadingPagination] = useState(false);
 
   // Circle Loader
-  const handleLoadDetail = (itemId) => {
+  const handleLoadItemDetail = (itemId) => {
     localStorage.setItem("currentPage", currentPage); //save currentPage in localStorage
     setLoadingDetail(itemId);
     setTimeout(() => {
@@ -85,7 +86,7 @@ export const ItemList = ({
 
   useEffect(() => {
     if (!initialMountRef.current) {
-      window.scrollTo({ top: 150, behavior: "instant" });
+      window.scrollTo({ top: 100, behavior: "instant" });
     } else {
       initialMountRef.current = false;
     }
@@ -133,32 +134,32 @@ export const ItemList = ({
         <ItemListTitle style={{ display: windowWidth < "901" && "none" }}>
           {categoryTitle}
         </ItemListTitle>
-        <PaginationWrapperTop>
-          <Pagination
-            size={windowWidth < 600 ? "small" : "medium"}
-            shape="rounded"
-            variant=""
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, value) => {
-              handlePageChange(value);
-            }}
-            renderItem={(item) => <PaginationItem component="div" {...item} />}
-          />
-          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={20} />}
-        </PaginationWrapperTop>
-        <ItemsQuantity>{productsQuantity} Products</ItemsQuantity>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            gap: "8rem",
+          }}
+        >
+          <FilterBy onClick={toggleFilterMenu}>
+            Hide Filters <TuneIcon />
+          </FilterBy>
+          <ItemsQuantity>{productsQuantity} Products</ItemsQuantity>
+        </div>
       </HeaderContainer>
 
       {itemLoader && ( //Loader for filters
-        <LoaderOverlay
+        <FilterLoaderOverlay
           scrollDirection={scrollDirection}
           isFilterOpen={isFilterOpen}
-          window={windowWidth}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
           style={{ top: windowWidth < 900 && "0px" }}
         >
           <Ring size={35} lineWeight={7} speed={1} color="black" />
-        </LoaderOverlay>
+        </FilterLoaderOverlay>
       )}
       <Wrapper key="cart-wrapper">
         {/* Map products list */}
@@ -174,7 +175,7 @@ export const ItemList = ({
               onClick={(event) => {
                 event.preventDefault();
                 handleLoadTop();
-                handleLoadDetail(product.id);
+                handleLoadItemDetail(product.id);
                 setTimeout(() => {
                   navigate(`/item-details/${product.id}`);
                 }, 900);
@@ -274,12 +275,23 @@ const Wrapper = styled.div`
     margin: 0 0 32px;
   }
 `;
-const LoaderOverlay = styled.div`
+const FilterLoaderOverlay = styled.div`
   position: fixed;
-  top: ${(props) => (props.scrollDirection === "down" ? "0" : "81.4px")};
+  /* top: ${(props) =>
+    props.scrollDirection === "down" ? "0px" : "81.4px"}; */
+  top: ${(props) =>
+    props.scrollDirection === "down"
+      ? "0px"
+      : props.windowHeight === 0
+      ? "111px"
+      : "81.4px"};
   transition: top
     ${(props) =>
-      props.scrollDirection === "down" ? "0.1s ease-in" : "0.22s ease-out"};
+      props.scrollDirection === "down"
+        ? "0.1s ease-in"
+        : props.windowHeight === 0
+        ? "0"
+        : "0.22s ease-out"};
   left: 0px;
   width: 100%;
   height: 100%;
@@ -296,10 +308,12 @@ const LoaderOverlay = styled.div`
     props.windowWidth > 500 ? "0" : props.isFilterOpen ? "0" : "80px"};
   z-index: 2;
 `;
-
+////////////////////////////////////////////////////////////////////////////
+// IMAGENES CUADRADAS
 const ItemImg = styled.img`
   margin: 0 auto;
   overflow: hidden;
+  width: 100%;
   transition: transform 0.19s ease-in-out 0.08s;
   cursor: pointer;
   mix-blend-mode: darken;
@@ -309,27 +323,63 @@ const ImgWrapper = styled.div`
   position: relative;
   background-color: rgb(239, 237, 237);
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   cursor: pointer;
-  /* align-items: flex-start; */
   &:hover ${ItemImg} {
     transform: scale(1.11);
   }
 `;
 
-const InfoWrapper = styled.div`
+const ItemCard = styled.div`
+  color: black;
+  background-color: rgb(239 237 237);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  padding: 1px 0px 13px 33px;
-  /* background-color: rgb(239 237 237); */
-  @media (max-width: 600px) {
-    padding: 0px 0px 0px 18px;
-  }
+  aspect-ratio: 1/1;
+  align-items: center;
+  margin-bottom: 8px;
+  justify-content: center;
 `;
+////////////////////////////////////////////////////////////////////////////
+// IMAGENES RECTANGULARES
+// const ItemImg = styled.img`
+//   max-height: 100%;
+//   max-width: 100%;
+//   object-fit: contain; /* Keeps entire image within bounds of container */
+//   transition: transform 0.19s ease-in-out 0.08s;
+//   cursor: pointer;
+//   mix-blend-mode: darken;
+// `;
+
+// const ImgWrapper = styled.div`
+//   position: relative;
+//   background-color: rgb(239, 237, 237);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden;
+//   cursor: pointer;
+
+//   &:hover ${ItemImg} {
+//     transform: scale(1.11);
+//   }
+// `;
+// const ItemCard = styled.div`
+//   color: black;
+//   background-color: rgb(239 237 237);
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   margin-bottom: 8px;
+//   width: 100%;
+//   overflow: hidden;
+// `;
+////////////////////////////////////////////////////////////////////////////
 const ItemWrapperLink = styled(Link)`
   text-decoration: none;
   margin-bottom: 10px;
@@ -352,17 +402,17 @@ const ItemWrapperLink = styled(Link)`
     min-width: ${(props) => props.imgskeleton && "100%"};
   }
 `;
-const ItemCard = styled.div`
-  color: black;
-  background-color: rgb(239 237 237);
+const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/1;
-  align-items: center;
-  margin-bottom: 8px;
-  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1px 0px 13px 33px;
+  /* background-color: rgb(239 237 237); */
+  @media (max-width: 600px) {
+    padding: 0px 0px 0px 18px;
+  }
 `;
-
 const Loader = styled.div`
   position: absolute;
   top: 90%;
@@ -451,9 +501,9 @@ const Discount = styled.h4`
 const HeaderContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: center;
-  margin-top: 32px;
-  margin-bottom: 5px;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-bottom: 20px;
   @media (max-width: 900px) {
     width: 100%;
     flex-direction: column-reverse;
@@ -515,17 +565,7 @@ const ClipLoaderBottom = styled(ClipLoader)`
   position: absolute;
   top: 106%;
 `;
-const PaginationWrapperTop = styled.div`
-  display: flex;
-  width: 33%;
-  margin: 1px 10px 21px -8px;
-  justify-content: center;
-  position: relative;
-  @media (max-width: 900px) {
-    width: 100%;
-    margin: 10px 0 15px -2px;
-  }
-`;
+
 const PaginationWrapperBottom = styled.div`
   display: flex;
   width: 100%;
@@ -564,12 +604,18 @@ const ItemListTitle = styled.h1`
     margin: 8px 0px 9px;
   }
 `;
+const FilterBy = styled.p`
+  font-weight: 500;
+  font-size: 0.85rem;
+  word-spacing: 5px;
+  letter-spacing: 1px;
+  cursor: pointer;
+`;
 const ItemsQuantity = styled.p`
-  width: 33%;
+  margin-right: 40px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(0.7rem, 1.7vw + 1px, 0.9rem);
-  margin: 6px 0 0 0;
   word-spacing: 5px;
   @media (max-width: 900px) {
     margin: 8px 0px 8px 0px;

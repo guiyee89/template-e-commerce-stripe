@@ -75,7 +75,7 @@ export const LoadingTopBar = () => {
           value={progress}
           valueBuffer={buffer}
           color="inherit"
-          sx={{ height: "4px", color: "#333" }}
+          sx={{ height: "4px", color: "#505050" }}
         />
       )}
     </BoxLoader>

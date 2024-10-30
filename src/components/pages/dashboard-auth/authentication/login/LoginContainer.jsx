@@ -47,8 +47,7 @@ export const LoginContainer = () => {
             email: res.user.email,
             rol: userDoc.data().rol,
           };
-          console.log(res.user);
-          /* console.log(userDoc.data()); */
+
           handleLogin(finallyUser);
 
           // Check if the "prevLocation" exists in localStorage
@@ -226,6 +225,7 @@ export const LoginContainer = () => {
                   </Button>
                 </Tooltip>
               </Grid>
+
               <Grid item xs={10} md={8}>
                 <Typography
                   color={"secondary.primary"}

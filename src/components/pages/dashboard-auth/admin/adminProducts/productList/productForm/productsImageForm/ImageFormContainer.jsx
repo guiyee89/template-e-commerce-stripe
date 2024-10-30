@@ -68,8 +68,8 @@ export const ImageFormContainer = ({
   const getResizedImageUrl = async (originalUrl) => {
     try {
       // Construct the URL for the resized image based on the original URL
-      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_1200x1600$1");
-
+      const resizedUrl = originalUrl.replace(/(\.[^.]*)?$/, "_982x1243$1");
+     
       // Return the resized URL
       return resizedUrl;
     } catch (error) {

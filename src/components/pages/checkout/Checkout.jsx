@@ -797,6 +797,7 @@ const CloseIconBtn = styled(CloseIcon)`
   border: 1px solid grey;
   box-shadow: rgba(0, 0, 0, 2) 0px 0px 3px;
   background-color: white;
+  z-index: 999;
   @media (max-width: 750px) {
     width: 1.1em !important;
     height: 1.1em !important;

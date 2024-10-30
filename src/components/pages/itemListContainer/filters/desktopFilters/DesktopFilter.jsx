@@ -24,11 +24,9 @@ export const DesktopFilter = ({
   selectedColorOrder,
   setSelectedColorOrder,
 }) => {
-
   return (
     <>
       <FilterHeader>
-        <FilterBy>Filters</FilterBy>
         <ResetAllBtn
           onClick={() => {
             //Reset General Filters
@@ -51,7 +49,6 @@ export const DesktopFilter = ({
         </ResetAllBtn>
       </FilterHeader>
       <FilterWrapper>
-        
         {/*      Loader Circle      */}
         <Loader>
           {loadingReset && (
@@ -59,14 +56,12 @@ export const DesktopFilter = ({
           )}
         </Loader>
 
-
         {/****************      GENERAL FILTER       ****************/}
         <GeneralDesktopFilter
           detailsFilters={detailsFilters}
           setDetailsFilters={setDetailsFilters}
           handleResetFilters={handleResetFilters}
           handleDetailsFilterChange={handleDetailsFilterChange}
-
         />
 
         {/****************      CATEGORY FILTER       ****************/}
@@ -122,11 +117,12 @@ const FilterHeader = styled.div`
   display: flex;
   width: 88%;
   -webkit-box-pack: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
   -webkit-box-align: center;
   align-items: center;
+  padding-left: 10px;
   @media (max-width: 1150px) {
     width: 92.7%;
   }
@@ -135,10 +131,7 @@ const FilterHeader = styled.div`
     padding-left: 4px;
   }
 `;
-const FilterBy = styled.p`
-  font-weight: bold;
-  margin-right: 25px;
-`;
+
 const ResetAllBtn = styled.button`
   font-size: 0.8rem;
   font-weight: 600;
