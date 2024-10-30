@@ -254,7 +254,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   max-width: ${(props) => (props.isDesktopFilterOpen ? "100%" : "1600px")};
-  padding: 2px 0px 78px;
+  padding: 0 0 78px;
   margin: 0px 0px 50px 0;
   gap: 1.1rem;
   -webkit-box-pack: center;
@@ -267,9 +267,7 @@ const Wrapper = styled.div`
   @media (max-width: 990px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (max-width: 900px) {
-    margin: 0 10px 36px 11px;
-  }
+
   @media (max-width: 500px) {
     grid-template-columns: repeat(1, 1fr);
     gap: 0.4rem;
@@ -281,10 +279,10 @@ const FilterLoaderOverlay = styled.div`
   position: fixed;
   top: ${(props) =>
     props.scrollDirection === "down"
-      ? "49px"
+      ? "0px"
       : props.windowHeight === 0
-      ? "49px"
-      : "48.4px"};
+      ? "111px"
+      : "81.4px"};
   transition: top
     ${(props) =>
       props.scrollDirection === "down"
@@ -303,7 +301,7 @@ const FilterLoaderOverlay = styled.div`
       : props.isMobileFilterOpen
       ? "center"
       : "flex-start"};
-  align-items: flex-start;
+  align-items: center;
   padding-left: ${(props) =>
     props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
   z-index: 2;
