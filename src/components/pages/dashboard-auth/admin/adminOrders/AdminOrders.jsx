@@ -158,7 +158,7 @@ export const AdminOrders = () => {
       }).fire({
         icon: "success",
         title: "Shipping confirmed!",
-        html: `Order will be shipped on <br><span style="font-weight:bold">${formattedDate}</span>`,
+        html: `Order arrival confirmed on <br><span style="font-weight:bold">${formattedDate}</span>`,
       });
 
       // Update the toggle state in the UI
@@ -486,11 +486,8 @@ const DetailsDiv = styled.div`
   cursor: pointer;
   border-radius: 8px;
   font-weight: 500;
-  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in;
-  
+
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 40px;
-    background-color: rgba(0, 0, 0, 0.06);
     font-weight: 600;
   }
 `;
@@ -499,11 +496,8 @@ const ProductsSpan = styled.span`
   align-items: center;
   cursor: pointer;
   border-radius: 8px;
-  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in;
-   
+
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 40px;
-    background-color: rgba(0, 0, 0, 0.06);
     font-weight: 500;
   }
 `;

@@ -207,7 +207,7 @@ const DropDown = styled.div`
     transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     opacity: 1;
     transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
-    top: 90px;
+    top: 106px;
     left: 0%;
     height: max-content;
   }
