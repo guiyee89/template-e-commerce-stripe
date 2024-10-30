@@ -33,8 +33,9 @@ export const ItemListContainer = () => {
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
 
   const {
-    isFilterOpen,
-    toggleFilterMenu,
+    isMobileFilterOpen,
+    isDesktopFilterOpen,
+    toggleMobileFilterMenu,
     windowWidth,
     progressComplete,
     setProgressComplete,
@@ -156,11 +157,12 @@ export const ItemListContainer = () => {
                   setCurrentPage={setCurrentPage}
                   setItemLoader={setItemLoader}
                   filteredItems={filteredItems}
-                  isFilterOpen={isFilterOpen}
-                  toggleFilterMenu={toggleFilterMenu}
+                  isMobileFilterOpen={isMobileFilterOpen}
+                  isDesktopFilterOpen={isDesktopFilterOpen}
+                  toggleMobileFilterMenu={toggleMobileFilterMenu}
                   setFilterChanged={setFilterChanged}
                 />
-                <ItemListWrapper>
+                <ItemListWrapper isDesktopFilterOpen={isDesktopFilterOpen}>
                   {/* RENDERING ITEMS */}
 
                   <ItemList
@@ -201,19 +203,23 @@ const NoProductMessage = styled.h2`
 `;
 
 const ItemListWrapper = styled.div`
-  grid-column: 2/13;
-  margin-top: -3px;
+  display: inline-block;
   width: 100%;
-  margin: 0 auto;
+  transform: ${(props) =>
+    props.isDesktopFilterOpen ? "translateX(0)" : "translateX(10px)"};
+  padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "10px")};
+  transition: transform 0.4s ease-in-out, padding-left 0.4s ease-in-out;
   position: relative;
+  @media (max-width: 1200px) {
+    margin-right: ${(props) => (props.isDesktopFilterOpen ? "0" : "20px")};
+    transition: margin-right 0.4s ease-in-out;
+  }
   @media (max-width: 900px) {
     width: 100%;
-    grid-column: 1/13;
   }
 `;
 const ItemsFiltersWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
   height: 100%;
   width: 100%;
   max-width: 1618px;
@@ -224,7 +230,6 @@ const ItemsFiltersWrapper = styled.div`
     margin-right: 10px;
   }
   @media (max-width: 900px) {
-    grid-column: 1/13;
     margin: 0 auto;
   }
 `;

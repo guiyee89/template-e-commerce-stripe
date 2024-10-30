@@ -1,6 +1,7 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const NavDesktopLinks = ({
   isDashboard,
@@ -8,6 +9,7 @@ export const NavDesktopLinks = ({
   handleNavLinkClick,
   hoveredCategory,
   setHoveredCategory,
+  scrollDirection,
 }) => {
   return (
     <>
@@ -25,7 +27,7 @@ export const NavDesktopLinks = ({
             home
           </NavLink>
         </NavList>
-        <ProductsDropDown>
+        <ProductsDropDown scrollDirection={scrollDirection}>
           <NavProductsDropDown
             onMouseEnter={() => setHoveredCategory("all-products")}
             onMouseLeave={() => setHoveredCategory("all-products")}
@@ -33,7 +35,7 @@ export const NavDesktopLinks = ({
             products
           </NavProductsDropDown>
           <ArrowDropDownIcon sx={{ marginTop: "-4px" }} />
-          <DropDown>
+          <DropDown scrollDirection={scrollDirection}>
             <DropDownContainer user={user}>
               <CategoryList
                 style={{
@@ -190,10 +192,12 @@ const ProductsDropDown = styled.div`
   align-items: center;
   justify-content: space-evenly;
 `;
+
 const DropDown = styled.div`
   visibility: hidden;
   opacity: 0;
   position: absolute;
+  top: 106px;
   background-color: rgb(253, 253, 253);
   width: 100%;
   border-top: 1px solid lightgray;
@@ -201,13 +205,13 @@ const DropDown = styled.div`
   justify-content: center;
   margin-top: -26px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 9px 15px;
+  display: ${(props) => (props.scrollDirection === "down" ? "none" : "flex")};
+
   ${ProductsDropDown}:hover & {
-    display: flex;
     visibility: visible;
-    transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     opacity: 1;
+    transition: visible 0.15s ease-in-out, transform 0.1s ease-in-out;
     transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
-    top: 106px;
     left: 0%;
     height: max-content;
   }
@@ -218,7 +222,7 @@ const DropDownContainer = styled.div`
   gap: 5rem;
   margin-bottom: 1%;
   margin-top: 0.6%;
-  margin-left: ${(props) => (props.user.rol ? "-22px" : "14px")};
+  margin-left: ${(props) => (props.user.rol ? "-30px" : "36px")};
 `;
 const CategoryContainer = styled.div`
   display: flex;

@@ -332,8 +332,8 @@ const ReferenceWrapper = styled.div`
   cursor: pointer;
   border-radius: 8px;
   font-weight: 500;
-  transition: box-shadow 0.2s ease-in, 
-    background-color 0.2s ease-in, font-weight 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in,
+    font-weight 0.2s ease-in;
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 20px;
     background-color: rgba(0, 0, 0, 0.06);

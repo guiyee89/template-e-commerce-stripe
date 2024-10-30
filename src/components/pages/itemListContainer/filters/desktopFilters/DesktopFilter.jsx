@@ -122,7 +122,7 @@ const FilterHeader = styled.div`
   border-bottom: 1px solid lightgray;
   -webkit-box-align: center;
   align-items: center;
-  padding-left: 10px;
+  padding-left: 30px;
   @media (max-width: 1150px) {
     width: 92.7%;
   }
@@ -157,6 +157,7 @@ const FilterWrapper = styled.div`
   flex-direction: column;
   height: 76.5%;
   width: 95%;
+  padding-top: 10px;
   align-items: center;
   overflow-x: hidden;
   overflow-y: auto;

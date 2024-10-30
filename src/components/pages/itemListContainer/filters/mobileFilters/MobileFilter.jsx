@@ -27,18 +27,18 @@ export const MobileFilter = ({
   selectedColorOrder,
   setSelectedColorOrder,
 }) => {
-  const { isFilterOpen, toggleFilterMenu } = useContext(GlobalToolsContext);
+  const { isMobileFilterOpen, toggleMobileFilterMenu } = useContext(GlobalToolsContext);
 
   return (
     <>
       <TransparentDiv
-        isOpen={isFilterOpen}
-        onClick={isFilterOpen ? toggleFilterMenu : null}
+        isOpen={isMobileFilterOpen}
+        onClick={isMobileFilterOpen ? toggleMobileFilterMenu : null}
       />
-      <SideFilterWrapper isFilterOpen={isFilterOpen} onClick={toggleFilterMenu}>
+      <SideFilterWrapper isMobileFilterOpen={isMobileFilterOpen} onClick={toggleMobileFilterMenu}>
         <FilterHeader>
           <CloseIcon
-            onClick={toggleFilterMenu}
+            onClick={toggleMobileFilterMenu}
             sx={{
               fontSize: "25px",
               marginTop: "15px",
@@ -149,7 +149,7 @@ const TransparentDiv = styled.div`
 const SideFilterWrapper = styled.div`
   position: fixed;
   top: 0;
-  right: ${({ isFilterOpen }) => (isFilterOpen ? "-420px" : "0")};
+  right: ${({ isMobileFilterOpen }) => (isMobileFilterOpen ? "-420px" : "0")};
   transition: right 0.3s ease-in-out;
   z-index: 2;
   max-width: 225px;

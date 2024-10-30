@@ -16,9 +16,14 @@ const GlobalToolsProvider = ({ children }) => {
     setIsMenuOpen((prevIsOpen) => !prevIsOpen);
   };
   //Manage side filters for Mobile
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
-  const toggleFilterMenu = () => {
-    setIsFilterOpen((prevIsOpen) => !prevIsOpen);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(true);
+  const toggleMobileFilterMenu = () => {
+    setIsMobileFilterOpen((prevIsOpen) => !prevIsOpen);
+  };
+  //Manage side filters for Desktop
+  const [isDesktopFilterOpen, setIsDesktopFilterOpen] = useState(true);
+  const toggleDesktopFilterMenu = () => {
+    setIsDesktopFilterOpen((prevIsOpen) => !prevIsOpen);
   };
   //Manage products dropdown on Mobile Navbar
   const [isDropDownOpen, setIsDropDownOpen] = useState(true);
@@ -41,7 +46,17 @@ const GlobalToolsProvider = ({ children }) => {
 
   //State for managing different screen Height
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
+  //State for scrolling on screenheight
   useEffect(() => {
     const handleScroll = () => setWindowHeight(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -102,8 +117,10 @@ const GlobalToolsProvider = ({ children }) => {
     toggleSideCart,
     isMenuOpen,
     toggleSideMenu,
-    isFilterOpen,
-    toggleFilterMenu,
+    isMobileFilterOpen,
+    isDesktopFilterOpen,
+    toggleMobileFilterMenu,
+    toggleDesktopFilterMenu,
     toggleDropDown,
     isDropDownOpen,
     setIsDropDownOpen,
