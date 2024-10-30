@@ -27,7 +27,8 @@ export const MobileFilter = ({
   selectedColorOrder,
   setSelectedColorOrder,
 }) => {
-  const { isMobileFilterOpen, toggleMobileFilterMenu } = useContext(GlobalToolsContext);
+  const { isMobileFilterOpen, toggleMobileFilterMenu } =
+    useContext(GlobalToolsContext);
 
   return (
     <>
@@ -35,7 +36,10 @@ export const MobileFilter = ({
         isOpen={isMobileFilterOpen}
         onClick={isMobileFilterOpen ? toggleMobileFilterMenu : null}
       />
-      <SideFilterWrapper isMobileFilterOpen={isMobileFilterOpen} onClick={toggleMobileFilterMenu}>
+      <SideFilterWrapper
+        isMobileFilterOpen={isMobileFilterOpen}
+        onClick={toggleMobileFilterMenu}
+      >
         <FilterHeader>
           <CloseIcon
             onClick={toggleMobileFilterMenu}
@@ -70,14 +74,12 @@ export const MobileFilter = ({
           </ResetAllBtn>
         </FilterHeader>
         <FilterWrapper>
-
           {/*  Loader Circle  */}
           <ResetLoader>
             {loadingReset && (
               <Ring size={40} lineWeight={6} speed={1} color="black" />
             )}
           </ResetLoader>
-
 
           {/****************      GENERAL FILTER       ****************/}
           <GeneralMobileFilter
