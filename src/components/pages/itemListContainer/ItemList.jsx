@@ -281,10 +281,10 @@ const FilterLoaderOverlay = styled.div`
   position: fixed;
   top: ${(props) =>
     props.scrollDirection === "down"
-      ? "0px"
+      ? "49px"
       : props.windowHeight === 0
-      ? "111px"
-      : "81.4px"};
+      ? "49px"
+      : "48.4px"};
   transition: top
     ${(props) =>
       props.scrollDirection === "down"
@@ -303,7 +303,7 @@ const FilterLoaderOverlay = styled.div`
       : props.isMobileFilterOpen
       ? "center"
       : "flex-start"};
-  align-items: center;
+  align-items: flex-start;
   padding-left: ${(props) =>
     props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
   z-index: 2;
