@@ -14,8 +14,9 @@ export const FilterContainer = ({
   setCurrentPage,
   setItemLoader,
   filteredItems,
-  isFilterOpen,
-  toggleFilterMenu,
+  isMobileFilterOpen,
+  isDesktopFilterOpen,
+  toggleMobileFilterMenu,
   setFilterChanged,
   isDiscountOnly,
 }) => {
@@ -263,7 +264,10 @@ export const FilterContainer = ({
   return (
     <>
       {windowWidth > 900 ? (
-        <DesktopFilterWrapper scrolled={scroll}>
+        <DesktopFilterWrapper
+          scrolled={scroll}
+          isDesktopFilterOpen={isDesktopFilterOpen}
+        >
           <DesktopFilter
             items={items}
             allItems={allItems}
@@ -287,8 +291,8 @@ export const FilterContainer = ({
         </DesktopFilterWrapper>
       ) : (
         <MobileFilterWrapper
-          isFilterOpen={isFilterOpen}
-          onClick={toggleFilterMenu}
+          isMobileFilterOpen={isMobileFilterOpen}
+          onClick={toggleMobileFilterMenu}
         >
           <MobileFilter
             items={items}
@@ -316,13 +320,38 @@ export const FilterContainer = ({
   );
 };
 const DesktopFilterWrapper = styled.aside`
-  display: flex;
-  grid-column: 1 / 2;
+  display: inline-block;
+  width: ${(props) => (props.isDesktopFilterOpen ? "25%" : "0")};
+  opacity: ${(props) => (props.isDesktopFilterOpen ? 1 : 0)};
+  transform-origin: left;
+  transition: width 0.4s ease-in-out;
+  animation: ${(props) =>
+    props.isDesktopFilterOpen
+      ? "fadeIn 0.55s ease-in"
+      : "fadeOut 0.3s ease-out"};
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
   gap: 0.5rem;
   flex-direction: column;
   margin: 5px 8px 0px 0px;
   height: 750px;
-  min-width: 250px;
+  max-width: 285px;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: start;
@@ -330,12 +359,7 @@ const DesktopFilterWrapper = styled.aside`
   position: sticky;
   top: 110px;
   background-color: rgb(253, 253, 253);
-  @media (max-width: 1200px) {
-    min-width: 228px;
-  }
-  @media (max-width: 1050px) {
-    min-width: 200px;
-  }
+
   @media (max-width: 900px) {
     display: none;
   }
@@ -343,7 +367,7 @@ const DesktopFilterWrapper = styled.aside`
 const MobileFilterWrapper = styled.div`
   position: fixed;
   top: 0;
-  right: ${({ isFilterOpen }) => (isFilterOpen ? "-420px" : "0")};
+  right: ${({ isMobileFilterOpen }) => (isMobileFilterOpen ? "-420px" : "0")};
   transition: right 0.3s ease-in-out;
   z-index: 3;
   min-width: 225px;

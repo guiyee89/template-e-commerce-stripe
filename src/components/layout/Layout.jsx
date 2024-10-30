@@ -22,7 +22,7 @@ export const Layout = () => {
 
   ////////////////////////////////////////////////////
   //SideMenu Context
-  const { isCartOpen, isMenuOpen, isFilterOpen, windowWidth } =
+  const { isCartOpen, isMenuOpen, isMobileFilterOpen, windowWidth } =
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
@@ -41,12 +41,12 @@ export const Layout = () => {
   ////////////////////////////////////////////////////
   // Prevent scrolling when the SideCart is open
   useEffect(() => {
-    if (isCartOpen && isMenuOpen && isFilterOpen) {
+    if (isCartOpen && isMenuOpen && isMobileFilterOpen) {
       document.body.style.overflow = "visible";
     } else {
       document.body.style.overflow = "hidden";
     }
-  }, [isCartOpen, isMenuOpen, isFilterOpen]);
+  }, [isCartOpen, isMenuOpen, isMobileFilterOpen]);
 
   ////////////////////////////////////////////////////
 
@@ -55,7 +55,7 @@ export const Layout = () => {
       <Wrapper
         isCartOpen={isCartOpen}
         isMenuOpen={isMenuOpen}
-        isFilterOpen={isFilterOpen}
+        isMobileFilterOpen={isMobileFilterOpen}
         windowWidth={windowWidth}
       >
         {!isHome && <LoadingTopBar />}

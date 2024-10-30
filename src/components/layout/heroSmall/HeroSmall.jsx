@@ -55,7 +55,8 @@ export const HeroSmall = () => {
 //   background-color: rgba(231, 230, 230, 0.05);
 // `;
 const Wrapper = styled.div`
-  margin: 0 auto 0;
+  margin: 0px auto;
+  position: relative;
   background-color: black;
 `;
 // const WrapperCarousel = styled.div`

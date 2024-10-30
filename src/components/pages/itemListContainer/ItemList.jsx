@@ -23,8 +23,10 @@ export const ItemList = ({
   const categoryTitle = categoryName ? categoryName : "All  Categories"; // Rendering conditional title
   const {
     isMenuOpen,
-    isFilterOpen,
-    toggleFilterMenu,
+    isMobileFilterOpen,
+    isDesktopFilterOpen,
+    toggleMobileFilterMenu,
+    toggleDesktopFilterMenu,
     windowWidth,
     windowHeight,
     setProgress,
@@ -119,11 +121,11 @@ export const ItemList = ({
     <>
       <FilterContainer
         isMenuOpen={isMenuOpen}
-        isFilterOpen={isFilterOpen}
+        isMobileFilterOpen={isMobileFilterOpen}
         scrollDirection={scrollDirection}
       >
         <FilterBtn>
-          Filters: <TuneIcon onClick={toggleFilterMenu} />
+          Filters: <TuneIcon onClick={toggleMobileFilterMenu} />
         </FilterBtn>
         <ItemListTitle style={{ display: windowWidth > "900" && "none" }}>
           {categoryTitle}
@@ -137,14 +139,13 @@ export const ItemList = ({
         <div
           style={{
             display: "flex",
-            width: "100%",
             justifyContent: "flex-end",
             alignItems: "flex-end",
-            gap: "8rem",
+            gap: "6rem",
           }}
         >
-          <FilterBy onClick={toggleFilterMenu}>
-            Hide Filters <TuneIcon />
+          <FilterBy onClick={toggleDesktopFilterMenu}>
+            {isDesktopFilterOpen ? "Hide Filters" : "Show Filters"} <TuneIcon />
           </FilterBy>
           <ItemsQuantity>{productsQuantity} Products</ItemsQuantity>
         </div>
@@ -153,7 +154,7 @@ export const ItemList = ({
       {itemLoader && ( //Loader for filters
         <FilterLoaderOverlay
           scrollDirection={scrollDirection}
-          isFilterOpen={isFilterOpen}
+          isMobileFilterOpen={isMobileFilterOpen}
           windowWidth={windowWidth}
           windowHeight={windowHeight}
           style={{ top: windowWidth < 900 && "0px" }}
@@ -161,7 +162,7 @@ export const ItemList = ({
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </FilterLoaderOverlay>
       )}
-      <Wrapper key="cart-wrapper">
+      <Wrapper key="cart-wrapper" isDesktopFilterOpen={isDesktopFilterOpen}>
         {/* Map products list */}
         {itemsToDisplay.map((product) => {
           const isLoadingDetail = loadingDetail === product.id;
@@ -251,7 +252,8 @@ export const ItemList = ({
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  max-width: 1400px;
+  width: 100%;
+  max-width: ${(props) => (props.isDesktopFilterOpen ? "100%" : "1600px")};
   padding: 2px 0px 78px;
   margin: 0px 0px 50px 0;
   gap: 1.1rem;
@@ -277,8 +279,6 @@ const Wrapper = styled.div`
 `;
 const FilterLoaderOverlay = styled.div`
   position: fixed;
-  /* top: ${(props) =>
-    props.scrollDirection === "down" ? "0px" : "81.4px"}; */
   top: ${(props) =>
     props.scrollDirection === "down"
       ? "0px"
@@ -300,12 +300,12 @@ const FilterLoaderOverlay = styled.div`
   justify-content: ${(props) =>
     props.windowWidth > 500
       ? "center"
-      : props.isFilterOpen
+      : props.isMobileFilterOpen
       ? "center"
       : "flex-start"};
   align-items: center;
   padding-left: ${(props) =>
-    props.windowWidth > 500 ? "0" : props.isFilterOpen ? "0" : "80px"};
+    props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
   z-index: 2;
 `;
 ////////////////////////////////////////////////////////////////////////////
@@ -604,7 +604,9 @@ const ItemListTitle = styled.h1`
     margin: 8px 0px 9px;
   }
 `;
-const FilterBy = styled.p`
+const FilterBy = styled.button`
+  background-color: transparent;
+  border: 0;
   font-weight: 500;
   font-size: 0.85rem;
   word-spacing: 5px;
@@ -612,7 +614,7 @@ const FilterBy = styled.p`
   cursor: pointer;
 `;
 const ItemsQuantity = styled.p`
-  margin-right: 40px;
+  margin-right: 65px;
   text-align: center;
   font-weight: 500;
   font-size: clamp(0.7rem, 1.7vw + 1px, 0.9rem);

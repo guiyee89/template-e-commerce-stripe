@@ -74,6 +74,7 @@ export const NavDesktop = () => {
                   hoveredCategory={hoveredCategory}
                   user={user}
                   isDashboard={isDashboard}
+                  scrollDirection={scrollDirection}
                 />
 
                 {/************                                      ************/}
@@ -115,6 +116,7 @@ const Nav = styled.nav`
   display: flex;
   background-color: rgb(253 253 253);
 `;
+
 const InsideNav = styled.div`
   width: 100vw;
   max-width: 1548px;
@@ -130,6 +132,7 @@ const InsideNav = styled.div`
     justify-content: flex-end;
   }
 `;
+
 const LogoDiv = styled.div`
   width: 90px;
   margin-top: 13px;
