@@ -41,11 +41,13 @@ export const ItemListContainer = () => {
     setProgressComplete,
     pageLoading,
     setPageLoading,
+    setScrollDirection,
   } = useContext(GlobalToolsContext);
 
   //////////////     //////////////    ////////////      ////////////      /////////////
   //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
   useEffect(() => {
+    setScrollDirection("up");
     setPageLoading(true);
     const delay = 300;
 
