@@ -83,6 +83,7 @@ const GlobalToolsProvider = ({ children }) => {
     console.log(scrollDirection);
     let lastScrollY = window.scrollY;
 
+    //Scroll "down" or "up"
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
         setScrollDirection("down");
