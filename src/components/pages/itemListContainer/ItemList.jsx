@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Pagination, PaginationItem } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import useScrollRestoration from "../../hooks/useScrollRestoration";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
@@ -17,8 +16,6 @@ export const ItemList = ({
   setCurrentPage,
   itemLoader,
 }) => {
-  useScrollRestoration();
-
   const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
   const categoryTitle = categoryName ? categoryName : "All  Categories"; // Rendering conditional title
   const {

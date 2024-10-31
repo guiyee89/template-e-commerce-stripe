@@ -44,9 +44,9 @@ export const ItemListContainer = () => {
     setScrollDirection,
   } = useContext(GlobalToolsContext);
 
-  //////////////     //////////////    ////////////      ////////////      /////////////
-  //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
+  // Fetch to Firestore for collection DB "Products" - Filter by CategoryName
   useEffect(() => {
+    // Mount Navbar up to avoid scrolling bug (TO-DO: Fix)
     setScrollDirection("up");
     setPageLoading(true);
     const delay = 300;
@@ -69,6 +69,7 @@ export const ItemListContainer = () => {
           );
         }
 
+        // Create new map and filter products by id and color to obtain 1 unique item to render
         const uniqueProducts = [];
         const uniqueProductsMap = new Map();
 
@@ -85,8 +86,8 @@ export const ItemListContainer = () => {
 
         uniqueProducts.push(...Array.from(uniqueProductsMap.values()));
 
-        setItems(uniqueProducts);
-        setAllItems(products);
+        setItems(uniqueProducts); //Store only 1 product to render
+        setAllItems(products); //Store all products
 
         setPageLoading(false);
         setProgressComplete(true);
@@ -100,6 +101,7 @@ export const ItemListContainer = () => {
     };
   }, [categoryName]);
 
+  //Store and handle filtered items and filter checkboxes
   const handleFilterChange = (filteredItems, detailsFilters) => {
     setItemsNotFound(false);
     if (filteredItems.length > 0) {
@@ -112,6 +114,7 @@ export const ItemListContainer = () => {
     }
   };
 
+  //Scrolling behaviour on filter change
   useEffect(() => {
     if (filterChanged) {
       window.scrollTo({ top: 0, behavior: "instant" });

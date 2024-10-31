@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Footer } from "./footer/Footer";
 import styled from "styled-components/macro";
-import useScrollRestoration from "../hooks/useScrollRestoration";
 import { SideCart } from "../pages/cart/SideCart";
 import { useContext, useEffect } from "react";
 import { GlobalToolsContext } from "../context/GlobalToolsContext";
@@ -17,8 +16,6 @@ import { NavMobile } from "./navbar/navMobile/NavMobile";
 ////////////////////////////////////////////////////
 
 export const Layout = () => {
-  //Restore scroll to top on navigation
-  useScrollRestoration();
 
   ////////////////////////////////////////////////////
   //SideMenu Context
