@@ -13,11 +13,13 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
 
+
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ScrollRestorationWrapper = ({ children }) => {
   useScrollRestoration(); // Apply the scroll restoration hook
   return <>{children}</>; // Render the children content
 };
+
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ItemListContainer = () => {
@@ -32,6 +34,8 @@ export const ItemListContainer = () => {
   const [filterChanged, setFilterChanged] = useState(false);
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
 
+
+
   const {
     isMobileFilterOpen,
     isDesktopFilterOpen,
@@ -44,15 +48,21 @@ export const ItemListContainer = () => {
     setScrollDirection,
   } = useContext(GlobalToolsContext);
 
-  //////////////     //////////////    ////////////      ////////////      /////////////
-  //FETCH TO FIRESTORE FOR COLLECTION DATABASE "products" AND FILTER BY categoryName
+
+
+  // Fetch products from Firestore "products" collection, filter by categoryName, and set items state
   useEffect(() => {
+    // Reset navbar scroll direction to avoid unwanted scroll behavior (TO-DO: Fix issue)
     setScrollDirection("up");
+
+    // Show loading indicator
     setPageLoading(true);
+
     const delay = 300;
 
     const fetchData = async () => {
       try {
+        // Retrieve "products" collection from Firestore
         const itemsCollection = collection(db, "products");
         const res = await getDocs(itemsCollection);
         const products = res.docs.map((productDoc) => ({
@@ -60,15 +70,15 @@ export const ItemListContainer = () => {
           id: productDoc.id,
         }));
 
-        // Filter and sort products
+        // Filter by selected category if categoryName is provided
         let filteredProducts = products;
-
         if (categoryName) {
           filteredProducts = filteredProducts.filter(
             (product) => product.category === categoryName
           );
         }
 
+        // New map by filtering products by productId-color combination, keeping just 1 item to render
         const uniqueProducts = [];
         const uniqueProductsMap = new Map();
 
@@ -82,35 +92,43 @@ export const ItemListContainer = () => {
             uniqueProductsMap.set(keys, product);
           }
         });
-
+        // Convert map to array
         uniqueProducts.push(...Array.from(uniqueProductsMap.values()));
 
+        // Update state with filtered unique products
         setItems(uniqueProducts);
+        // Store all products in state
         setAllItems(products);
 
+        // Hide loading indicator
         setPageLoading(false);
+        // Mark fetch as complete for progress indicator
         setProgressComplete(true);
       } catch (err) {
         console.error(err);
       }
     };
     const timer = setTimeout(fetchData, delay);
-    return () => {
-      clearTimeout(timer); // Clear the timeout if the component unmounts
-    };
+    return () => clearTimeout(timer);
   }, [categoryName]);
 
+
+
+
+  // Handle filters checkboxes on every change and store the data
   const handleFilterChange = (filteredItems, detailsFilters) => {
     setItemsNotFound(false);
     if (filteredItems.length > 0) {
-      setFilteredItems(filteredItems);
-      setDetailsFilters(detailsFilters);
+      setFilteredItems(filteredItems); // Store filtered items
+      setDetailsFilters(detailsFilters); // Store filter checkboxes
     } else {
       setFilteredItems([]);
       setDetailsFilters([]);
       setItemsNotFound(true);
     }
   };
+
+
 
   useEffect(() => {
     if (filterChanged) {
