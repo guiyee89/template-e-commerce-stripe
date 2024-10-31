@@ -52,6 +52,7 @@ export const ItemListContainer = () => {
 
   // Fetch products from Firestore "products" collection, filter by categoryName, and set items state
   useEffect(() => {
+    
     // Reset navbar scroll direction to avoid unwanted scroll behavior (TO-DO: Fix issue)
     setScrollDirection("up");
 
