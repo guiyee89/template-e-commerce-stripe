@@ -16,12 +16,8 @@ export const NavDesktop = () => {
   //////////        ////////////        ////////////        ///////////
   //                       Context                     //
   const { user } = useContext(AuthContext);
-  const { scroll, isCartOpen, scrollDirection, setScrollDirection } =
+  const { scroll, isCartOpen, scrollDirection } =
     useContext(GlobalToolsContext);
-
-  useEffect(() => {
-    setScrollDirection("up");
-  }, [scrollDirection]);
 
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
