@@ -22,6 +22,7 @@ export const NavDesktop = () => {
   useEffect(() => {
     setScrollDirection("up");
   }, [scrollDirection]);
+
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
   const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();
