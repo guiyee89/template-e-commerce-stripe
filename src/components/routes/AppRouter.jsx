@@ -9,7 +9,10 @@ import { LoginContainer } from "../pages/dashboard-auth/authentication/login/Log
 import { SignUpContainer } from "../pages/dashboard-auth/authentication/signup/SignUpContainer";
 import { ForgotPassword } from "../pages/dashboard-auth/authentication/forgotPass/ForgotPassword";
 
+
 export const AppRouter = () => {
+
+
   return (
     <Routes>
       <Route element={<Layout />}>

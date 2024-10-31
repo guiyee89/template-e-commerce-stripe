@@ -80,6 +80,7 @@ const GlobalToolsProvider = ({ children }) => {
   const [scrollDirection, setScrollDirection] = useState("up");
 
   useEffect(() => {
+    console.log(scrollDirection);
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
@@ -105,12 +106,7 @@ const GlobalToolsProvider = ({ children }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    // Reset scroll direction on route change
-    setScrollDirection("up");
-  }, [location.pathname]);
+  }, [scrollDirection]);
 
   const value = {
     isCartOpen,

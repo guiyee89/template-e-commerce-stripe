@@ -13,13 +13,11 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
 
-
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ScrollRestorationWrapper = ({ children }) => {
   useScrollRestoration(); // Apply the scroll restoration hook
   return <>{children}</>; // Render the children content
 };
-
 
 //////////////     //////////////    ////////////      ////////////      /////////////
 export const ItemListContainer = () => {
@@ -34,8 +32,6 @@ export const ItemListContainer = () => {
   const [filterChanged, setFilterChanged] = useState(false);
   const navigate = useNavigate(); //Pasamos useNavigate() como prop
 
-
-
   const {
     isMobileFilterOpen,
     isDesktopFilterOpen,
@@ -48,15 +44,10 @@ export const ItemListContainer = () => {
     setScrollDirection,
   } = useContext(GlobalToolsContext);
 
-
-
-  // Fetch products from Firestore "products" collection, filter by categoryName, and set items state
+  // Fetch to Firestore for collection DB "Products" - Filter by CategoryName
   useEffect(() => {
-    
-    // Reset navbar scroll direction to avoid unwanted scroll behavior (TO-DO: Fix issue)
+    // Mount Navbar up to avoid scrolling bug (TO-DO: Fix)
     setScrollDirection("up");
-
-    // Show loading indicator
     setPageLoading(true);
 
     const delay = 300;
@@ -79,7 +70,7 @@ export const ItemListContainer = () => {
           );
         }
 
-        // New map by filtering products by productId-color combination, keeping just 1 item to render
+        // Create new map and filter products by id and color to obtain 1 unique item to render
         const uniqueProducts = [];
         const uniqueProductsMap = new Map();
 
@@ -96,10 +87,8 @@ export const ItemListContainer = () => {
         // Convert map to array
         uniqueProducts.push(...Array.from(uniqueProductsMap.values()));
 
-        // Update state with filtered unique products
-        setItems(uniqueProducts);
-        // Store all products in state
-        setAllItems(products);
+        setItems(uniqueProducts); //Store only 1 product to render
+        setAllItems(products); //Store all products
 
         // Hide loading indicator
         setPageLoading(false);
@@ -113,10 +102,7 @@ export const ItemListContainer = () => {
     return () => clearTimeout(timer);
   }, [categoryName]);
 
-
-
-
-  // Handle filters checkboxes on every change and store the data
+  //Store and handle filtered items and filter checkboxes
   const handleFilterChange = (filteredItems, detailsFilters) => {
     setItemsNotFound(false);
     if (filteredItems.length > 0) {
@@ -129,8 +115,7 @@ export const ItemListContainer = () => {
     }
   };
 
-
-
+  //Scrolling behaviour on filter change
   useEffect(() => {
     if (filterChanged) {
       window.scrollTo({ top: 0, behavior: "instant" });
