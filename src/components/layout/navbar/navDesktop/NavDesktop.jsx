@@ -16,14 +16,17 @@ export const NavDesktop = () => {
   //////////        ////////////        ////////////        ///////////
   //                       Context                     //
   const { user } = useContext(AuthContext);
-  const { scroll, isCartOpen, scrollDirection, setScrollDirection } =
+  const { scroll, isCartOpen, scrollDirection } =
     useContext(GlobalToolsContext);
 
+<<<<<<< HEAD
   // Mount Navbar up
   useEffect(() => {
     setScrollDirection("up");
   }, [scrollDirection]);
 
+=======
+>>>>>>> main-back-up
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
   const { isCart, isDashboard, isCheckout, isHome } = useGlobalLocation();

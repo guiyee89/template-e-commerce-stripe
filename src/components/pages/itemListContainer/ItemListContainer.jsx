@@ -48,7 +48,11 @@ export const ItemListContainer = () => {
   useEffect(() => {
     // Mount Navbar up to avoid scrolling bug (TO-DO: Fix)
     setScrollDirection("up");
+<<<<<<< HEAD
     //Page Change Loader
+=======
+    //Page change loader
+>>>>>>> main-back-up
     setPageLoading(true);
 
     const delay = 300;

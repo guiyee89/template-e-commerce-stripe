@@ -82,6 +82,7 @@ const GlobalToolsProvider = ({ children }) => {
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
+    //Scroll "down" or "up"
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
         setScrollDirection("down");
@@ -91,7 +92,7 @@ const GlobalToolsProvider = ({ children }) => {
       lastScrollY = window.scrollY;
 
       // Scroll effect for navbar
-      const scrollHeight = window.innerHeight * 0.05; // 5% of screen height
+      const scrollHeight = window.innerHeight * 0.01; // 1% of screen height
 
       if (window.scrollY > scrollHeight) {
         setScroll("scrolled");
