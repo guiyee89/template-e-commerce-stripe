@@ -111,8 +111,7 @@ const LoadingScreen = styled.div`
 `;
 
 const OutletWrapper = styled.div`
-  //min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
-  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "85vh;")};
+  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
   display: flex;
   flex-direction: column;
   justify-content: center;
