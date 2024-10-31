@@ -9,7 +9,7 @@ export const useGlobalLoader = () => {
 
   //Global "Flash" Conditional
   useEffect(() => {
-    setScrollDirection();
+    setScrollDirection("up");
     setGlobalLoading(true);
     const timer = setTimeout(() => {
       setGlobalLoading(false);
