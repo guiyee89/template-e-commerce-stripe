@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { useState } from "react";
 import useGlobalLocation from "../../../hooks/useGlobalLocation";
@@ -16,8 +16,12 @@ export const NavDesktop = () => {
   //////////        ////////////        ////////////        ///////////
   //                       Context                     //
   const { user } = useContext(AuthContext);
-  const { scroll, isCartOpen, scrollDirection } =
+  const { scroll, isCartOpen, scrollDirection, setScrollDirection } =
     useContext(GlobalToolsContext);
+
+  useEffect(() => {
+    setScrollDirection("up");
+  }, [scrollDirection]);
 
   //////////////////////////////////////////////////////////////////////
   //                 useHooks                        //
