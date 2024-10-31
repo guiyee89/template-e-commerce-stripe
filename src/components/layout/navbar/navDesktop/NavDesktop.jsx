@@ -19,6 +19,7 @@ export const NavDesktop = () => {
   const { scroll, isCartOpen, scrollDirection, setScrollDirection } =
     useContext(GlobalToolsContext);
 
+  // Mount Navbar up
   useEffect(() => {
     setScrollDirection("up");
   }, [scrollDirection]);
