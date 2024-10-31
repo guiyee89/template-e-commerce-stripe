@@ -86,8 +86,6 @@ export const ItemListContainer = () => {
         setItems(uniqueProducts);
         setAllItems(products);
 
-        console.log(uniqueProducts);
-
         setPageLoading(false);
         setProgressComplete(true);
       } catch (err) {
@@ -205,7 +203,8 @@ const NoProductMessage = styled.h2`
 const ItemListWrapper = styled.div`
   display: inline-block;
   width: 100%;
-  padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "4px")};
+  padding-right: 12px;
+  padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "12px")};
   transition: padding-left 0.4s ease-in-out;
   position: relative;
   @media (max-width: 1200px) {
@@ -222,7 +221,6 @@ const ItemsFiltersWrapper = styled.div`
   width: 100%;
   max-width: 1618px;
   margin-top: 70px;
-  /* margin-right: 20px; */
   margin-bottom: 85px;
 
   @media (max-width: 900px) {

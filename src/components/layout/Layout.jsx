@@ -60,6 +60,7 @@ export const Layout = () => {
       >
         {!isHome && <LoadingTopBar />}
         <>
+        
           {globalLoading ? (
             <LoadingScreen />
           ) : (

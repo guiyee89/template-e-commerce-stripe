@@ -25,6 +25,7 @@ const GlobalToolsProvider = ({ children }) => {
   const toggleDesktopFilterMenu = () => {
     setIsDesktopFilterOpen((prevIsOpen) => !prevIsOpen);
   };
+
   //Manage products dropdown on Mobile Navbar
   const [isDropDownOpen, setIsDropDownOpen] = useState(true);
   const toggleDropDown = () => {
