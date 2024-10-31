@@ -138,7 +138,6 @@ export const FilterContainer = ({
 
   //ORDER BY - filtering logic according if filtered items or original items are being rendered
   useEffect(() => {
-    console.log(filteredItems);
     setTimeout(() => {
       if (
         detailsFilters.category.length === 0 &&
@@ -320,11 +319,24 @@ export const FilterContainer = ({
   );
 };
 const DesktopFilterWrapper = styled.aside`
-  display: inline-block;
   width: ${(props) => (props.isDesktopFilterOpen ? "25%" : "0")};
   opacity: ${(props) => (props.isDesktopFilterOpen ? 1 : 0)};
+  visibility: ${(props) => (props.isDesktopFilterOpen ? "visible" : "hidden")};
+  transform: ${(props) =>
+    props.isDesktopFilterOpen ? "translateX(0)" : "translateX(-100%)"};
+  transition: width 0.3s ease-in-out, opacity 0.2s ease-in-out,
+    visibility 0s linear 0.15s, transform 0.35s ease-in-out;
   transform-origin: left;
-  transition: width 0.4s ease-in-out;
+  margin: 10px 0 0 0;
+  height: 750px;
+  max-width: 285px;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  position: sticky;
+  top: 110px;
+  background-color: rgb(253, 253, 253);
+
   animation: ${(props) =>
     props.isDesktopFilterOpen
       ? "fadeIn 0.55s ease-in"
@@ -347,23 +359,11 @@ const DesktopFilterWrapper = styled.aside`
       opacity: 0;
     }
   }
-  gap: 0.5rem;
-  flex-direction: column;
-  margin: 5px 8px 0px 0px;
-  height: 750px;
-  max-width: 285px;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  position: sticky;
-  top: 110px;
-  background-color: rgb(253, 253, 253);
-
   @media (max-width: 900px) {
     display: none;
   }
 `;
+
 const MobileFilterWrapper = styled.div`
   position: fixed;
   top: 0;

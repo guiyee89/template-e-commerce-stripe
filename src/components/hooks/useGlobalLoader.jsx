@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-
 export const useGlobalLoader = () => {
-  
   const [globalLoading, setGlobalLoading] = useState(true);
   const location = useLocation();
 
@@ -12,12 +10,10 @@ export const useGlobalLoader = () => {
     setGlobalLoading(true);
     const timer = setTimeout(() => {
       setGlobalLoading(false);
-    }, 200);
+    }, 50);
 
     return () => clearTimeout(timer);
   }, [location]);
 
-
   return globalLoading;
 };
-
