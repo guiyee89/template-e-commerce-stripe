@@ -7,31 +7,25 @@ import { collection, getDocs } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components/macro";
-import useScrollRestoration from "../../hooks/useScrollRestoration";
 import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
+import { useGlobalLoader } from "../../hooks/useGlobalLoader";
 
-//////////////     //////////////    ////////////      ////////////      /////////////
-export const ScrollRestorationWrapper = ({ children }) => {
-  useScrollRestoration(); // Apply the scroll restoration hook
-  return <>{children}</>; // Render the children content
-};
-
-//////////////     //////////////    ////////////      ////////////      /////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//TODO: Fix scrolling bug on component mount
 export const ItemListContainer = () => {
-  const [items, setItems] = useState([]); //Guardamos los items
-  const [allItems, setAllItems] = useState([]); //Save all items to filter properly
-  const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
+  const [items, setItems] = useState([]);
+  const [allItems, setAllItems] = useState([]);
+  const { categoryName } = useParams();
   const [detailsFilters, setDetailsFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsNotFound, setItemsNotFound] = useState(false);
   const [itemLoader, setItemLoader] = useState(false);
   const [filterChanged, setFilterChanged] = useState(false);
-  const navigate = useNavigate(); //Pasamos useNavigate() como prop
-
+  const navigate = useNavigate();
   const {
     isMobileFilterOpen,
     isDesktopFilterOpen,
@@ -41,17 +35,17 @@ export const ItemListContainer = () => {
     setProgressComplete,
     pageLoading,
     setPageLoading,
-    setScrollDirection,
   } = useContext(GlobalToolsContext);
+  useGlobalLoader(); // Load screen at top + scrollbar up
 
-  // Fetch to Firestore for collection DB "Products" - Filter by CategoryName
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //* Fetch to Firestore for collection DB "Products" - Filter by CategoryName
   useEffect(() => {
-    // Mount Navbar up to avoid scrolling bug (TO-DO: Fix)
-    setScrollDirection("up");
-    //Page change loader
-    setPageLoading(true);
-    const delay = 300;
+    setPageLoading(true); //? Page change loader
+    const delay = 500;
 
+    //Fetch item data from database
     const fetchData = async () => {
       try {
         const itemsCollection = collection(db, "products");
@@ -61,7 +55,7 @@ export const ItemListContainer = () => {
           id: productDoc.id,
         }));
 
-        // Filter and sort products
+        // Filter and sort products by category
         let filteredProducts = products;
 
         if (categoryName) {
@@ -87,8 +81,8 @@ export const ItemListContainer = () => {
 
         uniqueProducts.push(...Array.from(uniqueProductsMap.values()));
 
-        setItems(uniqueProducts); //Store only 1 product to render
-        setAllItems(products); //Store all products
+        setItems(uniqueProducts); //? Store only 1 product to render
+        setAllItems(products); //? Store all products
 
         setPageLoading(false);
         setProgressComplete(true);
@@ -98,16 +92,17 @@ export const ItemListContainer = () => {
     };
     const timer = setTimeout(fetchData, delay);
     return () => {
-      clearTimeout(timer); // Clear the timeout if the component unmounts
+      clearTimeout(timer);
     };
   }, [categoryName]);
 
-  //Store and handle filtered items and filter checkboxes
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //* Store and handle filtered items and filter checkboxes
   const handleFilterChange = (filteredItems, detailsFilters) => {
     setItemsNotFound(false);
     if (filteredItems.length > 0) {
-      setFilteredItems(filteredItems);
-      setDetailsFilters(detailsFilters);
+      setFilteredItems(filteredItems); //? Store filtered items on filter
+      setDetailsFilters(detailsFilters); //? Store filter checkboxes
     } else {
       setFilteredItems([]);
       setDetailsFilters([]);
@@ -115,7 +110,7 @@ export const ItemListContainer = () => {
     }
   };
 
-  //Scrolling behaviour on filter change
+  //* Scrolling behaviour on filter change
   useEffect(() => {
     if (filterChanged) {
       window.scrollTo({ top: 0, behavior: "instant" });
@@ -123,67 +118,65 @@ export const ItemListContainer = () => {
     }
   }, [filterChanged]);
 
-  //////////////     //////////////    ////////////      ////////////      /////////////
-  //                                    RENDERING                                    //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*                                    RENDERING                                   *//
   return (
     <>
-      <ScrollRestorationWrapper>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
-        {pageLoading ? (
-          <LoaderWrapper>
-            {windowWidth > 600 ? (
-              <Ring size={30} lineWeight={6} speed={1} color="black" />
-            ) : (
-              <Ring size={27} lineWeight={6} speed={1} color="black" />
-            )}
-          </LoaderWrapper>
-        ) : (
-          <>
-            {/******  FILTER  ******/}
-            {progressComplete && (
-              <ItemsFiltersWrapper>
-                <FilterContainer
-                  items={items}
-                  allItems={allItems}
-                  onFilterChange={handleFilterChange}
-                  setCurrentPage={setCurrentPage}
-                  setItemLoader={setItemLoader}
+      {pageLoading ? (
+        <LoaderWrapper>
+          {windowWidth > 600 ? (
+            <Ring size={30} lineWeight={6} speed={1} color="black" />
+          ) : (
+            <Ring size={27} lineWeight={6} speed={1} color="black" />
+          )}
+        </LoaderWrapper>
+      ) : (
+        <>
+          {/******  FILTER  ******/}
+          {progressComplete && (
+            <ItemsFiltersWrapper>
+              <FilterContainer
+                items={items}
+                allItems={allItems}
+                onFilterChange={handleFilterChange}
+                setCurrentPage={setCurrentPage}
+                setItemLoader={setItemLoader}
+                filteredItems={filteredItems}
+                isMobileFilterOpen={isMobileFilterOpen}
+                isDesktopFilterOpen={isDesktopFilterOpen}
+                toggleMobileFilterMenu={toggleMobileFilterMenu}
+                setFilterChanged={setFilterChanged}
+              />
+              <ItemListWrapper isDesktopFilterOpen={isDesktopFilterOpen}>
+                {/* RENDERING ITEMS */}
+
+                <ItemList
                   filteredItems={filteredItems}
-                  isMobileFilterOpen={isMobileFilterOpen}
-                  isDesktopFilterOpen={isDesktopFilterOpen}
-                  toggleMobileFilterMenu={toggleMobileFilterMenu}
-                  setFilterChanged={setFilterChanged}
+                  navigate={navigate}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  itemLoader={itemLoader}
+                  detailsFilters={detailsFilters}
                 />
-                <ItemListWrapper isDesktopFilterOpen={isDesktopFilterOpen}>
-                  {/* RENDERING ITEMS */}
-
-                  <ItemList
-                    filteredItems={filteredItems}
-                    navigate={navigate}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    itemLoader={itemLoader}
-                    detailsFilters={detailsFilters}
-                  />
-                </ItemListWrapper>
-              </ItemsFiltersWrapper>
-            )}
-          </>
-        )}
-        {/* <AgregarDocs /> */}
-      </ScrollRestorationWrapper>
+              </ItemListWrapper>
+            </ItemsFiltersWrapper>
+          )}
+        </>
+      )}
+      {/* <AgregarDocs /> */}
     </>
   );
 };

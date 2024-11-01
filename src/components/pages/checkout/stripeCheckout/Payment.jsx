@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import { PaymentElementCheckout } from "./PaymentElementCheckout";
 import { CartContext } from "../../../context/CartContext";
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const Payment = ({ shipmentCost }) => {
   const { cart, getTotalPrice } = useContext(CartContext);
   const [publishableKey, setPublishableKey] = useState(null);
@@ -16,6 +17,7 @@ export const Payment = ({ shipmentCost }) => {
   const [isFormLoading, setIsFormLoading] = useState(true);
   const total = getTotalPrice();
 
+  /////////////////////////////////////////////////////////////
   useEffect(() => {
     const fetchConfig = async () => {
       try {
@@ -68,6 +70,7 @@ export const Payment = ({ shipmentCost }) => {
     AOS.init();
   }, []);
 
+  ////////////////////////////////////////////////////////////////
   return (
     <div>
       {stripePromise && clientSecret && (

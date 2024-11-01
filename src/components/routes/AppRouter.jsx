@@ -8,11 +8,11 @@ import { UserOrders } from "../pages/dashboard-auth/user/UserOrders";
 import { LoginContainer } from "../pages/dashboard-auth/authentication/login/LoginContainer";
 import { SignUpContainer } from "../pages/dashboard-auth/authentication/signup/SignUpContainer";
 import { ForgotPassword } from "../pages/dashboard-auth/authentication/forgotPass/ForgotPassword";
-
-
+import { useGlobalLoader } from "../hooks/useGlobalLoader";
+////////////////////////////////////////////////////
 export const AppRouter = () => {
-
-
+  useGlobalLoader();
+  ////////////////////////////////////////////////////
   return (
     <Routes>
       <Route element={<Layout />}>
