@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import styled from "styled-components/macro";
 
-
 export const LoadingTopBar = () => {
   const {
     progress,
@@ -75,7 +74,7 @@ export const LoadingTopBar = () => {
           value={progress}
           valueBuffer={buffer}
           color="inherit"
-          sx={{ height: "4px", color: "#505050" }}
+          sx={{ height: "5px", color: "#505050" }}
         />
       )}
     </BoxLoader>

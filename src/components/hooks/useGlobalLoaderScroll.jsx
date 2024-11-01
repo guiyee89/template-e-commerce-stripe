@@ -16,14 +16,14 @@ export const useGlobalLoaderScroll = () => {
     if (scrollDirection === "down") {
       setScrollDirection("up");
     }
-  }, []);
+  }, [location]);
   ////////////////////////////////////////////////////
   useEffect(() => {
     // Global "Flash" loading state
     setGlobalLoadingScroll(true);
     const timer = setTimeout(() => {
       setGlobalLoadingScroll(false);
-    }, 200);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, [location]);
