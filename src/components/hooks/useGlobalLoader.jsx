@@ -10,10 +10,6 @@ export const useGlobalLoader = () => {
 
   ////////////////////////////////////////////////////
   useEffect(() => {
-<<<<<<< HEAD
-    setScrollDirection("up");
-=======
->>>>>>> user-orders
     setGlobalLoading(true);
     // Scroll restoration logic
     setScrollDirection("up");
