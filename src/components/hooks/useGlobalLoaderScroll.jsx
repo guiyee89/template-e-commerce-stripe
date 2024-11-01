@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { GlobalToolsContext } from "../context/GlobalToolsContext";
 
 ////////////////////////////////////////////////////
+//! Used on Layout - ItemListContainer - AppRouter
 export const useGlobalLoaderScroll = () => {
   const [globalLoadingScroll, setGlobalLoadingScroll] = useState(true);
   const location = useLocation();
