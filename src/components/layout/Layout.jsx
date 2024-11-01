@@ -76,7 +76,6 @@ export const Layout = () => {
               ) : (
                 <NavMobile />
               )}
-
               <SideCart />
 
               <HeroWrapper>{isHome && <HeroLanding />}</HeroWrapper>
