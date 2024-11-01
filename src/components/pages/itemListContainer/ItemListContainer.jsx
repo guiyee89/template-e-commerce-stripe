@@ -44,7 +44,7 @@ export const ItemListContainer = () => {
   //* Fetch to Firestore for collection DB "Products" - Filter by CategoryName
   useEffect(() => {
     setPageLoading(true); //? Page change loader
-    const delay = 500;
+    const delay = 300;
 
     //Fetch item data from database
     const fetchData = async () => {

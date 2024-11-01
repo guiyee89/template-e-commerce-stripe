@@ -77,7 +77,7 @@ const GlobalToolsProvider = ({ children }) => {
   //////////        ////////////        ////////////        ///////////
   //                       Scroll Effect                      //
   const [scroll, setScroll] = useState("not-scrolled");
-  const [scrollDirection, setScrollDirection] = useState("up");
+  const [scrollDirection, setScrollDirection] = useState("");
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
