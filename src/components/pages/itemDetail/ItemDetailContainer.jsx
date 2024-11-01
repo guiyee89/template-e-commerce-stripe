@@ -8,12 +8,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import useScrollRestoration from "../../hooks/useScrollRestoration";
 import { bouncy } from "ldrs";
 bouncy.register();
 
+////////////////////////////////////////////////////
 export const ItemDetailContainer = () => {
-  useScrollRestoration();
   const [selectedItem, setSelectedItem] = useState({});
   const { id } = useParams();
   const [loadingColorFilter, setLoadingColorFilter] = useState(false); //Activate image loaders on color filter
@@ -27,6 +26,7 @@ export const ItemDetailContainer = () => {
     progress,
   } = useContext(GlobalToolsContext);
 
+  ////////////////////////////////////////////////////
   // ENCONTRAMOS PRODUCTO POR "ID" Y BUSCAMOS MAS ITEMS QUE COINCIDAN EN "productId" PARA RENDERIZAR
   useEffect(() => {
     setPageLoading(true);
@@ -61,6 +61,7 @@ export const ItemDetailContainer = () => {
     };
   }, [id]);
 
+  ////////////////////////////////////////////////////
   return (
     <>
       <ToastContainer
