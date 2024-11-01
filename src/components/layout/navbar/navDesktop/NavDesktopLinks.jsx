@@ -47,7 +47,7 @@ export const NavDesktopLinks = ({
                 <CategoryLink
                   style={{
                     fontWeight: "600",
-                    fontSize: ".74rem",
+                    fontSize: ".8rem",
                     textDecoration: "underline",
                     position: "absolute",
                     right: "-75px",
@@ -187,10 +187,11 @@ const ProductsDropDown = styled.div`
   cursor: pointer;
   display: flex;
   height: 100%;
+  width: 160px;
   padding: 3px 15px 0px 22px;
   -webkit-box-align: center;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 const DropDown = styled.div`
@@ -348,7 +349,7 @@ const CategoryLink = styled(Link)`
   font-weight: 500;
   text-transform: capitalize;
   position: relative;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   background-image: linear-gradient(to right, transparent 0%, #ecf0f8 100%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
