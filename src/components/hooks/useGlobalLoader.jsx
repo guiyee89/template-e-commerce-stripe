@@ -13,7 +13,7 @@ export const useGlobalLoader = () => {
     setGlobalLoading(true);
     // Scroll restoration logic
     setScrollDirection("up");
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({ top: -0, behavior: "instant" });
     // Global "Flash" loading state
     const timer = setTimeout(() => {
       setGlobalLoading(false);
