@@ -11,7 +11,7 @@ import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
-import { useGlobalLoader } from "../../hooks/useGlobalLoader";
+import { useGlobalLoaderScroll } from "../../hooks/useGlobalLoaderScroll";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //TODO: Fix scrolling bug on component mount
@@ -36,7 +36,8 @@ export const ItemListContainer = () => {
     pageLoading,
     setPageLoading,
   } = useContext(GlobalToolsContext);
-  useGlobalLoader(); // Load screen at top + scrollbar up
+  
+  useGlobalLoaderScroll(); // Load screen at top + scrollbar up
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
