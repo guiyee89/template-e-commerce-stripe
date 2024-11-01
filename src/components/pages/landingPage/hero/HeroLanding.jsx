@@ -115,7 +115,7 @@ const StyledCarousel = styled(Carousel)`
   }
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
-    background-color: rgba(0, 0, 0, 0.55);
+    //background-color: rgba(0, 0, 0, 0.55);
     border-radius: 50%;
     width: 2.1rem;
     height: 2.1rem;

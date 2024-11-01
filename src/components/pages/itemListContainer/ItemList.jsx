@@ -134,7 +134,7 @@ export const ItemList = ({
         </ItemListTitle>
       </FilterContainer>
 
-      <HeaderContainer>
+      <HeaderContainer fadeIn={fadeIn}>
         <ItemListTitle style={{ display: windowWidth < "901" && "none" }}>
           {categoryTitle}
         </ItemListTitle>
@@ -546,6 +546,8 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   margin-top: 40px;
   margin-bottom: 20px;
+  opacity: ${(props) => (props.fadeIn ? 1 : 0)};
+  transition: opacity 0.3s ease-in;
   @media (max-width: 900px) {
     width: 100%;
     flex-direction: column-reverse;
@@ -638,6 +640,7 @@ const ItemListTitle = styled.h1`
   font-size: clamp(0.8rem, 2vw + 1px, 1.6rem);
   font-weight: bold;
   text-transform: capitalize;
+
   @media (max-width: 900px) {
     width: 100%;
     margin: auto;

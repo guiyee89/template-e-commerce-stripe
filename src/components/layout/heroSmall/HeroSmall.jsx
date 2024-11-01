@@ -29,18 +29,18 @@ export const HeroSmall = () => {
           <Carousel.Item>
             <Banner>
               <BannerText isOpen={isOpen}>
-                All discounts... up to
+                <Span>Subscribe</Span> to our newsletter and get
                 {/* <br /> */}
-                <Span> 25%off</Span>
+                <Span> 5% off</Span>
               </BannerText>
             </Banner>
           </Carousel.Item>
           <Carousel.Item>
             <Banner>
               <BannerText isOpen={isOpen}>
-                Subscribe to our newsletter and get
+                All discounts... up to
                 {/* <br /> */}
-                <Span> 5%off</Span>
+                <Span> 25% off</Span>
               </BannerText>
             </Banner>
           </Carousel.Item>
