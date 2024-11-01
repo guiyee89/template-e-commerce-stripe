@@ -16,7 +16,6 @@ import { NavMobile } from "./navbar/navMobile/NavMobile";
 ////////////////////////////////////////////////////
 
 export const Layout = () => {
-
   ////////////////////////////////////////////////////
   //SideMenu Context
   const { isCartOpen, isMenuOpen, isMobileFilterOpen, windowWidth } =
@@ -57,7 +56,6 @@ export const Layout = () => {
       >
         {!isHome && <LoadingTopBar />}
         <>
-        
           {globalLoading ? (
             <LoadingScreen />
           ) : (
@@ -97,19 +95,18 @@ export const Layout = () => {
 };
 
 const Wrapper = styled.div`
-  // min-height: 100%;
+  //min-height: 100%;
   overflow-x: clip;
   padding: ${({ isCartOpen, windowWidth }) =>
     windowWidth > 830 ? (isCartOpen ? "0" : "0 17px 0 0") : "0"};
 `;
 
 const LoadingScreen = styled.div`
-  max-height: 100vh;
+  height: 100vh;
 `;
 
 const OutletWrapper = styled.div`
-  //min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
-  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "85vh;")};
+  min-height: ${({ isCheckout }) => (isCheckout ? "auto" : "100vh;")};
   display: flex;
   flex-direction: column;
   justify-content: center;
