@@ -7,7 +7,7 @@ import { GlobalToolsContext } from "../context/GlobalToolsContext";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { NewsLetter } from "./newsletter/NewsLetter";
-import { useGlobalLoader } from "../hooks/useGlobalLoader";
+import { useGlobalLoaderScroll } from "../hooks/useGlobalLoaderScroll";
 import { HeroSmall } from "./heroSmall/HeroSmall";
 import useGlobalLocation from "../hooks/useGlobalLocation";
 import { NavDesktop } from "./navbar/navDesktop/NavDesktop";
@@ -22,7 +22,7 @@ export const Layout = () => {
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
-  const globalLoading = useGlobalLoader(); //Flash loading effect
+  const globalLoadingScroll = useGlobalLoaderScroll(); //Flash loading effect
 
   ////////////////////////////////////////////////////
   const {
@@ -56,7 +56,7 @@ export const Layout = () => {
       >
         {!isHome && <LoadingTopBar />}
         <>
-          {globalLoading ? (
+          {globalLoadingScroll ? (
             <LoadingScreen />
           ) : (
             <>
