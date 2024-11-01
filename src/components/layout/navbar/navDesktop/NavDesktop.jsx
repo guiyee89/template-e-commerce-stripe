@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { useState } from "react";
 import useGlobalLocation from "../../../hooks/useGlobalLocation";

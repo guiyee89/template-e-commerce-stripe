@@ -85,7 +85,7 @@ export const ItemList = ({
 
   useEffect(() => {
     if (!initialMountRef.current) {
-      window.scrollTo({ top: 100, behavior: "instant" });
+      window.scrollTo({ top: 0, behavior: "instant" });
     } else {
       initialMountRef.current = false;
     }
