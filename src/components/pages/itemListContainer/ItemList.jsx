@@ -18,6 +18,7 @@ export const ItemList = ({
 }) => {
   const { categoryName } = useParams(); //useParams de react-router-dom para filtrar productos por categoryName
   const categoryTitle = categoryName ? categoryName : "All  Categories"; // Rendering conditional title
+  const [fadeIn, setFadeIn] = useState(false);
   const {
     isMenuOpen,
     isMobileFilterOpen,
@@ -113,6 +114,10 @@ export const ItemList = ({
     }, 550);
   }, []);
 
+  useEffect(() => {
+    setFadeIn(true); // Trigger opacity change on mount
+  }, []);
+
   ///////////////////////////                  /////////////////////////////
   return (
     <>
@@ -159,7 +164,11 @@ export const ItemList = ({
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </FilterLoaderOverlay>
       )}
-      <Wrapper key="cart-wrapper" isDesktopFilterOpen={isDesktopFilterOpen}>
+      <Wrapper
+        key="cart-wrapper"
+        isDesktopFilterOpen={isDesktopFilterOpen}
+        fadeIn={fadeIn}
+      >
         {/* Map products list */}
         {itemsToDisplay.map((product) => {
           const isLoadingDetail = loadingDetail === product.id;
@@ -258,6 +267,8 @@ const Wrapper = styled.div`
   justify-items: center;
   align-items: center;
   background-color: rgb(253 253 253);
+  opacity: ${(props) => (props.fadeIn ? 1 : 0)};
+  transition: opacity 0.9s ease-in;
   @media (max-width: 1150px) {
     gap: 0.7rem;
   }
@@ -275,7 +286,9 @@ const Wrapper = styled.div`
 const FilterLoaderOverlay = styled.div`
   position: fixed;
   top: ${(props) =>
-    props.scrollDirection === "down"
+    props.scrollDirection === ""
+      ? "111px"
+      : props.scrollDirection === "down"
       ? "0px"
       : props.windowHeight === 0
       ? "111px"
@@ -283,10 +296,12 @@ const FilterLoaderOverlay = styled.div`
   transition: top
     ${(props) =>
       props.scrollDirection === "down"
-        ? "0.1s ease-in"
+        ? "0.08s ease-in"
+        : props.scrollDirection === ""
+        ? "0.18s ease-out"
         : props.windowHeight === 0
         ? "0"
-        : "0.22s ease-out"};
+        : "0.18s ease-out"};
   left: 0px;
   width: 100%;
   height: 100%;
@@ -303,6 +318,38 @@ const FilterLoaderOverlay = styled.div`
     props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
   z-index: 2;
 `;
+
+// const FilterLoaderOverlay = styled.div`
+//   position: fixed;
+//   top: ${(props) =>
+//     props.scrollDirection === "down"
+//       ? "0px"
+//       : props.windowHeight === 0
+//       ? "111px"
+//       : "81.4px"};
+//   transition: top
+//     ${(props) =>
+//       props.scrollDirection === "down"
+//         ? "0.1s ease-in"
+//         : props.windowHeight === 0
+//         ? "0"
+//         : "0.22s ease-out"};
+//   left: 0px;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.2);
+//   display: flex;
+//   justify-content: ${(props) =>
+//     props.windowWidth > 500
+//       ? "center"
+//       : props.isMobileFilterOpen
+//       ? "center"
+//       : "flex-start"};
+//   align-items: center;
+//   padding-left: ${(props) =>
+//     props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
+//   z-index: 2;
+// `;
 ////////////////////////////////////////////////////////////////////////////
 // IMAGENES CUADRADAS
 const ItemImg = styled.img`

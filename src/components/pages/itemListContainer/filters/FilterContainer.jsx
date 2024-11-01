@@ -7,6 +7,7 @@ import { GlobalToolsContext } from "../../../context/GlobalToolsContext";
 import { MobileFilter } from "./mobileFilters/MobileFilter";
 import styled from "styled-components/macro";
 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
 export const FilterContainer = ({
   items,
   allItems,
@@ -22,8 +23,8 @@ export const FilterContainer = ({
 }) => {
   const { windowWidth } = useContext(GlobalToolsContext);
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //                       STATE FOR DIFFERENT FILTERS                        //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*                       STATE FOR DIFFERENT FILTERS                        //
   const [detailsFilters, setDetailsFilters] = useState({
     category: "",
     size: "",
@@ -35,8 +36,8 @@ export const FilterContainer = ({
   const [selectedColorOrder, setSelectedColorOrder] = useState([]);
   const { categoryName } = useParams();
 
+  //! Assuming related items are stored in a variable or fetched from a database
   const getRelatedItems = (items) => {
-    // Assuming related items are stored in a variable or fetched from a database
     return allItems.filter((relatedItem) =>
       items.some(
         (item) =>
@@ -54,10 +55,10 @@ export const FilterContainer = ({
     setSelectedColorOrder([]);
   };
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //                                FILTERING LOGIC FOR allItems                                  //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*                                FILTERING LOGIC FOR allItems                                  //
 
-  // Fetch items from Firestore Database and filter accordingly on selection
+  //! Fetch items from Firestore Database and filter accordingly on selection
   const fetchFilteredItems = async () => {
     setFilterChanged(true);
     try {
@@ -136,7 +137,7 @@ export const FilterContainer = ({
     }
   };
 
-  //ORDER BY - filtering logic according if filtered items or original items are being rendered
+  //!ORDER BY - filtering logic according if filtered items or original items are being rendered
   useEffect(() => {
     setTimeout(() => {
       if (
@@ -181,17 +182,17 @@ export const FilterContainer = ({
     }, 300);
   }, [detailsFilters]);
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //                    HANDLE FILTERED ITEMS & PASS VALUE TO ItemListContainer                    //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*                    HANDLE FILTERED ITEMS & PASS VALUE TO ItemListContainer                    *//
 
-  //Handle each filter change and pass the values
+  //!   Handle each filter change and pass the values
   const handleDetailsFilterChange = (filterName, value) => {
     setTimeout(() => {
       setDetailsFilters((prevFilters) => ({
         ...prevFilters,
         [filterName]: value,
       }));
-      setCurrentPage(1); //Set pagiination to 1 if filters changed
+      setCurrentPage(1); //Set pagination to 1 if filters changed
     }, 550);
     setItemLoader(true); //Activate Loader for filters
   };
@@ -204,17 +205,17 @@ export const FilterContainer = ({
     return array.filter((item) => item !== value);
   };
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //           LOADER            //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*           LOADER            //
   const loadingReset = false;
 
   const handleResetFilters = () => {
     setItemLoader(true); //Activate Loader for filters
   };
 
-  //////////           ////////////           ////////////           ///////////           ///////////
-  //                                MANAGING FILTERS BY localStorage                               //
-  // Load selected filters from localStorage when the component mounts
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //*                                MANAGING FILTERS BY localStorage                               //
+  //! Load selected filters from localStorage when the component mounts
   useEffect(() => {
     const storedFilters = localStorage.getItem("selectedFilters");
     const storedSizeOrder = localStorage.getItem("selectedSizeOrder");
@@ -234,7 +235,7 @@ export const FilterContainer = ({
     }
   }, []);
 
-  // Update localStorage when the detailsFilters state changes
+  //! Update localStorage when the detailsFilters state changes
   useEffect(() => {
     // Check if detailsFilters object has at least one property set
     if (Object.values(detailsFilters).some((value) => value !== "")) {
@@ -259,7 +260,7 @@ export const FilterContainer = ({
     selectedColorOrder,
   ]);
 
-  //////////           ////////////           ////////////           ///////////           ///////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <>
       {windowWidth > 900 ? (
