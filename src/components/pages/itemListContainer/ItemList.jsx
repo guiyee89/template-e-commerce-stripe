@@ -164,8 +164,8 @@ export const ItemList = ({
           <Ring size={35} lineWeight={7} speed={1} color="black" />
         </FilterLoaderOverlay>
       )}
-      <Wrapper
-        key="cart-wrapper"
+      <ItemListWrapper
+        key="item-list-wrapper"
         isDesktopFilterOpen={isDesktopFilterOpen}
         fadeIn={fadeIn}
       >
@@ -199,11 +199,18 @@ export const ItemList = ({
                   {imgskeleton === true ? (
                     <ClipLoader color="#8f501a" size={30} />
                   ) : (
-                    <ItemImg
-                      src={product.img[0]}
-                      alt={product.title}
-                      role="presentation"
-                    />
+                    <>
+                      <ItemImg
+                        src={product.img[0]}
+                        alt={product.title}
+                        role="presentation"
+                      />
+                      <ItemImgOverlay
+                        src={product.img[1]}
+                        alt={product.title}
+                        role="presentation"
+                      />
+                    </>
                   )}
                 </ImgWrapper>
                 {hasDiscount && product.discount !== null && (
@@ -234,7 +241,7 @@ export const ItemList = ({
             </ItemWrapperLink>
           );
         })}
-      </Wrapper>
+      </ItemListWrapper>
 
       {/* Pagination */}
       <PaginationWrapperBottom>
@@ -255,7 +262,7 @@ export const ItemList = ({
   );
 };
 
-const Wrapper = styled.div`
+const ItemListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
@@ -268,7 +275,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgb(253 253 253);
   opacity: ${(props) => (props.fadeIn ? 1 : 0)};
-  transition: opacity 0.9s ease-in;
+  transition: opacity 0.6s ease-in;
   @media (max-width: 1150px) {
     gap: 0.7rem;
   }
@@ -319,51 +326,12 @@ const FilterLoaderOverlay = styled.div`
   z-index: 2;
 `;
 
-// const FilterLoaderOverlay = styled.div`
-//   position: fixed;
-//   top: ${(props) =>
-//     props.scrollDirection === "down"
-//       ? "0px"
-//       : props.windowHeight === 0
-//       ? "111px"
-//       : "81.4px"};
-//   transition: top
-//     ${(props) =>
-//       props.scrollDirection === "down"
-//         ? "0.1s ease-in"
-//         : props.windowHeight === 0
-//         ? "0"
-//         : "0.22s ease-out"};
-//   left: 0px;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.2);
-//   display: flex;
-//   justify-content: ${(props) =>
-//     props.windowWidth > 500
-//       ? "center"
-//       : props.isMobileFilterOpen
-//       ? "center"
-//       : "flex-start"};
-//   align-items: center;
-//   padding-left: ${(props) =>
-//     props.windowWidth > 500 ? "0" : props.isMobileFilterOpen ? "0" : "80px"};
-//   z-index: 2;
-// `;
 ////////////////////////////////////////////////////////////////////////////
 // IMAGENES CUADRADAS
-const ItemImg = styled.img`
-  margin: 0 auto;
-  overflow: hidden;
-  width: 100%;
-  transition: transform 0.19s ease-in-out 0.08s;
-  cursor: pointer;
-  mix-blend-mode: darken;
-`;
 
 const ImgWrapper = styled.div`
   position: relative;
-  background-color: rgb(239, 237, 237);
+  background-color: rgb(118 10 10 / 0%);
   height: 100%;
   width: 100%;
   display: flex;
@@ -371,8 +339,37 @@ const ImgWrapper = styled.div`
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
-  &:hover ${ItemImg} {
-    transform: scale(1.11);
+`;
+const ItemImg = styled.img`
+  margin: 0 auto;
+  overflow: hidden;
+  width: 100%;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+  mix-blend-mode: darken;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+
+  ${ImgWrapper}:hover & {
+    opacity: 0;
+  }
+`;
+
+const ItemImgOverlay = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
+  mix-blend-mode: darken;
+
+  ${ImgWrapper}:hover & {
+    opacity: 1;
   }
 `;
 
@@ -386,6 +383,25 @@ const ItemCard = styled.div`
   margin-bottom: 8px;
   justify-content: center;
 `;
+
+const ItemWrapperLink = styled(Link)`
+  text-decoration: none;
+  margin-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 1px;
+  position: relative;
+  cursor: pointer;
+  min-width: ${(props) => props.imgskeleton && "100%"};
+  max-width: 430px;
+  height: 100%;
+
+  @media (max-width: 899px) {
+    min-width: ${(props) => props.imgskeleton && "100%"};
+  }
+  @media (max-width: 550px) {
+    min-width: ${(props) => props.imgskeleton && "100%"};
+  }
+`;
+
 ////////////////////////////////////////////////////////////////////////////
 // IMAGENES RECTANGULARES
 // const ItemImg = styled.img`
@@ -422,28 +438,7 @@ const ItemCard = styled.div`
 //   overflow: hidden;
 // `;
 ////////////////////////////////////////////////////////////////////////////
-const ItemWrapperLink = styled(Link)`
-  text-decoration: none;
-  margin-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 1px;
-  position: relative;
-  cursor: pointer;
-  min-width: ${(props) => props.imgskeleton && "100%"};
-  max-width: 430px;
-  height: 100%;
-  &:hover {
-    ${ItemImg} {
-      transform: scale(1.11);
-      mix-blend-mode: darken;
-    }
-  }
-  @media (max-width: 899px) {
-    min-width: ${(props) => props.imgskeleton && "100%"};
-  }
-  @media (max-width: 550px) {
-    min-width: ${(props) => props.imgskeleton && "100%"};
-  }
-`;
+
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -624,7 +619,7 @@ const PaginationWrapperBottom = styled.div`
 const PaginationBtn = styled(Pagination)`
   background-color: #d3d3d385;
   .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
     :hover {
       background-color: rgba(0, 0, 0, 0.3);
     }
