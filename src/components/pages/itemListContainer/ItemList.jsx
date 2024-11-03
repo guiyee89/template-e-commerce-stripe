@@ -194,29 +194,29 @@ export const ItemList = ({
                   <Ring size={20} lineWeight={5} speed={1} color="black" />
                 )}
               </Loader>
-              <ItemCard>
-                <ImgWrapper>
-                  {imgskeleton === true ? (
-                    <ClipLoader color="#8f501a" size={30} />
-                  ) : (
-                    <>
-                      <ItemImg
-                        src={product.img[0]}
-                        alt={product.title}
-                        role="presentation"
-                      />
-                      <ItemImgOverlay
-                        src={product.img[1]}
-                        alt={product.title}
-                        role="presentation"
-                      />
-                    </>
-                  )}
-                </ImgWrapper>
-                {hasDiscount && product.discount !== null && (
-                  <Discount>-{product.discount}%</Discount>
+
+              <ImgWrapper>
+                {imgskeleton === true ? (
+                  <ClipLoader color="#8f501a" size={30} />
+                ) : (
+                  <>
+                    <ItemImg
+                      src={product.img[0]}
+                      alt={product.title}
+                      role="presentation"
+                    />
+                    <ItemImgOverlay
+                      src={product.img[1]}
+                      alt={product.title}
+                      role="presentation"
+                    />
+                  </>
                 )}
-              </ItemCard>
+              </ImgWrapper>
+              {hasDiscount && product.discount !== null && (
+                <Discount>-{product.discount}%</Discount>
+              )}
+
               <InfoWrapper>
                 <ItemTitle>{product.title}</ItemTitle>
                 <ItemSubTitle>{product.subtitle}</ItemSubTitle>
@@ -278,6 +278,7 @@ const ItemListWrapper = styled.div`
   transition: opacity 0.6s ease-in;
   @media (max-width: 1150px) {
     gap: 0.7rem;
+    row-gap: 1.3rem;
   }
   @media (max-width: 990px) {
     grid-template-columns: repeat(2, 1fr);
@@ -329,28 +330,100 @@ const FilterLoaderOverlay = styled.div`
 ////////////////////////////////////////////////////////////////////////////
 // IMAGENES CUADRADAS
 
+// const ImgWrapper = styled.div`
+//   position: relative;
+//   background-color: rgb(118 10 10 / 0%);
+//   height: 100%;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden;
+//   cursor: pointer;
+// `;
+// const ItemImg = styled.img`
+//   position: absolute;
+//   //top: 0;
+//   margin: 0 auto;
+//   overflow: hidden;
+//   width: 100%;
+//   transition: opacity 0.3s ease-in-out;
+//   cursor: pointer;
+//   mix-blend-mode: darken;
+//   opacity: 1;
+//   object-fit: cover;
+
+//   ${ImgWrapper}:hover & {
+//     opacity: 0;
+//   }
+// `;
+
+// const ItemImgOverlay = styled.img`
+//   position: absolute;
+//   //top: 0;
+//   width: 100%;
+//   height: 100%;
+//   opacity: 0;
+//   transition: opacity 0.4s ease-in-out;
+//   cursor: pointer;
+//   mix-blend-mode: darken;
+//   object-fit: cover;
+
+//   ${ImgWrapper}:hover & {
+//     opacity: 1;
+//   }
+// `;
+
+// const ItemWrapperLink = styled(Link)`
+//   text-decoration: none;
+//   margin-bottom: 10px;
+//   box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 1px;
+//   position: relative;
+//   cursor: pointer;
+//   min-width: ${(props) => props.imgskeleton && "100%"};
+//   max-width: 430px;
+//   height: 100%;
+
+//   @media (max-width: 899px) {
+//     min-width: ${(props) => props.imgskeleton && "100%"};
+//   }
+//   @media (max-width: 550px) {
+//     min-width: ${(props) => props.imgskeleton && "100%"};
+//   }
+// `;
+
+////////////////////////////////////////////////////////////////////////////
+// IMAGENES RECTANGULARES
 const ImgWrapper = styled.div`
   position: relative;
-  background-color: rgb(118 10 10 / 0%);
-  height: 100%;
-  width: 100%;
+  background-color: rgb(239, 237, 237);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
-`;
-const ItemImg = styled.img`
-  margin: 0 auto;
-  overflow: hidden;
   width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 615px;
+
+  @media (max-width: 899px) {
+    aspect-ratio: 3/4;
+  }
+
+  @media (max-width: 550px) {
+    aspect-ratio: 1/2; // ¿¿1/1 for smaller height images ??
+  }
+`;
+
+const ItemImg = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%; // Cancelar para Mobile?
+  object-fit: cover; //Change to "contain" for CategoryName "shoes" - "bags" o imagenes cuadradas
   transition: opacity 0.3s ease-in-out;
   cursor: pointer;
-  mix-blend-mode: darken;
-  position: absolute;
-  top: 0;
-  left: 0;
   opacity: 1;
+  mix-blend-mode: darken;
 
   ${ImgWrapper}:hover & {
     opacity: 0;
@@ -359,10 +432,9 @@ const ItemImg = styled.img`
 
 const ItemImgOverlay = styled.img`
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover; //Change to "contain" for CategoryName "shoes" - "bags"  o imagenes cuadradas
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   cursor: pointer;
@@ -371,17 +443,6 @@ const ItemImgOverlay = styled.img`
   ${ImgWrapper}:hover & {
     opacity: 1;
   }
-`;
-
-const ItemCard = styled.div`
-  color: black;
-  background-color: rgb(239 237 237);
-  display: flex;
-  flex-direction: column;
-  aspect-ratio: 1/1;
-  align-items: center;
-  margin-bottom: 8px;
-  justify-content: center;
 `;
 
 const ItemWrapperLink = styled(Link)`
@@ -401,42 +462,6 @@ const ItemWrapperLink = styled(Link)`
     min-width: ${(props) => props.imgskeleton && "100%"};
   }
 `;
-
-////////////////////////////////////////////////////////////////////////////
-// IMAGENES RECTANGULARES
-// const ItemImg = styled.img`
-//   max-height: 100%;
-//   max-width: 100%;
-//   object-fit: contain; /* Keeps entire image within bounds of container */
-//   transition: transform 0.19s ease-in-out 0.08s;
-//   cursor: pointer;
-//   mix-blend-mode: darken;
-// `;
-
-// const ImgWrapper = styled.div`
-//   position: relative;
-//   background-color: rgb(239, 237, 237);
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   overflow: hidden;
-//   cursor: pointer;
-
-//   &:hover ${ItemImg} {
-//     transform: scale(1.11);
-//   }
-// `;
-// const ItemCard = styled.div`
-//   color: black;
-//   background-color: rgb(239 237 237);
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   margin-bottom: 8px;
-//   width: 100%;
-//   overflow: hidden;
-// `;
 ////////////////////////////////////////////////////////////////////////////
 
 const InfoWrapper = styled.div`
@@ -444,10 +469,9 @@ const InfoWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding: 1px 0px 13px 33px;
-  /* background-color: rgb(239 237 237); */
+  padding: 14px 0px 12px 32px;
   @media (max-width: 600px) {
-    padding: 0px 0px 0px 18px;
+    padding: 12px 0px 0px 18px;
   }
 `;
 const Loader = styled.div`
@@ -560,7 +584,7 @@ const FilterContainer = styled.div`
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: ${(props) => (props.scrollDirection === "down" ? "0" : "66px")};
+    top: ${(props) => (props.scrollDirection === "down" ? "23px" : "77px")};
     transition: top
       ${(props) =>
         props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"};
@@ -652,6 +676,9 @@ const FilterBy = styled.button`
   word-spacing: 5px;
   letter-spacing: 1px;
   cursor: pointer;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 const ItemsQuantity = styled.p`
   margin-right: 65px;

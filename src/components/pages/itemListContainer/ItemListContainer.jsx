@@ -210,8 +210,8 @@ const ItemListWrapper = styled.div`
   transition: padding-left 0.4s ease-in-out;
   position: relative;
   @media (max-width: 1200px) {
-    margin-right: ${(props) => (props.isDesktopFilterOpen ? "0" : "20px")};
-    transition: margin-right 0.4s ease-in-out;
+    /* margin-right: ${(props) => (props.isDesktopFilterOpen ? "0" : "20px")};
+    transition: margin-right 0.4s ease-in-out; */
   }
   @media (max-width: 900px) {
     width: 100%;
