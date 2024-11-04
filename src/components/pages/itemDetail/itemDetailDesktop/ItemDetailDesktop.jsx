@@ -73,7 +73,6 @@ export const ItemDetailDesktop = ({
     setSizeGuide(false);
   };
 
- 
   //Render item details based on the existence of selectedItem or filteredItem
   return (
     <Wrapper>
@@ -95,11 +94,11 @@ export const ItemDetailDesktop = ({
                 : selectedItem.title}
             </Title>
 
-            <SubTitle>
+            {/* <SubTitle>
               {Object.keys(filteredItem).length > 0
                 ? filteredItem.subtitle
                 : selectedItem.subtitle}
-            </SubTitle>
+            </SubTitle> */}
 
             <FilterWrapper>
               <FilterDetail
@@ -252,11 +251,11 @@ const Title = styled.h1`
   text-align: center;
   text-transform: capitalize;
 `;
-const SubTitle = styled.h2`
-  font-size: 1.3rem;
-  text-align: center;
-  text-transform: capitalize;
-`;
+// const SubTitle = styled.h2`
+//   font-size: 1.3rem;
+//   text-align: center;
+//   text-transform: capitalize;
+// `;
 const FilterWrapper = styled.div`
   width: 95%;
   display: flex;

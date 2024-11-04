@@ -7,11 +7,12 @@ import { GlobalToolsContext } from "../context/GlobalToolsContext";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { NewsLetter } from "./newsletter/NewsLetter";
-import { useGlobalLoaderScroll } from "../hooks/useGlobalLoaderScroll";
+import { useGlobalLoaderScreen } from "../hooks/useGlobalLoaderScreen";
 import { HeroSmall } from "./heroSmall/HeroSmall";
 import useGlobalLocation from "../hooks/useGlobalLocation";
 import { NavDesktop } from "./navbar/navDesktop/NavDesktop";
 import { NavMobile } from "./navbar/navMobile/NavMobile";
+import { LoadingScreen } from "./loadingScreen/LoadingScreen";
 
 ////////////////////////////////////////////////////
 
@@ -22,7 +23,7 @@ export const Layout = () => {
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
-  const globalLoadingScroll = useGlobalLoaderScroll(); //Flash loading effect
+  const globalLoadingScreen = useGlobalLoaderScreen(); //Flash loading effect
 
   ////////////////////////////////////////////////////
   const {
@@ -48,17 +49,17 @@ export const Layout = () => {
 
   return (
     <>
-      <Wrapper
-        isCartOpen={isCartOpen}
-        isMenuOpen={isMenuOpen}
-        isMobileFilterOpen={isMobileFilterOpen}
-        windowWidth={windowWidth}
-      >
-        {!isHome && <LoadingTopBar />}
+      {globalLoadingScreen ? (
+        <LoadingScreen />
+      ) : (
         <>
-          {globalLoadingScroll ? (
-            <LoadingScreen />
-          ) : (
+          <Wrapper
+            isCartOpen={isCartOpen}
+            isMenuOpen={isMenuOpen}
+            isMobileFilterOpen={isMobileFilterOpen}
+            windowWidth={windowWidth}
+          >
+            {!isHome && <LoadingTopBar />}
             <>
               {!isDashboard &&
                 !isCheckout &&
@@ -86,22 +87,18 @@ export const Layout = () => {
               {!isDashboard && <NewsLetter />}
               <Footer />
             </>
-          )}
+          </Wrapper>
         </>
-      </Wrapper>
+      )}
     </>
   );
 };
 
 const Wrapper = styled.div`
-  //min-height: 100%;
+  min-height: 100vh;
   overflow-x: clip;
   padding: ${({ isCartOpen, windowWidth }) =>
     windowWidth > 830 ? (isCartOpen ? "0" : "0 17px 0 0") : "0"};
-`;
-
-const LoadingScreen = styled.div`
-  height: 100vh;
 `;
 
 const OutletWrapper = styled.div`

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { db } from "../../../../../firebaseConfig";
 import { ProductList } from "./productList/ProductList";
 import { Ring } from "@uiball/loaders";
-//import { DeleteImages } from "./productList/deleteImages/DeleteImages";
+import { DeleteImages } from "./productList/deleteImages/DeleteImages";//!Button for erasing Imgs from Database storage
 
 export const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -64,7 +64,7 @@ export const AdminProducts = () => {
           gridColumn: "2/7",
         }}
       >
-        {/* <DeleteImages /> */}
+        <DeleteImages />
         <ProductList
           products={products}
           setIsChanged={handleIsChanged}

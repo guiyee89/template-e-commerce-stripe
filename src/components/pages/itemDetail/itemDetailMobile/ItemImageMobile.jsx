@@ -166,13 +166,13 @@ const StyledCarousel = styled(Carousel)`
     opacity: 1;
   }
   .carousel-control-next {
-    right: -10px;
+    right: -20px;
   }
   .carousel-control-next-icon {
     background-image: url(${NextButtonSVG});
   }
   .carousel-control-prev {
-    left: -10px;
+    left: -20px;
     z-index: 0;
   }
   .carousel-control-prev-icon {
@@ -181,7 +181,7 @@ const StyledCarousel = styled(Carousel)`
 `;
 const CarouselItem = styled(Carousel.Item)`
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 3/4;
 `;
 const MainImgWrapper = styled.div`
   display: flex;
