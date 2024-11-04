@@ -11,10 +11,10 @@ import { Ring } from "@uiball/loaders";
 import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
-import { useGlobalLoaderScroll } from "../../hooks/useGlobalLoaderScroll";
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-//TODO: Fix scrolling bug on component mount
+
 export const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
@@ -36,15 +36,13 @@ export const ItemListContainer = () => {
     pageLoading,
     setPageLoading,
   } = useContext(GlobalToolsContext);
-  
-  useGlobalLoaderScroll(); // Load screen at top + scrollbar up
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //* Fetch to Firestore for collection DB "Products" - Filter by CategoryName
   useEffect(() => {
     setPageLoading(true); //? Page change loader
-    const delay = 300;
+    const delay = 400;
 
     //Fetch item data from database
     const fetchData = async () => {
@@ -143,7 +141,7 @@ export const ItemListContainer = () => {
           {windowWidth > 600 ? (
             <Ring size={30} lineWeight={6} speed={1} color="black" />
           ) : (
-            <Ring size={27} lineWeight={6} speed={1} color="black" />
+            <Ring size={25} lineWeight={5} speed={1} color="black" />
           )}
         </LoaderWrapper>
       ) : (
@@ -185,11 +183,11 @@ export const ItemListContainer = () => {
 };
 
 const LoaderWrapper = styled.div`
-  display: flex;
+   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
-  align-items: center;
+  height: 70vh;
+  align-items: center; 
 `;
 
 const NoProductMessage = styled.h2`
@@ -209,16 +207,15 @@ const ItemListWrapper = styled.div`
   padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "12px")};
   transition: padding-left 0.4s ease-in-out;
   position: relative;
-  @media (max-width: 1200px) {
-    /* margin-right: ${(props) => (props.isDesktopFilterOpen ? "0" : "20px")};
-    transition: margin-right 0.4s ease-in-out; */
-  }
+
   @media (max-width: 900px) {
     width: 100%;
+    padding-right: 0;
   }
 `;
 const ItemsFiltersWrapper = styled.div`
   display: flex;
+  min-height: 1000px;
   height: 100%;
   width: 100%;
   max-width: 1618px;

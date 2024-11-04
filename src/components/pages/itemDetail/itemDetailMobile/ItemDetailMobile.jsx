@@ -224,6 +224,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 65%;
+  min-height: 100%;
   margin-bottom: 30px;
   @media (max-width: 820px) {
     width: 75%;

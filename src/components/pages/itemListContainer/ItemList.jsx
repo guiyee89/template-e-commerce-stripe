@@ -403,15 +403,11 @@ const ImgWrapper = styled.div`
   overflow: hidden;
   cursor: pointer;
   width: 100%;
-  aspect-ratio: 3/4;
-  max-height: 615px;
+  aspect-ratio: 4 / 5;
+  //max-height: 600px;
 
   @media (max-width: 899px) {
-    aspect-ratio: 3/4;
-  }
-
-  @media (max-width: 550px) {
-    aspect-ratio: 1/2; // ¿¿1/1 for smaller height images ??
+    aspect-ratio: 3/4; // ¿¿1/1 for smaller height images ??
   }
 `;
 
@@ -453,7 +449,7 @@ const ItemWrapperLink = styled(Link)`
   cursor: pointer;
   min-width: ${(props) => props.imgskeleton && "100%"};
   max-width: 430px;
-  height: 100%;
+  //height: 100%;
 
   @media (max-width: 899px) {
     min-width: ${(props) => props.imgskeleton && "100%"};

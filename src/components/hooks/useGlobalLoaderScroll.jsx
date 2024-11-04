@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { GlobalToolsContext } from "../context/GlobalToolsContext";
 
+
 ////////////////////////////////////////////////////
 //! Used on Layout - ItemListContainer - AppRouter
 export const useGlobalLoaderScroll = () => {
@@ -9,6 +10,7 @@ export const useGlobalLoaderScroll = () => {
   const location = useLocation();
   const { setScrollDirection, scrollDirection } =
     useContext(GlobalToolsContext);
+
   ////////////////////////////////////////////////////
   useEffect(() => {
     // Scroll restoration logic
@@ -17,11 +19,13 @@ export const useGlobalLoaderScroll = () => {
       setScrollDirection("up");
     }
   }, [location]);
+
   ////////////////////////////////////////////////////
   useEffect(() => {
     // Global "Flash" loading state
     setGlobalLoadingScroll(true);
     const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
       setGlobalLoadingScroll(false);
     }, 400);
 

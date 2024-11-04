@@ -12,6 +12,7 @@ import { HeroSmall } from "./heroSmall/HeroSmall";
 import useGlobalLocation from "../hooks/useGlobalLocation";
 import { NavDesktop } from "./navbar/navDesktop/NavDesktop";
 import { NavMobile } from "./navbar/navMobile/NavMobile";
+import { LoadingScreen } from "./loadingScreen/LoadingScreen";
 
 ////////////////////////////////////////////////////
 
@@ -48,17 +49,17 @@ export const Layout = () => {
 
   return (
     <>
-      <Wrapper
-        isCartOpen={isCartOpen}
-        isMenuOpen={isMenuOpen}
-        isMobileFilterOpen={isMobileFilterOpen}
-        windowWidth={windowWidth}
-      >
-        {!isHome && <LoadingTopBar />}
+      {globalLoadingScroll ? (
+        <LoadingScreen />
+      ) : (
         <>
-          {globalLoadingScroll ? (
-            <LoadingScreen />
-          ) : (
+          <Wrapper
+            isCartOpen={isCartOpen}
+            isMenuOpen={isMenuOpen}
+            isMobileFilterOpen={isMobileFilterOpen}
+            windowWidth={windowWidth}
+          >
+            {!isHome && <LoadingTopBar />}
             <>
               {!isDashboard &&
                 !isCheckout &&
@@ -86,22 +87,18 @@ export const Layout = () => {
               {!isDashboard && <NewsLetter />}
               <Footer />
             </>
-          )}
+          </Wrapper>
         </>
-      </Wrapper>
+      )}
     </>
   );
 };
 
 const Wrapper = styled.div`
-  //min-height: 100%;
+  min-height: 100vh;
   overflow-x: clip;
   padding: ${({ isCartOpen, windowWidth }) =>
     windowWidth > 830 ? (isCartOpen ? "0" : "0 17px 0 0") : "0"};
-`;
-
-const LoadingScreen = styled.div`
-  height: 100vh;
 `;
 
 const OutletWrapper = styled.div`

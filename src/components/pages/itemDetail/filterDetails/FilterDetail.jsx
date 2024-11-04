@@ -94,7 +94,7 @@ export const FilterDetail = ({
 
   const renderSizes = () => {
     const customStringSizes = ["xs", "s", "m", "l", "xl", "xxl"];
-    const customNumberSizes = [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5 , 8, 8.5];
+    const customNumberSizes = [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5];
 
     if (typeof selectedItem.size === "string") {
       return customStringSizes;
@@ -238,7 +238,7 @@ const ColorContainer = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  margin-bottom: 16px;
+  margin: 24px auto;
   width: 100%;
   gap: 0.4rem;
   @media (max-width: 950px) {
@@ -267,23 +267,23 @@ const ColorCheckbox = styled.input.attrs({ type: "checkbox" })`
   margin-right: 8px;
   appearance: none;
   width: 76px;
-  height: 80px;
+  height: 88px;
   outline: none;
   cursor: pointer;
   &:checked {
     border: 1px solid rgb(21 26 32 / 78%);
-    border-radius: 12px;
+    border-radius: 6px;
   }
 `;
 const ColorImage = styled.img`
   width: 72px;
-  height: 76px;
+  height: 86px;
   object-fit: cover;
   position: absolute;
   right: 10px;
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.65) 0px 0px 3.5px;
+  box-shadow: rgba(0, 0, 0, 0.65) 0px 0px 3.5;
 `;
 const ColorRepresentation = styled.div``;
 
