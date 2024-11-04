@@ -55,9 +55,9 @@ export const ItemDetailContainer = () => {
         console.log(err);
       }
     };
-    const timer = setTimeout(fetchItem, delay); // Fix here: Change fetchData to fetchItem
+    const timer = setTimeout(fetchItem, delay);
     return () => {
-      clearTimeout(timer); // Clear the timeout if the component unmounts
+      clearTimeout(timer);
     };
   }, [id]);
 

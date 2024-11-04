@@ -29,7 +29,7 @@ export const HeroSmall = () => {
           <Carousel.Item>
             <Banner>
               <BannerText isOpen={isOpen}>
-                <Span>Subscribe</Span> to our newsletter and get
+                <Span>Subscribe</Span> to our newsletter.. get
                 {/* <br /> */}
                 <Span> 5% off</Span>
               </BannerText>
@@ -61,8 +61,10 @@ export const HeroSmall = () => {
 
 const Wrapper = styled.div`
   margin: 0px auto;
-  position: relative;
+  position: sticky;
+  top: 0;
   background-color: black;
+  z-index: 3;
 `;
 const WrapperCarousel = styled.div`
   margin: 0 auto;

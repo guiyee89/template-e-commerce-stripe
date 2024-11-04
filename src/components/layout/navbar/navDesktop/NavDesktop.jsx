@@ -94,7 +94,7 @@ export const NavDesktop = () => {
 
 const HeaderWrapper = styled.header`
   position: sticky;
-  top: 0;
+  top: ${({ scrolled }) => (scrolled === "scrolled" ? "16px" : "0")};
   z-index: 2;
   height: 80px;
   box-shadow: ${({ scrolled }) =>

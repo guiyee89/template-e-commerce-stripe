@@ -89,11 +89,11 @@ export const ItemDetailMobile = ({ selectedItem }) => {
               : selectedItem.title}
           </Title>
 
-          <SubTitle>
+          {/* <SubTitle>
             {Object.keys(filteredItem).length > 0
               ? filteredItem.subtitle
               : selectedItem.subtitle}
-          </SubTitle>
+          </SubTitle> */}
 
           <ItemImageMobile
             filteredItem={filteredItem}
@@ -224,6 +224,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 65%;
+  min-height: 100%;
   margin-bottom: 30px;
   @media (max-width: 820px) {
     width: 75%;
@@ -279,12 +280,12 @@ const Title = styled.h1`
   letter-spacing: -2px;
   text-transform: capitalize;
 `;
-const SubTitle = styled.h2`
-  font-size: 1.3rem;
-  text-align: center;
-  margin: 0 0 8px;
-  text-transform: capitalize;
-`;
+// const SubTitle = styled.h2`
+//   font-size: 1.3rem;
+//   text-align: center;
+//   margin: 0 0 8px;
+//   text-transform: capitalize;
+// `;
 
 const FilterWrapper = styled.div`
   width: 100%;
