@@ -444,12 +444,10 @@ const ItemImgOverlay = styled.img`
 const ItemWrapperLink = styled(Link)`
   text-decoration: none;
   margin-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 1px;
   position: relative;
   cursor: pointer;
   min-width: ${(props) => props.imgskeleton && "100%"};
   max-width: 430px;
-  //height: 100%;
 
   @media (max-width: 899px) {
     min-width: ${(props) => props.imgskeleton && "100%"};
@@ -580,7 +578,7 @@ const FilterContainer = styled.div`
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: ${(props) => (props.scrollDirection === "down" ? "23px" : "77px")};
+    top: ${(props) => (props.scrollDirection === "down" ? "24px" : "84px")};
     transition: top
       ${(props) =>
         props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"};

@@ -7,7 +7,7 @@ import { GlobalToolsContext } from "../context/GlobalToolsContext";
 import { LoadingTopBar } from "../common/loadingTopBars/LoadingTopBar";
 import { HeroLanding } from "../pages/landingPage/hero/HeroLanding";
 import { NewsLetter } from "./newsletter/NewsLetter";
-import { useGlobalLoaderScroll } from "../hooks/useGlobalLoaderScroll";
+import { useGlobalLoaderScreen } from "../hooks/useGlobalLoaderScreen";
 import { HeroSmall } from "./heroSmall/HeroSmall";
 import useGlobalLocation from "../hooks/useGlobalLocation";
 import { NavDesktop } from "./navbar/navDesktop/NavDesktop";
@@ -23,7 +23,7 @@ export const Layout = () => {
     useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
-  const globalLoadingScroll = useGlobalLoaderScroll(); //Flash loading effect
+  const globalLoadingScreen = useGlobalLoaderScreen(); //Flash loading effect
 
   ////////////////////////////////////////////////////
   const {
@@ -49,7 +49,7 @@ export const Layout = () => {
 
   return (
     <>
-      {globalLoadingScroll ? (
+      {globalLoadingScreen ? (
         <LoadingScreen />
       ) : (
         <>

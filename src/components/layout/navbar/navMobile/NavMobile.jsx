@@ -136,7 +136,7 @@ export const NavMobile = () => {
 };
 const HeaderWrapper = styled.header`
   position: sticky;
-  top: ${({ scrolled }) => (scrolled === "scrolled" ? "14px" : "0")};
+  top: ${({ scrolled }) => (scrolled === "scrolled" ? "20px" : "24px")};
   z-index: 2;
   height: 65px;
   background-color: rgb(253 253 253);

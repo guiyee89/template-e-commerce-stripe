@@ -12,7 +12,6 @@ import { useContext } from "react";
 import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 import { FilterContainer } from "./filters/FilterContainer";
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const ItemListContainer = () => {
@@ -183,11 +182,11 @@ export const ItemListContainer = () => {
 };
 
 const LoaderWrapper = styled.div`
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 70vh;
-  align-items: center; 
+  align-items: center;
 `;
 
 const NoProductMessage = styled.h2`
