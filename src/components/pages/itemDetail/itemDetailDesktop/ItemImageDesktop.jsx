@@ -73,9 +73,12 @@ export const ItemImageDesktop = ({
 
     if (loadedImages === totalImages) {
       // All non-null images are loaded
-      setProgress(100);
-      if (progress === 100) {
-        setVisible(false);
+      setProgress(99);
+      if (progress === 99) {
+        setTimeout(() => {
+          setProgress(100);
+          setVisible(false);
+        }, 1000);
       }
     }
   }, [loadedImages, setVisible]);

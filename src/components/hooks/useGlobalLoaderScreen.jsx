@@ -26,7 +26,7 @@ export const useGlobalLoaderScreen = () => {
     const timer = setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "instant" });
       setGlobalLoadingScroll(false);
-    }, 400);
+    }, 450);
 
     return () => clearTimeout(timer);
   }, [location]);
