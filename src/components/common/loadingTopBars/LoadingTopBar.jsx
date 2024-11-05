@@ -27,12 +27,12 @@ export const LoadingTopBar = () => {
         setTimeout(() => {
           if (pageLoading === false) {
             setProgress(0);
-            setBuffer(10);
+            setBuffer(20);
             setVisible(false); // Hide the progress bar
           }
-        }, 300);
+        }, 200);
       } else {
-        const diff = Math.random() * 12;
+        const diff = Math.random() * 20;
         // const diff2 = Math.random() * 15;
         let newProgress; // Ensure progress doesn't exceed 100
 
@@ -74,7 +74,7 @@ export const LoadingTopBar = () => {
           value={progress}
           valueBuffer={buffer}
           color="inherit"
-          sx={{ height: "5px", color: "#505050" }}
+          sx={{ height: "5px", color: "#9d9c9c" }}
         />
       )}
     </BoxLoader>

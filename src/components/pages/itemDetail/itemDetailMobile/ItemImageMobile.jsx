@@ -77,10 +77,12 @@ export const ItemImageMobile = ({
     }
     if (imgSkeletonLoader === false) {
       setProgress(100);
-      if (progress === 100) {
+      setProgress(99);
+      if (progress === 99) {
         setTimeout(() => {
+          setProgress(100);
           setVisible(false);
-        }, 450);
+        }, 1000);
       }
     }
   }, [imagesToRender, setProgress, setVisible]);
