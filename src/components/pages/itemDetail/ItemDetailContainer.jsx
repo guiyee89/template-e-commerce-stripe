@@ -23,7 +23,6 @@ export const ItemDetailContainer = () => {
     setVisible,
     progressComplete,
     setProgressComplete,
-    progress,
   } = useContext(GlobalToolsContext);
 
   ////////////////////////////////////////////////////
@@ -43,13 +42,10 @@ export const ItemDetailContainer = () => {
             ...response.data(),
             id: response.id,
           });
-          setTimeout(() => {
+         
             setPageLoading(false);
-            setProgressComplete(true);
-            if (progress === 100) {
-              setVisible(false);
-            }
-          }, 250); // Set loading to false, progress to 100, and progressComplete to true after a delay
+            setProgressComplete(true);  // Set loading to false, progressComplete to true => setProgress 100
+            
         });
       } catch (err) {
         console.log(err);
