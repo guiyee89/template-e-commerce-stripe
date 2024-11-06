@@ -42,6 +42,7 @@ export const NavDesktop = () => {
         scrollDirection={scrollDirection}
         scrolled={scroll}
         isDashboard={isDashboard}
+        isCheckout={isCheckout}
       >
         <Nav>
           <InsideNav
@@ -94,13 +95,11 @@ export const NavDesktop = () => {
 
 const HeaderWrapper = styled.header`
   position: sticky;
-  top: ${({ scrolled }) => (scrolled === "scrolled" ? "16px" : "0")};
+  top: ${({ scrolled, isDashboard, isCheckout }) =>
+    isDashboard || isCheckout ? "0" : scrolled === "scrolled" ? "10px" : "0"};
   z-index: 2;
   height: 80px;
-  box-shadow: ${({ scrolled }) =>
-    scrolled === "scrolled"
-      ? "rgba(0, 0, 0, 0.25) 0px 0px 1px"
-      : "rgba(0, 0, 0, 0.30) 0px 0px 2px"};
+  border-bottom: 1px solid #d3d3d35c;
   transform: translateY(
     ${({ scrollDirection, isDashboard }) =>
       isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}
@@ -119,14 +118,18 @@ const Nav = styled.nav`
 
 const InsideNav = styled.div`
   width: 100vw;
-  max-width: 1548px;
+  max-width: 1390px;
   display: flex;
+  flex-direction: ${(props) => props.isDashboard && "row-reverse"};
   margin: ${(props) => (props.isDashboard ? " 0 100px 0 0" : "0 auto ")};
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: ${(props) =>
-    props.isDashboard ? "flex-end" : "space-around"};
+    props.isCheckout ? "center" : "space-between"};
+  @media (max-width: 1500px) {
+    padding: 0 50px;
+  }
   @media screen and (max-width: 50rem) {
     padding: 0;
     justify-content: flex-end;

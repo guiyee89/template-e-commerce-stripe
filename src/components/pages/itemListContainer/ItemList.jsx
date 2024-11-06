@@ -141,9 +141,10 @@ export const ItemList = ({
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
             alignItems: "flex-end",
-            gap: "6rem",
+            gap: "5rem",
+            width: "400px",
+            justifyContent: "flex-end",
           }}
         >
           <FilterBy onClick={toggleDesktopFilterMenu}>
@@ -649,7 +650,8 @@ const PaginationBtn = styled(Pagination)`
 const ItemListTitle = styled.h1`
   width: 34%;
   color: #2b2929;
-  text-align: center;
+  text-align: left;
+  padding-left: 20px;
   font-size: clamp(0.8rem, 2vw + 1px, 1.6rem);
   font-weight: bold;
   text-transform: capitalize;
@@ -675,7 +677,7 @@ const FilterBy = styled.button`
   }
 `;
 const ItemsQuantity = styled.p`
-  margin-right: 65px;
+  margin-right: 34px;
   text-align: center;
   font-weight: 500;
   font-size: clamp(0.7rem, 1.7vw + 1px, 0.9rem);
