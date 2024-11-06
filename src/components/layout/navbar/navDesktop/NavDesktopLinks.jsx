@@ -198,14 +198,13 @@ const DropDown = styled.div`
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  top: 106px;
+  top: 79px;
   background-color: rgb(253, 253, 253);
   width: 100%;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid rgb(211 211 211 / 19%);
   border-bottom: 1px solid lightgray;
   justify-content: center;
-  margin-top: -26px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 9px 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 30px;
   display: ${(props) => (props.scrollDirection === "down" ? "none" : "flex")};
 
   ${ProductsDropDown}:hover & {
@@ -250,7 +249,7 @@ const ImagesDropDown = styled.div`
   width: 190px;
   height: 210px;
   margin: 0px 20px 0px -17px;
-  border-left: 1px solid lightgrey;
+  border-left: 1px solid rgb(211 211 211 / 50%);
 `;
 const Img = styled.img`
   height: 90%;

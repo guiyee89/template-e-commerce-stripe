@@ -140,10 +140,11 @@ const HeaderWrapper = styled.header`
   z-index: 2;
   height: 65px;
   background-color: rgb(253 253 253);
-  box-shadow: ${(props) =>
+  border-bottom: 1px solid #d3d3d35c;
+  /* box-shadow: ${(props) =>
     props.scrolled === "scrolled"
       ? "rgba(0, 0, 0, 0.35) 0px 0px 2px"
-      : "rgba(0, 0, 0, 0.45) 0px 0px 2px"};
+      : "rgba(0, 0, 0, 0.45) 0px 0px 2px"}; */
   transform: translateY(
     ${({ scrollDirection, isDashboard }) =>
       isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}

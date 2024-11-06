@@ -23,7 +23,7 @@ const useGlobalLocation = () => {
     isCheckout,
     isContactUs,
     isCompletion,
-    isUserOrder
+    isUserOrder,
   };
 };
 export default useGlobalLocation;

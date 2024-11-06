@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
-import { GlobalToolsContext } from "../../context/GlobalToolsContext";
-import { useContext } from "react";
 
 export const HeroSmall = () => {
   const [index, setIndex] = useState(0);
-  const { isOpen } = useContext(GlobalToolsContext);
 
   // Function to handle the carousel interval
   useEffect(() => {
     const interval = setInterval(() => {
       // Increment the index to move to the next banner
       setIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 3000);
+    }, 553000);
 
     return () => clearInterval(interval);
   }, []);
@@ -28,7 +25,7 @@ export const HeroSmall = () => {
         <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
           <Carousel.Item>
             <Banner>
-              <BannerText isOpen={isOpen}>
+              <BannerText>
                 <Span>Subscribe</Span> to our newsletter.. get
                 {/* <br /> */}
                 <Span> 5% off</Span>
@@ -37,7 +34,7 @@ export const HeroSmall = () => {
           </Carousel.Item>
           <Carousel.Item>
             <Banner>
-              <BannerText isOpen={isOpen}>
+              <BannerText>
                 All discounts... up to
                 {/* <br /> */}
                 <Span> 25% off</Span>
@@ -46,7 +43,7 @@ export const HeroSmall = () => {
           </Carousel.Item>
           <Carousel.Item>
             <Banner>
-              <BannerText isOpen={isOpen}>
+              <BannerText>
                 Up to...
                 {/* <br /> */}
                 <Span> 4 payments with installments</Span>
@@ -65,6 +62,7 @@ const Wrapper = styled.div`
   top: 0;
   background-color: black;
   z-index: 3;
+  height: 24px;
 `;
 const WrapperCarousel = styled.div`
   margin: 0 auto;
@@ -105,8 +103,9 @@ const WrapperCarousel = styled.div`
 const Banner = styled.div`
   width: 100%;
   line-height: 1.5;
-  padding: 6px 0 6px;
-  overflow-x: hidden;
+  padding: 6px 0px;
+  height: 24px;
+  overflow: hidden;
   background: black;
   @media (max-width: 500px) {
     padding: 4px 0 4px;
@@ -120,7 +119,6 @@ const BannerText = styled.p`
   letter-spacing: 3px;
   word-spacing: 5px;
   text-align: center;
-  padding: ${({ isOpen }) => (isOpen ? "0 32px 0 33px" : "0 32px")};
   @media (max-width: 500px) {
     font-size: clamp(0.42rem, 1px + 0.78vw, 0.56rem);
     padding: 0;
