@@ -603,11 +603,9 @@ const FilterContainer = styled.div`
     position: sticky;
     margin: 0px auto 6px 0px;
     top: ${(props) => (props.scrollDirection === "down" ? "24px" : "84px")};
-    /* transition: top
-      ${(props) =>
-      props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"}; */
     transition: top
-      ${(props) => props.scrollDirection === "up" && "0.15s ease-in"};
+      ${(props) =>
+        props.scrollDirection === "up" ? "0.15s ease-in" : "0.21s ease-out"};
     z-index: 1;
     align-items: center;
     justify-content: space-between;

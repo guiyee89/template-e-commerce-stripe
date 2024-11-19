@@ -149,10 +149,9 @@ const HeaderWrapper = styled.header`
     ${({ scrollDirection, isDashboard }) =>
       isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}
   );
-
   transition: transform
     ${(props) =>
-      props.scrollDirection === "down" ? "0.1s ease-in" : "0.21s ease-out"};
+      props.scrollDirection === "up" ? "0.15s ease-in" : "0.21s ease-out"};
 `;
 const Nav = styled.nav`
   margin: 0 auto;
