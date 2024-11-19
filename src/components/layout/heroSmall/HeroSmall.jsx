@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styled from "styled-components/macro";
+import { GlobalToolsContext } from "../../context/GlobalToolsContext";
 
 export const HeroSmall = () => {
   const [index, setIndex] = useState(0);
+
+  const { isMenuOpen } = useContext(GlobalToolsContext);
 
   // Function to handle the carousel interval
   useEffect(() => {
@@ -20,7 +23,7 @@ export const HeroSmall = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper isMenuOpen={isMenuOpen}>
       <WrapperCarousel>
         <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
           <Carousel.Item>
@@ -61,7 +64,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background-color: black;
-  z-index: 3;
+  z-index: ${(props) => (props.isMenuOpen ? "3" : "2")};
   height: 24px;
 `;
 const WrapperCarousel = styled.div`
