@@ -52,7 +52,6 @@ export const NavMobile = () => {
     <>
       <HeaderWrapper
         scrolled={scroll}
-        scrollDirection={scrollDirection}
         isDashboard={isDashboard}
       >
         <Nav isFilterOpen={isFilterOpen}>
@@ -136,18 +135,11 @@ export const NavMobile = () => {
 };
 const HeaderWrapper = styled.header`
   position: sticky;
-  top: ${({ scrolled }) => (scrolled === "scrolled" ? "20px" : "20px")};
+  top: ${({ scrolled }) => (scrolled === "scrolled" ? "14px" : "20px")};
   z-index: 2;
   height: 65px;
   background-color: rgb(253 253 253);
   border-bottom: 1px solid #d3d3d35c;
-  transform: translateY(
-    ${({ scrollDirection, isDashboard }) =>
-      isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}
-  );
-  transition: transform
-    ${(props) =>
-      props.scrollDirection === "up" ? "0.15s ease-in" : "0.21s ease-out"};
 `;
 const Nav = styled.nav`
   margin: 0 auto;
