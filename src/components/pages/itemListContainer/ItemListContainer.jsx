@@ -203,12 +203,11 @@ const ItemListWrapper = styled.div`
   display: inline-block;
   width: 100%;
   padding-right: 12px;
+  padding-left: 6px;
   padding-left: ${(props) => (props.isDesktopFilterOpen ? "0" : "12px")};
   transition: padding-left 0.4s ease-in-out;
   position: relative;
-  @media (max-width: 1151px) {
-    padding-left: 6px;
-  }
+
   @media (max-width: 900px) {
     width: 100%;
     padding-right: 0;
