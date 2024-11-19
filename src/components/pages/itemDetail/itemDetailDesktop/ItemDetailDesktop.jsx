@@ -248,7 +248,6 @@ const Title = styled.h1`
   letter-spacing: -2px;
   margin-top: -11px;
   margin-bottom: -32px;
-  text-align: center;
   text-transform: capitalize;
 `;
 // const SubTitle = styled.h2`

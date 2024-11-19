@@ -244,6 +244,7 @@ const ColorContainer = styled.div`
   @media (max-width: 950px) {
     justify-content: center;
     gap: 0.2rem;
+    margin: 0px auto 24px;
   }
 `;
 const ColorImagesContainer = styled.div`
