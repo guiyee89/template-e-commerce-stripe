@@ -87,11 +87,11 @@ const GlobalToolsProvider = ({ children }) => {
       if (window.scrollY > lastScrollY) {
         setTimeout(() => {
           setScrollDirection("down");
-        }, 300);
+        }, 200);
       } else {
         setTimeout(() => {
           setScrollDirection("up");
-        }, 300);
+        }, 200);
       }
       lastScrollY = window.scrollY;
 

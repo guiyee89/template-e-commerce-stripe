@@ -605,7 +605,7 @@ const FilterContainer = styled.div`
     top: ${(props) => (props.scrollDirection === "down" ? "24px" : "84px")};
     transition: top
       ${(props) =>
-        props.scrollDirection === "up" ? "0.15s ease-in" : "0.21s ease-out"};
+        props.scrollDirection === "up" ? "0.15s ease-in" : "0.15s ease-out"};
     z-index: 1;
     align-items: center;
     justify-content: space-between;
