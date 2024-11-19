@@ -96,7 +96,11 @@ export const NavDesktop = () => {
 const HeaderWrapper = styled.header`
   position: sticky;
   top: ${({ scrolled, isDashboard, isCheckout }) =>
-    isDashboard || isCheckout ? "0" : scrolled === "scrolled" ? "10px" : "0"};
+    isDashboard || isCheckout
+      ? "0"
+      : scrolled === "scrolled"
+      ? "24px"
+      : "24px"};
   z-index: 2;
   height: 80px;
   border-bottom: 1px solid #d3d3d35c;
@@ -106,8 +110,9 @@ const HeaderWrapper = styled.header`
   );
   transition: transform
     ${(props) =>
-      props.scrollDirection === "down" ? "0.1s ease-in" : "0.21s ease-out"};
+      props.scrollDirection === "down" ? "0.1s ease-in" : "0.15s ease-out"};
 `;
+
 const Nav = styled.nav`
   width: 100%;
   height: 100%;
