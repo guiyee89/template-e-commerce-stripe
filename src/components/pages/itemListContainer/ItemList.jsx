@@ -127,7 +127,11 @@ export const ItemList = ({
         scrollDirection={scrollDirection}
       >
         <FilterBtn>
-          Filters: <TuneIcon onClick={toggleMobileFilterMenu} />
+          Filters:{" "}
+          <TuneIcon
+            sx={{ fontSize: windowWidth > 900 ? "1.4rem" : "1.3rem" }}
+            onClick={toggleMobileFilterMenu}
+          />
         </FilterBtn>
         <ItemListTitle style={{ display: windowWidth > "900" && "none" }}>
           {categoryTitle}
@@ -138,13 +142,27 @@ export const ItemList = ({
         <ItemListTitle style={{ display: windowWidth < "901" && "none" }}>
           {categoryTitle}
         </ItemListTitle>
+        <PaginationWrapperTop>
+          <PaginationBtnTop
+            size={windowWidth < 600 ? "small" : "medium"}
+            shape="rounded"
+            variant=""
+            count={totalPages} // Set the count to the total number of pages
+            page={currentPage}
+            onChange={(event, value) => {
+              handlePageChange(value);
+            }}
+            renderItem={(item) => <PaginationItem component="div" {...item} />}
+          />
+          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={20} />}
+        </PaginationWrapperTop>
         <div
           style={{
             display: "flex",
             alignItems: "flex-end",
             gap: "5rem",
             width: "400px",
-            justifyContent: "flex-end",
+            justifyContent: windowWidth > 900 ? "flex-end" : "center",
           }}
         >
           <FilterBy onClick={toggleDesktopFilterMenu}>
@@ -280,9 +298,13 @@ const ItemListWrapper = styled.div`
   @media (max-width: 1150px) {
     gap: 0.7rem;
     row-gap: 1.3rem;
+    padding-left: 6px;
   }
   @media (max-width: 990px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 900px) {
+    padding-left: 0;
   }
 
   @media (max-width: 500px) {
@@ -562,6 +584,7 @@ const HeaderContainer = styled.div`
   margin-bottom: 20px;
   opacity: ${(props) => (props.fadeIn ? 1 : 0)};
   transition: opacity 0.3s ease-in;
+  gap: 1rem;
   @media (max-width: 900px) {
     width: 100%;
     flex-direction: column-reverse;
@@ -580,9 +603,11 @@ const FilterContainer = styled.div`
     position: sticky;
     margin: 0px auto 6px 0px;
     top: ${(props) => (props.scrollDirection === "down" ? "24px" : "84px")};
-    transition: top
+    /* transition: top
       ${(props) =>
-        props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"};
+      props.scrollDirection === "down" ? "0.1s ease-in" : "0.23s ease-out"}; */
+    transition: top
+      ${(props) => props.scrollDirection === "up" && "0.15s ease-in"};
     z-index: 1;
     align-items: center;
     justify-content: space-between;
@@ -605,7 +630,7 @@ const FilterBtn = styled.div`
   word-spacing: 7px;
   width: 100%;
   border-right: 1px solid #aeacac;
-  font-size: clamp(0.88rem, 2vw + 1px, 1.2rem);
+  font-size: clamp(0.82rem, 2vw + 1px, 1.2rem);
   text-align: center;
   @media (min-width: 901px) {
     display: none;
@@ -623,7 +648,11 @@ const ClipLoaderBottom = styled(ClipLoader)`
   position: absolute;
   top: 106%;
 `;
-
+const PaginationWrapperTop = styled.div`
+  @media (min-width: 900px) {
+    display: none;
+  }
+`;
 const PaginationWrapperBottom = styled.div`
   display: flex;
   width: 100%;
@@ -633,6 +662,17 @@ const PaginationWrapperBottom = styled.div`
   justify-content: center;
   @media (max-width: 900px) {
     width: 100%;
+  }
+`;
+const PaginationBtnTop = styled(Pagination)`
+  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    background-color: rgba(0, 0, 0, 0.4);
+    :hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `;
 const PaginationBtn = styled(Pagination)`
@@ -650,9 +690,9 @@ const PaginationBtn = styled(Pagination)`
 const ItemListTitle = styled.h1`
   width: 34%;
   color: #2b2929;
-  text-align: left;
-  padding-left: 20px;
-  font-size: clamp(0.8rem, 2vw + 1px, 1.6rem);
+  text-align: center;
+  padding-left: 8px;
+  font-size: clamp(0.78rem, 2vw + 1px, 1.2rem);
   font-weight: bold;
   text-transform: capitalize;
 

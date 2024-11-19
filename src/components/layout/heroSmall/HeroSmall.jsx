@@ -10,7 +10,7 @@ export const HeroSmall = () => {
     const interval = setInterval(() => {
       // Increment the index to move to the next banner
       setIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 553000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
