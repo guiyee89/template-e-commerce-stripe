@@ -30,6 +30,7 @@ export const ItemList = ({
     setProgress,
     setVisible,
     scrollDirection,
+    scroll,
   } = useContext(GlobalToolsContext);
 
   //////////////////////////                    ////////////////////////////
@@ -124,7 +125,7 @@ export const ItemList = ({
       <FilterContainer
         isMenuOpen={isMenuOpen}
         isMobileFilterOpen={isMobileFilterOpen}
-        scrollDirection={scrollDirection}
+        scrolled={scroll}
       >
         <FilterBtn>
           Filters:{" "}
@@ -602,10 +603,8 @@ const FilterContainer = styled.div`
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: ${(props) => (props.scrollDirection === "down" ? "24px" : "84px")};
-    transition: top
-      ${(props) =>
-        props.scrollDirection === "up" ? "0.15s ease-in" : "0.15s ease-out"};
+    top: ${(props) => (props.scrolled === "scrolled" ? "79px" : "84px")};
+    height: ${(props) => (props.scrolled === "scrolled" ? "35px" : "35px")};
     z-index: 1;
     align-items: center;
     justify-content: space-between;
