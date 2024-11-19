@@ -239,7 +239,7 @@ const Wrapper = styled.div`
 const Discount = styled.h4`
   position: absolute;
   display: flex;
-  top: 105px;
+  top: 122px;
   right: 84.6%;
   width: 60px;
   height: 60px;

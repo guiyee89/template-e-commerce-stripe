@@ -603,7 +603,7 @@ const FilterContainer = styled.div`
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: ${(props) => (props.scrolled === "scrolled" ? "79px" : "84px")};
+    top: ${(props) => (props.scrolled === "scrolled" ? "75px" : "84px")};
     height: ${(props) => (props.scrolled === "scrolled" ? "35px" : "35px")};
     z-index: 1;
     align-items: center;

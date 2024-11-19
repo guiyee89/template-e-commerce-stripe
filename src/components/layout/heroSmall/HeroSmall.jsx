@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background-color: black;
-  z-index: ${(props) => (props.isMenuOpen ? "3" : "2")};
+  z-index: 2;
   height: 24px;
 `;
 const WrapperCarousel = styled.div`
