@@ -53,6 +53,8 @@ export const NavMobile = () => {
       <HeaderWrapper
         scrolled={scroll}
         isDashboard={isDashboard}
+        isCheckout={isCheckout}
+        isMenuOpen={isMenuOpen}
       >
         <Nav isFilterOpen={isFilterOpen}>
           <InsideNav
@@ -135,9 +137,10 @@ export const NavMobile = () => {
 };
 const HeaderWrapper = styled.header`
   position: sticky;
-  top: ${({ scrolled }) => (scrolled === "scrolled" ? "14px" : "20px")};
+  top: ${({ isCart, isCheckout, isDashboard }) =>
+    isCart || isCheckout || isDashboard ? "0" : "24px"};
   z-index: 2;
-  height: 65px;
+  height: ${({ scrolled }) => (scrolled === "scrolled" ? "50px" : "65px")};
   background-color: rgb(253 253 253);
   border-bottom: 1px solid #d3d3d35c;
 `;
