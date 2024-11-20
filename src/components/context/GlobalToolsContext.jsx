@@ -85,18 +85,14 @@ const GlobalToolsProvider = ({ children }) => {
     //Scroll "down" or "up"
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        setTimeout(() => {
-          setScrollDirection("down");
-        }, 100);
+        setScrollDirection("down");
       } else {
-        setTimeout(() => {
-          setScrollDirection("up");
-        }, 100);
+        setScrollDirection("up");
       }
       lastScrollY = window.scrollY;
 
       // Scroll effect for navbar
-      const scrollHeight = window.innerHeight * 0.02; // 2% of screen height
+      const scrollHeight = window.innerHeight * 0.005; // 5% of screen height
 
       if (window.scrollY > scrollHeight) {
         setScroll("scrolled");

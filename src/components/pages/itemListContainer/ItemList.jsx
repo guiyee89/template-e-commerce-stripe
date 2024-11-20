@@ -143,20 +143,6 @@ export const ItemList = ({
         <ItemListTitle style={{ display: windowWidth < "901" && "none" }}>
           {categoryTitle}
         </ItemListTitle>
-        <PaginationWrapperTop>
-          <PaginationBtnTop
-            size={windowWidth < 600 ? "small" : "medium"}
-            shape="rounded"
-            variant=""
-            count={totalPages} // Set the count to the total number of pages
-            page={currentPage}
-            onChange={(event, value) => {
-              handlePageChange(value);
-            }}
-            renderItem={(item) => <PaginationItem component="div" {...item} />}
-          />
-          {isLoadingPagination && <ClipLoaderTop color="#194f44" size={20} />}
-        </PaginationWrapperTop>
         <div
           style={{
             display: "flex",
@@ -603,8 +589,8 @@ const FilterContainer = styled.div`
     width: 100%;
     position: sticky;
     margin: 0px auto 6px 0px;
-    top: ${(props) => (props.scrolled === "scrolled" ? "75px" : "84px")};
-    height: ${(props) => (props.scrolled === "scrolled" ? "35px" : "35px")};
+    top: ${(props) => (props.scrolled === "scrolled" ? "24px" : "84px")};
+    height: 35px;
     z-index: 1;
     align-items: center;
     justify-content: space-between;
@@ -634,22 +620,11 @@ const FilterBtn = styled.div`
   }
 `;
 
-const ClipLoaderTop = styled(ClipLoader)`
-  position: absolute;
-  top: -28px;
-  @media (max-width: 900px) {
-    top: -68px;
-  }
-`;
 const ClipLoaderBottom = styled(ClipLoader)`
   position: absolute;
   top: 106%;
 `;
-const PaginationWrapperTop = styled.div`
-  @media (min-width: 900px) {
-    display: none;
-  }
-`;
+
 const PaginationWrapperBottom = styled.div`
   display: flex;
   width: 100%;
@@ -661,17 +636,7 @@ const PaginationWrapperBottom = styled.div`
     width: 100%;
   }
 `;
-const PaginationBtnTop = styled(Pagination)`
-  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-    background-color: rgba(0, 0, 0, 0.4);
-    :hover {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-  }
-  .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`;
+
 const PaginationBtn = styled(Pagination)`
   background-color: #d3d3d385;
   .css-1idgk4h-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {

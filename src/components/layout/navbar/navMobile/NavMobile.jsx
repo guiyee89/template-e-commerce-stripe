@@ -55,6 +55,7 @@ export const NavMobile = () => {
         isDashboard={isDashboard}
         isCheckout={isCheckout}
         isMenuOpen={isMenuOpen}
+        scrollDirection={scrollDirection}
       >
         <Nav isFilterOpen={isFilterOpen}>
           <InsideNav
@@ -140,7 +141,14 @@ const HeaderWrapper = styled.header`
   top: ${({ isCart, isCheckout, isDashboard }) =>
     isCart || isCheckout || isDashboard ? "0" : "24px"};
   z-index: 2;
-  height: ${({ scrolled }) => (scrolled === "scrolled" ? "50px" : "65px")};
+  height: 65px;
+  transform: translateY(
+    ${({ scrollDirection, isDashboard }) =>
+      isDashboard ? "0" : scrollDirection === "down" ? "-100%" : "0"}
+  );
+  transition: transform
+    ${(props) =>
+      props.scrollDirection === "down" ? "0.1s ease-in" : "0.15s ease-out"};
   background-color: rgb(253 253 253);
   border-bottom: 1px solid #d3d3d35c;
 `;

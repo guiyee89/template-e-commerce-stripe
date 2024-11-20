@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background-color: black;
-  z-index: 2;
+  z-index: 3;
   height: 24px;
 `;
 const WrapperCarousel = styled.div`
@@ -132,80 +132,7 @@ const Span = styled.span`
   font-size: clamp(0.7rem, 2vw + 1px, 0.7rem);
   font-weight: bold;
   @media (max-width: 500px) {
-    font-size: clamp(0.64rem, 2vw + 1px, 0.68rem);
+    font-size: clamp(0.5rem, 2vw + 0.8px, 0.68rem);
   }
 `;
 
-// const Wrapper = styled.div`
-//   margin: 20px auto 50px;
-//   /* background-color: rgba(231, 230, 230, 0.35); */
-//   background-color: rgba(231, 230, 230, 0.05);
-// `;
-// const WrapperCarousel = styled.div`
-//   margin: 0 auto;
-//   max-width: 610px;
-//   background-color: white;
-//   position: relative;
-//   display: flex;
-//   -webkit-box-pack: center;
-//   justify-content: center;
-//   z-index: 0;
-
-//   .carousel-indicators {
-//     display: none;
-//   }
-
-//   .carousel.slide {
-//     width: 100%;
-//   }
-//   .carousel-control-prev {
-//     left: -30px;
-//     opacity: 0.5;
-//     width: 25px;
-//     .carousel-control-prev-icon {
-//       width: 13px;
-//       height: 15px;
-//       background-image: url(https://res.cloudinary.com/derdim3m6/image/upload/v1691421029/web%20access/samples%20for%20e-commerce/2023-08-07_12h08_34_tzeavn.png);
-//     }
-//   }
-//   .carousel-control-next {
-//     right: -30px;
-//     opacity: 0.5;
-//     width: 25px;
-//     .carousel-control-next-icon {
-//       width: 13px;
-//       height: 15px;
-//       background-image: url(https://res.cloudinary.com/derdim3m6/image/upload/v1691421027/web%20access/samples%20for%20e-commerce/2023-08-07_12h08_16_jmaxho.png);
-//     }
-//   }
-// `;
-
-// const Banner = styled.div`
-//   width: 100%;
-//   line-height: 1.5;
-//   padding: 22px 0 16px;
-//   overflow-x: hidden;
-//   border-bottom: 1px solid #ededed;
-//   @media (max-width: 500px) {
-//     padding: 12px 0 14px;
-//   }
-// `;
-
-// const BannerText = styled.p`
-//   text-transform: uppercase;
-//   font-size: clamp(0.6rem, 1px + 0.78vw, 0.7rem);
-//   font-weight: 500;
-//   letter-spacing: 3px;
-//   word-spacing: 5px;
-//   text-align: center;
-//   padding: ${({ isOpen }) => (isOpen ? "0 32px 0 33px" : "0 32px")};
-//   @media (max-width: 500px) {
-//     font-size: clamp(0.75rem, 2vw + 1px, 0.8rem);
-//   }
-// `;
-
-// const Span = styled.span`
-//   color: red;
-//   font-size: clamp(1rem, 2vw + 1px, 1rem);
-//   font-weight: bold;
-// `;
