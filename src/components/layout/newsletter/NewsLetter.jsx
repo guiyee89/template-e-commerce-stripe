@@ -50,9 +50,8 @@ export const NewsLetter = () => {
                   confirmButtonColor: "#000000",
                   customClass: {
                     icon: "custom-swal-icon",
-                    title:"swal2-title-custom"
+                    title: "swal2-title-custom",
                   },
-                  scrollbarPadding: false,
                 });
               })
               .catch((err) => console.error("Error sending email: ", err));

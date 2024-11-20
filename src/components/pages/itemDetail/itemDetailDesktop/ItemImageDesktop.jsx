@@ -131,7 +131,7 @@ export const ItemImageDesktop = ({
 
 const Wrapper = styled.div`
   display: flex;
-  width: 90%;
+  width: 75%;
   height: 100%;
   margin-left: -35px;
   margin-right: 20px;
@@ -182,7 +182,7 @@ const MainImg = styled.img`
   transform: ${({ translationDirection }) => translationDirection};
   opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
   transition: transform 0.1s ease, opacity 0.2s ease;
-  height: 92%;
+  height: 100%;
   @media (max-width: 1320px) {
     height: 85%;
   }
